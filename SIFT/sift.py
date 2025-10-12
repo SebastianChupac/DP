@@ -102,9 +102,10 @@ def show_image(vis, title="Feature Matches"):
 
 # ---------- Main Execution ----------
 if __name__ == "__main__":
-    Image.open("C:/Users/sebas/Documents/VUT FIT MIT/DP/PublicDataset/PublicDataset/FingerVein/001/__MACOSX/Finger Vein Database/001/left/._index_1.bmp").show()
-    img1 = load_image("SIFT/fingervein-index-a-1.bmp")
-    img2 = load_image("SIFT/fingervein-index-a-2.bmp")
+    #Image.open("C:/Users/sebas/Documents/VUT FIT MIT/DP/PublicDataset/PublicDataset/FingerVein/001/__MACOSX/Finger Vein Database/001/left/._index_1.bmp").show()
+    
+    img1 = load_image("data/hand-001-2.jpg")
+    img2 = load_image("data/hand-003-1.jpg")#fingervein-index-a-2.bmp
 
     kps1, des1 = compute_sift_features(img1)
     kps2, des2 = compute_sift_features(img2)
