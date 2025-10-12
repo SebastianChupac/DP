@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 
 # ---------- Configuration ----------
 METHOD = "ORB"            # choose: "SIFT" or "ORB"
-LOWE_RATIO = 0.75
-RANSAC_THRESH = 5.0
+LOWE_RATIO = 0.75         # Lowe's ratio test threshold - heigher allows more matches into "good matches"
+RANSAC_THRESH = 5.0       # RANSAC reprojection threshold (in pixels) - lower means stricter inlier/outlier criteria
 
 # SIFT/FLANN parameters
 FLANN_TREES = 5
@@ -153,8 +153,8 @@ def show_image(vis, title="Feature Matches"):
 
 # ---------- Main ----------
 if __name__ == "__main__":
-    img1 = load_image("data/iris-l-006-1.jpg")
-    img2 = load_image("data/iris-l-006-2.jpg")
+    img1 = load_image("data/hand-003-1.jpg")
+    img2 = load_image("data/hand-001-1.jpg")
 
     kps1, des1 = compute_features(img1)
     kps2, des2 = compute_features(img2)
