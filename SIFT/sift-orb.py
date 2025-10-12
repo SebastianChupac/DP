@@ -1,9 +1,10 @@
 import cv2
+import os
 import numpy as np
 import matplotlib.pyplot as plt
 
 # ---------- Configuration ----------
-METHOD = "ORB"            # choose: "SIFT" or "ORB"
+METHOD = "SIFT"            # choose: "SIFT" or "ORB"
 LOWE_RATIO = 0.75         # Lowe's ratio test threshold - heigher allows more matches into "good matches"
 RANSAC_THRESH = 5.0       # RANSAC reprojection threshold (in pixels) - lower means stricter inlier/outlier criteria
 
@@ -20,6 +21,9 @@ USE_CROSS_CHECK = False    # Whether to use cross-check validation (only for BF)
 FLANN_LSH_TABLE_NUMBER = 6    # LSH table number (typically 6-20)
 FLANN_LSH_KEY_SIZE = 12       # Key size (typically 10-20)
 FLANN_LSH_MULTI_PROBE_LEVEL = 1  # Multi-probe level (typically 1-2)
+
+# Prediction thresholds (PLACEHOLDER)
+RATIO_THRESHOLD = 0.3       # Minimum inlier ratio to predict "same person"
 # -----------------------------------
 
 def load_image(path: str):
@@ -107,8 +111,34 @@ def estimate_homography(kps1, kps2, matches):
     return H, mask.ravel().tolist(), {"inliers": inliers, "ratio": ratio}
 
 
-def draw_matches(img1, img2, kps1, kps2, matches, mask=None):
-    """Visualize matches: inliers (green), outliers (red), or all (yellow)."""
+def draw_matches_with_info(img1, img2, kps1, kps2, matches, mask=None, 
+                          file1="image1", file2="image2", prediction=None):
+    """Visualize matches with file names and prediction result."""
+    # Convert grayscale to BGR for colored text if needed
+    if len(img1.shape) == 2:
+        img1_display = cv2.cvtColor(img1, cv2.COLOR_GRAY2BGR)
+    else:
+        img1_display = img1.copy()
+        
+    if len(img2.shape) == 2:
+        img2_display = cv2.cvtColor(img2, cv2.COLOR_GRAY2BGR)
+    else:
+        img2_display = img2.copy()
+    
+    # Add file names to individual images
+    font = cv2.FONT_HERSHEY_SIMPLEX
+    font_scale = 0.7
+    thickness = 2
+    
+    # Add filename to first image
+    cv2.putText(img1_display, file1, (10, 30), font, font_scale, (255, 255, 255), thickness)
+    cv2.putText(img1_display, file1, (10, 30), font, font_scale, (0, 0, 0), 1)
+    
+    # Add filename to second image  
+    cv2.putText(img2_display, file2, (10, 30), font, font_scale, (255, 255, 255), thickness)
+    cv2.putText(img2_display, file2, (10, 30), font, font_scale, (0, 0, 0), 1)
+    
+    # Draw matches
     if mask is not None and any(mask):
         # Inliers (green)
         params_in = dict(matchColor=(0, 255, 0), matchesMask=mask,
@@ -118,14 +148,29 @@ def draw_matches(img1, img2, kps1, kps2, matches, mask=None):
                           matchesMask=[0 if m else 1 for m in mask],
                           flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
 
-        img_in = cv2.drawMatches(img1, kps1, img2, kps2, matches, None, **params_in)
-        img_out = cv2.drawMatches(img1, kps1, img2, kps2, matches, None, **params_out)
+        img_in = cv2.drawMatches(img1_display, kps1, img2_display, kps2, matches, None, **params_in)
+        img_out = cv2.drawMatches(img1_display, kps1, img2_display, kps2, matches, None, **params_out)
         vis = cv2.addWeighted(img_in, 0.6, img_out, 0.6, 0)
     else:
         # All matches (cyan)
-        vis = cv2.drawMatches(img1, kps1, img2, kps2, matches, None,
-                              matchColor=(255, 255, 0), # cyan in BGR
+        vis = cv2.drawMatches(img1_display, kps1, img2_display, kps2, matches, None,
+                              matchColor=(255, 255, 0),
                               flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+    
+    # Add prediction result at the bottom
+    h, w = vis.shape[:2]
+    if prediction is not None:
+        pred_text = f"Prediction - Same Person: {prediction}"
+        pred_color = (0, 255, 0) if prediction else (0, 0, 255)  # Green for True, Red for False
+        
+        # Add background for text
+        cv2.rectangle(vis, (0, h-40), (w, h), (0, 0, 0), -1)
+        
+        # Add prediction text
+        text_size = cv2.getTextSize(pred_text, font, font_scale, thickness)[0]
+        text_x = (w - text_size[0]) // 2
+        cv2.putText(vis, pred_text, (text_x, h-10), font, font_scale, pred_color, thickness)
+    
     return vis
 
 
@@ -141,6 +186,14 @@ def compute_reprojection_error(H, src_pts, dst_pts, mask):
     errors = np.linalg.norm(src_proj - dst_in, axis=1)
     return errors.mean()
 
+#PLACEHOLDER
+def predict_same_person(inlier_ratio, ratio_threshold=0.3):
+    """Simple prediction based on inlier ratio."""
+    if inlier_ratio is None:
+        return False
+    
+    return inlier_ratio >= ratio_threshold
+
 
 def show_image(vis, title="Feature Matches"):
     """Display visualization with matplotlib."""
@@ -153,8 +206,14 @@ def show_image(vis, title="Feature Matches"):
 
 # ---------- Main ----------
 if __name__ == "__main__":
-    img1 = load_image("data/hand-003-1.jpg")
-    img2 = load_image("data/hand-001-1.jpg")
+    file1 = "data/iris-l-006-2.jpg"
+    file2 = "data/iris-l-007-1.jpg"
+
+    img1 = load_image(file1)
+    img2 = load_image(file2)
+
+    file1_name = os.path.basename(file1)
+    file2_name = os.path.basename(file2)
 
     kps1, des1 = compute_features(img1)
     kps2, des2 = compute_features(img2)
@@ -168,6 +227,9 @@ if __name__ == "__main__":
     H, mask, stats = estimate_homography(kps1, kps2, good_matches)
 
     if H is not None:
+        # Compute prediction based on inlier ratio
+        prediction = None
+        inlier_ratio = stats['ratio']
         print(f"Inliers: {stats['inliers']}  Ratio: {stats['ratio']:.2f}")
 
         # Compute reprojection error
@@ -177,11 +239,18 @@ if __name__ == "__main__":
         if err is not None: 
             print(f"Mean reprojection error (pixels): {err:.2f}")
 
-        vis = draw_matches(img1, img2, kps1, kps2, good_matches, mask)
-        title = f"{METHOD} Matches (green=inliers, red=outliers)"
+        # Make prediction PLACEHOLDER
+        prediction = predict_same_person(inlier_ratio, RATIO_THRESHOLD)
+        print(f"Prediction - Same Person: {prediction}")
+
+        vis = draw_matches_with_info(img1, img2, kps1, kps2, good_matches, mask, 
+                                   file1_name, file2_name, prediction)
+        title = f"{METHOD} Matches (green=inliers, red=outliers) - Same: {prediction}"
     else:
         print("Homography estimation failed or not enough matches.")
-        vis = draw_matches(img1, img2, kps1, kps2, good_matches)
-        title = f"{METHOD} Matches (cyan=good matches, no valid homography)"
+        prediction = False
+        vis = draw_matches_with_info(img1, img2, kps1, kps2, good_matches, None, 
+                                   file1_name, file2_name, prediction)
+        title = f"{METHOD} Matches (cyan=good matches) - Same: {prediction}"
 
     show_image(vis, title)
