@@ -1,0 +1,187 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+
+# ---------- Configuration ----------
+METHOD = "ORB"            # choose: "SIFT" or "ORB"
+LOWE_RATIO = 0.75
+RANSAC_THRESH = 5.0
+
+# SIFT/FLANN parameters
+FLANN_TREES = 5
+FLANN_CHECKS = 50
+
+# ORB parameters  
+ORB_N_FEATURES = 1000
+ORB_MATCHER = "BF"     # choose: "BF" (BruteForce) or "FLANN"
+USE_CROSS_CHECK = False    # Whether to use cross-check validation (only for BF)
+
+# ORB/FLANN parameters (for when ORB_MATCHER = "FLANN")
+FLANN_LSH_TABLE_NUMBER = 6    # LSH table number (typically 6-20)
+FLANN_LSH_KEY_SIZE = 12       # Key size (typically 10-20)
+FLANN_LSH_MULTI_PROBE_LEVEL = 1  # Multi-probe level (typically 1-2)
+# -----------------------------------
+
+def load_image(path: str):
+    """Load an image in grayscale."""
+    img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+    if img is None:
+        raise FileNotFoundError(f"Could not load image: {path}")
+    return img
+
+
+def compute_features(image, method=METHOD):
+    """Detect and compute keypoints + descriptors using SIFT or ORB."""
+    if method.upper() == "SIFT":
+        extractor = cv2.SIFT_create()
+    elif method.upper() == "ORB":
+        extractor = cv2.ORB_create(nfeatures=ORB_N_FEATURES)
+    else:
+        raise ValueError(f"Unknown method: {method}")
+
+    keypoints, descriptors = extractor.detectAndCompute(image, None)
+    return keypoints, descriptors
+
+
+def match_features(des1, des2, method=METHOD, ratio=LOWE_RATIO):
+    """Match descriptors using the right matcher for SIFT/ORB."""
+    if method.upper() == "SIFT":
+        # Float descriptors → FLANN with KD-tree
+        index_params = dict(algorithm=1, trees=FLANN_TREES)
+        search_params = dict(checks=FLANN_CHECKS)
+        matcher = cv2.FlannBasedMatcher(index_params, search_params)
+        matches = matcher.knnMatch(des1, des2, k=2)
+
+    elif method.upper() == "ORB":
+        if ORB_MATCHER.upper() == "FLANN":
+            # ORB with FLANN using LSH index for binary descriptors
+            index_params = dict(algorithm=6,  # FLANN_INDEX_LSH
+                               table_number=FLANN_LSH_TABLE_NUMBER,
+                               key_size=FLANN_LSH_KEY_SIZE,
+                               multi_probe_level=FLANN_LSH_MULTI_PROBE_LEVEL)
+            search_params = dict(checks=FLANN_CHECKS)
+            matcher = cv2.FlannBasedMatcher(index_params, search_params)
+            matches = matcher.knnMatch(des1, des2, k=2)
+            
+        else:  # BruteForce
+            if USE_CROSS_CHECK:
+                # Cross-check: only consistent matches in both directions
+                bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=True)
+                matches = bf.match(des1, des2)
+                # Convert to list of lists for consistency with knnMatch format
+                matches = [[m] for m in matches]
+            else:
+                # Standard BF with ratio test
+                bf = cv2.BFMatcher(cv2.NORM_HAMMING, crossCheck=False)
+                matches = bf.knnMatch(des1, des2, k=2)
+
+    # Apply ratio test (except for cross-check which is already filtered)
+    if USE_CROSS_CHECK and method.upper() == "ORB" and ORB_MATCHER.upper() == "BF":
+        good = [m[0] for m in matches]  # Cross-check returns direct matches
+    else:
+        # Add safety check for matches
+        good = []
+        for match_pair in matches:
+            if len(match_pair) == 2:  # Only proceed if we have 2 matches, ORB+FLANN may return less
+                m, n = match_pair
+                if m.distance < ratio * n.distance:
+                    good.append(m)
+    
+    return good
+
+
+def estimate_homography(kps1, kps2, matches):
+    """Estimate homography using RANSAC and return (H, mask, stats)."""
+    if len(matches) < 4:
+        return None, None, {"inliers": 0, "ratio": 0}
+
+    src_pts = np.float32([kps1[m.queryIdx].pt for m in matches]).reshape(-1, 1, 2)
+    dst_pts = np.float32([kps2[m.trainIdx].pt for m in matches]).reshape(-1, 1, 2)
+    H, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, RANSAC_THRESH) # RANSAC determines number of iterations internally
+
+    if H is None or mask is None:
+        return None, None, {"inliers": 0, "ratio": 0}
+
+    inliers = int(np.sum(mask))
+    ratio = inliers / len(matches)
+    return H, mask.ravel().tolist(), {"inliers": inliers, "ratio": ratio}
+
+
+def draw_matches(img1, img2, kps1, kps2, matches, mask=None):
+    """Visualize matches: inliers (green), outliers (red), or all (yellow)."""
+    if mask is not None and any(mask):
+        # Inliers (green)
+        params_in = dict(matchColor=(0, 255, 0), matchesMask=mask,
+                         flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+        # Outliers (red)
+        params_out = dict(matchColor=(0, 0, 255),
+                          matchesMask=[0 if m else 1 for m in mask],
+                          flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+
+        img_in = cv2.drawMatches(img1, kps1, img2, kps2, matches, None, **params_in)
+        img_out = cv2.drawMatches(img1, kps1, img2, kps2, matches, None, **params_out)
+        vis = cv2.addWeighted(img_in, 0.6, img_out, 0.6, 0)
+    else:
+        # All matches (cyan)
+        vis = cv2.drawMatches(img1, kps1, img2, kps2, matches, None,
+                              matchColor=(255, 255, 0), # cyan in BGR
+                              flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+    return vis
+
+
+def compute_reprojection_error(H, src_pts, dst_pts, mask):
+    """Compute mean reprojection error for inlier points."""
+    if H is None:
+        return None
+    src_in = src_pts[np.array(mask, dtype=bool)].reshape(-1, 2)
+    dst_in = dst_pts[np.array(mask, dtype=bool)].reshape(-1, 2)
+    if len(src_in) == 0:
+        return None
+    src_proj = cv2.perspectiveTransform(src_in.reshape(-1, 1, 2), H).reshape(-1, 2)
+    errors = np.linalg.norm(src_proj - dst_in, axis=1)
+    return errors.mean()
+
+
+def show_image(vis, title="Feature Matches"):
+    """Display visualization with matplotlib."""
+    plt.figure(figsize=(14, 8))
+    plt.imshow(cv2.cvtColor(vis, cv2.COLOR_BGR2RGB))
+    plt.title(title)
+    plt.axis("off")
+    plt.show()
+
+
+# ---------- Main ----------
+if __name__ == "__main__":
+    img1 = load_image("data/iris-l-006-1.jpg")
+    img2 = load_image("data/iris-l-006-2.jpg")
+
+    kps1, des1 = compute_features(img1)
+    kps2, des2 = compute_features(img2)
+    print(f"{METHOD}: {len(kps1)} keypoints in img1, {len(kps2)} in img2")
+
+    good_matches = match_features(des1, des2)
+    print(f"Good matches: {len(good_matches)}")
+    if (METHOD.upper() == "ORB"):
+        print(f"ORB Matcher: {ORB_MATCHER}, Cross-check: {USE_CROSS_CHECK}")
+
+    H, mask, stats = estimate_homography(kps1, kps2, good_matches)
+
+    if H is not None:
+        print(f"Inliers: {stats['inliers']}  Ratio: {stats['ratio']:.2f}")
+
+        # Compute reprojection error
+        src_pts = np.float32([kps1[m.queryIdx].pt for m in good_matches]).reshape(-1, 1, 2) 
+        dst_pts = np.float32([kps2[m.trainIdx].pt for m in good_matches]).reshape(-1, 1, 2) 
+        err = compute_reprojection_error(H, src_pts, dst_pts, mask) 
+        if err is not None: 
+            print(f"Mean reprojection error (pixels): {err:.2f}")
+
+        vis = draw_matches(img1, img2, kps1, kps2, good_matches, mask)
+        title = f"{METHOD} Matches (green=inliers, red=outliers)"
+    else:
+        print("Homography estimation failed or not enough matches.")
+        vis = draw_matches(img1, img2, kps1, kps2, good_matches)
+        title = f"{METHOD} Matches (cyan=good matches, no valid homography)"
+
+    show_image(vis, title)
