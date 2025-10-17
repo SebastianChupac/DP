@@ -70,7 +70,7 @@ if __name__ == '__main__':
         help='Directory where to write output frames (If None, no output)')
 
     parser.add_argument(
-        '--image_glob', type=str, nargs='+', default=['*.png', '*.jpg', '*.jpeg'],
+        '--image_glob', type=str, nargs='+', default=['*.png', '*.jpg', '*.jpeg', '*.bmp'],
         help='Glob if a directory of images is specified')
     parser.add_argument(
         '--skip', type=int, default=1,
