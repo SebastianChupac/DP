@@ -182,8 +182,8 @@ def predict_identity(stats, reproj_error):
 
 # ---------- Main Execution ----------
 if __name__ == "__main__":
-    img1_path = "data/hand-002-1.jpg"
-    img2_path = "data/hand-003-1.jpg"
+    img1_path = "data/hand-001-1.jpg"
+    img2_path = "data/hand-001-2.jpg"
 
     img1_tensor, img1_gray = load_image(img1_path)
     img2_tensor, img2_gray = load_image(img2_path)
