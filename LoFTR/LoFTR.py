@@ -14,8 +14,31 @@ def load_image(path: str):
     img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
     if img is None:
         raise FileNotFoundError(f"Could not load image: {path}")
+    img = resize_image(img, target_size=(640, 480), keep_aspect=True)
     tensor = torch.from_numpy(img).float()[None, None] / 255.0
     return tensor, img
+
+def resize_image(img, target_size=(640, 480), keep_aspect=False):
+    """
+    Resize an image either to a fixed size or while keeping aspect ratio.
+    
+    Args:
+        img (np.ndarray): Input image.
+        target_size (tuple): (width, height) if keep_aspect=False.
+        keep_aspect (bool): Whether to maintain aspect ratio.
+        
+    Returns:
+        np.ndarray: Resized image.
+    """
+    if keep_aspect:
+        h, w = img.shape[:2]
+        target_w, target_h = target_size
+        scale = min(target_w / w, target_h / h)
+        new_w, new_h = int(w * scale), int(h * scale)
+        resized = cv2.resize(img, (new_w, new_h), interpolation=cv2.INTER_AREA)
+        return resized
+    else:
+        return cv2.resize(img, target_size, interpolation=cv2.INTER_AREA)
 
 def match_with_loftr(img1_tensor, img2_tensor, model_type=MODEL_TYPE):
     """Run LoFTR feature matching using Kornia."""
@@ -150,17 +173,17 @@ def predict_identity(stats, reproj_error):
     - Could combine inlier ratio, mean reprojection error, and mean confidence
       into a similarity or verification score.
     """
-    if stats["ratio"] > 0.3 and reproj_error < 5.0:
+    if stats["ratio"] > 0.2 and reproj_error < 5.0:
         return True
-    elif stats["ratio"] > 0.2:
+    elif stats["ratio"] > 0.15:
         return False # uncertain case
     else:
         return False
 
 # ---------- Main Execution ----------
 if __name__ == "__main__":
-    img1_path = "data/fingervein-index-l-001-1.bmp"
-    img2_path = "data/fingervein-index-l-002-1.bmp"
+    img1_path = "data/hand-002-1.jpg"
+    img2_path = "data/hand-003-1.jpg"
 
     img1_tensor, img1_gray = load_image(img1_path)
     img2_tensor, img2_gray = load_image(img2_path)

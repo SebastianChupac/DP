@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # ---------- Configuration ----------
-METHOD = "ORB"            # choose: "SIFT" or "ORB"
+METHOD = "SIFT"            # choose: "SIFT" or "ORB"
 LOWE_RATIO = 0.75         # Lowe's ratio test threshold - heigher allows more matches into "good matches"
 RANSAC_THRESH = 5.0       # RANSAC reprojection threshold (in pixels) - lower means stricter inlier/outlier criteria
 
@@ -31,7 +31,30 @@ def load_image(path: str):
     img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
     if img is None:
         raise FileNotFoundError(f"Could not load image: {path}")
+    img = resize_image(img, target_size=(640, 480), keep_aspect=True)
     return img
+
+def resize_image(img, target_size=(640, 480), keep_aspect=False):
+    """
+    Resize an image either to a fixed size or while keeping aspect ratio.
+    
+    Args:
+        img (np.ndarray): Input image.
+        target_size (tuple): (width, height) if keep_aspect=False.
+        keep_aspect (bool): Whether to maintain aspect ratio.
+        
+    Returns:
+        np.ndarray: Resized image.
+    """
+    if keep_aspect:
+        h, w = img.shape[:2]
+        target_w, target_h = target_size
+        scale = min(target_w / w, target_h / h)
+        new_w, new_h = int(w * scale), int(h * scale)
+        resized = cv2.resize(img, (new_w, new_h), interpolation=cv2.INTER_AREA)
+        return resized
+    else:
+        return cv2.resize(img, target_size, interpolation=cv2.INTER_AREA)
 
 
 def compute_features(image, method=METHOD):
@@ -217,8 +240,8 @@ def show_image(vis, title="Feature Matches"):
 
 # ---------- Main ----------
 if __name__ == "__main__":
-    file1 = "data/iris-l-006-2.jpg"
-    file2 = "data/iris-l-006-1.jpg"
+    file1 = "data/hand-001-1.jpg"
+    file2 = "data/hand-001-2.jpg"
 
     img1 = load_image(file1)
     img2 = load_image(file2)
