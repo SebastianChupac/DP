@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # ---------- Configuration ----------
-METHOD = "SIFT"            # choose: "SIFT" or "ORB"
+METHOD = "ORB"            # choose: "SIFT" or "ORB"
 LOWE_RATIO = 0.75         # Lowe's ratio test threshold - heigher allows more matches into "good matches"
 RANSAC_THRESH = 5.0       # RANSAC reprojection threshold (in pixels) - lower means stricter inlier/outlier criteria
 
@@ -125,18 +125,18 @@ def draw_matches_with_info(img1, img2, kps1, kps2, matches, mask=None,
     else:
         img2_display = img2.copy()
     
-    # Add file names to individual images
+    # --- Match visualization parameters ---
     font = cv2.FONT_HERSHEY_SIMPLEX
     font_scale = 0.7
     thickness = 2
+    header_height = 40
+    footer_height = 40
+
+        # --- Concatenate images horizontally ---
+    H1, W1 = img1_display.shape[:2]
+    vis = cv2.hconcat([img1_display, img2_display])
+    H_vis, W_vis = vis.shape[:2]
     
-    # Add filename to first image
-    cv2.putText(img1_display, file1, (10, 30), font, font_scale, (255, 255, 255), thickness)
-    cv2.putText(img1_display, file1, (10, 30), font, font_scale, (0, 0, 0), 1)
-    
-    # Add filename to second image  
-    cv2.putText(img2_display, file2, (10, 30), font, font_scale, (255, 255, 255), thickness)
-    cv2.putText(img2_display, file2, (10, 30), font, font_scale, (0, 0, 0), 1)
     
     # Draw matches
     if mask is not None and any(mask):
@@ -156,22 +156,33 @@ def draw_matches_with_info(img1, img2, kps1, kps2, matches, mask=None,
         vis = cv2.drawMatches(img1_display, kps1, img2_display, kps2, matches, None,
                               matchColor=(255, 255, 0),
                               flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+        
+    # --- Create header and footer bars ---
+    header = np.full((header_height, W_vis, 3), 230, dtype=np.uint8)  # light gray
+    footer = np.full((footer_height, W_vis, 3), 30, dtype=np.uint8)   # dark gray / black
+
+    # --- Add filenames above each image ---
+    text_y = int(header_height * 0.75)
+    cv2.putText(header, file1, (int(W1 * 0.25) - 60, text_y),
+                font, font_scale, (0, 0, 0), thickness)
+    cv2.putText(header, file2, (int(W1 + W1 * 0.25) - 60, text_y),
+                font, font_scale, (0, 0, 0), thickness)
     
     # Add prediction result at the bottom
-    h, w = vis.shape[:2]
     if prediction is not None:
         pred_text = f"Prediction - Same Person: {prediction}"
         pred_color = (0, 255, 0) if prediction else (0, 0, 255)  # Green for True, Red for False
         
         # Add background for text
-        cv2.rectangle(vis, (0, h-40), (w, h), (0, 0, 0), -1)
+        #cv2.rectangle(vis, (0, h-40), (w, h), (0, 0, 0), -1)
         
         # Add prediction text
         text_size = cv2.getTextSize(pred_text, font, font_scale, thickness)[0]
-        text_x = (w - text_size[0]) // 2
-        cv2.putText(vis, pred_text, (text_x, h-10), font, font_scale, pred_color, thickness)
-    
-    return vis
+        text_x = (W_vis - text_size[0]) // 2
+        cv2.putText(footer, pred_text, (text_x, footer_height - 10), font, font_scale, pred_color, thickness)
+
+    vis_with_bars = cv2.vconcat([header, vis, footer])
+    return vis_with_bars
 
 
 def compute_reprojection_error(H, src_pts, dst_pts, mask):
@@ -207,7 +218,7 @@ def show_image(vis, title="Feature Matches"):
 # ---------- Main ----------
 if __name__ == "__main__":
     file1 = "data/iris-l-006-2.jpg"
-    file2 = "data/iris-l-007-1.jpg"
+    file2 = "data/iris-l-006-1.jpg"
 
     img1 = load_image(file1)
     img2 = load_image(file2)
