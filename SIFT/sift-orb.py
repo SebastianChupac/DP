@@ -24,6 +24,10 @@ FLANN_LSH_MULTI_PROBE_LEVEL = 1  # Multi-probe level (typically 1-2)
 
 # Prediction thresholds (PLACEHOLDER)
 RATIO_THRESHOLD = 0.3       # Minimum inlier ratio to predict "same person"
+
+RESIZE = True            # Whether to resize images
+RESIZE_TARGET = (640, 480)  # Target size for resizing (width, height)
+KEEP_ASPECT = True       # Whether to keep aspect ratio when resizing
 # -----------------------------------
 
 def load_image(path: str):
@@ -31,7 +35,8 @@ def load_image(path: str):
     img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
     if img is None:
         raise FileNotFoundError(f"Could not load image: {path}")
-    img = resize_image(img, target_size=(640, 480), keep_aspect=True)
+    if RESIZE:
+        img = resize_image(img, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
     return img
 
 def resize_image(img, target_size=(640, 480), keep_aspect=False):

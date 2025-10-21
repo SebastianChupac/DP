@@ -14,6 +14,9 @@ COLOR = False                  # Whether to load color images, Super Point works
 # For now, tunable parameters can be set in the config file above
 # Matchers: SGM, SG, NN
 # Extractors: root, sp
+RESIZE = True            # Whether to resize images
+RESIZE_TARGET = (640, 480)  # Target size for resizing (width, height)
+KEEP_ASPECT = True       # Whether to keep aspect ratio when resizing
 # -----------------------------------
 # Download weights from https://drive.google.com/file/d/1Ca0WmKSSt2G6P7m8YAOlSAHEFar_TAWb/view
 
@@ -22,8 +25,9 @@ def load_image(path: str):
     """Load grayscale and color image."""
     img_g = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
     img_c = cv2.imread(path)
-    img_g = resize_image(img_g, target_size=(640, 480), keep_aspect=True)
-    img_c = resize_image(img_c, target_size=(640, 480), keep_aspect=True)
+    if RESIZE:
+        img_g = resize_image(img_g, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
+        img_c = resize_image(img_c, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
     if img_g is None or img_c is None:
         raise FileNotFoundError(f"Could not load image: {path}")
     return img_c, img_g

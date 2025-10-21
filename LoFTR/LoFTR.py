@@ -7,6 +7,10 @@ import kornia.feature as KF
 # ---------- Configuration ----------
 MODEL_TYPE = "indoor"       # 'indoor' or 'outdoor'
 RANSAC_THRESH = 3.0          # in pixels; smaller = stricter geometric constraint
+
+RESIZE = True            # Whether to resize images
+RESIZE_TARGET = (640, 480)  # Target size for resizing (width, height)
+KEEP_ASPECT = True       # Whether to keep aspect ratio when resizing
 # -----------------------------------
 
 def load_image(path: str):
@@ -14,7 +18,8 @@ def load_image(path: str):
     img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
     if img is None:
         raise FileNotFoundError(f"Could not load image: {path}")
-    img = resize_image(img, target_size=(640, 480), keep_aspect=True)
+    if RESIZE:
+        img = resize_image(img, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
     tensor = torch.from_numpy(img).float()[None, None] / 255.0
     return tensor, img
 

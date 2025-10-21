@@ -2,16 +2,18 @@ import cv2
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
-from ASpanFormer.aspanformer import ASpanFormer 
-from config.default import get_cfg_defaults
-from utils.misc import lower_config
-import demo_utils 
+from models.matching import Matching
 
 # ---------- Configuration ----------
 MODEL_TYPE = "indoor"       # 'indoor' or 'outdoor'
 RANSAC_THRESH = 3.0          # in pixels; smaller = stricter geometric constraint
 
-#TODO
+MAX_RADIUS = 4
+KEYPOINT_THRESHOLD = 0.005
+MAX_KEYPOINTS= 1024
+SINKHORN_ITERATIONS = 20
+MATCH_THRESHOLD = 0.2
+
 RESIZE = True            # Whether to resize images
 RESIZE_TARGET = (640, 480)  # Target size for resizing (width, height)
 KEEP_ASPECT = True       # Whether to keep aspect ratio when resizing
@@ -22,9 +24,9 @@ def load_image(path: str):
     img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
     if img is None:
         raise FileNotFoundError(f"Could not load image: {path}")
-    #TODO resize, for now we use demo_utils
-    img = demo_utils.resize(img,1024)
-    tensor = torch.from_numpy(img/255.)[None,None].float()
+    if RESIZE:
+        img = resize_image(img, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
+    tensor = torch.from_numpy(img/255.0).float()[None, None]
     return tensor, img
 
 def resize_image(img, target_size=(640, 480), keep_aspect=False):
@@ -49,30 +51,39 @@ def resize_image(img, target_size=(640, 480), keep_aspect=False):
     else:
         return cv2.resize(img, target_size, interpolation=cv2.INTER_AREA)
 
-def match_with_aspanformer(img1_tensor, img2_tensor, model_type=MODEL_TYPE):
-    """Run ASpanFormer feature matching."""
+def match_with_superglue(img1_tensor, img2_tensor, model_type=MODEL_TYPE):
+    """Run SuperGlue feature matching using Kornia."""
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    config = get_cfg_defaults()
-    config.merge_from_file(f'ASpanFormer/config/aspan/{model_type}/aspan_test.py')
-    _config = lower_config(config)
-    matcher = ASpanFormer(config=_config['aspan'])
-    state_dict = torch.load(f'ASpanFormer/weights/{model_type}.ckpt', map_location='cpu')['state_dict']
-    matcher.load_state_dict(state_dict,strict=False)
-    matcher.eval().to(device)
+    config = {
+        'superpoint': {
+            'nms_radius': MAX_RADIUS,
+            'keypoint_threshold': KEYPOINT_THRESHOLD,
+            'max_keypoints': MAX_KEYPOINTS
+        },
+        'superglue': {
+            'weights': model_type,
+            'sinkhorn_iterations': SINKHORN_ITERATIONS,
+            'match_threshold': MATCH_THRESHOLD,
+        }
+    }
+    matching = Matching(config).eval().to(device)
 
-    batch = {
-    "image0": img1_tensor.to(device),
-    "image1": img2_tensor.to(device),
-}
-    with torch.inference_mode():
-        matcher(batch,online_resize=True)
+    img1 = img1_tensor.to(device)
+    img2 = img2_tensor.to(device)
 
-    mkpts0 = batch["mkpts0_f"].cpu().numpy()
-    mkpts1 = batch["mkpts1_f"].cpu().numpy()
-    confidence = batch["mconf"].cpu().numpy()
+    pred = matching({'image0': img1, 'image1': img2})
+    pred = {k: v[0].cpu().detach().numpy() for k, v in pred.items()}
+    kpts0, kpts1 = pred['keypoints0'], pred['keypoints1']
+    matches, conf = pred['matches0'], pred['matching_scores0']
+
+    # Keep the matching keypoints.
+    valid = matches > -1
+    mkpts0 = kpts0[valid]
+    mkpts1 = kpts1[matches[valid]]
+    mconf = conf[valid]
 
     print(f"Matched keypoints: {len(mkpts0)}")
-    return mkpts0, mkpts1, confidence
+    return mkpts0, mkpts1, mconf
 
 def estimate_homography(mkpts0, mkpts1):
     """Estimate homography with RANSAC and compute inlier ratio."""
@@ -101,11 +112,11 @@ def compute_reprojection_error(H, mkpts0, mkpts1, mask):
     errors = np.linalg.norm(src_proj - dst_in, axis=1)
     return errors.mean()
 
-def draw_aspanformer_matches_with_info(img1, img2, mkpts0, mkpts1, mask=None,
+def draw_superglue_matches_with_info(img1, img2, mkpts0, mkpts1, mask=None,
                                  confidence=None, file1="image1", file2="image2",
                                  prediction=None):
     """
-    Visualize ASpanFormer matches with:
+    Visualize SuperGlue matches with:
     - File names above each image
     - Matches (green=inlier, red=outlier, cyan=confidence)
     - Prediction result below the images
@@ -176,7 +187,7 @@ def draw_aspanformer_matches_with_info(img1, img2, mkpts0, mkpts1, mask=None,
     vis_with_bars = cv2.vconcat([header, vis, footer])
     return vis_with_bars
 
-def show_image(vis, title="ASpanFormer Matches"):
+def show_image(vis, title="SuperGlue Matches"):
     """Display visualization with Matplotlib."""
     plt.figure(figsize=(14, 8))
     plt.imshow(cv2.cvtColor(vis, cv2.COLOR_BGR2RGB))
@@ -190,22 +201,22 @@ def predict_identity(stats, reproj_error):
     - Could combine inlier ratio, mean reprojection error, and mean confidence
       into a similarity or verification score.
     """
-    if stats["ratio"] > 0.4 and reproj_error < 5.0:
+    if stats["ratio"] > 0.2 and reproj_error < 5.0:
         return True
-    elif stats["ratio"] > 0.25:
+    elif stats["ratio"] > 0.15:
         return False # uncertain case
     else:
         return False
 
 # ---------- Main Execution ----------
 if __name__ == "__main__":
-    img1_path = "data/fingervein-index-l-005-1.bmp"
-    img2_path = "data/fingervein-index-l-002-1.bmp"
+    img1_path = "data/iris-l-006-1.jpg"
+    img2_path = "data/iris-l-006-2.jpg"
 
     img1_tensor, img1_gray = load_image(img1_path)
     img2_tensor, img2_gray = load_image(img2_path)
 
-    mkpts0, mkpts1, confidence = match_with_aspanformer(img1_tensor, img2_tensor)
+    mkpts0, mkpts1, confidence = match_with_superglue(img1_tensor, img2_tensor)
 
     H, mask, stats = estimate_homography(mkpts0, mkpts1)
 
@@ -218,19 +229,19 @@ if __name__ == "__main__":
         prediction = predict_identity(stats, reproj_error)
         print(f"Identity prediction: {prediction}")
 
-        vis = draw_aspanformer_matches_with_info(
+        vis = draw_superglue_matches_with_info(
             img1_gray, img2_gray, mkpts0, mkpts1, mask=mask,
             confidence=confidence, file1=img1_path, file2=img2_path,
             prediction=prediction
         )
-        title = "ASpanFormer Matches (green=inliers, red=outliers)"
+        title = "SuperGlue Matches (green=inliers, red=outliers)"
     else:
         print("Homography estimation failed or not enough matches.")
         prediction = False
-        vis = draw_aspanformer_matches_with_info(
+        vis = draw_superglue_matches_with_info(
             img1_gray, img2_gray, mkpts0, mkpts1,
             confidence=confidence, file1=img1_path, file2=img2_path, prediction=prediction
         )
-        title = "ASpanFormer Matches (cyan=matches, no valid homography)"
+        title = "SuperGlue Matches (cyan=matches, no valid homography)"
 
     show_image(vis, title)
