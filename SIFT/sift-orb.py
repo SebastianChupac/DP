@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # ---------- Configuration ----------
-METHOD = "SIFT"            # choose: "SIFT" or "ORB"
+METHOD = "ORB"            # choose: "SIFT" or "ORB"
 LOWE_RATIO = 0.75         # Lowe's ratio test threshold - heigher allows more matches into "good matches"
 RANSAC_THRESH = 5.0       # RANSAC reprojection threshold (in pixels) - lower means stricter inlier/outlier criteria
 
@@ -23,7 +23,7 @@ FLANN_LSH_KEY_SIZE = 12       # Key size (typically 10-20)
 FLANN_LSH_MULTI_PROBE_LEVEL = 1  # Multi-probe level (typically 1-2)
 
 # Prediction thresholds (PLACEHOLDER)
-RATIO_THRESHOLD = 0.3       # Minimum inlier ratio to predict "same person"
+RATIO_THRESHOLD = 0.45       # Minimum inlier ratio to predict "same person"
 
 RESIZE = True            # Whether to resize images
 RESIZE_TARGET = (640, 480)  # Target size for resizing (width, height)
@@ -37,6 +37,7 @@ def load_image(path: str):
         raise FileNotFoundError(f"Could not load image: {path}")
     if RESIZE:
         img = resize_image(img, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
+        print(f"Resized image shape: {img.shape}, dtype: {img.dtype}")
     return img
 
 def resize_image(img, target_size=(640, 480), keep_aspect=False):
@@ -140,7 +141,7 @@ def estimate_homography(kps1, kps2, matches):
 
 
 def draw_matches_with_info(img1, img2, kps1, kps2, matches, mask=None, 
-                          file1="image1", file2="image2", prediction=None):
+                          file1="image1", file2="image2", prediction=None, gt=None):
     """Visualize matches with file names and prediction result."""
     # Convert grayscale to BGR for colored text if needed
     if len(img1.shape) == 2:
@@ -159,11 +160,11 @@ def draw_matches_with_info(img1, img2, kps1, kps2, matches, mask=None,
     thickness = 2
     header_height = 40
     footer_height = 40
+    vis_width = max(1000, img1_display.shape[1] + img2_display.shape[1])
 
         # --- Concatenate images horizontally ---
-    H1, W1 = img1_display.shape[:2]
     vis = cv2.hconcat([img1_display, img2_display])
-    H_vis, W_vis = vis.shape[:2]
+    _, W_imgs = vis.shape[:2]
     
     
     # Draw matches
@@ -186,27 +187,33 @@ def draw_matches_with_info(img1, img2, kps1, kps2, matches, mask=None,
                               flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
         
     # --- Create header and footer bars ---
-    header = np.full((header_height, W_vis, 3), 230, dtype=np.uint8)  # light gray
-    footer = np.full((footer_height, W_vis, 3), 30, dtype=np.uint8)   # dark gray / black
+    header = np.full((header_height, vis_width, 3), 230, dtype=np.uint8)  # light gray
+    footer = np.full((footer_height, vis_width, 3), 30, dtype=np.uint8)   # dark gray / black
 
-    # --- Add filenames above each image ---
+    # --- Pad and center images ---
+    if W_imgs < vis_width:
+        pad_w = (vis_width - W_imgs) // 2
+        vis = cv2.copyMakeBorder(vis, 0, 0, pad_w, vis_width - W_imgs - pad_w, cv2.BORDER_CONSTANT, value=(0, 0, 0))
+
+
+    # --- Add two filenames to header ---
     text_y = int(header_height * 0.75)
-    cv2.putText(header, file1, (int(W1 * 0.25) - 60, text_y),
+    cv2.putText(header, file1, (5, text_y),
                 font, font_scale, (0, 0, 0), thickness)
-    cv2.putText(header, file2, (int(W1 + W1 * 0.25) - 60, text_y),
+    cv2.putText(header, file2, (int(vis_width * 0.5 + 5), text_y),
                 font, font_scale, (0, 0, 0), thickness)
     
     # Add prediction result at the bottom
     if prediction is not None:
         pred_text = f"Prediction - Same Person: {prediction}"
-        pred_color = (0, 255, 0) if prediction else (0, 0, 255)  # Green for True, Red for False
+        pred_color = (0, 255, 0) if prediction == gt else (0, 0, 255)  # Green for correct, Red for incorrect
         
         # Add background for text
         #cv2.rectangle(vis, (0, h-40), (w, h), (0, 0, 0), -1)
         
         # Add prediction text
         text_size = cv2.getTextSize(pred_text, font, font_scale, thickness)[0]
-        text_x = (W_vis - text_size[0]) // 2
+        text_x = (vis_width - text_size[0]) // 2
         cv2.putText(footer, pred_text, (text_x, footer_height - 10), font, font_scale, pred_color, thickness)
 
     vis_with_bars = cv2.vconcat([header, vis, footer])
@@ -245,8 +252,9 @@ def show_image(vis, title="Feature Matches"):
 
 # ---------- Main ----------
 if __name__ == "__main__":
-    file1 = "data/hand-001-1.jpg"
-    file2 = "data/hand-001-2.jpg"
+    file1 = "data/face/same/4/004_01_02_041_11_crop_128.png"
+    file2 = "data/face/same/4/004_01_02_051_16_crop_128.png"
+    gt = False  # Ground truth: same person or not
 
     img1 = load_image(file1)
     img2 = load_image(file2)
@@ -258,7 +266,11 @@ if __name__ == "__main__":
     kps2, des2 = compute_features(img2)
     print(f"{METHOD}: {len(kps1)} keypoints in img1, {len(kps2)} in img2")
 
-    good_matches = match_features(des1, des2)
+    if des1 is None or des2 is None or len(des1) < 2 or len(des2) < 2:
+        print(" Less than 2 keypoints in one of the images. Not enough to match. Skipping.")
+        good_matches = []
+    else:
+        good_matches = match_features(des1, des2)
     print(f"Good matches: {len(good_matches)}")
     if (METHOD.upper() == "ORB"):
         print(f"ORB Matcher: {ORB_MATCHER}, Cross-check: {USE_CROSS_CHECK}")
@@ -283,13 +295,15 @@ if __name__ == "__main__":
         print(f"Prediction - Same Person: {prediction}")
 
         vis = draw_matches_with_info(img1, img2, kps1, kps2, good_matches, mask, 
-                                   file1_name, file2_name, prediction)
-        title = f"{METHOD} Matches (green=inliers, red=outliers) - Same: {prediction}"
+                                   file1_name, file2_name, prediction, gt)
+        title = f"{METHOD} Kpts1: {len(kps1)}, Kpts2: {len(kps2)}, Matches: {len(good_matches)}."
+        title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
     else:
         print("Homography estimation failed or not enough matches.")
         prediction = False
         vis = draw_matches_with_info(img1, img2, kps1, kps2, good_matches, None, 
-                                   file1_name, file2_name, prediction)
-        title = f"{METHOD} Matches (cyan=good matches) - Same: {prediction}"
+                                   file1_name, file2_name, prediction, gt)
+        title = f"{METHOD} NO VALID HOMOGRAPHY FOUND Kpts1: {len(kps1)}, Kpts2: {len(kps2)}, Matches: {len(good_matches)}."
+        title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
 
     show_image(vis, title)

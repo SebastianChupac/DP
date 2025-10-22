@@ -1,3 +1,4 @@
+import os
 import cv2
 import torch
 import numpy as np
@@ -9,7 +10,7 @@ import demo_utils
 
 # ---------- Configuration ----------
 MODEL_TYPE = "indoor"       # 'indoor' or 'outdoor'
-RANSAC_THRESH = 3.0          # in pixels; smaller = stricter geometric constraint
+RANSAC_THRESH = 5.0         #  RANSAC reprojection threshold (in pixels) - lower means stricter inlier/outlier criteria
 
 #TODO
 RESIZE = True            # Whether to resize images
@@ -23,7 +24,8 @@ def load_image(path: str):
     if img is None:
         raise FileNotFoundError(f"Could not load image: {path}")
     #TODO resize, for now we use demo_utils
-    img = demo_utils.resize(img,1024)
+    img = demo_utils.resize(img,512)
+    print(f"Resized image shape: {img.shape}, dtype: {img.dtype}")
     tensor = torch.from_numpy(img/255.)[None,None].float()
     return tensor, img
 
@@ -103,7 +105,7 @@ def compute_reprojection_error(H, mkpts0, mkpts1, mask):
 
 def draw_aspanformer_matches_with_info(img1, img2, mkpts0, mkpts1, mask=None,
                                  confidence=None, file1="image1", file2="image2",
-                                 prediction=None):
+                                 prediction=None, gt=None):
     """
     Visualize ASpanFormer matches with:
     - File names above each image
@@ -128,11 +130,12 @@ def draw_aspanformer_matches_with_info(img1, img2, mkpts0, mkpts1, mask=None,
     thickness = 2
     header_height = 40
     footer_height = 40
+    vis_width = max(1000, img1_display.shape[1] + img2_display.shape[1])
 
     # --- Concatenate images horizontally ---
-    H1, W1 = img1_display.shape[:2]
+    _, W1 = img1_display.shape[:2]
     vis = cv2.hconcat([img1_display, img2_display])
-    H_vis, W_vis = vis.shape[:2]
+    _, W_imgs = vis.shape[:2]
 
     # --- Draw matches ---
     if mask is not None:
@@ -152,22 +155,27 @@ def draw_aspanformer_matches_with_info(img1, img2, mkpts0, mkpts1, mask=None,
             cv2.line(vis, (int(x1), int(y1)), (int(x2) + W1, int(y2)), color, 1)
 
     # --- Create header and footer bars ---
-    header = np.full((header_height, W_vis, 3), 230, dtype=np.uint8)  # light gray
-    footer = np.full((footer_height, W_vis, 3), 30, dtype=np.uint8)   # dark gray / black
+    header = np.full((header_height, vis_width, 3), 230, dtype=np.uint8)  # light gray
+    footer = np.full((footer_height, vis_width, 3), 30, dtype=np.uint8)   # dark gray / black
+
+    # --- Pad and center vis images ---
+    if W_imgs < vis_width:
+        pad_w = (vis_width - W_imgs) // 2
+        vis = cv2.copyMakeBorder(vis, 0, 0, pad_w, vis_width - W_imgs - pad_w, cv2.BORDER_CONSTANT, value=(0, 0, 0))
 
     # --- Add filenames above each image ---
     text_y = int(header_height * 0.75)
-    cv2.putText(header, file1, (int(W1 * 0.25) - 60, text_y),
+    cv2.putText(header, file1, (5, text_y),
                 font, font_scale, (0, 0, 0), thickness)
-    cv2.putText(header, file2, (int(W1 + W1 * 0.25) - 60, text_y),
+    cv2.putText(header, file2, (int(vis_width * 0.5) + 5, text_y),
                 font, font_scale, (0, 0, 0), thickness)
 
     # --- Add prediction result below images ---
     if prediction is not None:
         pred_text = f"Prediction - Same Person: {prediction}"
-        pred_color = (0, 255, 0) if prediction else (0, 0, 255)
+        pred_color = (0, 255, 0) if prediction == gt else (0, 0, 255)
         text_size = cv2.getTextSize(pred_text, font, font_scale, thickness)[0]
-        text_x = (W_vis - text_size[0]) // 2
+        text_x = (vis_width - text_size[0]) // 2
         text_y = int(footer_height * 0.7)
         cv2.putText(footer, pred_text, (text_x, text_y),
                     font, font_scale, pred_color, thickness)
@@ -199,11 +207,15 @@ def predict_identity(stats, reproj_error):
 
 # ---------- Main Execution ----------
 if __name__ == "__main__":
-    img1_path = "data/fingervein-index-l-005-1.bmp"
-    img2_path = "data/fingervein-index-l-002-1.bmp"
+    file1 = "data/face/same/2/002_01_01_041_04_crop_128.png"
+    file2 = "data/face/same/2/002_01_01_041_08_crop_128.png"
+    gt = True  # Ground truth: same person or not
 
-    img1_tensor, img1_gray = load_image(img1_path)
-    img2_tensor, img2_gray = load_image(img2_path)
+    file1_name = os.path.basename(file1)
+    file2_name = os.path.basename(file2)
+
+    img1_tensor, img1_gray = load_image(file1)
+    img2_tensor, img2_gray = load_image(file2)
 
     mkpts0, mkpts1, confidence = match_with_aspanformer(img1_tensor, img2_tensor)
 
@@ -220,17 +232,19 @@ if __name__ == "__main__":
 
         vis = draw_aspanformer_matches_with_info(
             img1_gray, img2_gray, mkpts0, mkpts1, mask=mask,
-            confidence=confidence, file1=img1_path, file2=img2_path,
-            prediction=prediction
+            confidence=confidence, file1=file1_name, file2=file2_name,
+            prediction=prediction, gt=gt
         )
-        title = "ASpanFormer Matches (green=inliers, red=outliers)"
+        title = f"ASpanFormer {MODEL_TYPE}, Matches: {len(mkpts0)}."
+        title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
     else:
         print("Homography estimation failed or not enough matches.")
         prediction = False
         vis = draw_aspanformer_matches_with_info(
             img1_gray, img2_gray, mkpts0, mkpts1,
-            confidence=confidence, file1=img1_path, file2=img2_path, prediction=prediction
+            confidence=confidence, file1=file1_name, file2=file2_name, prediction=prediction, gt=gt
         )
-        title = "ASpanFormer Matches (cyan=matches, no valid homography)"
+        title = f"ASpanFormer {MODEL_TYPE}, NO VALID HOMOGRAPHY FOUND, Matches: {len(mkpts0)}."
+        title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
 
     show_image(vis, title)
