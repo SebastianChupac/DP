@@ -28,6 +28,9 @@ RATIO_THRESHOLD = 0.45       # Minimum inlier ratio to predict "same person"
 RESIZE = True            # Whether to resize images
 RESIZE_TARGET = (640, 480)  # Target size for resizing (width, height)
 KEEP_ASPECT = True       # Whether to keep aspect ratio when resizing
+
+ROOT_DIR = "data"
+OUTPUT_ROOT = "SIFT/results"
 # -----------------------------------
 
 def load_image(path: str):
@@ -250,60 +253,99 @@ def show_image(vis, title="Feature Matches"):
     plt.show()
 
 
+def save_image(vis, save_path, title="SIFT Matches"):
+    """Save visualization with Matplotlib."""
+    plt.figure(figsize=(14, 8))
+    plt.imshow(cv2.cvtColor(vis, cv2.COLOR_BGR2RGB))
+    plt.title(title)
+    plt.axis("off")
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    plt.savefig(save_path, bbox_inches="tight")
+    plt.close()
+
+
 # ---------- Main ----------
 if __name__ == "__main__":
-    file1 = "data/face/same/4/004_01_02_041_11_crop_128.png"
-    file2 = "data/face/same/4/004_01_02_051_16_crop_128.png"
-    gt = False  # Ground truth: same person or not
 
-    img1 = load_image(file1)
-    img2 = load_image(file2)
+    for modality in ["face", "iris", "hand", "fingervein"]:
+        for gt_type in ["same", "different"]:
 
-    file1_name = os.path.basename(file1)
-    file2_name = os.path.basename(file2)
+            gt = True if gt_type == "same" else False
+            base_path = os.path.join(ROOT_DIR, modality, gt_type)
 
-    kps1, des1 = compute_features(img1)
-    kps2, des2 = compute_features(img2)
-    print(f"{METHOD}: {len(kps1)} keypoints in img1, {len(kps2)} in img2")
+            if not os.path.exists(base_path):
+                print(f"Skipping missing folder: {base_path}")
+                continue
 
-    if des1 is None or des2 is None or len(des1) < 2 or len(des2) < 2:
-        print(" Less than 2 keypoints in one of the images. Not enough to match. Skipping.")
-        good_matches = []
-    else:
-        good_matches = match_features(des1, des2)
-    print(f"Good matches: {len(good_matches)}")
-    if (METHOD.upper() == "ORB"):
-        print(f"ORB Matcher: {ORB_MATCHER}, Cross-check: {USE_CROSS_CHECK}")
+            # Each subfolder (1–5) contains an image pair
+            for subfolder in os.listdir(base_path):
+                sub_path = os.path.join(base_path, subfolder)
+                if not os.path.isdir(sub_path):
+                    continue
 
-    H, mask, stats = estimate_homography(kps1, kps2, good_matches)
+                images = [os.path.join(sub_path, f) for f in os.listdir(sub_path) if f.lower().endswith((".png", ".jpg", ".jpeg", ".bmp"))]
 
-    if H is not None:
-        # Compute prediction based on inlier ratio
-        prediction = None
-        inlier_ratio = stats['ratio']
-        print(f"Inliers: {stats['inliers']}  Ratio: {stats['ratio']:.2f}")
+                if len(images) != 2:
+                    print(f"⚠️ Skipping {sub_path}: expected 2 images, found {len(images)}")
+                    continue
 
-        # Compute reprojection error
-        src_pts = np.float32([kps1[m.queryIdx].pt for m in good_matches]).reshape(-1, 1, 2) 
-        dst_pts = np.float32([kps2[m.trainIdx].pt for m in good_matches]).reshape(-1, 1, 2) 
-        err = compute_reprojection_error(H, src_pts, dst_pts, mask) 
-        if err is not None: 
-            print(f"Mean reprojection error (pixels): {err:.2f}")
+                file1, file2 = sorted(images)
+                file1_name = os.path.basename(file1)
+                file2_name = os.path.basename(file2)
 
-        # Make prediction PLACEHOLDER
-        prediction = predict_same_person(inlier_ratio, RATIO_THRESHOLD)
-        print(f"Prediction - Same Person: {prediction}")
+                print(f"Processing {file1_name} vs {file2_name} ({modality}, {gt_type})")
 
-        vis = draw_matches_with_info(img1, img2, kps1, kps2, good_matches, mask, 
-                                   file1_name, file2_name, prediction, gt)
-        title = f"{METHOD} Kpts1: {len(kps1)}, Kpts2: {len(kps2)}, Matches: {len(good_matches)}."
-        title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
-    else:
-        print("Homography estimation failed or not enough matches.")
-        prediction = False
-        vis = draw_matches_with_info(img1, img2, kps1, kps2, good_matches, None, 
-                                   file1_name, file2_name, prediction, gt)
-        title = f"{METHOD} NO VALID HOMOGRAPHY FOUND Kpts1: {len(kps1)}, Kpts2: {len(kps2)}, Matches: {len(good_matches)}."
-        title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
+                # Load images
+                img1 = load_image(file1)
+                img2 = load_image(file2)
 
-    show_image(vis, title)
+
+                kps1, des1 = compute_features(img1)
+                kps2, des2 = compute_features(img2)
+                print(f"{METHOD}: {len(kps1)} keypoints in img1, {len(kps2)} in img2")
+
+                if des1 is None or des2 is None or len(des1) < 2 or len(des2) < 2:
+                    print(" Less than 2 keypoints in one of the images. Not enough to match. Skipping.")
+                    good_matches = []
+                else:
+                    good_matches = match_features(des1, des2)
+                print(f"Good matches: {len(good_matches)}")
+                if (METHOD.upper() == "ORB"):
+                    print(f"ORB Matcher: {ORB_MATCHER}, Cross-check: {USE_CROSS_CHECK}")
+
+                H, mask, stats = estimate_homography(kps1, kps2, good_matches)
+
+                if H is not None:
+                    # Compute prediction based on inlier ratio
+                    prediction = None
+                    inlier_ratio = stats['ratio']
+                    print(f"Inliers: {stats['inliers']}  Ratio: {stats['ratio']:.2f}")
+
+                    # Compute reprojection error
+                    src_pts = np.float32([kps1[m.queryIdx].pt for m in good_matches]).reshape(-1, 1, 2) 
+                    dst_pts = np.float32([kps2[m.trainIdx].pt for m in good_matches]).reshape(-1, 1, 2) 
+                    err = compute_reprojection_error(H, src_pts, dst_pts, mask) 
+                    if err is not None: 
+                        print(f"Mean reprojection error (pixels): {err:.2f}")
+
+                    # Make prediction PLACEHOLDER
+                    prediction = predict_same_person(inlier_ratio, RATIO_THRESHOLD)
+                    print(f"Prediction - Same Person: {prediction}")
+
+                    title = f"{METHOD} Kpts1: {len(kps1)}, Kpts2: {len(kps2)}, Matches: {len(good_matches)}."
+                    title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
+                else:
+                    print("Homography estimation failed or not enough matches.")
+                    prediction = False
+                    title = f"{METHOD} NO VALID HOMOGRAPHY FOUND Kpts1: {len(kps1)}, Kpts2: {len(kps2)}, Matches: {len(good_matches)}."
+                    title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
+                
+                vis = draw_matches_with_info(img1, img2, kps1, kps2, good_matches, mask, 
+                        file1_name, file2_name, prediction, gt)
+                 # Save visualization
+                save_dir = os.path.join(OUTPUT_ROOT, modality, gt_type)
+                save_path = os.path.join(save_dir, f"{file1_name}_vs_{file2_name}.png")
+                save_image(vis, save_path, title)
+
+                print(f" Saved result: {save_path}")
+

@@ -16,6 +16,9 @@ RANSAC_THRESH = 5.0         #  RANSAC reprojection threshold (in pixels) - lower
 RESIZE = True            # Whether to resize images
 RESIZE_TARGET = (640, 480)  # Target size for resizing (width, height)
 KEEP_ASPECT = True       # Whether to keep aspect ratio when resizing
+
+ROOT_DIR = "data"
+OUTPUT_ROOT = "ASpanFormer/results"
 # -----------------------------------
 
 def load_image(path: str):
@@ -192,6 +195,16 @@ def show_image(vis, title="ASpanFormer Matches"):
     plt.axis("off")
     plt.show()
 
+def save_image(vis, save_path, title="LoFTR Matches"):
+    """Save visualization with Matplotlib."""
+    plt.figure(figsize=(14, 8))
+    plt.imshow(cv2.cvtColor(vis, cv2.COLOR_BGR2RGB))
+    plt.title(title)
+    plt.axis("off")
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
+    plt.savefig(save_path, bbox_inches="tight")
+    plt.close()
+
 def predict_identity(stats, reproj_error):
     """
     Placeholder for decision logic:
@@ -207,44 +220,65 @@ def predict_identity(stats, reproj_error):
 
 # ---------- Main Execution ----------
 if __name__ == "__main__":
-    file1 = "data/face/same/2/002_01_01_041_04_crop_128.png"
-    file2 = "data/face/same/2/002_01_01_041_08_crop_128.png"
-    gt = True  # Ground truth: same person or not
+    for modality in ["face", "iris", "hand", "fingervein"]:
+        for gt_type in ["same", "different"]:
 
-    file1_name = os.path.basename(file1)
-    file2_name = os.path.basename(file2)
+            gt = True if gt_type == "same" else False
+            base_path = os.path.join(ROOT_DIR, modality, gt_type)
 
-    img1_tensor, img1_gray = load_image(file1)
-    img2_tensor, img2_gray = load_image(file2)
+            if not os.path.exists(base_path):
+                print(f"Skipping missing folder: {base_path}")
+                continue
 
-    mkpts0, mkpts1, confidence = match_with_aspanformer(img1_tensor, img2_tensor)
+            # Each subfolder (1–5) contains an image pair
+            for subfolder in os.listdir(base_path):
+                sub_path = os.path.join(base_path, subfolder)
+                if not os.path.isdir(sub_path):
+                    continue
 
-    H, mask, stats = estimate_homography(mkpts0, mkpts1)
+                images = [os.path.join(sub_path, f) for f in os.listdir(sub_path) if f.lower().endswith((".png", ".jpg", ".jpeg", ".bmp"))]
 
-    if H is not None:
-        print(f"Homography found: {stats['inliers']} inliers ({stats['ratio']:.2f})")
-        reproj_error = compute_reprojection_error(H, mkpts0, mkpts1, mask)
-        if reproj_error is not None:
-            print(f"Mean reprojection error: {reproj_error:.2f} px")
+                if len(images) != 2:
+                    print(f"⚠️ Skipping {sub_path}: expected 2 images, found {len(images)}")
+                    continue
 
-        prediction = predict_identity(stats, reproj_error)
-        print(f"Identity prediction: {prediction}")
+                file1, file2 = sorted(images)
+                file1_name = os.path.basename(file1)
+                file2_name = os.path.basename(file2)
 
-        vis = draw_aspanformer_matches_with_info(
-            img1_gray, img2_gray, mkpts0, mkpts1, mask=mask,
-            confidence=confidence, file1=file1_name, file2=file2_name,
-            prediction=prediction, gt=gt
-        )
-        title = f"ASpanFormer {MODEL_TYPE}, Matches: {len(mkpts0)}."
-        title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
-    else:
-        print("Homography estimation failed or not enough matches.")
-        prediction = False
-        vis = draw_aspanformer_matches_with_info(
-            img1_gray, img2_gray, mkpts0, mkpts1,
-            confidence=confidence, file1=file1_name, file2=file2_name, prediction=prediction, gt=gt
-        )
-        title = f"ASpanFormer {MODEL_TYPE}, NO VALID HOMOGRAPHY FOUND, Matches: {len(mkpts0)}."
-        title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
+                print(f"Processing {file1_name} vs {file2_name} ({modality}, {gt_type})")
 
-    show_image(vis, title)
+                img1_tensor, img1_gray = load_image(file1)
+                img2_tensor, img2_gray = load_image(file2)
+
+                mkpts0, mkpts1, confidence = match_with_aspanformer(img1_tensor, img2_tensor)
+
+                H, mask, stats = estimate_homography(mkpts0, mkpts1)
+
+                if H is not None:
+                    print(f"Homography found: {stats['inliers']} inliers ({stats['ratio']:.2f})")
+                    reproj_error = compute_reprojection_error(H, mkpts0, mkpts1, mask)
+                    if reproj_error is not None:
+                        print(f"Mean reprojection error: {reproj_error:.2f} px")
+
+                    prediction = predict_identity(stats, reproj_error)
+                    print(f"Identity prediction: {prediction}")
+
+                    title = f"ASpanFormer {MODEL_TYPE}, Matches: {len(mkpts0)}."
+                    title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
+                else:
+                    print("Homography estimation failed or not enough matches.")
+                    prediction = False
+
+                    title = f"ASpanFormer {MODEL_TYPE}, NO VALID HOMOGRAPHY FOUND, Matches: {len(mkpts0)}."
+                    title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
+
+                vis = draw_aspanformer_matches_with_info(img1_gray, img2_gray, mkpts0, mkpts1, mask,
+                        confidence=confidence, file1=file1_name, file2=file2_name,
+                        prediction=prediction, gt=gt)
+                # Save visualization
+                save_dir = os.path.join(OUTPUT_ROOT, modality, gt_type)
+                save_path = os.path.join(save_dir, f"{file1_name}_vs_{file2_name}.png")
+                save_image(vis, save_path, title)
+
+                print(f" Saved result: {save_path}")
