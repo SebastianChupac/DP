@@ -3,6 +3,11 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 
+import sys, os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+import VerificationResult
+
 # ---------- Configuration ----------
 METHOD = "ORB"            # choose: "SIFT" or "ORB"
 LOWE_RATIO = 0.75         # Lowe's ratio test threshold - heigher allows more matches into "good matches"
@@ -39,9 +44,9 @@ def load_image(path: str):
     if img is None:
         raise FileNotFoundError(f"Could not load image: {path}")
     if RESIZE:
-        img = resize_image(img, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
-        print(f"Resized image shape: {img.shape}, dtype: {img.dtype}")
-    return img
+        img_resized = resize_image(img, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
+        print(f"Resized image shape: {img_resized.shape}, dtype: {img_resized.dtype}")
+    return img, img_resized if RESIZE else img
 
 def resize_image(img, target_size=(640, 480), keep_aspect=False):
     """
@@ -267,8 +272,10 @@ def save_image(vis, save_path, title="SIFT Matches"):
 # ---------- Main ----------
 if __name__ == "__main__":
 
-    for modality in ["face", "iris", "hand", "fingervein"]:
-        for gt_type in ["same", "different"]:
+    #for modality in ["face", "iris", "hand", "fingervein"]:
+    for modality in ["face"]:
+        #for gt_type in ["same", "different"]:
+        for gt_type in ["same"]:
 
             gt = True if gt_type == "same" else False
             base_path = os.path.join(ROOT_DIR, modality, gt_type)
@@ -278,7 +285,8 @@ if __name__ == "__main__":
                 continue
 
             # Each subfolder (1–5) contains an image pair
-            for subfolder in os.listdir(base_path):
+            #for subfolder in os.listdir(base_path):
+            for subfolder in ["1"]:
                 sub_path = os.path.join(base_path, subfolder)
                 if not os.path.isdir(sub_path):
                     continue
@@ -296,12 +304,12 @@ if __name__ == "__main__":
                 print(f"Processing {file1_name} vs {file2_name} ({modality}, {gt_type})")
 
                 # Load images
-                img1 = load_image(file1)
-                img2 = load_image(file2)
+                img1, img1_resized = load_image(file1)
+                img2, img2_resized = load_image(file2)
 
 
-                kps1, des1 = compute_features(img1)
-                kps2, des2 = compute_features(img2)
+                kps1, des1 = compute_features(img1_resized)
+                kps2, des2 = compute_features(img2_resized)
                 print(f"{METHOD}: {len(kps1)} keypoints in img1, {len(kps2)} in img2")
 
                 if des1 is None or des2 is None or len(des1) < 2 or len(des2) < 2:
@@ -340,7 +348,7 @@ if __name__ == "__main__":
                     title = f"{METHOD} NO VALID HOMOGRAPHY FOUND Kpts1: {len(kps1)}, Kpts2: {len(kps2)}, Matches: {len(good_matches)}."
                     title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
                 
-                vis = draw_matches_with_info(img1, img2, kps1, kps2, good_matches, mask, 
+                vis = draw_matches_with_info(img1_resized, img2_resized, kps1, kps2, good_matches, mask, 
                         file1_name, file2_name, prediction, gt)
                  # Save visualization
                 save_dir = os.path.join(OUTPUT_ROOT, modality, gt_type)
@@ -348,4 +356,49 @@ if __name__ == "__main__":
                 save_image(vis, save_path, title)
 
                 print(f" Saved result: {save_path}")
+
+                result = VerificationResult.VerificationResult(
+                    method_name=METHOD,
+                    image1=VerificationResult.ImageData(
+                        filename=file1_name, 
+                        original=img1, 
+                        processed=img1_resized,
+                        image_type=VerificationResult.ImageType.GRAYSCALE,
+                        mask=None),
+                    image2=VerificationResult.ImageData(
+                        filename=file2_name,
+                        original=img2,
+                        processed=img2_resized,
+                        image_type=VerificationResult.ImageType.GRAYSCALE,
+                        mask=None),
+                    keypoints1=[VerificationResult.Keypoint(x=kp.pt[0], y=kp.pt[1], size=kp.size,
+                                                           angle=kp.angle, response=kp.response,
+                                                           octave=kp.octave, class_id=kp.class_id,
+                                                            descriptor=des)
+                                for kp, des in zip(kps1, des1)],
+                    keypoints2=[VerificationResult.Keypoint(x=kp.pt[0], y=kp.pt[1], size=kp.size,
+                                                           angle=kp.angle, response=kp.response,
+                                                           octave=kp.octave, class_id=kp.class_id,
+                                                           descriptor=des)
+                                for kp, des in zip(kps2, des2)],
+                    matches=[VerificationResult.Match(kp1_idx=m.queryIdx,
+                                                     kp2_idx=m.trainIdx,
+                                                     distance=m.distance,
+                                                     confidence=None,
+                                                     is_inlier=bool(mask[i]) if mask else None)
+                                for i, m in enumerate(good_matches)],
+                    homography=H,
+                    homography_confidence=inlier_ratio if H is not None else 0.0,#placeholder
+                    inlier_mask=np.array(mask) if mask is not None else None,
+                    is_same_person_pred=prediction,
+                    verification_confidence=inlier_ratio if H is not None else 0.0,#placeholder
+                    ground_truth=gt,
+                    num_matches=len(good_matches),
+                    num_inliers=stats['inliers'] if H is not None else 0,
+                    inlier_ratio=inlier_ratio if H is not None else 0.0,
+                    reprojection_error=err if H is not None else None
+                )
+
+                print(" VerificationResult object created.\n")
+                print(result)
 
