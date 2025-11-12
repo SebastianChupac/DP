@@ -1,9 +1,12 @@
-import os
+import os, sys
 import cv2
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
 from models.matching import Matching
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+import VerificationResult
 
 # ---------- Configuration ----------
 MODEL_TYPE = "indoor"       # 'indoor' or 'outdoor'
@@ -29,10 +32,9 @@ def load_image(path: str):
     if img is None:
         raise FileNotFoundError(f"Could not load image: {path}")
     if RESIZE:
-        img = resize_image(img, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
-        print(f"Resized image shape: {img.shape}, dtype: {img.dtype}")
-    tensor = torch.from_numpy(img/255.0).float()[None, None]
-    return tensor, img
+        img_resized = resize_image(img, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
+        print(f"Resized image shape: {img_resized.shape}, dtype: {img.dtype}")
+    return img, img_resized if RESIZE else img
 
 def resize_image(img, target_size=(640, 480), keep_aspect=False):
     """
@@ -79,6 +81,8 @@ def match_with_superglue(img1_tensor, img2_tensor, model_type=MODEL_TYPE):
     pred = matching({'image0': img1, 'image1': img2})
     pred = {k: v[0].cpu().detach().numpy() for k, v in pred.items()}
     kpts0, kpts1 = pred['keypoints0'], pred['keypoints1']
+    kpts0_conf, kpts1_conf = pred['scores0'], pred['scores1']
+    des1, des2 = pred['descriptors0'], pred['descriptors1']
     matches, conf = pred['matches0'], pred['matching_scores0']
 
     # Keep the matching keypoints.
@@ -88,7 +92,7 @@ def match_with_superglue(img1_tensor, img2_tensor, model_type=MODEL_TYPE):
     mconf = conf[valid]
 
     print(f"Matched keypoints: {len(mkpts0)}")
-    return mkpts0, mkpts1, mconf, kpts0, kpts1
+    return mkpts0, mkpts1, mconf, kpts0, kpts1, des1, des2, matches[valid], kpts0_conf, kpts1_conf
 
 def estimate_homography(mkpts0, mkpts1):
     """Estimate homography with RANSAC and compute inlier ratio."""
@@ -232,7 +236,9 @@ def predict_identity(stats, reproj_error):
 # ---------- Main Execution ----------
 if __name__ == "__main__":
     for modality in ["face", "iris", "hand", "fingervein"]:
+    #for modality in ["face"]:
         for gt_type in ["same", "different"]:
+        #for gt_type in ["same"]:
 
             gt = True if gt_type == "same" else False
             base_path = os.path.join(ROOT_DIR, modality, gt_type)
@@ -243,6 +249,7 @@ if __name__ == "__main__":
 
             # Each subfolder (1–5) contains an image pair
             for subfolder in os.listdir(base_path):
+            #for subfolder in ["1"]:
                 sub_path = os.path.join(base_path, subfolder)
                 if not os.path.isdir(sub_path):
                     continue
@@ -259,16 +266,24 @@ if __name__ == "__main__":
 
                 print(f"Processing {file1_name} vs {file2_name} ({modality}, {gt_type})")
 
-                img1_tensor, img1_gray = load_image(file1)
-                img2_tensor, img2_gray = load_image(file2)
+                img1, img1_resized = load_image(file1)
+                img2, img2_resized = load_image(file2)
 
-                mkpts0, mkpts1, confidence, kpts0, kpts1 = match_with_superglue(img1_tensor, img2_tensor)
+                img1_tensor = tensor = torch.from_numpy(img1_resized/255.0).float()[None, None]
+                img2_tensor = tensor = torch.from_numpy(img2_resized/255.0).float()[None, None]
 
-                H, mask, stats = estimate_homography(mkpts0, mkpts1)
+                mkpts1, mkpts2, confidence, kpts1, kpts2, des1, des2, matches, kpts1_conf, kpts2_conf = match_with_superglue(img1_tensor, img2_tensor)
+
+                des1= des1.T
+                des2= des2.T
+                
+                print(f"Keypoints: {len(kpts1)} keypoints in img1, {len(kpts2)} in img2")
+                H, mask, stats = estimate_homography(mkpts1, mkpts2)
 
                 if H is not None:
+                    inlier_ratio = stats['ratio']
                     print(f"Homography found: {stats['inliers']} inliers ({stats['ratio']:.2f})")
-                    reproj_error = compute_reprojection_error(H, mkpts0, mkpts1, mask)
+                    reproj_error = compute_reprojection_error(H, mkpts1, mkpts2, mask)
                     if reproj_error is not None:
                         print(f"Mean reprojection error: {reproj_error:.2f} px")
 
@@ -276,17 +291,17 @@ if __name__ == "__main__":
                     print(f"Identity prediction: {prediction}")
 
                     
-                    title = f"SuperGlue {MODEL_TYPE} Kpts1: {len(kpts0)}, Kpts2: {len(kpts1)}, Matches: {len(mkpts0)}."
+                    title = f"SuperGlue {MODEL_TYPE} Kpts1: {len(kpts1)}, Kpts2: {len(kpts2)}, Matches: {len(mkpts1)}."
                     title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
                 else:
                     print("Homography estimation failed or not enough matches.")
                     prediction = False
-                    
-                    title = f"SuperGlue {MODEL_TYPE}, NO VALID HOMOGRAPHY FOUND, Kpts1: {len(kpts0)}, Kpts2: {len(kpts1)}, Matches: {len(mkpts0)}."
+
+                    title = f"SuperGlue {MODEL_TYPE}, NO VALID HOMOGRAPHY FOUND, Kpts1: {len(kpts1)}, Kpts2: {len(kpts2)}, Matches: {len(mkpts1)}."
                     title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
                 
                 vis = draw_superglue_matches_with_info(
-                    img1_gray, img2_gray, mkpts0, mkpts1, mask=mask,
+                    img1_resized, img2_resized, mkpts1, mkpts2, mask=mask,
                     confidence=confidence, file1=file1_name, file2=file2_name,
                     prediction=prediction, gt=gt
                 )
@@ -297,3 +312,47 @@ if __name__ == "__main__":
                 save_image(vis, save_path, title)
 
                 print(f" Saved result: {save_path}")
+
+                result = VerificationResult.VerificationResult(
+                    method_name=f"SuperGlue_{MODEL_TYPE}",
+                    modality=modality,
+                    image1=VerificationResult.ImageData(
+                        filename=file1_name, 
+                        original=img1, 
+                        processed=img1_resized,
+                        image_type=VerificationResult.ImageType.GRAYSCALE,
+                        mask=None),
+                    image2=VerificationResult.ImageData(
+                        filename=file2_name,
+                        original=img2,
+                        processed=img2_resized,
+                        image_type=VerificationResult.ImageType.GRAYSCALE,
+                        mask=None),
+                    keypoints1= [] if (kpts1 is None or (np.size(kpts1) == 0)) or (des1 is None or np.size(des1) == 0) else
+                                [VerificationResult.Keypoint(x=kp[0], y=kp[1], confidence=kpts1_conf[i],
+                                                           descriptor=des)
+                                for i, (kp, des) in enumerate(zip(kpts1, des1))],
+                    keypoints2= [] if (kpts2 is None or (np.size(kpts2) == 0)) or (des2 is None or np.size(des2) == 0) else
+                                [VerificationResult.Keypoint(x=kp[0], y=kp[1], confidence=kpts2_conf[i],
+                                                           descriptor=des)
+                                for i, (kp, des) in enumerate(zip(kpts2, des2))],
+                    matches=[VerificationResult.Match(kp1_idx=i,
+                                                    kp2_idx=m,
+                                                    distance=0.0,  # SuperGlue does not provide distance
+                                                    confidence=confidence[i] if confidence is not None else None,
+                                                    is_inlier=bool(mask[i]) if mask is not None else None)
+                                for i, m in enumerate(matches)],
+                    homography=H,
+                    homography_confidence=inlier_ratio if H is not None else 0.0,#placeholder
+                    inlier_mask=np.array(mask) if mask is not None else None,
+                    is_same_person_pred=prediction,
+                    verification_confidence=inlier_ratio if H is not None else 0.0,#placeholder
+                    ground_truth=gt,
+                    num_matches=len(matches),
+                    num_inliers=stats['inliers'] if H is not None else 0,
+                    inlier_ratio=inlier_ratio if H is not None else 0.0,
+                    reprojection_error=reproj_error if H is not None else None
+                )
+
+                print(" VerificationResult object created.\n")
+                print(result)

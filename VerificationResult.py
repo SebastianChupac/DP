@@ -32,6 +32,7 @@ class Keypoint:
     """Unified keypoint representation"""
     x: float
     y: float
+    confidence: Optional[float] = None
     size: Optional[float] = None
     angle: Optional[float] = None
     response: Optional[float] = None
@@ -95,6 +96,7 @@ class VerificationResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     timestamp: float = field(default_factory=lambda: time.time())
+    modality: Optional[str] = None # e.g., "face", "iris", etc.
     
     def __post_init__(self):
         self.num_matches = len(self.matches)
@@ -112,6 +114,8 @@ class VerificationResult:
         
         # Image information
         lines.append("--- Images ---")
+        lines.append(f"Modality: {self.modality or 'N/A'}")
+        lines.append(f"Image type: {self.image1.image_type.value}")
         lines.append(f"Image 1: {self._format_image_data(self.image1)}")
         lines.append(f"Image 2: {self._format_image_data(self.image2)}")
         lines.append("")

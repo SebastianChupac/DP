@@ -1,11 +1,9 @@
 import cv2
-import os
+import os, sys
 import numpy as np
 import matplotlib.pyplot as plt
 
-import sys, os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-
 import VerificationResult
 
 # ---------- Configuration ----------
@@ -131,13 +129,13 @@ def match_features(des1, des2, method=METHOD, ratio=LOWE_RATIO):
     return good
 
 
-def estimate_homography(kps1, kps2, matches):
+def estimate_homography(kpts1, kpts2, matches):
     """Estimate homography using RANSAC and return (H, mask, stats)."""
     if len(matches) < 4:
         return None, None, {"inliers": 0, "ratio": 0}
 
-    src_pts = np.float32([kps1[m.queryIdx].pt for m in matches]).reshape(-1, 1, 2)
-    dst_pts = np.float32([kps2[m.trainIdx].pt for m in matches]).reshape(-1, 1, 2)
+    src_pts = np.float32([kpts1[m.queryIdx].pt for m in matches]).reshape(-1, 1, 2)
+    dst_pts = np.float32([kpts2[m.trainIdx].pt for m in matches]).reshape(-1, 1, 2)
     H, mask = cv2.findHomography(src_pts, dst_pts, cv2.RANSAC, RANSAC_THRESH) # RANSAC determines number of iterations internally
 
     if H is None or mask is None:
@@ -148,7 +146,7 @@ def estimate_homography(kps1, kps2, matches):
     return H, mask.ravel().tolist(), {"inliers": inliers, "ratio": ratio}
 
 
-def draw_matches_with_info(img1, img2, kps1, kps2, matches, mask=None, 
+def draw_matches_with_info(img1, img2, kpts1, kpts2, matches, mask=None, 
                           file1="image1", file2="image2", prediction=None, gt=None):
     """Visualize matches with file names and prediction result."""
     # Convert grayscale to BGR for colored text if needed
@@ -185,12 +183,12 @@ def draw_matches_with_info(img1, img2, kps1, kps2, matches, mask=None,
                           matchesMask=[0 if m else 1 for m in mask],
                           flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
 
-        img_in = cv2.drawMatches(img1_display, kps1, img2_display, kps2, matches, None, **params_in)
-        img_out = cv2.drawMatches(img1_display, kps1, img2_display, kps2, matches, None, **params_out)
+        img_in = cv2.drawMatches(img1_display, kpts1, img2_display, kpts2, matches, None, **params_in)
+        img_out = cv2.drawMatches(img1_display, kpts1, img2_display, kpts2, matches, None, **params_out)
         vis = cv2.addWeighted(img_in, 0.6, img_out, 0.6, 0)
     else:
         # All matches (cyan)
-        vis = cv2.drawMatches(img1_display, kps1, img2_display, kps2, matches, None,
+        vis = cv2.drawMatches(img1_display, kpts1, img2_display, kpts2, matches, None,
                               matchColor=(255, 255, 0),
                               flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
         
@@ -272,10 +270,10 @@ def save_image(vis, save_path, title="SIFT Matches"):
 # ---------- Main ----------
 if __name__ == "__main__":
 
-    #for modality in ["face", "iris", "hand", "fingervein"]:
-    for modality in ["face"]:
-        #for gt_type in ["same", "different"]:
-        for gt_type in ["same"]:
+    for modality in ["face", "iris", "hand", "fingervein"]:
+    #for modality in ["face"]:
+        for gt_type in ["same", "different"]:
+        #for gt_type in ["same"]:
 
             gt = True if gt_type == "same" else False
             base_path = os.path.join(ROOT_DIR, modality, gt_type)
@@ -285,8 +283,8 @@ if __name__ == "__main__":
                 continue
 
             # Each subfolder (1–5) contains an image pair
-            #for subfolder in os.listdir(base_path):
-            for subfolder in ["1"]:
+            for subfolder in os.listdir(base_path):
+            #for subfolder in ["1"]:
                 sub_path = os.path.join(base_path, subfolder)
                 if not os.path.isdir(sub_path):
                     continue
@@ -308,9 +306,9 @@ if __name__ == "__main__":
                 img2, img2_resized = load_image(file2)
 
 
-                kps1, des1 = compute_features(img1_resized)
-                kps2, des2 = compute_features(img2_resized)
-                print(f"{METHOD}: {len(kps1)} keypoints in img1, {len(kps2)} in img2")
+                kpts1, des1 = compute_features(img1_resized)
+                kpts2, des2 = compute_features(img2_resized)
+                print(f"{METHOD}: {len(kpts1)} keypoints in img1, {len(kpts2)} in img2")
 
                 if des1 is None or des2 is None or len(des1) < 2 or len(des2) < 2:
                     print(" Less than 2 keypoints in one of the images. Not enough to match. Skipping.")
@@ -321,7 +319,7 @@ if __name__ == "__main__":
                 if (METHOD.upper() == "ORB"):
                     print(f"ORB Matcher: {ORB_MATCHER}, Cross-check: {USE_CROSS_CHECK}")
 
-                H, mask, stats = estimate_homography(kps1, kps2, good_matches)
+                H, mask, stats = estimate_homography(kpts1, kpts2, good_matches)
 
                 if H is not None:
                     # Compute prediction based on inlier ratio
@@ -330,8 +328,8 @@ if __name__ == "__main__":
                     print(f"Inliers: {stats['inliers']}  Ratio: {stats['ratio']:.2f}")
 
                     # Compute reprojection error
-                    src_pts = np.float32([kps1[m.queryIdx].pt for m in good_matches]).reshape(-1, 1, 2) 
-                    dst_pts = np.float32([kps2[m.trainIdx].pt for m in good_matches]).reshape(-1, 1, 2) 
+                    src_pts = np.float32([kpts1[m.queryIdx].pt for m in good_matches]).reshape(-1, 1, 2) 
+                    dst_pts = np.float32([kpts2[m.trainIdx].pt for m in good_matches]).reshape(-1, 1, 2) 
                     err = compute_reprojection_error(H, src_pts, dst_pts, mask) 
                     if err is not None: 
                         print(f"Mean reprojection error (pixels): {err:.2f}")
@@ -340,15 +338,15 @@ if __name__ == "__main__":
                     prediction = predict_same_person(inlier_ratio, RATIO_THRESHOLD)
                     print(f"Prediction - Same Person: {prediction}")
 
-                    title = f"{METHOD} Kpts1: {len(kps1)}, Kpts2: {len(kps2)}, Matches: {len(good_matches)}."
+                    title = f"{METHOD} Kpts1: {len(kpts1)}, Kpts2: {len(kpts2)}, Matches: {len(good_matches)}."
                     title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
                 else:
                     print("Homography estimation failed or not enough matches.")
                     prediction = False
-                    title = f"{METHOD} NO VALID HOMOGRAPHY FOUND Kpts1: {len(kps1)}, Kpts2: {len(kps2)}, Matches: {len(good_matches)}."
+                    title = f"{METHOD} NO VALID HOMOGRAPHY FOUND Kpts1: {len(kpts1)}, Kpts2: {len(kpts2)}, Matches: {len(good_matches)}."
                     title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
                 
-                vis = draw_matches_with_info(img1_resized, img2_resized, kps1, kps2, good_matches, mask, 
+                vis = draw_matches_with_info(img1_resized, img2_resized, kpts1, kpts2, good_matches, mask, 
                         file1_name, file2_name, prediction, gt)
                  # Save visualization
                 save_dir = os.path.join(OUTPUT_ROOT, modality, gt_type)
@@ -359,6 +357,7 @@ if __name__ == "__main__":
 
                 result = VerificationResult.VerificationResult(
                     method_name=METHOD,
+                    modality=modality,
                     image1=VerificationResult.ImageData(
                         filename=file1_name, 
                         original=img1, 
@@ -371,16 +370,18 @@ if __name__ == "__main__":
                         processed=img2_resized,
                         image_type=VerificationResult.ImageType.GRAYSCALE,
                         mask=None),
-                    keypoints1=[VerificationResult.Keypoint(x=kp.pt[0], y=kp.pt[1], size=kp.size,
+                    keypoints1= [] if (kpts1 is None or (np.size(kpts1) == 0)) or (des1 is None or np.size(des1) == 0) else
+                                [VerificationResult.Keypoint(x=kp.pt[0], y=kp.pt[1], size=kp.size,
                                                            angle=kp.angle, response=kp.response,
                                                            octave=kp.octave, class_id=kp.class_id,
-                                                            descriptor=des)
-                                for kp, des in zip(kps1, des1)],
-                    keypoints2=[VerificationResult.Keypoint(x=kp.pt[0], y=kp.pt[1], size=kp.size,
+                                                           descriptor=des, confidence=None)
+                                for kp, des in zip(kpts1, des1)],
+                    keypoints2= [] if (kpts2 is None or (np.size(kpts2) == 0)) or (des2 is None or np.size(des2) == 0) else
+                                [VerificationResult.Keypoint(x=kp.pt[0], y=kp.pt[1], size=kp.size,
                                                            angle=kp.angle, response=kp.response,
                                                            octave=kp.octave, class_id=kp.class_id,
-                                                           descriptor=des)
-                                for kp, des in zip(kps2, des2)],
+                                                           descriptor=des, confidence=None)
+                                for kp, des in zip(kpts2, des2)],
                     matches=[VerificationResult.Match(kp1_idx=m.queryIdx,
                                                      kp2_idx=m.trainIdx,
                                                      distance=m.distance,

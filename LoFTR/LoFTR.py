@@ -1,9 +1,12 @@
-import os
+import os, sys
 import cv2
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
 import kornia.feature as KF
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+import VerificationResult
 
 # ---------- Configuration ----------
 MODEL_TYPE = "indoor"       # 'indoor' or 'outdoor'
@@ -23,10 +26,9 @@ def load_image(path: str):
     if img is None:
         raise FileNotFoundError(f"Could not load image: {path}")
     if RESIZE:
-        img = resize_image(img, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
+        img_resized = resize_image(img, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
         print(f"Resized image shape: {img.shape}, dtype: {img.dtype}")
-    tensor = torch.from_numpy(img).float()[None, None] / 255.0
-    return tensor, img
+    return img, img_resized if RESIZE else img
 
 def resize_image(img, target_size=(640, 480), keep_aspect=False):
     """
@@ -209,7 +211,9 @@ def predict_identity(stats, reproj_error):
 # ---------- Main Execution ----------
 if __name__ == "__main__":
     for modality in ["face", "iris", "hand", "fingervein"]:
+    #for modality in ["face"]:
         for gt_type in ["same", "different"]:
+        #for gt_type in ["same"]:
 
             gt = True if gt_type == "same" else False
             base_path = os.path.join(ROOT_DIR, modality, gt_type)
@@ -220,6 +224,7 @@ if __name__ == "__main__":
 
             # Each subfolder (1–5) contains an image pair
             for subfolder in os.listdir(base_path):
+            #for subfolder in ["1"]:
                 sub_path = os.path.join(base_path, subfolder)
                 if not os.path.isdir(sub_path):
                     continue
@@ -236,8 +241,11 @@ if __name__ == "__main__":
 
                 print(f"Processing {file1_name} vs {file2_name} ({modality}, {gt_type})")
 
-                img1_tensor, img1_gray = load_image(file1)
-                img2_tensor, img2_gray = load_image(file2)
+                img1, img1_resized = load_image(file1)
+                img2, img2_resized = load_image(file2)
+
+                img1_tensor = torch.from_numpy(img1_resized).float()[None, None] / 255.0
+                img2_tensor = torch.from_numpy(img2_resized).float()[None, None] / 255.0
 
                 mkpts0, mkpts1, confidence = match_with_loftr(img1_tensor, img2_tensor)
 
@@ -245,6 +253,7 @@ if __name__ == "__main__":
 
                 if H is not None:
                     print(f"Homography found: {stats['inliers']} inliers ({stats['ratio']:.2f})")
+                    inlier_ratio = stats['ratio']
                     reproj_error = compute_reprojection_error(H, mkpts0, mkpts1, mask)
                     if reproj_error is not None:
                         print(f"Mean reprojection error: {reproj_error:.2f} px")
@@ -260,7 +269,7 @@ if __name__ == "__main__":
                     title = f"LoFTR {MODEL_TYPE}, NO VALID HOMOGRAPHY FOUND, Matches: {len(mkpts0)}."
                     title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
                 
-                vis = draw_loftr_matches_with_info(img1_gray, img2_gray, mkpts0, mkpts1, mask,
+                vis = draw_loftr_matches_with_info(img1_resized, img2_resized, mkpts0, mkpts1, mask,
                         confidence=confidence, file1=file1_name, file2=file2_name, prediction=prediction, gt=gt)
                 
                 # Save visualization
@@ -269,3 +278,47 @@ if __name__ == "__main__":
                 save_image(vis, save_path, title)
 
                 print(f" Saved result: {save_path}")
+
+                result = VerificationResult.VerificationResult(
+                    method_name=f"LoFTR_{MODEL_TYPE}",
+                    modality=modality,
+                    image1=VerificationResult.ImageData(
+                        filename=file1_name, 
+                        original=img1, 
+                        processed=img1_resized,
+                        image_type=VerificationResult.ImageType.GRAYSCALE,
+                        mask=None),
+                    image2=VerificationResult.ImageData(
+                        filename=file2_name,
+                        original=img2,
+                        processed=img2_resized,
+                        image_type=VerificationResult.ImageType.GRAYSCALE,
+                        mask=None),
+                    keypoints1= [] if (mkpts0 is None or (np.size(mkpts0) == 0)) else
+                                [VerificationResult.Keypoint(x=kp[0], y=kp[1], confidence=None,
+                                                           descriptor=None)
+                                for kp in mkpts0],
+                    keypoints2= [] if (mkpts1 is None or (np.size(mkpts1) == 0)) else
+                                [VerificationResult.Keypoint(x=kp[0], y=kp[1], confidence=None,
+                                                           descriptor=None)
+                                for kp in mkpts1],
+                    matches=[VerificationResult.Match(kp1_idx=i,
+                                                    kp2_idx=i,
+                                                    distance=0.0,  # SuperGlue does not provide distance
+                                                    confidence=confidence[i] if confidence is not None else None,
+                                                    is_inlier=bool(mask[i]) if mask is not None else None)
+                                for i, m in enumerate(mkpts0)],
+                    homography=H,
+                    homography_confidence=inlier_ratio if H is not None else 0.0,#placeholder
+                    inlier_mask=np.array(mask) if mask is not None else None,
+                    is_same_person_pred=prediction,
+                    verification_confidence=inlier_ratio if H is not None else 0.0,#placeholder
+                    ground_truth=gt,
+                    num_matches=len(mkpts0),
+                    num_inliers=stats['inliers'] if H is not None else 0,
+                    inlier_ratio=inlier_ratio if H is not None else 0.0,
+                    reprojection_error=reproj_error if H is not None else None
+                )
+
+                print(" VerificationResult object created.\n")
+                print(result)

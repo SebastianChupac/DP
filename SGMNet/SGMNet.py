@@ -1,4 +1,4 @@
-import os
+import os, sys
 import cv2
 import torch
 import numpy as np
@@ -6,6 +6,9 @@ import matplotlib.pyplot as plt
 import yaml
 
 from components import load_component
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+import VerificationResult
 
 # ---------- Configuration ----------
 #TODO move all to config files, or here
@@ -25,17 +28,18 @@ OUTPUT_ROOT = "SGMNet/results"
 # Download weights from https://drive.google.com/file/d/1Ca0WmKSSt2G6P7m8YAOlSAHEFar_TAWb/view
 
 
-def load_image(path: str):
-    """Load grayscale and color image."""
-    img_g = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-    img_c = cv2.imread(path)
+def load_image(path: str, color: bool = COLOR):
+    """Load grayscale / color image."""
+    if color:
+        img = cv2.imread(path, cv2.IMREAD_COLOR)
+    else:
+        img = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
     if RESIZE:
-        img_g = resize_image(img_g, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
-        img_c = resize_image(img_c, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
-        print(f"Resized image shape: {img_g.shape}, dtype: {img_g.dtype}")
-    if img_g is None or img_c is None:
+        img_resized = resize_image(img, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
+        print(f"Resized image shape: {img_resized.shape}, dtype: {img_resized.dtype}")
+    if img is None:
         raise FileNotFoundError(f"Could not load image: {path}")
-    return img_c, img_g
+    return img, img_resized if RESIZE else img
 
 def resize_image(img, target_size=(640, 480), keep_aspect=False):
     """
@@ -81,10 +85,10 @@ def match_with_sgmnet(img1, img2, config_path=CONFIG_PATH):
         "size2": size2,
     }
     # Run SGMNet matcher
-    corr1, corr2 = matcher.run(data)
+    corr1, corr2, index1, index2 = matcher.run(data)
 
     print(f"Matched keypoints: {len(corr1)}")
-    return corr1, corr2, kpt1, kpt2
+    return corr1, corr2, kpt1, kpt2, index1, index2, desc1, desc2
 
 def estimate_homography(mkpts0, mkpts1):
     """Estimate homography with RANSAC and compute inlier ratio."""
@@ -237,7 +241,9 @@ if __name__ == "__main__":
 
     # Walk through each biometric type
     for modality in ["face", "iris", "hand", "fingervein"]:
+    #for modality in ["face"]:
         for gt_type in ["same", "different"]:
+        #for gt_type in ["same"]:
             gt = True if gt_type == "same" else False
             base_path = os.path.join(ROOT_DIR, modality, gt_type)
 
@@ -247,6 +253,7 @@ if __name__ == "__main__":
 
             # Each subfolder (1–5) contains an image pair
             for subfolder in os.listdir(base_path):
+            #for subfolder in ["1"]:
                 sub_path = os.path.join(base_path, subfolder)
                 if not os.path.isdir(sub_path):
                     continue
@@ -262,21 +269,18 @@ if __name__ == "__main__":
 
                 print(f"Processing {file1_name} vs {file2_name} ({modality}, {gt_type})")
 
-                img1_color, img1_gray = load_image(file1)
-                img2_color, img2_gray = load_image(file2)
-    
+                img1, img1_resized = load_image(file1, color=COLOR)
+                img2, img2_resized = load_image(file2, color=COLOR)
 
-                if COLOR:
-                    mkpts0, mkpts1, kpt1, kpt2 = match_with_sgmnet(img1_color, img2_color, config_path=CONFIG_PATH)
-                else:
-                    mkpts0, mkpts1, kpt1, kpt2 = match_with_sgmnet(img1_gray, img2_gray, config_path=CONFIG_PATH)
-
+                mkpts0, mkpts1, kpt1, kpt2, index1, index2, desc1, desc2 = match_with_sgmnet(img1_resized, img2_resized, config_path=CONFIG_PATH)
+                
                 confidence = np.ones(len(mkpts0))
 
                 H, mask, stats = estimate_homography(mkpts0, mkpts1)
 
                 if H is not None:
                     print(f"Homography found: {stats['inliers']} inliers ({stats['ratio']:.2f})")
+                    inlier_ratio = stats['ratio']
                     reproj_error = compute_reprojection_error(H, mkpts0, mkpts1, mask)
                     if reproj_error is not None:
                         print(f"Mean reprojection error: {reproj_error:.2f} px")
@@ -293,7 +297,7 @@ if __name__ == "__main__":
                     title = f"Extractor:  {extractor_name} Matcher: {matcher_name}. NO WALID HOMOGRAPHY FOUND, Kpts1: {len(kpt1)}, Kpts2: {len(kpt2)}, Matches: {len(mkpts0)}."
                     title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
 
-                vis = draw_sgmnet_matches_with_info(img1_gray, img2_gray, mkpts0, mkpts1, mask,
+                vis = draw_sgmnet_matches_with_info(img1_resized, img2_resized, mkpts0, mkpts1, mask,
                         confidence=confidence, file1=file1_name, file2=file2_name,
                         prediction=prediction, gt=gt)
 
@@ -303,3 +307,47 @@ if __name__ == "__main__":
                 save_image(vis, save_path, title)
 
                 print(f" Saved result: {save_path}")
+
+                result = VerificationResult.VerificationResult(
+                    method_name=f"SGMNet_{extractor_name}_{matcher_name}",
+                    modality=modality,
+                    image1=VerificationResult.ImageData(
+                        filename=file1_name, 
+                        original=img1, 
+                        processed=img1_resized,
+                        image_type=VerificationResult.ImageType.COLOR if COLOR else VerificationResult.ImageType.GRAYSCALE,
+                        mask=None),
+                    image2=VerificationResult.ImageData(
+                        filename=file2_name,
+                        original=img2,
+                        processed=img2_resized,
+                        image_type=VerificationResult.ImageType.COLOR if COLOR else VerificationResult.ImageType.GRAYSCALE,
+                        mask=None),
+                    keypoints1= [] if (kpt1 is None or (np.size(kpt1) == 0)) else
+                                [VerificationResult.Keypoint(x=kp[0], y=kp[1], confidence=kp[2],
+                                                           descriptor=desc1[i] if desc1 is not None else None)
+                                for i, kp in enumerate(kpt1)],
+                    keypoints2= [] if (kpt2 is None or (np.size(kpt2) == 0)) else
+                                [VerificationResult.Keypoint(x=kp[0], y=kp[1], confidence=kp[2],
+                                                           descriptor=desc2[i] if desc2 is not None else None)
+                                for i, kp in enumerate(kpt2)],
+                    matches=[VerificationResult.Match(kp1_idx=idx1,
+                                                    kp2_idx=idx2,
+                                                    distance=0.0,  # does not provide distance
+                                                    confidence=confidence[i] if confidence is not None else None,
+                                                    is_inlier=bool(mask[i]) if mask is not None else None)
+                                for i, (idx1, idx2) in enumerate(zip(index1, index2))],
+                    homography=H,
+                    homography_confidence=inlier_ratio if H is not None else 0.0,#placeholder
+                    inlier_mask=np.array(mask) if mask is not None else None,
+                    is_same_person_pred=prediction,
+                    verification_confidence=inlier_ratio if H is not None else 0.0,#placeholder
+                    ground_truth=gt,
+                    num_matches=len(mkpts0),
+                    num_inliers=stats['inliers'] if H is not None else 0,
+                    inlier_ratio=inlier_ratio if H is not None else 0.0,
+                    reprojection_error=reproj_error if H is not None else None
+                )
+
+                print(" VerificationResult object created.\n")
+                print(result)

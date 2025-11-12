@@ -43,7 +43,8 @@ class GNN_Matcher(object):
         corr1,corr2=test_data['x1'][:,:2][index1.cpu()],test_data['x2'][:,:2][index2.cpu()]
         if len(corr1.shape)==1:
             corr1,corr2=corr1[np.newaxis],corr2[np.newaxis]
-        return corr1,corr2
+        # return indices was not in original code!
+        return corr1,corr2, index1.cpu().numpy(),index2.cpu().numpy()
     
     def match_p(self,p):#p N*M
         score,index=torch.topk(p,k=1,dim=-1)
@@ -77,7 +78,10 @@ class NN_Matcher(object):
         else:
             mask=mask_ratio
         corr1,corr2=corr1[mask],corr2[mask]
-        return corr1,corr2
+        #return indices was not in original code!
+        index1 = np.where(mask)[0]
+        index2 = nn_index1[mask]
+        return corr1,corr2,index1,index2
 
 
 

@@ -1,4 +1,4 @@
-import os
+import os, sys
 import cv2
 import torch
 import numpy as np
@@ -9,12 +9,16 @@ from model import ESPNet, CBR, ESPNet_Encoder, InputProjectionA, BR, DownSampler
 from PIL import Image
 import torchvision.transforms as T
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+import VerificationResult
+
 
 # ---------- Configuration ----------
 #MODEL_TYPE = "indoor"       # 'indoor' or 'outdoor'
 RANSAC_THRESH = 7        #  RANSAC reprojection threshold (in pixels) - lower means stricter inlier/outlier criteria
 MODEL_THRESH = 0.5       # Model's Prediction Threshold (Tau)
 NNDR_THRESH = 0.8   # Nearest Neighbour Distance Ratio (NNDR) threshold
+MATCHER = "Nearest Neighbour"  # Matcher name for result logging #TODO try different matchers
 
 # no resing for now as we want to always resize to 480x480
 #RESIZE = True            # Whether to resize images
@@ -127,7 +131,7 @@ def match_with_deepdetect(orig_img1, orig_img2, img1, img2):
 
     print(f"Total good matches after NNDR: {len(good_matches)}")
     
-    return good_matches, kp1, kp2, nndr_values
+    return good_matches, kp1, kp2, nndr_values, des1, des2
 
 def estimate_homography(mkpts0, mkpts1):
     """Estimate homography with RANSAC and compute inlier ratio."""
@@ -352,7 +356,9 @@ def predict_identity(stats, reproj_error):
 # ---------- Main Execution ----------
 if __name__ == "__main__":
     for modality in ["face", "iris", "hand", "fingervein"]:
+    #for modality in ["face"]:
         for gt_type in ["same", "different"]:
+        #for gt_type in ["same"]:
 
             gt = True if gt_type == "same" else False
             base_path = os.path.join(ROOT_DIR, modality, gt_type)
@@ -363,6 +369,7 @@ if __name__ == "__main__":
 
             # Each subfolder (1–5) contains an image pair
             for subfolder in os.listdir(base_path):
+            #for subfolder in ["1"]:
                 sub_path = os.path.join(base_path, subfolder)
                 if not os.path.isdir(sub_path):
                     continue
@@ -380,10 +387,10 @@ if __name__ == "__main__":
                 print(f"Processing {file1_name} vs {file2_name} ({modality}, {gt_type})")
 
                 # Load both original and resized images
-                orig_img1, img1 = load_image(file1)
-                orig_img2, img2 = load_image(file2)
+                img1, img1_resized = load_image(file1)
+                img2, img2_resized = load_image(file2)
 
-                good_matches, kp1, kp2, nndr_values = match_with_deepdetect(orig_img1, orig_img2, img1, img2)
+                good_matches, kp1, kp2, nndr_values, des1, des2 = match_with_deepdetect(img1, img2, img1_resized, img2_resized)
 
                 pts1 = np.float32([kp1[m.queryIdx].pt for m in good_matches]).reshape(-1,1,2)
                 pts2 = np.float32([kp2[m.trainIdx].pt for m in good_matches]).reshape(-1,1,2)
@@ -392,6 +399,7 @@ if __name__ == "__main__":
 
                 if H is not None:
                     print(f"Homography found: {stats['inliers']} inliers ({stats['ratio']:.2f})")
+                    inlier_ratio = stats['ratio']
                     reproj_error = compute_reprojection_error(H, pts1, pts2, mask)
                     if reproj_error is not None:
                         print(f"Mean reprojection error: {reproj_error:.2f} px")
@@ -407,7 +415,7 @@ if __name__ == "__main__":
                     title = f"DeepDetect , NO VALID HOMOGRAPHY FOUND, Matches: {len(good_matches)}."
                     title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
                 
-                vis = draw_deepdetect_matches_with_info(orig_img1, orig_img2, pts1, pts2, mask,
+                vis = draw_deepdetect_matches_with_info(img1, img2, pts1, pts2, mask,
                     confidence=None, file1=file1_name, file2=file2_name, prediction=prediction, gt=gt)
                 
                 # Save visualization
@@ -416,6 +424,54 @@ if __name__ == "__main__":
                 save_image(vis, save_path, title)
 
                 print(f" Saved result: {save_path}")
+
+                result = VerificationResult.VerificationResult(
+                    method_name=MATCHER,
+                    modality=modality,
+                    image1=VerificationResult.ImageData(
+                        filename=file1_name, 
+                        original=img1, 
+                        processed=img1_resized,
+                        image_type=VerificationResult.ImageType.GRAYSCALE,
+                        mask=None),
+                    image2=VerificationResult.ImageData(
+                        filename=file2_name,
+                        original=img2,
+                        processed=img2_resized,
+                        image_type=VerificationResult.ImageType.GRAYSCALE,
+                        mask=None),
+                    keypoints1= [] if (kp1 is None or (np.size(kp1) == 0)) or (des1 is None or np.size(des1) == 0) else
+                                [VerificationResult.Keypoint(x=kp.pt[0], y=kp.pt[1], size=kp.size,
+                                                           angle=kp.angle, response=kp.response,
+                                                           octave=kp.octave, class_id=kp.class_id,
+                                                           descriptor=des, confidence=None)
+                                for kp, des in zip(kp1, des1)],
+                    keypoints2= [] if (kp2 is None or (np.size(kp2) == 0)) or (des2 is None or np.size(des2) == 0) else
+                                [VerificationResult.Keypoint(x=kp.pt[0], y=kp.pt[1], size=kp.size,
+                                                           angle=kp.angle, response=kp.response,
+                                                           octave=kp.octave, class_id=kp.class_id,
+                                                           descriptor=des, confidence=None)
+                                for kp, des in zip(kp2, des2)],
+                    matches=[VerificationResult.Match(kp1_idx=m.queryIdx,
+                                                     kp2_idx=m.trainIdx,
+                                                     distance=m.distance,
+                                                     confidence=None,
+                                                     is_inlier=bool(mask[i]) if mask else None)
+                                for i, m in enumerate(good_matches)],
+                    homography=H,
+                    homography_confidence=inlier_ratio if H is not None else 0.0,#placeholder
+                    inlier_mask=np.array(mask) if mask is not None else None,
+                    is_same_person_pred=prediction,
+                    verification_confidence=inlier_ratio if H is not None else 0.0,#placeholder
+                    ground_truth=gt,
+                    num_matches=len(good_matches),
+                    num_inliers=stats['inliers'] if H is not None else 0,
+                    inlier_ratio=inlier_ratio if H is not None else 0.0,
+                    reprojection_error=reproj_error if H is not None else None
+                )
+
+                print(" VerificationResult object created.\n")
+                print(result)
             
 
     
