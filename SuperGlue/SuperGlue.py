@@ -7,6 +7,7 @@ from models.matching import Matching
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import VerificationResult
+import Utils
 
 # ---------- Configuration ----------
 MODEL_TYPE = "indoor"       # 'indoor' or 'outdoor'
@@ -269,6 +270,17 @@ if __name__ == "__main__":
                 img1, img1_resized = load_image(file1)
                 img2, img2_resized = load_image(file2)
 
+                image1_mask = None
+                image2_mask = None
+
+                if modality == "iris":
+                    # Create iris masks
+                    image1_mask = Utils.create_iris_mask(img1_resized, exclude_pupil=True)
+                    image2_mask = Utils.create_iris_mask(img2_resized, exclude_pupil=True)
+                    # Apply masks
+                    img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
+                    img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
+
                 img1_tensor = tensor = torch.from_numpy(img1_resized/255.0).float()[None, None]
                 img2_tensor = tensor = torch.from_numpy(img2_resized/255.0).float()[None, None]
 
@@ -321,13 +333,13 @@ if __name__ == "__main__":
                         original=img1, 
                         processed=img1_resized,
                         image_type=VerificationResult.ImageType.GRAYSCALE,
-                        mask=None),
+                        mask=image1_mask),
                     image2=VerificationResult.ImageData(
                         filename=file2_name,
                         original=img2,
                         processed=img2_resized,
                         image_type=VerificationResult.ImageType.GRAYSCALE,
-                        mask=None),
+                        mask=image2_mask),
                     keypoints1= [] if (kpts1 is None or (np.size(kpts1) == 0)) or (des1 is None or np.size(des1) == 0) else
                                 [VerificationResult.Keypoint(x=kp[0], y=kp[1], confidence=kpts1_conf[i],
                                                            descriptor=des)

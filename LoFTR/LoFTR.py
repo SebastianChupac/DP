@@ -7,6 +7,7 @@ import kornia.feature as KF
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import VerificationResult
+import Utils
 
 # ---------- Configuration ----------
 MODEL_TYPE = "indoor"       # 'indoor' or 'outdoor'
@@ -244,10 +245,31 @@ if __name__ == "__main__":
                 img1, img1_resized = load_image(file1)
                 img2, img2_resized = load_image(file2)
 
+                image1_mask = None
+                image2_mask = None
+
+                if modality == "iris":
+                    # Create iris masks
+                    image1_mask = Utils.create_iris_mask(img1_resized, exclude_pupil=True)
+                    image2_mask = Utils.create_iris_mask(img2_resized, exclude_pupil=True)
+                    # Apply masks
+                    img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
+                    img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
+
                 img1_tensor = torch.from_numpy(img1_resized).float()[None, None] / 255.0
                 img2_tensor = torch.from_numpy(img2_resized).float()[None, None] / 255.0
 
                 mkpts0, mkpts1, confidence = match_with_loftr(img1_tensor, img2_tensor)
+
+                # filter matches by confidence threshold - reduces background matches in masked images
+                conf_threshold = 0.9
+                filtered_mkpts0 = np.array([pt for pt, conf in zip(mkpts0, confidence) if conf >= conf_threshold])
+                filtered_mkpts1 = np.array([pt for pt, conf in zip(mkpts1, confidence) if conf >= conf_threshold])
+                filtered_confidence = np.array([conf for conf in confidence if conf >= conf_threshold])
+
+                mkpts0 = filtered_mkpts0
+                mkpts1 = filtered_mkpts1
+                confidence = filtered_confidence
 
                 H, mask, stats = estimate_homography(mkpts0, mkpts1)
 
@@ -287,13 +309,13 @@ if __name__ == "__main__":
                         original=img1, 
                         processed=img1_resized,
                         image_type=VerificationResult.ImageType.GRAYSCALE,
-                        mask=None),
+                        mask=image1_mask),
                     image2=VerificationResult.ImageData(
                         filename=file2_name,
                         original=img2,
                         processed=img2_resized,
                         image_type=VerificationResult.ImageType.GRAYSCALE,
-                        mask=None),
+                        mask=image2_mask),
                     keypoints1= [] if (mkpts0 is None or (np.size(mkpts0) == 0)) else
                                 [VerificationResult.Keypoint(x=kp[0], y=kp[1], confidence=None,
                                                            descriptor=None)
@@ -304,7 +326,7 @@ if __name__ == "__main__":
                                 for kp in mkpts1],
                     matches=[VerificationResult.Match(kp1_idx=i,
                                                     kp2_idx=i,
-                                                    distance=0.0,  # SuperGlue does not provide distance
+                                                    distance=0.0,  # LofFTR does not provide distance
                                                     confidence=confidence[i] if confidence is not None else None,
                                                     is_inlier=bool(mask[i]) if mask is not None else None)
                                 for i, m in enumerate(mkpts0)],

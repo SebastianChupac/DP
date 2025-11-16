@@ -11,6 +11,7 @@ import torchvision.transforms as T
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import VerificationResult
+import Utils
 
 
 # ---------- Configuration ----------
@@ -40,7 +41,7 @@ def load_image(path: str):
     img_resized = cv2.resize(orig_img, RESIZE_TARGET, interpolation=cv2.INTER_CUBIC)
     print(f"Original image shape: {orig_img.shape}, Resized: {img_resized.shape}")
     
-    return orig_img, img_resized
+    return orig_img, img_resized 
 
 
 
@@ -88,25 +89,6 @@ def match_with_deepdetect(orig_img1, orig_img2, img1, img2):
     kp2, des2 = sift.compute(orig_img2, kp2_list)    # Computing SIFT Descriptors for Detected Keypoints
 
     print(f"Image 1: {len(kp1)} keypoints, Image 2: {len(kp2)} keypoints")
-    # img1_kp = cv2.drawKeypoints(orig_img1, kp1, None, (0,242,255), flags=cv2.DRAW_MATCHES_FLAGS_DEFAULT)
-    # img2_kp = cv2.drawKeypoints(orig_img2, kp2, None, (0,242,255), flags=cv2.DRAW_MATCHES_FLAGS_DEFAULT)
-
-    # cv2.imwrite("image_1_DEEPDETECT.png", img1_kp)
-    # cv2.imwrite("image_2_DEEPDETECT.png", img2_kp)
-
-    # img1_kp_rgb = cv2.cvtColor(img1_kp, cv2.COLOR_BGR2RGB)   # Convert BGR (OpenCV default) to RGB for displaying correctly with matplotlib
-    # img2_kp_rgb = cv2.cvtColor(img2_kp, cv2.COLOR_BGR2RGB)
-
-    # plt.figure(figsize=(8, 4))
-    # plt.subplot(1, 2, 1)
-    # plt.imshow(img1_kp_rgb)
-    # plt.title("Image 1 with DeepDetect Keypoints")
-    # plt.axis('off')
-    # plt.subplot(1, 2, 2)
-    # plt.imshow(img2_kp_rgb)
-    # plt.title("Image 2 with DeepDetect Keypoints")
-    # plt.axis('off')
-    # plt.show()
 
     if len(kp1) == 0 or len(kp2) == 0:
         return np.array([]), np.array([]), np.array([]), kp1, kp2
@@ -304,55 +286,6 @@ def predict_identity(stats, reproj_error):
 
 
 
-# # ---------- Main Execution ----------
-# if __name__ == "__main__":
-#     img1_path = 'data/004_01_02_041_11_crop_128.png'
-#     img2_path = 'data/004_01_02_051_16_crop_128.png'
-#     gt = True  # Ground truth: whether images are of the same person
-
-#     file1_name = os.path.basename(img1_path)
-#     file2_name = os.path.basename(img2_path)
-
-#     # Load both original and resized images
-#     orig_img1, img1 = load_image(img1_path)
-#     orig_img2, img2 = load_image(img2_path)
-
-#     good_matches, kp1, kp2, nndr_values = match_with_deepdetect(orig_img1, orig_img2, img1, img2)
-#     matched_img = cv2.drawMatches(orig_img1, kp1, orig_img2, kp2, good_matches, None, matchColor=(0, 255, 0), flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
-
-#     pts1 = np.float32([kp1[m.queryIdx].pt for m in good_matches]).reshape(-1,1,2)
-#     pts2 = np.float32([kp2[m.trainIdx].pt for m in good_matches]).reshape(-1,1,2)
-
-#     #H, mask = cv2.findHomography(pts1, pts2, cv2.RANSAC, ransacReprojThreshold=1.0, maxIters=50000)
-#     #F, mask = cv2.findFundamentalMat(pts1, pts2, cv2.FM_RANSAC, ransacReprojThreshold=1.0)  # Use Fundamental Matrix (Epipolar Geometry) to remove outliers - Works best for wide baseline or non-planar scenes
-    
-#     H, mask, stats = estimate_homography(pts1, pts2)
-    
-#     inlier_matches = [m for i, m in enumerate(good_matches) if mask[i]]
-
-#     if H is not None:
-#         print(f"Homography found: {stats['inliers']} inliers ({stats['ratio']:.2f})")
-#         reproj_error = compute_reprojection_error(H, pts1, pts2, mask)
-#         if reproj_error is not None:
-#             print(f"Mean reprojection error: {reproj_error:.2f} px")
-
-#         prediction = predict_identity(stats, reproj_error)
-#         print(f"Identity prediction: {prediction}")
-
-#         title = f"DeepDetect , Matches: {len(good_matches)}."
-#         title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
-#     else:
-#         print("Homography estimation failed or not enough matches.")
-#         prediction = False
-#         title = f"DeepDetect , NO VALID HOMOGRAPHY FOUND, Matches: {len(good_matches)}."
-#         title += f"\n Inliers: {stats['inliers']}, Ratio: {stats['ratio']:.2f}, GT Same Person: {gt}"
-    
-#     vis = draw_deepdetect_matches_with_info(orig_img1, orig_img2, pts1, pts2, mask,
-#             confidence=None, file1=file1_name, file2=file2_name, prediction=prediction, gt=gt)
-#     show_image(vis, title=title)
-
-
-
 # ---------- Main Execution ----------
 if __name__ == "__main__":
     for modality in ["face", "iris", "hand", "fingervein"]:
@@ -389,6 +322,17 @@ if __name__ == "__main__":
                 # Load both original and resized images
                 img1, img1_resized = load_image(file1)
                 img2, img2_resized = load_image(file2)
+
+                image1_mask = None
+                image2_mask = None
+
+                if modality == "iris":
+                    # Create iris masks
+                    image1_mask = Utils.create_iris_mask(img1_resized, exclude_pupil=True)
+                    image2_mask = Utils.create_iris_mask(img2_resized, exclude_pupil=True)
+                    # Apply masks
+                    img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
+                    img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
 
                 good_matches, kp1, kp2, nndr_values, des1, des2 = match_with_deepdetect(img1, img2, img1_resized, img2_resized)
 

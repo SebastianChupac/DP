@@ -7,8 +7,7 @@ import time
 
 class ImageType(Enum):
     GRAYSCALE = "grayscale"
-    RGB = "rgb"
-    RGBA = "rgba"
+    COLOR = "color"
 
 @dataclass
 class ImageData:

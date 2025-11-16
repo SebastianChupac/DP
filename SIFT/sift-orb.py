@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import VerificationResult
+import Utils
 
 # ---------- Configuration ----------
 METHOD = "ORB"            # choose: "SIFT" or "ORB"
@@ -271,7 +272,7 @@ def save_image(vis, save_path, title="SIFT Matches"):
 if __name__ == "__main__":
 
     for modality in ["face", "iris", "hand", "fingervein"]:
-    #for modality in ["face"]:
+    #for modality in ["iris"]:
         for gt_type in ["same", "different"]:
         #for gt_type in ["same"]:
 
@@ -305,6 +306,16 @@ if __name__ == "__main__":
                 img1, img1_resized = load_image(file1)
                 img2, img2_resized = load_image(file2)
 
+                image1_mask = None
+                image2_mask = None
+
+                if modality == "iris":
+                    # Create iris masks
+                    image1_mask = Utils.create_iris_mask(img1_resized, exclude_pupil=True)
+                    image2_mask = Utils.create_iris_mask(img2_resized, exclude_pupil=True)
+                    # Apply masks
+                    img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
+                    img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
 
                 kpts1, des1 = compute_features(img1_resized)
                 kpts2, des2 = compute_features(img2_resized)
@@ -363,13 +374,13 @@ if __name__ == "__main__":
                         original=img1, 
                         processed=img1_resized,
                         image_type=VerificationResult.ImageType.GRAYSCALE,
-                        mask=None),
+                        mask=image1_mask),
                     image2=VerificationResult.ImageData(
                         filename=file2_name,
                         original=img2,
                         processed=img2_resized,
                         image_type=VerificationResult.ImageType.GRAYSCALE,
-                        mask=None),
+                        mask=image2_mask),
                     keypoints1= [] if (kpts1 is None or (np.size(kpts1) == 0)) or (des1 is None or np.size(des1) == 0) else
                                 [VerificationResult.Keypoint(x=kp.pt[0], y=kp.pt[1], size=kp.size,
                                                            angle=kp.angle, response=kp.response,

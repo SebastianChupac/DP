@@ -64,13 +64,16 @@ def resize_image(img, target_size=(640, 480), keep_aspect=False):
     else:
         return cv2.resize(img, target_size, interpolation=cv2.INTER_AREA)
     
-def create_iris_mask(img_path: str, exclude_pupil: bool = False):
+def create_iris_mask(img: np.ndarray, exclude_pupil: bool = False):
     iris_pipeline = iris.IRISPipeline()
-    img_pixels = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+
+    # Ensure image is in GRAYSCALE
+    if len(img.shape) == 3:
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
     # Run the pipeline
     output = iris_pipeline(
-        iris.IRImage(img_data=img_pixels, image_id="image_id", eye_side="left")
+        iris.IRImage(img_data=img, image_id="image_id", eye_side="left")
     )
 
     # Get segmentation map object
@@ -83,11 +86,11 @@ def create_iris_mask(img_path: str, exclude_pupil: bool = False):
         # Iris only (exclude pupil - class 2)
         iris_probs = preds[:, :, 1]  # Class 1: iris
         pupil_probs = preds[:, :, 2]  # Class 2: pupil
-        iris_mask = ((iris_probs > 0.5) & (pupil_probs <= 0.3)).astype(np.uint8) * 255
+        iris_mask = ((iris_probs > 0.5) & (pupil_probs <= 0.3)).astype(np.uint8)
     else:
         # Iris including pupil
         iris_probs = preds[:, :, 1]
-        iris_mask = (iris_probs > 0.5).astype(np.uint8) * 255
+        iris_mask = (iris_probs > 0.5).astype(np.uint8)
 
     # Clean up the mask
     kernel = np.ones((3, 3), np.uint8)
@@ -99,12 +102,14 @@ def create_iris_mask(img_path: str, exclude_pupil: bool = False):
 # Usage examples:
 if __name__ == "__main__":
     img_path = 'data/iris/same/5/Iris_20220817_125828_Left.bmp'
+
+    img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
     
     # Iris including pupil
-    iris_with_pupil = create_iris_mask(img_path, exclude_pupil=False)
+    iris_with_pupil = create_iris_mask(img, exclude_pupil=False)
     
     # Iris excluding pupil  
-    iris_without_pupil = create_iris_mask(img_path, exclude_pupil=True)
+    iris_without_pupil = create_iris_mask(img, exclude_pupil=True)
     
     # Display results
     plt.figure(figsize=(10, 5))

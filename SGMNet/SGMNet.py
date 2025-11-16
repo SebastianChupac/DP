@@ -9,12 +9,13 @@ from components import load_component
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 import VerificationResult
+import Utils
 
 # ---------- Configuration ----------
 #TODO move all to config files, or here
 RANSAC_THRESH = 3.0          # in pixels; smaller = stricter geometric constraint
 CONFIG_PATH = "SGMNet/configs/sgm_config.yaml"
-COLOR = False                  # Whether to load color images, Super Point works on grayscale, root on color
+COLOR = True                  # Whether to load color images, Super Point works on grayscale, root on color
 # For now, tunable parameters can be set in the config file above
 # Matchers: SGM, SG, NN
 # Extractors: root, sp
@@ -272,6 +273,17 @@ if __name__ == "__main__":
                 img1, img1_resized = load_image(file1, color=COLOR)
                 img2, img2_resized = load_image(file2, color=COLOR)
 
+                image1_mask = None
+                image2_mask = None
+
+                if modality == "iris":
+                    # Create iris masks
+                    image1_mask = Utils.create_iris_mask(img1_resized, exclude_pupil=True)
+                    image2_mask = Utils.create_iris_mask(img2_resized, exclude_pupil=True)
+                    # Apply masks
+                    img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
+                    img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
+
                 mkpts0, mkpts1, kpt1, kpt2, index1, index2, desc1, desc2 = match_with_sgmnet(img1_resized, img2_resized, config_path=CONFIG_PATH)
                 
                 confidence = np.ones(len(mkpts0))
@@ -316,13 +328,13 @@ if __name__ == "__main__":
                         original=img1, 
                         processed=img1_resized,
                         image_type=VerificationResult.ImageType.COLOR if COLOR else VerificationResult.ImageType.GRAYSCALE,
-                        mask=None),
+                        mask=image1_mask),
                     image2=VerificationResult.ImageData(
                         filename=file2_name,
                         original=img2,
                         processed=img2_resized,
                         image_type=VerificationResult.ImageType.COLOR if COLOR else VerificationResult.ImageType.GRAYSCALE,
-                        mask=None),
+                        mask=image2_mask),
                     keypoints1= [] if (kpt1 is None or (np.size(kpt1) == 0)) else
                                 [VerificationResult.Keypoint(x=kp[0], y=kp[1], confidence=kp[2],
                                                            descriptor=desc1[i] if desc1 is not None else None)
