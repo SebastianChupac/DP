@@ -5,3 +5,4 @@ SIFT/results
 LoFTR/results
 DeepDetect/results
 SuperGlue/results
+__pycache__/

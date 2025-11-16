@@ -15,7 +15,7 @@ import Utils
 #TODO move all to config files, or here
 RANSAC_THRESH = 3.0          # in pixels; smaller = stricter geometric constraint
 CONFIG_PATH = "SGMNet/configs/sgm_config.yaml"
-COLOR = True                  # Whether to load color images, Super Point works on grayscale, root on color
+COLOR = False                  # Whether to load color images, Super Point works on grayscale, root on color
 # For now, tunable parameters can be set in the config file above
 # Matchers: SGM, SG, NN
 # Extractors: root, sp
