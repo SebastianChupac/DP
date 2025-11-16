@@ -99,27 +99,73 @@ def create_iris_mask(img: np.ndarray, exclude_pupil: bool = False):
 
     return iris_mask
 
+def create_hand_mask(img):
+    #img = cv2.bilateralFilter(img, 9, 75, 75)
+    ycrcb = cv2.cvtColor(img, cv2.COLOR_BGR2YCrCb)
+    Y, Cr, Cb = cv2.split(ycrcb)
+
+    # Improved skin range
+    lower = np.array([0, 140, 85], dtype=np.uint8)
+    upper = np.array([255, 180, 138], dtype=np.uint8)
+    mask = cv2.inRange(ycrcb, lower, upper)
+
+
+        # optional: clean up noise
+    mask = cv2.GaussianBlur(mask, (5, 5), 0)
+    mask = cv2.medianBlur(mask, 5)
+
+    # remove dark shadows
+    shadow = (Y < 60).astype(np.uint8) * 255
+    mask = cv2.bitwise_and(mask, cv2.bitwise_not(shadow))
+
+    # fill holes (e.g., fingernails)
+    mask = cv2.morphologyEx(mask, cv2.MORPH_CLOSE, np.ones((9, 9), np.uint8))
+
+    # keep only the largest blob (the hand)
+    num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(mask)
+    largest = 1 + np.argmax(stats[1:, cv2.CC_STAT_AREA])
+    mask = (labels == largest).astype(np.uint8) * 255
+
+    return mask
+
+
 # Usage examples:
 if __name__ == "__main__":
-    img_path = 'data/iris/same/5/Iris_20220817_125828_Left.bmp'
+    #img_path = 'data/iris/same/5/Iris_20220817_125828_Left.bmp'
+    img_path1 = 'data/hand/different/5/Hand_0000541.jpg'
+    img_path2 = 'data/hand/different/5/Hand_0000723.jpg'
 
-    img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-    
+    #img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+    img1 = cv2.imread(img_path1)
+    img2 = cv2.imread(img_path2)
+
     # Iris including pupil
-    iris_with_pupil = create_iris_mask(img, exclude_pupil=False)
+    #iris_with_pupil = create_iris_mask(img, exclude_pupil=False)
     
     # Iris excluding pupil  
-    iris_without_pupil = create_iris_mask(img, exclude_pupil=True)
+    #iris_without_pupil = create_iris_mask(img, exclude_pupil=True)
+
+    # Hand mask
+    hand_mask1 = create_hand_mask(img1)
+    hand_mask2 = create_hand_mask(img2)
     
     # Display results
     plt.figure(figsize=(10, 5))
     
-    plt.subplot(1, 2, 1)
-    plt.imshow(iris_with_pupil, cmap='gray')
-    plt.title("Iris with Pupil")
+    # plt.subplot(1, 2, 1)
+    # plt.imshow(iris_with_pupil, cmap='gray')
+    # plt.title("Iris with Pupil")
     
+    # plt.subplot(1, 2, 2)
+    # plt.imshow(iris_without_pupil, cmap='gray')
+    # plt.title("Iris without Pupil")
+
+    plt.subplot(1, 2, 1)
+    plt.imshow(hand_mask1, cmap='gray')
+    plt.title("Hand Mask 1")
+
     plt.subplot(1, 2, 2)
-    plt.imshow(iris_without_pupil, cmap='gray')
-    plt.title("Iris without Pupil")
+    plt.imshow(hand_mask2, cmap='gray')
+    plt.title("Hand Mask 2")
     
     plt.show()
