@@ -22,7 +22,7 @@ NNDR_THRESH = 0.8   # Nearest Neighbour Distance Ratio (NNDR) threshold
 MATCHER = "Nearest Neighbour"  # Matcher name for result logging #TODO try different matchers
 
 # no resing for now as we want to always resize to 480x480
-#RESIZE = True            # Whether to resize images
+RESIZE = True            # Whether to resize images
 RESIZE_TARGET = (320, 320)  # Target size for resizing (width, height)
 # original DeepDetect demo resizes to 480x480
 #KEEP_ASPECT = False       # Whether to keep aspect ratio when resizing
@@ -288,8 +288,8 @@ def predict_identity(stats, reproj_error):
 
 # ---------- Main Execution ----------
 if __name__ == "__main__":
-    for modality in ["face", "iris", "hand", "fingervein"]:
-    #for modality in ["face"]:
+    #for modality in ["face", "iris", "hand", "fingervein"]:
+    for modality in ["hand"]:
         for gt_type in ["same", "different"]:
         #for gt_type in ["same"]:
 
@@ -333,6 +333,16 @@ if __name__ == "__main__":
                     # Apply masks
                     img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
                     img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
+                # Seems like DeepDetect works better without masks for hand
+                elif modality == "hand":
+                    pass
+                    # Already in color and resized
+                    # Create hand masks
+                    #image1_mask = Utils.create_hand_mask(img1_resized)
+                    #image2_mask = Utils.create_hand_mask(img2_resized)
+                    # Apply masks
+                    #img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
+                    #img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
 
                 good_matches, kp1, kp2, nndr_values, des1, des2 = match_with_deepdetect(img1, img2, img1_resized, img2_resized)
 
@@ -377,13 +387,13 @@ if __name__ == "__main__":
                         original=img1, 
                         processed=img1_resized,
                         image_type=VerificationResult.ImageType.GRAYSCALE,
-                        mask=None),
+                        mask=image1_mask),
                     image2=VerificationResult.ImageData(
                         filename=file2_name,
                         original=img2,
                         processed=img2_resized,
                         image_type=VerificationResult.ImageType.GRAYSCALE,
-                        mask=None),
+                        mask=image2_mask),
                     keypoints1= [] if (kp1 is None or (np.size(kp1) == 0)) or (des1 is None or np.size(des1) == 0) else
                                 [VerificationResult.Keypoint(x=kp.pt[0], y=kp.pt[1], size=kp.size,
                                                            angle=kp.angle, response=kp.response,

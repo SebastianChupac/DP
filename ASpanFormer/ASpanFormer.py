@@ -31,7 +31,7 @@ def load_image(path: str):
     if img is None:
         raise FileNotFoundError(f"Could not load image: {path}")
     #TODO resize, for now we use demo_utils
-    img_resized = demo_utils.resize(img,512)
+    img_resized = demo_utils.resize(img, 512)
     print(f"Resized image shape: {img_resized.shape}, dtype: {img_resized.dtype}")
     return img, img_resized
 
@@ -223,8 +223,8 @@ def predict_identity(stats, reproj_error):
 
 # ---------- Main Execution ----------
 if __name__ == "__main__":
-    for modality in ["face", "iris", "hand", "fingervein"]:
-    #for modality in ["face"]:
+    #for modality in ["face", "iris", "hand", "fingervein"]:
+    for modality in ["hand"]:
         for gt_type in ["same", "different"]:
         #for gt_type in ["same"]:
 
@@ -264,6 +264,19 @@ if __name__ == "__main__":
                     # Create iris masks
                     image1_mask = Utils.create_iris_mask(img1_resized, exclude_pupil=True)
                     image2_mask = Utils.create_iris_mask(img2_resized, exclude_pupil=True)
+                    # Apply masks
+                    img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
+                    img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
+                elif modality == "hand":
+                    # Load color images for hand mask creation
+                    img1_color = cv2.imread(file1)
+                    img2_color = cv2.imread(file2)
+                    # resize color images to match resized grayscale images
+                    img1_color_resized = demo_utils.resize(img1_color, 512)
+                    img2_color_resized = demo_utils.resize(img2_color, 512)
+                    # Create hand masks
+                    image1_mask = Utils.create_hand_mask(img1_color_resized)
+                    image2_mask = Utils.create_hand_mask(img2_color_resized)
                     # Apply masks
                     img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
                     img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)

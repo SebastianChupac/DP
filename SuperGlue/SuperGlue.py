@@ -159,7 +159,7 @@ def draw_superglue_matches_with_info(img1, img2, mkpts0, mkpts1, mask=None,
     # --- Draw matches ---
     if mask is not None:
         for (x1, y1), (x2, y2), inlier in zip(mkpts0, mkpts1, mask):
-            color = (0, 255, 0) if inlier else (0, 0, 255)
+            color = (0, 180, 0) if inlier else (0, 0, 180)
             cv2.circle(vis, (int(x1), int(y1)), 3, color, -1)
             cv2.circle(vis, (int(x2) + W1, int(y2)), 3, color, -1)
             cv2.line(vis, (int(x1), int(y1)), (int(x2) + W1, int(y2)), color, 1)
@@ -236,8 +236,8 @@ def predict_identity(stats, reproj_error):
 
 # ---------- Main Execution ----------
 if __name__ == "__main__":
-    for modality in ["face", "iris", "hand", "fingervein"]:
-    #for modality in ["face"]:
+    #for modality in ["face", "iris", "hand", "fingervein"]:
+    for modality in ["hand"]:
         for gt_type in ["same", "different"]:
         #for gt_type in ["same"]:
 
@@ -280,6 +280,21 @@ if __name__ == "__main__":
                     # Apply masks
                     img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
                     img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
+
+                elif modality == "hand":
+                    # Load color images for hand mask creation
+                    img1_color = cv2.imread(file1)
+                    img2_color = cv2.imread(file2)
+                    if RESIZE:
+                        img1_color = resize_image(img1_color, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
+                        img2_color = resize_image(img2_color, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
+                    # Create hand masks
+                    image1_mask = Utils.create_hand_mask(img1_color)
+                    image2_mask = Utils.create_hand_mask(img2_color)
+                    # Apply masks
+                    img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
+                    img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
+
 
                 img1_tensor = tensor = torch.from_numpy(img1_resized/255.0).float()[None, None]
                 img2_tensor = tensor = torch.from_numpy(img2_resized/255.0).float()[None, None]

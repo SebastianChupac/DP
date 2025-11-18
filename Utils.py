@@ -100,7 +100,11 @@ def create_iris_mask(img: np.ndarray, exclude_pupil: bool = False):
     return iris_mask
 
 def create_hand_mask(img):
-    #img = cv2.bilateralFilter(img, 9, 75, 75)
+    # ensure image is in BGR
+    if len(img.shape) == 2:
+        img = cv2.cvtColor(img, cv2.COLOR_GRAY2BGR)
+
+
     ycrcb = cv2.cvtColor(img, cv2.COLOR_BGR2YCrCb)
     Y, Cr, Cb = cv2.split(ycrcb)
 
@@ -124,7 +128,7 @@ def create_hand_mask(img):
     # keep only the largest blob (the hand)
     num_labels, labels, stats, _ = cv2.connectedComponentsWithStats(mask)
     largest = 1 + np.argmax(stats[1:, cv2.CC_STAT_AREA])
-    mask = (labels == largest).astype(np.uint8) * 255
+    mask = (labels == largest).astype(np.uint8)
 
     return mask
 
