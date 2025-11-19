@@ -289,7 +289,7 @@ def predict_identity(stats, reproj_error):
 # ---------- Main Execution ----------
 if __name__ == "__main__":
     #for modality in ["face", "iris", "hand", "fingervein"]:
-    for modality in ["hand"]:
+    for modality in ["face"]:
         for gt_type in ["same", "different"]:
         #for gt_type in ["same"]:
 
@@ -343,6 +343,14 @@ if __name__ == "__main__":
                     # Apply masks
                     #img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
                     #img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
+                elif modality == "face":
+                    # Already in color and resized
+                    # Create face masks
+                    image1_mask = Utils.create_face_mask(img1_resized)
+                    image2_mask = Utils.create_face_mask(img2_resized)
+                    # Apply masks
+                    img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
+                    img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
 
                 good_matches, kp1, kp2, nndr_values, des1, des2 = match_with_deepdetect(img1, img2, img1_resized, img2_resized)
 

@@ -9,6 +9,10 @@ import matplotlib.pyplot as plt
 import os
 from tqdm import tqdm
 import iris
+import mediapipe as mp
+
+from mediapipe.tasks import python
+from mediapipe.tasks.python import vision
 
 # This could be used in the future to prepare image data consistently
 def prepare_image_data(image_path: str, resize_target: Optional[Tuple[int, int]] = None, 
@@ -132,16 +136,83 @@ def create_hand_mask(img):
 
     return mask
 
+def create_face_mask(img):
+
+    # The model provides these class IDs:
+    # 0 - background
+    # 1 - hair
+    # 2 - body-skin
+    # 3 - face-skin
+    # 4 - clothes
+    # 5 - accessories
+
+    base_options = python.BaseOptions(
+        model_asset_path='face_segmentation/selfie_multiclass_256x256.tflite'
+    )
+    options = vision.ImageSegmenterOptions(
+        base_options=base_options,
+        output_category_mask=True
+    )
+
+    # Original image size (for resizing output)
+    orig_h, orig_w = img.shape[:2]
+
+    with vision.ImageSegmenter.create_from_options(options) as segmenter:
+
+        mp_image = mp.Image(
+            image_format=mp.ImageFormat.SRGB,
+            data=img
+        )
+
+        result = segmenter.segment(mp_image)
+        category_mask = result.category_mask.numpy_view()  # H × W with class IDs
+
+        # -------------------------------
+        # Stored separately, but not used directly
+        # -------------------------------
+        background_mask = (category_mask == 0).astype(np.uint8)
+        hair_mask        = (category_mask == 1).astype(np.uint8)
+        body_skin_mask   = (category_mask == 2).astype(np.uint8)
+        face_skin_mask   = (category_mask == 3).astype(np.uint8)
+        clothes_mask     = (category_mask == 4).astype(np.uint8)
+        accessory_mask   = (category_mask == 5).astype(np.uint8)
+
+        # -------------------------------
+        # Combine everything except background into 1 class
+        # -------------------------------
+        final_mask = (category_mask != 0).astype(np.uint8)
+
+        # -------------------------------
+        # Resize to original image size
+        # -------------------------------
+        final_mask = cv2.resize(
+            final_mask,
+            (orig_w, orig_h),
+            interpolation=cv2.INTER_NEAREST
+        )
+
+        return final_mask  # 0/1 binary mask
+
+
+
 
 # Usage examples:
 if __name__ == "__main__":
+    image = cv2.imread('data/face/different/5/009_01_01_200_14_crop_128.png')
+    mask = create_face_mask(image)
+    print(f'Segmentation mask:')
+    plt.figure(figsize=(14, 8))
+    plt.imshow(mask, cmap='gray')
+    plt.title("Segmentation Mask")
+    plt.axis("off")
+    plt.show()
     #img_path = 'data/iris/same/5/Iris_20220817_125828_Left.bmp'
-    img_path1 = 'data/hand/different/5/Hand_0000541.jpg'
-    img_path2 = 'data/hand/different/5/Hand_0000723.jpg'
+    #img_path1 = 'data/hand/different/5/Hand_0000541.jpg'
+    #img_path2 = 'data/hand/different/5/Hand_0000723.jpg'
 
     #img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-    img1 = cv2.imread(img_path1)
-    img2 = cv2.imread(img_path2)
+    #img1 = cv2.imread(img_path1)
+    #img2 = cv2.imread(img_path2)
 
     # Iris including pupil
     #iris_with_pupil = create_iris_mask(img, exclude_pupil=False)
@@ -150,11 +221,11 @@ if __name__ == "__main__":
     #iris_without_pupil = create_iris_mask(img, exclude_pupil=True)
 
     # Hand mask
-    hand_mask1 = create_hand_mask(img1)
-    hand_mask2 = create_hand_mask(img2)
+    #hand_mask1 = create_hand_mask(img1)
+    #hand_mask2 = create_hand_mask(img2)
     
     # Display results
-    plt.figure(figsize=(10, 5))
+    #plt.figure(figsize=(10, 5))
     
     # plt.subplot(1, 2, 1)
     # plt.imshow(iris_with_pupil, cmap='gray')
@@ -164,12 +235,12 @@ if __name__ == "__main__":
     # plt.imshow(iris_without_pupil, cmap='gray')
     # plt.title("Iris without Pupil")
 
-    plt.subplot(1, 2, 1)
-    plt.imshow(hand_mask1, cmap='gray')
-    plt.title("Hand Mask 1")
+    # plt.subplot(1, 2, 1)
+    # plt.imshow(hand_mask1, cmap='gray')
+    # plt.title("Hand Mask 1")
 
-    plt.subplot(1, 2, 2)
-    plt.imshow(hand_mask2, cmap='gray')
-    plt.title("Hand Mask 2")
+    # plt.subplot(1, 2, 2)
+    # plt.imshow(hand_mask2, cmap='gray')
+    # plt.title("Hand Mask 2")
     
-    plt.show()
+    # plt.show()

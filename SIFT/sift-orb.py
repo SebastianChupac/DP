@@ -272,7 +272,7 @@ def save_image(vis, save_path, title="SIFT Matches"):
 if __name__ == "__main__":
 
     #for modality in ["face", "iris", "hand", "fingervein"]:
-    for modality in ["hand"]:
+    for modality in ["face"]:
         for gt_type in ["same", "different"]:
         #for gt_type in ["same"]:
 
@@ -330,6 +330,20 @@ if __name__ == "__main__":
                     # Apply masks
                     img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
                     img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
+                elif modality == "face":
+                    # Load color images for face mask creation
+                    img1_color = cv2.imread(file1)
+                    img2_color = cv2.imread(file2)
+                    if RESIZE:
+                        img1_color = resize_image(img1_color, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
+                        img2_color = resize_image(img2_color, target_size=RESIZE_TARGET, keep_aspect=KEEP_ASPECT)
+                    # Create face masks
+                    image1_mask = Utils.create_face_mask(img1_color)
+                    image2_mask = Utils.create_face_mask(img2_color)
+                    # Apply masks
+                    img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
+                    img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
+
 
                 kpts1, des1 = compute_features(img1_resized)
                 kpts2, des2 = compute_features(img2_resized)

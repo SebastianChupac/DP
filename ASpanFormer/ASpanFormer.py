@@ -224,7 +224,7 @@ def predict_identity(stats, reproj_error):
 # ---------- Main Execution ----------
 if __name__ == "__main__":
     #for modality in ["face", "iris", "hand", "fingervein"]:
-    for modality in ["hand"]:
+    for modality in ["face"]:
         for gt_type in ["same", "different"]:
         #for gt_type in ["same"]:
 
@@ -280,6 +280,18 @@ if __name__ == "__main__":
                     # Apply masks
                     img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
                     img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
+                elif modality == "face":
+                    # Load color images for face mask creation
+                    img1_color = cv2.imread(file1)
+                    img2_color = cv2.imread(file2)
+                    img1_color_resized = demo_utils.resize(img1_color, 512)
+                    img2_color_resized = demo_utils.resize(img2_color, 512)
+                    # Create face masks
+                    image1_mask = Utils.create_face_mask(img1_color_resized)
+                    image2_mask = Utils.create_face_mask(img2_color_resized)
+                    # Apply masks
+                    img1_resized = cv2.bitwise_and(img1_resized, img1_resized, mask=image1_mask)
+                    img2_resized = cv2.bitwise_and(img2_resized, img2_resized, mask=image2_mask)
 
                 img1_tensor = torch.from_numpy(img1_resized/255.)[None,None].float()
                 img2_tensor = torch.from_numpy(img2_resized/255.)[None,None].float()
@@ -287,7 +299,7 @@ if __name__ == "__main__":
                 mkpts0, mkpts1, confidence = match_with_aspanformer(img1_tensor, img2_tensor)
 
                 # filter matches by confidence threshold - reduces background matches in masked images
-                conf_threshold = 0.75
+                conf_threshold = 0.3
                 filtered_mkpts0 = np.array([pt for pt, conf in zip(mkpts0, confidence) if conf >= conf_threshold])
                 filtered_mkpts1 = np.array([pt for pt, conf in zip(mkpts1, confidence) if conf >= conf_threshold])
                 filtered_confidence = np.array([conf for conf in confidence if conf >= conf_threshold])
