@@ -1,0 +1,23 @@
+# Test configuration for indexing - initial test for Multi-PIE face dataset
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+
+random_seed: 42
+
+pair_generation:
+  genuine_per_identity: 2          # Or use max_genuine_pairs
+  #max_genuine_pairs: 100          # Hard limit, set to -1 for maximum possible pairs up to cap
+  impostor_ratio: 1.0
+
+output:
+  csv_path: "bioverify/data/pairs/test001_face_multipie.csv"
+  relative_paths: true
+
+# Just one small dataset for testing
+datasets:
+  - dataset_path: "Face"
+    dataset_name: "Multi-PIE"
+    image_type: "HR_128"  #HR_128 or "LR_4x" or "both"
+    modality: "face"
+    match_constraints:
+      

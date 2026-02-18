@@ -1,0 +1,22 @@
+# Test configuration for indexing - uses smallest iris dataset (MMU)
+# Good for testing the indexing pipeline
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+
+random_seed: 42
+
+pair_generation:
+  genuine_per_identity: 2          # Or use max_genuine_pairs
+  max_genuine_pairs: 100          # Hard limit
+  impostor_ratio: 1.0
+  max_impostor_pairs: 100         # Hard limit
+
+output:
+  csv_path: "test_mmu_iris.csv"
+  relative_paths: true
+
+# Just one small dataset for testing
+datasets:
+  - dataset_path: "Iris/002-MMU-Iris-Database"
+    dataset_name: "MMU-Iris"
+    modality: "iris"

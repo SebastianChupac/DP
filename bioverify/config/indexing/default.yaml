@@ -1,0 +1,31 @@
+# Default configuration for dataset indexing
+# This file shows all available options with their default values
+
+# Path to PublicDataset root directory
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+
+# Random seed for reproducible pair generation
+random_seed: 42
+
+# Pair generation parameters
+pair_generation:
+  genuine_per_identity: 2         # Or use max_genuine_pairs
+  max_genuine_pairs: 100          # Hard limit, set to -1 for maximum possible pairs up to cap
+  impostor_ratio: 1.0             # Ratio of impostor pairs to genuine pairs
+
+# Output configuration
+output:
+  csv_path: "bioverify/data/pairs/default.csv"
+  relative_paths: true  # Save paths relative to public_dataset_root
+
+# Datasets to index
+# Each entry should have: dataset_path, dataset_name, modality
+datasets:
+  - dataset_path: "FingerVein/001-finger-vein/Finger Vein Database" # Example dataset path from public_dataset_root
+    dataset_name: "FingerVein" # Name to use to match with parser
+    modality: "finger" # Modality of the dataset (e.g., "finger", "face", "iris", hand)
+    image_type: "roi" # Important for finger (e.g., "roi", "full", "both") and face datasets (e.g., "HR_128", "LR_4x", "both")
+    modality_type: "vein" # Important for finger datasets (e.g., "vein", "dorsal", "both")
+    match_constraints: # Only match same side/finger...
+      side: True
+      finger: True

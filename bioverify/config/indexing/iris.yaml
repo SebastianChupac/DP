@@ -1,0 +1,34 @@
+# Configuration for indexing iris datasets
+# Example: CASIA-Iris-Thousand, MMU, and AMF datasets
+
+# Path to PublicDataset root directory
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+
+# Random seed for reproducible results
+random_seed: 42
+
+# Pair generation parameters
+pair_generation:
+  genuine_per_identity: 2          # Or use max_genuine_pairs
+  max_genuine_pairs: 100         # Hard limit
+  impostor_ratio: 1.0
+  max_impostor_pairs: 100        # Hard limit
+
+# Output
+output:
+  csv_path: "iris_dataset_index.csv"
+  relative_paths: true
+
+# Datasets to index
+datasets:
+  - dataset_path: "Iris/001-CASIA-Iris-Thousand"
+    dataset_name: "CASIA-Iris-Thousand"
+    modality: "iris"
+  
+  - dataset_path: "Iris/002-MMU-Iris-Database"
+    dataset_name: "MMU-Iris"
+    modality: "iris"
+  
+  - dataset_path: "Iris/003-AMF-Iris-Dataset"
+    dataset_name: "AMF-Iris"
+    modality: "iris"

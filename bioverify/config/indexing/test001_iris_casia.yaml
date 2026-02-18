@@ -1,0 +1,23 @@
+# Test configuration for indexing - initial test for CASIA iris dataset
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+
+random_seed: 42
+
+pair_generation:
+  genuine_per_identity: 5          # Or use max_genuine_pairs
+  max_genuine_pairs: -1          # Hard limit, set to -1 for maximum possible pairs up to cap
+  impostor_ratio: 1
+  #max_impostor_pairs: 100         # no longer used
+
+output:
+  csv_path: "bioverify/data/pairs/test001_iris_casia.csv"
+  relative_paths: true
+
+# Just one small dataset for testing
+datasets:
+  - dataset_path: "Iris/001-CASIA-Iris-Thousand"
+    dataset_name: "CASIA-Iris-Thousand"
+    modality: "iris"
+    match_constraints:
+      side: true
