@@ -85,7 +85,7 @@ def resize_image(
         return cv2.resize(img, target_size, interpolation=cv2.INTER_AREA)
 
 
-def create_iris_mask(img: np.ndarray, exclude_pupil: bool = False) -> np.ndarray:
+def create_iris_mask(img: np.ndarray, exclude_pupil: bool = True) -> np.ndarray:
     """Create segmentation mask for iris region.
     
     Args:

@@ -1,0 +1,43 @@
+# ORB Matcher Configuration
+# Ported from SIFT/sift-orb.py
+
+matcher:
+  name: orb
+  config:
+    # Image preprocessing
+    resize_width: 640
+    resize_height: 480
+    resize_keep_aspect: true
+    
+    # RANSAC parameters
+    ransac_thresh: 5.0
+    ransac_max_iters: 10000
+    min_matches: 4
+    
+    # Masking
+    use_masking: false
+    mask_cache_dir: null
+    
+    # Device
+    device: cpu
+    
+    # ORB detector parameters
+    nfeatures: 1000
+    
+    # Matching strategy: "BF" (BruteForce) or "FLANN"
+    matcher_type: "FLANN"
+    
+    # BruteForce options
+    use_cross_check: false  # Only used when matcher_type="BF"
+    
+    # FLANN-LSH options (only used when matcher_type="FLANN")
+    flann_lsh_table_number: 6
+    flann_lsh_key_size: 12
+    flann_lsh_multi_probe_level: 1
+    flann_checks: 50
+    
+    # Lowe's ratio test (only used when use_cross_check=false)
+    lowe_ratio: 0.75
+    
+    # Prediction threshold
+    ratio_threshold: 0.45

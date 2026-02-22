@@ -6,4 +6,8 @@ LoFTR/results
 DeepDetect/results
 SuperGlue/results
 face_segmentation
+bioverify/matchers/aspanformer_models
+bioverify/matchers/deepdetect_models
+bioverify/matchers/sgmnet_models
+bioverify/matchers/superglue_models
 __pycache__/

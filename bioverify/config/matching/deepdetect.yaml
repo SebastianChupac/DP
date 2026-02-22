@@ -1,0 +1,31 @@
+# DeepDetect Matcher Configuration
+# Ported from DeepDetect/DeepDetect.py
+
+matcher:
+  name: deepdetect
+  config:
+    # Image preprocessing
+    resize_width: 320
+    resize_height: 320
+    resize_keep_aspect: false
+    
+    # RANSAC parameters
+    ransac_thresh: 7
+    min_matches: 4
+    
+    # Masking
+    use_masking: true
+    mask_cache_dir: null
+    
+    # Device
+    device: cuda
+    
+    # CNN model parameters
+    model_threshold: 0.5          # Threshold for CNN keypoint mask prediction (Tau)
+    
+    # FLANN matching parameters
+    nndr_threshold: 0.8           # Nearest Neighbor Distance Ratio (Lowe's ratio test)
+    
+    # Decision thresholds
+    ratio_threshold: 0.3          # Minimum inlier ratio to predict same person
+    max_reprojection_error: 5.0   # Maximum mean reprojection error for same person

@@ -1,0 +1,37 @@
+# ASpanFormer Matcher Configuration
+# Ported from ASpanFormer/ASpanFormer.py
+
+matcher:
+  name: aspanformer
+  config:
+    # Image preprocessing
+    resize_width: 512
+    resize_height: 512
+    resize_keep_aspect: true
+    
+    # RANSAC parameters
+    ransac_thresh: 5.0
+    ransac_max_iters: 10000
+    min_matches: 4
+    
+    # Masking
+    use_masking: true
+    mask_cache_dir: null
+    
+    # Device
+    device: cuda
+    
+    # ASpanFormer model type: 'indoor' or 'outdoor'
+    model_type: indoor
+    
+    # Confidence threshold for filtering matches
+    # ASpanFormer outputs matches with confidence scores
+    # Only matches with confidence >= threshold are kept
+    confidence_threshold: 0.3
+    
+    # Prediction threshold
+    ratio_threshold: 0.4
+    max_reprojection_error: 5.0
+    
+    # Iris masking parameter
+    iris_exclude_pupil: true

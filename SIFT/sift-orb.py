@@ -18,7 +18,7 @@ FLANN_CHECKS = 50
 
 # ORB parameters  
 ORB_N_FEATURES = 1000
-ORB_MATCHER = "BF"     # choose: "BF" (BruteForce) or "FLANN"
+ORB_MATCHER = "FLANN"     # choose: "BF" (BruteForce) or "FLANN"
 USE_CROSS_CHECK = False    # Whether to use cross-check validation (only for BF)
 
 # ORB/FLANN parameters (for when ORB_MATCHER = "FLANN")
@@ -78,7 +78,7 @@ def compute_features(image, method=METHOD):
         extractor = cv2.ORB_create(nfeatures=ORB_N_FEATURES)
     else:
         raise ValueError(f"Unknown method: {method}")
-
+    #TODO mask should probably be passed here instead of applied to image, but for simplicity we apply it before feature extraction
     keypoints, descriptors = extractor.detectAndCompute(image, None)
     return keypoints, descriptors
 
@@ -272,9 +272,9 @@ def save_image(vis, save_path, title="SIFT Matches"):
 if __name__ == "__main__":
 
     #for modality in ["face", "iris", "hand", "fingervein"]:
-    for modality in ["face"]:
-        for gt_type in ["same", "different"]:
-        #for gt_type in ["same"]:
+    for modality in ["iris"]:
+        #for gt_type in ["same", "different"]:
+        for gt_type in ["same"]:
 
             gt = True if gt_type == "same" else False
             base_path = os.path.join(ROOT_DIR, modality, gt_type)
@@ -284,8 +284,8 @@ if __name__ == "__main__":
                 continue
 
             # Each subfolder (1–5) contains an image pair
-            for subfolder in os.listdir(base_path):
-            #for subfolder in ["1"]:
+            #for subfolder in os.listdir(base_path):
+            for subfolder in ["1"]:
                 sub_path = os.path.join(base_path, subfolder)
                 if not os.path.isdir(sub_path):
                     continue
@@ -309,7 +309,7 @@ if __name__ == "__main__":
                 image1_mask = None
                 image2_mask = None
 
-                if modality == "iris":
+                if modality == "irisss":
                     # Create iris masks
                     image1_mask = Utils.create_iris_mask(img1_resized, exclude_pupil=True)
                     image2_mask = Utils.create_iris_mask(img2_resized, exclude_pupil=True)

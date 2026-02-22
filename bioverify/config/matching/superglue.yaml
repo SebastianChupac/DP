@@ -1,0 +1,35 @@
+# SuperGlue Matcher Configuration
+# Ported from SuperGlue/SuperGlue.py
+
+matcher:
+  name: superglue
+  config:
+    # Image preprocessing
+    resize_width: 640
+    resize_height: 480
+    resize_keep_aspect: true
+    
+    # RANSAC parameters
+    ransac_thresh: 5.0
+    ransac_max_iters: 10000
+    min_matches: 4
+    
+    # Masking
+    use_masking: true
+    mask_cache_dir: null
+    
+    # Device
+    device: cuda
+    
+    # SuperPoint parameters
+    nms_radius: 4
+    keypoint_threshold: 0.005
+    max_keypoints: 1024
+    
+    # SuperGlue parameters
+    weights: indoor  # indoor | outdoor
+    sinkhorn_iterations: 20
+    match_threshold: 0.2
+    
+    # Prediction threshold
+    ratio_threshold: 0.45

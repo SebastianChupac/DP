@@ -59,13 +59,74 @@ class Match:
 
 @dataclass
 class VerificationResult:
-    """Main result container for all feature matching methods"""
-    # Method identification
-    method_name: str
+    """Lightweight result for experiment tracking and parameter tuning.
     
-    # Input images
-    image1: ImageData
-    image2: ImageData
+    Stores decision metrics and matcher configuration for batch processing
+    and results aggregation. Does NOT store images or keypoints (to save memory
+    for large experiments).
+    """
+    # Identification
+    method_name: str
+    modality: Optional[str] = None  # e.g., "face", "iris", etc.
+    
+    # Verification decision
+    is_same_person_pred: Optional[bool] = None
+    verification_confidence: float = 0.0
+    ground_truth: Optional[bool] = None
+    is_correct: Optional[bool] = None
+    
+    # Quality metrics
+    num_matches: int = 0
+    num_inliers: int = 0
+    inlier_ratio: float = 0.0
+    reprojection_error: Optional[float] = None
+    homography_confidence: Optional[float] = None
+    
+    # Matcher configuration (for parameter tuning)
+    matcher_params: Dict[str, Any] = field(default_factory=dict)
+    
+    # Metadata and tracking
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    timestamp: float = field(default_factory=lambda: time.time())
+    
+    def __post_init__(self):
+        if self.ground_truth is None or self.is_same_person_pred is None:
+            self.is_correct = None
+        else:
+            self.is_correct = (self.is_same_person_pred == self.ground_truth)
+
+    def __str__(self) -> str:
+        """Concise string representation of verification result."""
+        lines = [
+            f"=== Verification Result: {self.method_name} ===",
+            f"Prediction: {self.is_same_person_pred} (confidence: {self.verification_confidence:.3f})",
+            f"Ground truth: {self.ground_truth}",
+            f"Correct: {'✅ Yes' if self.is_correct else '❌ No'}",
+            f"Matches: {self.num_matches} total, {self.num_inliers} inliers (ratio: {self.inlier_ratio:.3f})",
+        ]
+        if self.reprojection_error is not None:
+            lines.append(f"Reprojection error: {self.reprojection_error:.2f} px")
+        return "\n".join(lines)
+
+    def print_summary(self) -> None:
+        """Print a condensed summary of verification results."""
+        print(str(self))
+
+
+@dataclass
+class VisualizationResult:
+    """Rich result container for visualization and debugging.
+    
+    Stores complete matching artifacts including images, keypoints, descriptors,
+    and matches. Used for visualizing and analyzing single image pairs.
+    """
+    # Identification
+    method_name: str
+    modality: Optional[str] = None
+    
+    # Input images (kept for visualization)
+    image1: ImageData = None
+    image2: ImageData = None
     
     # Keypoints (converted to unified format)
     keypoints1: List[Keypoint] = field(default_factory=list)
@@ -91,32 +152,37 @@ class VerificationResult:
     inlier_ratio: float = 0.0
     reprojection_error: Optional[float] = None
     
+    # Matcher configuration
+    matcher_params: Dict[str, Any] = field(default_factory=dict)
+    
     # Additional method-specific data
     metadata: Dict[str, Any] = field(default_factory=dict)
 
     timestamp: float = field(default_factory=lambda: time.time())
-    modality: Optional[str] = None # e.g., "face", "iris", etc.
-    
     def __post_init__(self):
         self.num_matches = len(self.matches)
-        self.is_correct = (self.is_same_person_pred == self.ground_truth)
+        if self.ground_truth is None or self.is_same_person_pred is None:
+            self.is_correct = None
+        else:
+            self.is_correct = (self.is_same_person_pred == self.ground_truth)
         if self.inlier_mask is not None:
             self.num_inliers = np.sum(self.inlier_mask)
             self.inlier_ratio = self.num_inliers / max(1, self.num_matches)
 
     def __str__(self) -> str:
-        """Custom string representation for clean, readable output"""
+        """Detailed string representation for visualization."""
         lines = []
-        lines.append(f"=== Verification Result: {self.method_name} ===")
+        lines.append(f"=== Visualization Result: {self.method_name} ===")
         lines.append(f"Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(self.timestamp))}")
         lines.append("")
         
         # Image information
         lines.append("--- Images ---")
         lines.append(f"Modality: {self.modality or 'N/A'}")
-        lines.append(f"Image type: {self.image1.image_type.value}")
-        lines.append(f"Image 1: {self._format_image_data(self.image1)}")
-        lines.append(f"Image 2: {self._format_image_data(self.image2)}")
+        if self.image1:
+            lines.append(f"Image type: {self.image1.image_type.value}")
+            lines.append(f"Image 1: {self._format_image_data(self.image1)}")
+            lines.append(f"Image 2: {self._format_image_data(self.image2)}")
         lines.append("")
         
         # Keypoints and matches
@@ -144,7 +210,7 @@ class VerificationResult:
         lines.append(f"Verification confidence: {self.verification_confidence:.3f}")
         lines.append(f"Reprojection error: {self._format_value(self.reprojection_error)}")
         lines.append(f"Ground truth: {self._format_value(self.ground_truth)}")
-        lines.append(f"Correct decision: ✅ Yes" if self.is_correct else "Correct decision: ❌ No")
+        lines.append(f"Correct decision: {'✅ Yes' if self.is_correct else '❌ No'}")
         lines.append("")
         
         # Metadata
@@ -194,10 +260,8 @@ class VerificationResult:
     def _format_metadata_value(self, value) -> str:
         """Format metadata values, handling arrays specially"""
         if hasattr(value, 'shape') and hasattr(value, 'dtype'):
-            # It's a numpy array
             return f"array{value.shape} {value.dtype}"
         elif isinstance(value, (list, tuple, np.ndarray)):
-            # It's a sequence
             if hasattr(value, 'shape'):
                 return f"array{value.shape} {value.dtype}"
             else:
@@ -208,7 +272,7 @@ class VerificationResult:
             return self._format_value(value)
 
     def print_summary(self) -> None:
-        """Print a condensed summary of the most important results"""
+        """Print a condensed summary of visualization results."""
         print(f"{self.method_name} Results:")
         print(f"   Ground Truth: {self.ground_truth}")
         print(f"   Prediction: {self.is_same_person_pred} "

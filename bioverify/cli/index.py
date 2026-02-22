@@ -4,11 +4,13 @@ CLI commands for dataset indexing.
 Provides command-line interface for indexing datasets and generating pair manifests.
 """
 import argparse
+from typing import Optional
 import yaml
 from pathlib import Path
 
 from ..data.indexer import DatasetIndexer
 from ..data.validation import CSVValidator, print_csv_statistics
+from ..matchers.registry import create_matcher
 
 
 def load_config(config_path: str) -> dict:
@@ -23,6 +25,20 @@ def load_config(config_path: str) -> dict:
     with open(config_path, 'r') as f:
         config = yaml.safe_load(f)
     return config
+
+
+def parse_ground_truth(value: str) -> Optional[bool]:
+    """Parse ground truth CLI value into a boolean or None."""
+    if value is None:
+        return None
+    normalized = value.strip().lower()
+    if normalized in {"same", "true", "1", "yes", "y"}:
+        return True
+    if normalized in {"different", "diff", "false", "0", "no", "n"}:
+        return False
+    raise ValueError(
+        "Invalid ground truth value. Use: same|different|true|false|1|0."
+    )
 
 
 def index_datasets_command(args):
@@ -103,6 +119,36 @@ def stats_command(args):
     print_csv_statistics(args.csv, args.base_path)
 
 
+def match_command(args):
+    """Execute a single-pair match using a configured matcher.
+    
+    Args:
+        args: Parsed command-line arguments
+    """
+    config = load_config(args.config)
+    matcher_block = config.get("matcher", {})
+    matcher_name = args.matcher or matcher_block.get("name")
+    if not matcher_name:
+        raise ValueError("Matcher name is required (use --matcher or config.matcher.name)")
+
+    matcher_config = matcher_block.get("config", {})
+    matcher = create_matcher(matcher_name, matcher_config)
+
+    ground_truth = parse_ground_truth(args.ground_truth)
+
+    result = matcher.match(
+        args.image1,
+        args.image2,
+        modality=args.modality,
+        visualize=args.visualize,
+        ground_truth=ground_truth,
+    )
+    if args.full:
+        print(result)
+    else:
+        result.print_summary()
+
+
 def main():
     """Main CLI entry point."""
     parser = argparse.ArgumentParser(
@@ -119,8 +165,13 @@ Examples:
   # Validate existing CSV
   python -m bioverify.cli.index validate --csv dataset_index.csv
 
-  # Show statistics
-  python -m bioverify.cli.index stats --csv dataset_index.csv
+    # Show statistics
+    python -m bioverify.cli.index stats --csv dataset_index.csv
+
+    # Run a matcher on a single pair
+    python -m bioverify.cli.index match \
+        --config config/matching/sift.yaml \
+        --image1 path/to/img1.png --image2 path/to/img2.png
         """
     )
     
@@ -173,6 +224,46 @@ Examples:
         default='C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset',
         help='Base path for resolving relative paths (default: PublicDataset)'
     )
+
+    # Match command
+    match_parser = subparsers.add_parser('match', help='Run matcher on a single pair')
+    match_parser.add_argument(
+        '--config', '-c',
+        required=True,
+        help='Path to matcher YAML configuration file'
+    )
+    match_parser.add_argument(
+        '--matcher', '-m',
+        help='Override matcher name (e.g., sift)'
+    )
+    match_parser.add_argument(
+        '--image1',
+        required=True,
+        help='Path to first image'
+    )
+    match_parser.add_argument(
+        '--image2',
+        required=True,
+        help='Path to second image'
+    )
+    match_parser.add_argument(
+        '--modality',
+        help='Optional modality hint (iris, face, hand, fingervein)'
+    )
+    match_parser.add_argument(
+        '--ground-truth',
+        help='Optional ground truth label: same|different|true|false|1|0'
+    )
+    match_parser.add_argument(
+        '--full',
+        action='store_true',
+        help='Print full VerificationResult instead of summary'
+    )
+    match_parser.add_argument(
+        '--visualize',
+        action='store_true',
+        help='Return VisualizationResult instead of VerificationResult'
+    )
     
     # Parse arguments
     args = parser.parse_args()
@@ -184,6 +275,8 @@ Examples:
         exit(validate_command(args))
     elif args.command == 'stats':
         stats_command(args)
+    elif args.command == 'match':
+        match_command(args)
     else:
         parser.print_help()
 

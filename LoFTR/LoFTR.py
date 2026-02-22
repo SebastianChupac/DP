@@ -212,9 +212,9 @@ def predict_identity(stats, reproj_error):
 # ---------- Main Execution ----------
 if __name__ == "__main__":
     #for modality in ["face", "iris", "hand", "fingervein"]:
-    for modality in ["face"]:
-        for gt_type in ["same", "different"]:
-        #for gt_type in ["same"]:
+    for modality in ["iris"]:
+        #for gt_type in ["same", "different"]:
+        for gt_type in ["same"]:
 
             gt = True if gt_type == "same" else False
             base_path = os.path.join(ROOT_DIR, modality, gt_type)
@@ -224,8 +224,8 @@ if __name__ == "__main__":
                 continue
 
             # Each subfolder (1–5) contains an image pair
-            for subfolder in os.listdir(base_path):
-            #for subfolder in ["1"]:
+            #for subfolder in os.listdir(base_path):
+            for subfolder in ["1"]:
                 sub_path = os.path.join(base_path, subfolder)
                 if not os.path.isdir(sub_path):
                     continue
