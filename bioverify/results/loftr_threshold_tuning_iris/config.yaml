@@ -1,0 +1,22 @@
+base_path: C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset
+batch_size: 1
+dataset: bioverify/data/pairs/test001_iris_mmu.csv
+device: cuda
+experiment:
+  created: '2026-02-25'
+  description: Evaluate LoFTR matcher with different confidence thresholds on iris
+    pairs
+  name: LoFTR Threshold Tuning - Iris
+  purpose: threshold_tuning
+  researcher: null
+filter_dataset: null
+filter_modality: iris
+matchers:
+- config_base: bioverify/config/matching/loftr.yaml
+  config_overrides:
+    use_masking: false
+  name: loftr
+output_dir: bioverify/results/loftr_threshold_tuning_iris
+save_pair_images: false
+save_visualization_results: false
+verbose: true

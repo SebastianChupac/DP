@@ -373,8 +373,8 @@ class DeepDetectMatcher(BaseMatcher):
         Create verification result with DeepDetect-specific decision logic.
         
         Decision logic:
-        - Predict same person if inlier_ratio >= ratio_threshold 
-          AND mean_reprojection_error <= max_reprojection_error
+        - Predict same person if inlier_ratio > ratio_threshold 
+          AND mean_reprojection_error < max_reprojection_error
         """
         # Compute metrics
         inlier_mask = inliers.astype(bool) if inliers is not None else None
@@ -384,8 +384,8 @@ class DeepDetectMatcher(BaseMatcher):
         
         # Decision logic: inlier ratio AND reprojection error thresholds
         is_same_person = False
-        if inlier_ratio >= self.ratio_threshold:
-            if reprojection_error is None or reprojection_error <= self.max_reprojection_error:
+        if inlier_ratio > self.ratio_threshold:
+            if reprojection_error is None or reprojection_error < self.max_reprojection_error:
                 is_same_person = True
         
         confidence = inlier_ratio

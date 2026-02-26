@@ -10,4 +10,5 @@ bioverify/matchers/aspanformer_models
 bioverify/matchers/deepdetect_models
 bioverify/matchers/sgmnet_models
 bioverify/matchers/superglue_models
+bioverify/data/cache
 __pycache__/

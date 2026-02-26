@@ -1,0 +1,37 @@
+# Example Experiment: Threshold Tuning for LoFTR on Iris Data
+# This experiment evaluates a single matcher (LoFTR) on a single dataset (iris)
+# with varying confidence/inlier thresholds to find optimal parameters.
+
+experiment:
+  name: "LoFTR Threshold Tuning - Iris masked"
+  description: "Evaluate LoFTR matcher with different confidence thresholds on iris pairs"
+  purpose: "threshold_tuning"
+  created: "2026-02-25"
+
+# Input pairs
+dataset: "bioverify/data/pairs/test001_iris_mmu.csv"
+base_path: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+filter_modality: "iris"
+
+# Single matcher configuration
+matchers:
+  - name: loftr
+    config_base: "bioverify/config/matching/loftr.yaml"
+    config_overrides:
+      # PERFORMANCE: Disable masking to run experiments 10x faster
+      # Iris masking runs a DL model on each image (very slow without caching)
+      # use_masking: false
+      
+      # To enable masking with caching, use:
+      use_masking: true
+      mask_cache_dir: "bioverify/data/cache/masks"
+
+# Output
+output_dir: "bioverify/results/loftr_threshold_tuning_iris_masked"
+save_visualization_results: true
+save_pair_images: true
+
+# Options
+batch_size: 1
+verbose: true
+device: "cuda"

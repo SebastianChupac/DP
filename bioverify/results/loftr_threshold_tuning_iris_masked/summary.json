@@ -1,0 +1,13 @@
+{
+  "LoFTR_indoor": {
+    "num_pairs": 200,
+    "accuracy": 0.93,
+    "precision": 0.8909090909090909,
+    "recall": 0.98,
+    "genuine_accuracy": 0.98,
+    "impostor_accuracy": 0.88,
+    "num_genuine": 100,
+    "num_impostor": 100,
+    "avg_inlier_ratio": 0.5401138025183397
+  }
+}

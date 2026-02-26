@@ -1,0 +1,41 @@
+# Example Experiment: Multi-Matcher Comparison on Iris Data
+# Compare performance of multiple matchers on the same dataset.
+
+experiment:
+  name: "Matcher Comparison - Iris"
+  description: "Compare SIFT, ORB, and LoFTR on iris pairs to identify best method"
+  purpose: "method_comparison"
+  created: "2026-02-25"
+
+# Input pairs
+dataset: "data/pairs/test001_iris_mmu.csv"
+base_path: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+filter_modality: "iris"
+
+# Multiple matchers
+matchers:
+  - name: sift
+    config_base: "config/matching/sift.yaml"
+    config_overrides:
+      use_masking: false  # Disable for speed (or enable with mask_cache_dir)
+  
+  - name: orb
+    config_base: "config/matching/orb.yaml"
+    config_overrides:
+      use_masking: false
+  
+  - name: loftr
+    config_base: "config/matching/loftr.yaml"
+    config_overrides:
+      use_masking: false
+      device: "cuda"
+
+# Output
+output_dir: "results/matcher_comparison_iris"
+save_visualization_results: false
+save_pair_images: false
+
+# Options
+batch_size: 1
+verbose: true
+device: "cuda"

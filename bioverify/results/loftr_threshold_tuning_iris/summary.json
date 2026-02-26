@@ -1,0 +1,18 @@
+{
+  "LoFTR_indoor": {
+    "total_pairs": 200,
+    "accuracy": 0.825,
+    "genuine_count": 100,
+    "impostor_count": 100,
+    "genuine_accuracy": 0.65,
+    "impostor_accuracy": 1.0,
+    "correct_predictions": 165,
+    "wrong_predictions": 35,
+    "avg_matches": 1429.885,
+    "std_matches": 914.1028781132899,
+    "avg_inliers": 724.72,
+    "std_inliers": 804.9210592350034,
+    "avg_inlier_ratio": 0.3537257945458699,
+    "std_inlier_ratio": 0.2593317279693131
+  }
+}

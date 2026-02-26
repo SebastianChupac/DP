@@ -1,0 +1,33 @@
+# Example Experiment: LoFTR Cross-Modality Evaluation
+# Evaluate LoFTR performance across different biometric modalities.
+
+experiment:
+  name: "LoFTR Cross-Modality Evaluation"
+  description: "Test LoFTR matcher performance on iris, face, and hand modalities"
+  purpose: "cross_modality"
+  created: "2026-02-25"
+
+# Multiple dataset runs: you'll need to create separate experiment configs
+# for each modality, OR manually run the experiment multiple times with
+# different datasets and filter_modality settings.
+
+# For this example, we evaluate only on iris. To evaluate cross-modality,
+# create similar configs with different modalities.
+
+dataset: "data/pairs/test001_iris_mmu.csv"
+base_path: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+filter_modality: "iris"
+
+# Single matcher
+matchers:
+  - name: loftr
+    config_base: "config/matching/loftr.yaml"
+
+# Output
+output_dir: "results/loftr_crossmodality_iris"
+save_visualization_results: false
+
+# Options
+batch_size: 1
+verbose: true
+device: "cuda"

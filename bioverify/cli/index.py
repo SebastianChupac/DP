@@ -11,6 +11,7 @@ from pathlib import Path
 from ..data.indexer import DatasetIndexer
 from ..data.validation import CSVValidator, print_csv_statistics
 from ..matchers.registry import create_matcher
+from ..experiments.runner import run_experiment
 
 
 def load_config(config_path: str) -> dict:
@@ -149,29 +150,64 @@ def match_command(args):
         result.print_summary()
 
 
+def experiment_command(args):
+    """Execute a batch experiment on pairs.
+    
+    Args:
+        args: Parsed command-line arguments
+    """
+    try:
+        results, metrics = run_experiment(args.config)
+        
+        print("\n" + "=" * 60)
+        print("EXPERIMENT SUMMARY")
+        print("=" * 60)
+        print(f"Results saved to: {args.config}")
+        print(f"Total pairs processed: {len(results)}")
+        print(f"\nMetrics by matcher:")
+        for matcher_name, matcher_metrics in metrics.items():
+            print(f"\n  {matcher_name}:")
+            for key, value in matcher_metrics.items():
+                if isinstance(value, float):
+                    print(f"    {key}: {value:.4f}")
+                else:
+                    print(f"    {key}: {value}")
+    
+    except Exception as e:
+        print(f"❌ Experiment failed: {str(e)}")
+        if args.verbose:
+            import traceback
+            traceback.print_exc()
+        exit(1)
+
+
 def main():
     """Main CLI entry point."""
     parser = argparse.ArgumentParser(
-        description='BioVerify Dataset Indexing Tool',
+        description='BioVerify Dataset Indexing and Experimentation Tool',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
   # Index datasets using config file
-  python -m bioverify.cli.index --config config/indexing/iris.yaml
+  python -m bioverify.cli.index index --config config/indexing/iris.yaml
 
   # Index and validate in one step
-  python -m bioverify.cli.index --config config/indexing/test_mmu.yaml --validate
+  python -m bioverify.cli.index index --config config/indexing/test_mmu.yaml --validate
 
   # Validate existing CSV
-  python -m bioverify.cli.index validate --csv dataset_index.csv
+  python -m bioverify.cli.index validate --csv data/pairs/iris_pairs.csv
 
-    # Show statistics
-    python -m bioverify.cli.index stats --csv dataset_index.csv
+  # Show statistics
+  python -m bioverify.cli.index stats --csv data/pairs/iris_pairs.csv
 
-    # Run a matcher on a single pair
-    python -m bioverify.cli.index match \
-        --config config/matching/sift.yaml \
-        --image1 path/to/img1.png --image2 path/to/img2.png
+  # Run a matcher on a single pair
+  python -m bioverify.cli.index match \
+      --config config/matching/loftr.yaml \
+      --image1 path/to/img1.png --image2 path/to/img2.png
+
+  # Run a batch experiment
+  python -m bioverify.cli.index experiment \
+      --config config/experiments/exp_loftr_iris.yaml
         """
     )
     
@@ -264,6 +300,19 @@ Examples:
         action='store_true',
         help='Return VisualizationResult instead of VerificationResult'
     )
+
+    # Experiment command
+    experiment_parser = subparsers.add_parser('experiment', help='Run batch experiment on pairs')
+    experiment_parser.add_argument(
+        '--config', '-c',
+        required=True,
+        help='Path to experiment YAML configuration file'
+    )
+    experiment_parser.add_argument(
+        '--verbose', '-v',
+        action='store_true',
+        help='Print verbose output including tracebacks'
+    )
     
     # Parse arguments
     args = parser.parse_args()
@@ -277,6 +326,8 @@ Examples:
         stats_command(args)
     elif args.command == 'match':
         match_command(args)
+    elif args.command == 'experiment':
+        experiment_command(args)
     else:
         parser.print_help()
 

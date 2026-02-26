@@ -35,8 +35,7 @@ class ASpanFormerMatcher(BaseMatcher):
         params = config.extra_params
         self._model_type = params.get("model_type", "indoor")  # 'indoor' or 'outdoor'
         self._confidence_threshold = float(params.get("confidence_threshold", 0.3))
-        self._ratio_thresh = float(params.get("ratio_threshold", 0.4))
-        self._max_reprojection_error = params.get("max_reprojection_error", 5.0)
+        self._ratio_thresh = float(params.get("ratio_threshold", 0.45))
 
         self._device = self._get_device()
         
@@ -50,7 +49,6 @@ class ASpanFormerMatcher(BaseMatcher):
             from ASpanFormer.aspanformer import ASpanFormer
             from config.default import get_cfg_defaults
             from utils.misc import lower_config
-            import demo_utils
             
             # Load config
             config_obj = get_cfg_defaults()
@@ -68,8 +66,6 @@ class ASpanFormerMatcher(BaseMatcher):
             state_dict = torch.load(str(weights_path), map_location='cpu')['state_dict']
             self._matcher.load_state_dict(state_dict, strict=False)
             self._matcher.eval().to(self._device)
-
-            self._demo_utils = demo_utils
             
         except ImportError as e:
             raise ImportError(f"Failed to import ASpanFormer components: {e}")
@@ -140,18 +136,6 @@ class ASpanFormerMatcher(BaseMatcher):
             matches,
         )
 
-    def _preprocess_image(self, img: np.ndarray) -> np.ndarray:
-        """Resize image using ASpanFormer demo resize behavior."""
-        if self.config.resize_width and self.config.resize_height:
-            keep_aspect = bool(self.config.extra_params.get("resize_keep_aspect", False))
-            if keep_aspect:
-                long_dim = int(max(self.config.resize_width, self.config.resize_height))
-                img = self._demo_utils.resize(img, long_dim)
-            else:
-                target = (int(self.config.resize_width), int(self.config.resize_height))
-                img = cv2.resize(img, target, interpolation=cv2.INTER_AREA)
-        return img
-
     def _create_verification_result(
         self,
         img1_path: str,
@@ -171,8 +155,6 @@ class ASpanFormerMatcher(BaseMatcher):
         inlier_ratio = num_inliers / max(1, num_matches)
 
         is_match = inlier_ratio >= self._ratio_thresh if inlier_mask is not None else False
-        if is_match and self._max_reprojection_error is not None and reprojection_error is not None:
-            is_match = reprojection_error <= float(self._max_reprojection_error)
         confidence = inlier_ratio
 
         return VerificationResult(
@@ -190,7 +172,6 @@ class ASpanFormerMatcher(BaseMatcher):
                 "model_type": self._model_type,
                 "confidence_threshold": self._confidence_threshold,
                 "ratio_threshold": self._ratio_thresh,
-                "max_reprojection_error": self._max_reprojection_error,
             },
         )
 
@@ -199,7 +180,6 @@ class ASpanFormerMatcher(BaseMatcher):
             "model_type": self._model_type,
             "confidence_threshold": self._confidence_threshold,
             "ratio_threshold": self._ratio_thresh,
-            "max_reprojection_error": self._max_reprojection_error,
         }
 
     def _to_tensor(self, gray: np.ndarray) -> torch.Tensor:

@@ -295,7 +295,7 @@ class BaseMatcher(ABC):
         img1 = self._preprocess_image(img1)
         img2 = self._preprocess_image(img2)
         
-        # Get masks if needed
+        # Get masks if needed (AFTER preprocessing so masks match image size)
         mask1 = None
         mask2 = None
         if self.config.use_masking and modality:
@@ -435,14 +435,18 @@ class BaseMatcher(ABC):
         1. If mask_cache_dir is set, check for cached mask
         2. If not found, compute mask
         3. Optionally save to cache
+        4. Resize mask to match image dimensions
+        
+        IMPORTANT: Must be called AFTER image preprocessing so mask dimensions
+        match the preprocessed image size.
         
         Args:
             img_path: Path to image (used for cache lookup)
-            img: Image array
+            img: Image array (AFTER preprocessing/resizing)
             modality: Modality type ('iris', 'face', 'hand', 'fingervein')
             
         Returns:
-            Binary mask or None if computation fails
+            Binary mask matching image dimensions, or None if computation fails
         """
         mask = None
         
@@ -454,11 +458,20 @@ class BaseMatcher(ABC):
             mask_path = cache_dir / f"{img_name}_{modality}_mask.png"
             
             if mask_path.exists():
-                mask = cv2.imread(str(mask_path), cv2.IMREAD_GRAYSCALE)
-                if mask is not None:
+                cached_mask = cv2.imread(str(mask_path), cv2.IMREAD_GRAYSCALE)
+                if cached_mask is not None:
                     # Ensure binary
-                    mask = (mask > 127).astype(np.uint8) * 255
-                    return mask
+                    cached_mask = (cached_mask > 127).astype(np.uint8) * 255
+                    
+                    # CRITICAL: Resize mask to match preprocessed image dimensions
+                    if cached_mask.shape != img.shape[:2]:
+                        cached_mask = cv2.resize(
+                            cached_mask,
+                            (img.shape[1], img.shape[0]),
+                            interpolation=cv2.INTER_NEAREST
+                        )
+                    
+                    return cached_mask
         
         # Compute mask
         if modality == "iris":
