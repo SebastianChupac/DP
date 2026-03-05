@@ -13,8 +13,7 @@ filter_dataset: null
 filter_modality: iris
 matchers:
 - config_base: bioverify/config/matching/loftr.yaml
-  config_overrides:
-    use_masking: false
+  config_overrides: null
   name: loftr
 output_dir: bioverify/results/loftr_threshold_tuning_iris
 save_pair_images: false

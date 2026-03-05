@@ -14,7 +14,6 @@ filter_modality: iris
 matchers:
 - config_base: bioverify/config/matching/loftr.yaml
   config_overrides:
-    mask_cache_dir: bioverify/data/cache/masks
     use_masking: true
   name: loftr
 output_dir: bioverify/results/loftr_threshold_tuning_iris_masked

@@ -1,0 +1,36 @@
+# Example Experiment: Quicktest of sift vs superglue on face dataset
+# This experiment evaluates multiple matchers on a single dataset (face).
+
+experiment:
+  name: "Sift vs SuperGlue 10 Face"
+  description: "Evaluate sift and superglue on face pairs"
+  purpose: "two_matchers_comparison"
+  created: "2026-03-04"
+
+# Input pairs
+dataset: "bioverify/data/pairs/quicktest_face_multipie.csv"
+base_path: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+filter_modality: "face"
+
+# Multiple matcher configuration
+matchers:
+  - name: sift
+    config_base: "bioverify/config/matching/sift.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      #use_masking: false
+  - name: superglue
+    config_base: "bioverify/config/matching/superglue.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      #use_masking: false
+
+# Output
+output_dir: "bioverify/results/quicktest_face_sift_vs_superglue"
+save_visualization_results: false
+save_pair_images: false
+
+# Options
+batch_size: 1
+verbose: true
+device: "cuda"

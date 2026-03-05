@@ -230,7 +230,9 @@ class MultiPIEParser(DatasetParser):
                         expression=expression,
                         angle=angle,
                         lighting=lighting,
-                        metadata={'version': version}
+                        metadata={'version': version,
+                                  'angle': angle,
+                                  'lighting': lighting}
                     )
                     records.append(record)
         

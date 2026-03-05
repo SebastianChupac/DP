@@ -19,7 +19,8 @@ class GNN_Matcher(object):
         self.p_th=config.p_th
         self.model = SGM_Model(config) if model_name=='SGM' else SG_Model(config) 
         self.model.cuda(),self.model.eval()
-        checkpoint = torch.load(os.path.join(config.model_dir, 'model_best.pth'))
+        # weights_only=False is safe here as we control the model file
+        checkpoint = torch.load(os.path.join(config.model_dir, 'model_best.pth'), weights_only=False)
         #for ddp model
         if list(checkpoint['state_dict'].items())[0][0].split('.')[0]=='module':
             new_stat_dict=OrderedDict()

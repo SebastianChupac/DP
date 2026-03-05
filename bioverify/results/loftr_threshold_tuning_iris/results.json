@@ -6,7 +6,7 @@
     "created": "2026-02-25",
     "purpose": "threshold_tuning"
   },
-  "timestamp": "2026-02-25T14:22:49.744973",
+  "timestamp": "2026-03-03T10:41:17.270094",
   "statistics": {
     "total_results": 200,
     "total_errors": 0,
@@ -19,14 +19,14 @@
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.8051420838971584,
+      "verification_confidence": 0.7523961661341853,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2217,
-      "num_inliers": 1785,
-      "inlier_ratio": 0.8051420838971584,
-      "reprojection_error": 1.9644856259295553,
-      "homography_confidence": 0.8051420838971584,
+      "num_matches": 626,
+      "num_inliers": 471,
+      "inlier_ratio": 0.7523961661341853,
+      "reprojection_error": 1.6895533093145014,
+      "homography_confidence": 0.7523961661341853,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -41,20 +41,20 @@
         "identity2": "6",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025551.6512706
+      "timestamp": 1772530665.607265
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5404780262143408,
+      "verification_confidence": 0.8878205128205128,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2594,
-      "num_inliers": 1402,
-      "inlier_ratio": 0.5404780262143408,
-      "reprojection_error": 1.6973422864410035,
-      "homography_confidence": 0.5404780262143408,
+      "num_matches": 312,
+      "num_inliers": 277,
+      "inlier_ratio": 0.8878205128205128,
+      "reprojection_error": 1.2674815873102383,
+      "homography_confidence": 0.8878205128205128,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -69,20 +69,20 @@
         "identity2": "9",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025552.0970578
+      "timestamp": 1772530665.9963465
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.7061594202898551,
+      "verification_confidence": 0.7734082397003745,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2760,
-      "num_inliers": 1949,
-      "inlier_ratio": 0.7061594202898551,
-      "reprojection_error": 1.876290746806255,
-      "homography_confidence": 0.7061594202898551,
+      "num_matches": 534,
+      "num_inliers": 413,
+      "inlier_ratio": 0.7734082397003745,
+      "reprojection_error": 1.4421076067450294,
+      "homography_confidence": 0.7734082397003745,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -97,20 +97,20 @@
         "identity2": "8",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025552.541564
+      "timestamp": 1772530666.4042563
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.879590395480226,
+      "verification_confidence": 0.7722929936305732,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2832,
-      "num_inliers": 2491,
-      "inlier_ratio": 0.879590395480226,
-      "reprojection_error": 1.6728722093157635,
-      "homography_confidence": 0.879590395480226,
+      "num_matches": 628,
+      "num_inliers": 485,
+      "inlier_ratio": 0.7722929936305732,
+      "reprojection_error": 1.062265283037079,
+      "homography_confidence": 0.7722929936305732,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -125,20 +125,20 @@
         "identity2": "35",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025552.9873724
+      "timestamp": 1772530666.8136833
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.3281086729362591,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7097345132743362,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1914,
-      "num_inliers": 628,
-      "inlier_ratio": 0.3281086729362591,
-      "reprojection_error": 2.094369804874964,
-      "homography_confidence": 0.3281086729362591,
+      "is_correct": true,
+      "num_matches": 565,
+      "num_inliers": 401,
+      "inlier_ratio": 0.7097345132743362,
+      "reprojection_error": 1.5079009692623182,
+      "homography_confidence": 0.7097345132743362,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -153,20 +153,20 @@
         "identity2": "14",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025553.401266
+      "timestamp": 1772530667.2057848
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5026328386787937,
+      "verification_confidence": 0.6629032258064517,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2089,
-      "num_inliers": 1050,
-      "inlier_ratio": 0.5026328386787937,
-      "reprojection_error": 2.4371529249971378,
-      "homography_confidence": 0.5026328386787937,
+      "num_matches": 620,
+      "num_inliers": 411,
+      "inlier_ratio": 0.6629032258064517,
+      "reprojection_error": 1.5961047051870976,
+      "homography_confidence": 0.6629032258064517,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -181,20 +181,20 @@
         "identity2": "11",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025553.8151817
+      "timestamp": 1772530667.6188707
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5920424403183023,
+      "verification_confidence": 0.7771739130434783,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 1885,
-      "num_inliers": 1116,
-      "inlier_ratio": 0.5920424403183023,
-      "reprojection_error": 2.465647351908562,
-      "homography_confidence": 0.5920424403183023,
+      "num_matches": 552,
+      "num_inliers": 429,
+      "inlier_ratio": 0.7771739130434783,
+      "reprojection_error": 2.0476546750120197,
+      "homography_confidence": 0.7771739130434783,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -209,20 +209,20 @@
         "identity2": "40",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025554.2141154
+      "timestamp": 1772530668.0256536
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.40698151950718686,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7424657534246575,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 2435,
-      "num_inliers": 991,
-      "inlier_ratio": 0.40698151950718686,
-      "reprojection_error": 2.57246309435808,
-      "homography_confidence": 0.40698151950718686,
+      "is_correct": true,
+      "num_matches": 730,
+      "num_inliers": 542,
+      "inlier_ratio": 0.7424657534246575,
+      "reprojection_error": 1.6438555335026237,
+      "homography_confidence": 0.7424657534246575,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -237,20 +237,20 @@
         "identity2": "34",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025554.650955
+      "timestamp": 1772530668.452657
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.6124237804878049,
+      "verification_confidence": 0.7825443786982249,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2624,
-      "num_inliers": 1607,
-      "inlier_ratio": 0.6124237804878049,
-      "reprojection_error": 2.1631045069021413,
-      "homography_confidence": 0.6124237804878049,
+      "num_matches": 676,
+      "num_inliers": 529,
+      "inlier_ratio": 0.7825443786982249,
+      "reprojection_error": 2.2681626765766754,
+      "homography_confidence": 0.7825443786982249,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -265,20 +265,20 @@
         "identity2": "7",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025555.088757
+      "timestamp": 1772530668.878112
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.7385392385392385,
+      "verification_confidence": 0.6847195357833655,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2574,
-      "num_inliers": 1901,
-      "inlier_ratio": 0.7385392385392385,
-      "reprojection_error": 1.7921253741704686,
-      "homography_confidence": 0.7385392385392385,
+      "num_matches": 517,
+      "num_inliers": 354,
+      "inlier_ratio": 0.6847195357833655,
+      "reprojection_error": 2.3564344877654357,
+      "homography_confidence": 0.6847195357833655,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -293,20 +293,20 @@
         "identity2": "1",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025555.5335894
+      "timestamp": 1772530669.2859404
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.9089239809034153,
+      "verification_confidence": 0.6423357664233577,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2723,
-      "num_inliers": 2475,
-      "inlier_ratio": 0.9089239809034153,
-      "reprojection_error": 1.5662622577350156,
-      "homography_confidence": 0.9089239809034153,
+      "num_matches": 685,
+      "num_inliers": 440,
+      "inlier_ratio": 0.6423357664233577,
+      "reprojection_error": 2.0554431958924484,
+      "homography_confidence": 0.6423357664233577,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -321,20 +321,20 @@
         "identity2": "13",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025555.9754093
+      "timestamp": 1772530669.7098331
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.43283582089552236,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5491183879093199,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 2345,
-      "num_inliers": 1015,
-      "inlier_ratio": 0.43283582089552236,
-      "reprojection_error": 2.560798750239086,
-      "homography_confidence": 0.43283582089552236,
+      "is_correct": true,
+      "num_matches": 794,
+      "num_inliers": 436,
+      "inlier_ratio": 0.5491183879093199,
+      "reprojection_error": 2.5376459039565953,
+      "homography_confidence": 0.5491183879093199,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -349,20 +349,20 @@
         "identity2": "45",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025556.4072332
+      "timestamp": 1772530670.136257
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5430958663148637,
+      "verification_confidence": 0.7630057803468208,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2274,
-      "num_inliers": 1235,
-      "inlier_ratio": 0.5430958663148637,
-      "reprojection_error": 1.947711722415872,
-      "homography_confidence": 0.5430958663148637,
+      "num_matches": 346,
+      "num_inliers": 264,
+      "inlier_ratio": 0.7630057803468208,
+      "reprojection_error": 1.3952413780779231,
+      "homography_confidence": 0.7630057803468208,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -377,20 +377,20 @@
         "identity2": "20",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025556.83509
+      "timestamp": 1772530670.5138056
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5702222222222222,
+      "verification_confidence": 0.7654784240150094,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2250,
-      "num_inliers": 1283,
-      "inlier_ratio": 0.5702222222222222,
-      "reprojection_error": 2.6321055081009455,
-      "homography_confidence": 0.5702222222222222,
+      "num_matches": 533,
+      "num_inliers": 408,
+      "inlier_ratio": 0.7654784240150094,
+      "reprojection_error": 1.4141216270815702,
+      "homography_confidence": 0.7654784240150094,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -405,20 +405,20 @@
         "identity2": "17",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025557.2506154
+      "timestamp": 1772530670.9096127
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.35514461830251304,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7692307692307693,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 2109,
-      "num_inliers": 749,
-      "inlier_ratio": 0.35514461830251304,
-      "reprojection_error": 2.4661593580369634,
-      "homography_confidence": 0.35514461830251304,
+      "is_correct": true,
+      "num_matches": 520,
+      "num_inliers": 400,
+      "inlier_ratio": 0.7692307692307693,
+      "reprojection_error": 1.3635971597973733,
+      "homography_confidence": 0.7692307692307693,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -433,20 +433,20 @@
         "identity2": "28",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025558.284882
+      "timestamp": 1772530671.3162162
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.9493934142114385,
+      "verification_confidence": 0.7201426024955436,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2885,
-      "num_inliers": 2739,
-      "inlier_ratio": 0.9493934142114385,
-      "reprojection_error": 1.636951800084927,
-      "homography_confidence": 0.9493934142114385,
+      "num_matches": 561,
+      "num_inliers": 404,
+      "inlier_ratio": 0.7201426024955436,
+      "reprojection_error": 1.7934067824712552,
+      "homography_confidence": 0.7201426024955436,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -461,20 +461,20 @@
         "identity2": "31",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025559.7060537
+      "timestamp": 1772530672.0950737
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5969283276450512,
+      "verification_confidence": 0.7097288676236044,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2930,
-      "num_inliers": 1749,
-      "inlier_ratio": 0.5969283276450512,
-      "reprojection_error": 1.7371903122873416,
-      "homography_confidence": 0.5969283276450512,
+      "num_matches": 627,
+      "num_inliers": 445,
+      "inlier_ratio": 0.7097288676236044,
+      "reprojection_error": 1.4041525159895694,
+      "homography_confidence": 0.7097288676236044,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -489,20 +489,20 @@
         "identity2": "31",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025561.139245
+      "timestamp": 1772530673.3620982
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.518263266712612,
+      "verification_confidence": 0.7162698412698413,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2902,
-      "num_inliers": 1504,
-      "inlier_ratio": 0.518263266712612,
-      "reprojection_error": 2.4763227060977826,
-      "homography_confidence": 0.518263266712612,
+      "num_matches": 504,
+      "num_inliers": 361,
+      "inlier_ratio": 0.7162698412698413,
+      "reprojection_error": 2.3198412312411496,
+      "homography_confidence": 0.7162698412698413,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -517,20 +517,20 @@
         "identity2": "19",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025562.55145
+      "timestamp": 1772530674.617913
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.3541666666666667,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.6104868913857678,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 2016,
-      "num_inliers": 714,
-      "inlier_ratio": 0.3541666666666667,
-      "reprojection_error": 2.3209300360084844,
-      "homography_confidence": 0.3541666666666667,
+      "is_correct": true,
+      "num_matches": 534,
+      "num_inliers": 326,
+      "inlier_ratio": 0.6104868913857678,
+      "reprojection_error": 1.4533088292620844,
+      "homography_confidence": 0.6104868913857678,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -545,20 +545,20 @@
         "identity2": "28",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025563.8599286
+      "timestamp": 1772530675.9215589
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.4397482014388489,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.8266384778012685,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 2224,
-      "num_inliers": 978,
-      "inlier_ratio": 0.4397482014388489,
-      "reprojection_error": 2.3995942697583788,
-      "homography_confidence": 0.4397482014388489,
+      "is_correct": true,
+      "num_matches": 473,
+      "num_inliers": 391,
+      "inlier_ratio": 0.8266384778012685,
+      "reprojection_error": 1.3921958665181624,
+      "homography_confidence": 0.8266384778012685,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -573,20 +573,20 @@
         "identity2": "12",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025565.1842048
+      "timestamp": 1772530677.1272697
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.502854177477945,
+      "verification_confidence": 0.6726296958855098,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 1927,
-      "num_inliers": 969,
-      "inlier_ratio": 0.502854177477945,
-      "reprojection_error": 2.2515410205688013,
-      "homography_confidence": 0.502854177477945,
+      "num_matches": 559,
+      "num_inliers": 376,
+      "inlier_ratio": 0.6726296958855098,
+      "reprojection_error": 0.9115495093716799,
+      "homography_confidence": 0.6726296958855098,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -601,20 +601,20 @@
         "identity2": "7",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025566.4509299
+      "timestamp": 1772530678.313926
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.27176220806794055,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5648414985590778,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1884,
-      "num_inliers": 512,
-      "inlier_ratio": 0.27176220806794055,
-      "reprojection_error": 1.883831671334756,
-      "homography_confidence": 0.27176220806794055,
+      "is_correct": true,
+      "num_matches": 347,
+      "num_inliers": 196,
+      "inlier_ratio": 0.5648414985590778,
+      "reprojection_error": 1.7780996311806938,
+      "homography_confidence": 0.5648414985590778,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -629,20 +629,20 @@
         "identity2": "27",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025567.790585
+      "timestamp": 1772530679.5074263
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.3353889943074004,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.9147286821705426,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 2108,
-      "num_inliers": 707,
-      "inlier_ratio": 0.3353889943074004,
-      "reprojection_error": 2.329278199010958,
-      "homography_confidence": 0.3353889943074004,
+      "is_correct": true,
+      "num_matches": 645,
+      "num_inliers": 590,
+      "inlier_ratio": 0.9147286821705426,
+      "reprojection_error": 1.1723441510715091,
+      "homography_confidence": 0.9147286821705426,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -657,20 +657,20 @@
         "identity2": "1",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025569.1517034
+      "timestamp": 1772530680.8580453
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.6243752402921953,
+      "verification_confidence": 0.7609942638623327,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2601,
-      "num_inliers": 1624,
-      "inlier_ratio": 0.6243752402921953,
-      "reprojection_error": 2.1831465068271343,
-      "homography_confidence": 0.6243752402921953,
+      "num_matches": 523,
+      "num_inliers": 398,
+      "inlier_ratio": 0.7609942638623327,
+      "reprojection_error": 1.0969219432257389,
+      "homography_confidence": 0.7609942638623327,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -685,20 +685,20 @@
         "identity2": "27",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025570.5291572
+      "timestamp": 1772530682.0711813
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.4149779735682819,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7260034904013961,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 2270,
-      "num_inliers": 942,
-      "inlier_ratio": 0.4149779735682819,
-      "reprojection_error": 2.8614361032900866,
-      "homography_confidence": 0.4149779735682819,
+      "is_correct": true,
+      "num_matches": 573,
+      "num_inliers": 416,
+      "inlier_ratio": 0.7260034904013961,
+      "reprojection_error": 1.8167000484534042,
+      "homography_confidence": 0.7260034904013961,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -713,20 +713,20 @@
         "identity2": "21",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025571.8671732
+      "timestamp": 1772530683.357353
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.2957446808510638,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5171232876712328,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 940,
-      "num_inliers": 278,
-      "inlier_ratio": 0.2957446808510638,
-      "reprojection_error": 2.7416313216970645,
-      "homography_confidence": 0.2957446808510638,
+      "is_correct": true,
+      "num_matches": 292,
+      "num_inliers": 151,
+      "inlier_ratio": 0.5171232876712328,
+      "reprojection_error": 2.40378916359761,
+      "homography_confidence": 0.5171232876712328,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -741,20 +741,20 @@
         "identity2": "30",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025572.9981182
+      "timestamp": 1772530684.345377
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.662093296746374,
+      "verification_confidence": 0.639412997903564,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2551,
-      "num_inliers": 1689,
-      "inlier_ratio": 0.662093296746374,
-      "reprojection_error": 1.748366835311584,
-      "homography_confidence": 0.662093296746374,
+      "num_matches": 477,
+      "num_inliers": 305,
+      "inlier_ratio": 0.639412997903564,
+      "reprojection_error": 1.4245717812170342,
+      "homography_confidence": 0.639412997903564,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -769,20 +769,20 @@
         "identity2": "22",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025574.4061916
+      "timestamp": 1772530685.655957
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.40829493087557606,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7241379310344828,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 2170,
-      "num_inliers": 886,
-      "inlier_ratio": 0.40829493087557606,
-      "reprojection_error": 2.3705284081036266,
-      "homography_confidence": 0.40829493087557606,
+      "is_correct": true,
+      "num_matches": 580,
+      "num_inliers": 420,
+      "inlier_ratio": 0.7241379310344828,
+      "reprojection_error": 1.6073350991975799,
+      "homography_confidence": 0.7241379310344828,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -797,20 +797,20 @@
         "identity2": "29",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025575.7282948
+      "timestamp": 1772530686.91686
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.7470483005366726,
+      "verification_confidence": 0.7466504263093788,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2795,
-      "num_inliers": 2088,
-      "inlier_ratio": 0.7470483005366726,
-      "reprojection_error": 2.206060168177888,
-      "homography_confidence": 0.7470483005366726,
+      "num_matches": 821,
+      "num_inliers": 613,
+      "inlier_ratio": 0.7466504263093788,
+      "reprojection_error": 1.876695548169699,
+      "homography_confidence": 0.7466504263093788,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -825,20 +825,20 @@
         "identity2": "42",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025577.1934536
+      "timestamp": 1772530688.205697
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.3522802379378718,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7428571428571429,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1513,
-      "num_inliers": 533,
-      "inlier_ratio": 0.3522802379378718,
-      "reprojection_error": 2.5527233161029286,
-      "homography_confidence": 0.3522802379378718,
+      "is_correct": true,
+      "num_matches": 525,
+      "num_inliers": 390,
+      "inlier_ratio": 0.7428571428571429,
+      "reprojection_error": 1.841712164872163,
+      "homography_confidence": 0.7428571428571429,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -853,20 +853,20 @@
         "identity2": "44",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025578.584757
+      "timestamp": 1772530689.3658507
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.31223880597014925,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7071428571428572,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1675,
-      "num_inliers": 523,
-      "inlier_ratio": 0.31223880597014925,
-      "reprojection_error": 2.5508014059559456,
-      "homography_confidence": 0.31223880597014925,
+      "is_correct": true,
+      "num_matches": 420,
+      "num_inliers": 297,
+      "inlier_ratio": 0.7071428571428572,
+      "reprojection_error": 1.7835597944995312,
+      "homography_confidence": 0.7071428571428572,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -881,20 +881,20 @@
         "identity2": "35",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025579.927228
+      "timestamp": 1772530690.6314056
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5212992545260916,
+      "verification_confidence": 0.6108374384236454,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 1878,
-      "num_inliers": 979,
-      "inlier_ratio": 0.5212992545260916,
-      "reprojection_error": 2.4747083891809663,
-      "homography_confidence": 0.5212992545260916,
+      "num_matches": 406,
+      "num_inliers": 248,
+      "inlier_ratio": 0.6108374384236454,
+      "reprojection_error": 2.360839366674433,
+      "homography_confidence": 0.6108374384236454,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -909,20 +909,20 @@
         "identity2": "40",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025581.3169408
+      "timestamp": 1772530691.9488914
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.946384479717813,
+      "verification_confidence": 0.8052256532066508,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2835,
-      "num_inliers": 2683,
-      "inlier_ratio": 0.946384479717813,
-      "reprojection_error": 1.1550582550341406,
-      "homography_confidence": 0.946384479717813,
+      "num_matches": 421,
+      "num_inliers": 339,
+      "inlier_ratio": 0.8052256532066508,
+      "reprojection_error": 1.1525221189248074,
+      "homography_confidence": 0.8052256532066508,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -937,20 +937,20 @@
         "identity2": "43",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025582.753497
+      "timestamp": 1772530693.3095784
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5781487101669196,
+      "verification_confidence": 0.8048289738430584,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 1977,
-      "num_inliers": 1143,
-      "inlier_ratio": 0.5781487101669196,
-      "reprojection_error": 2.280286960019223,
-      "homography_confidence": 0.5781487101669196,
+      "num_matches": 497,
+      "num_inliers": 400,
+      "inlier_ratio": 0.8048289738430584,
+      "reprojection_error": 1.4016013358710353,
+      "homography_confidence": 0.8048289738430584,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -965,20 +965,20 @@
         "identity2": "6",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025584.0530837
+      "timestamp": 1772530694.4336388
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5995279307631786,
+      "verification_confidence": 0.6370808678500987,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2542,
-      "num_inliers": 1524,
-      "inlier_ratio": 0.5995279307631786,
-      "reprojection_error": 2.15487344525168,
-      "homography_confidence": 0.5995279307631786,
+      "num_matches": 507,
+      "num_inliers": 323,
+      "inlier_ratio": 0.6370808678500987,
+      "reprojection_error": 2.02932060226465,
+      "homography_confidence": 0.6370808678500987,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -993,20 +993,20 @@
         "identity2": "16",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025585.4361374
+      "timestamp": 1772530695.8064127
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.3967758710348414,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.677376171352075,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1923,
-      "num_inliers": 763,
-      "inlier_ratio": 0.3967758710348414,
-      "reprojection_error": 2.288373216565381,
-      "homography_confidence": 0.3967758710348414,
+      "is_correct": true,
+      "num_matches": 747,
+      "num_inliers": 506,
+      "inlier_ratio": 0.677376171352075,
+      "reprojection_error": 1.7439685352759016,
+      "homography_confidence": 0.677376171352075,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1021,20 +1021,20 @@
         "identity2": "18",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025586.7219126
+      "timestamp": 1772530697.203534
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.6227816756087495,
+      "verification_confidence": 0.6859375,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2423,
-      "num_inliers": 1509,
-      "inlier_ratio": 0.6227816756087495,
-      "reprojection_error": 2.225800772606149,
-      "homography_confidence": 0.6227816756087495,
+      "num_matches": 640,
+      "num_inliers": 439,
+      "inlier_ratio": 0.6859375,
+      "reprojection_error": 1.5521669491171697,
+      "homography_confidence": 0.6859375,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1049,20 +1049,20 @@
         "identity2": "23",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025588.088358
+      "timestamp": 1772530698.5790868
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.26448362720403024,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5657894736842105,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1191,
-      "num_inliers": 315,
-      "inlier_ratio": 0.26448362720403024,
-      "reprojection_error": 2.2653138355874813,
-      "homography_confidence": 0.26448362720403024,
+      "is_correct": true,
+      "num_matches": 304,
+      "num_inliers": 172,
+      "inlier_ratio": 0.5657894736842105,
+      "reprojection_error": 2.0903422713347357,
+      "homography_confidence": 0.5657894736842105,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1077,20 +1077,20 @@
         "identity2": "2",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025589.3047094
+      "timestamp": 1772530699.9000216
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.8769554753309265,
+      "verification_confidence": 0.7273809523809524,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 3324,
-      "num_inliers": 2915,
-      "inlier_ratio": 0.8769554753309265,
-      "reprojection_error": 1.1614807472866555,
-      "homography_confidence": 0.8769554753309265,
+      "num_matches": 840,
+      "num_inliers": 611,
+      "inlier_ratio": 0.7273809523809524,
+      "reprojection_error": 1.1027389315413134,
+      "homography_confidence": 0.7273809523809524,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1105,20 +1105,20 @@
         "identity2": "11",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025590.775787
+      "timestamp": 1772530701.4598644
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.43075801749271136,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5665024630541872,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1372,
-      "num_inliers": 591,
-      "inlier_ratio": 0.43075801749271136,
-      "reprojection_error": 2.2139842847808833,
-      "homography_confidence": 0.43075801749271136,
+      "is_correct": true,
+      "num_matches": 203,
+      "num_inliers": 115,
+      "inlier_ratio": 0.5665024630541872,
+      "reprojection_error": 1.9110223197932505,
+      "homography_confidence": 0.5665024630541872,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1133,20 +1133,20 @@
         "identity2": "36",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025591.9677906
+      "timestamp": 1772530702.535468
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.7891854893908282,
+      "verification_confidence": 0.6595365418894831,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2922,
-      "num_inliers": 2306,
-      "inlier_ratio": 0.7891854893908282,
-      "reprojection_error": 2.1313023590904523,
-      "homography_confidence": 0.7891854893908282,
+      "num_matches": 561,
+      "num_inliers": 370,
+      "inlier_ratio": 0.6595365418894831,
+      "reprojection_error": 1.61211720513474,
+      "homography_confidence": 0.6595365418894831,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1161,20 +1161,20 @@
         "identity2": "8",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025593.3998082
+      "timestamp": 1772530703.808516
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.4836772983114446,
+      "verification_confidence": 0.6407982261640798,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2665,
-      "num_inliers": 1289,
-      "inlier_ratio": 0.4836772983114446,
-      "reprojection_error": 2.330562758897708,
-      "homography_confidence": 0.4836772983114446,
+      "num_matches": 451,
+      "num_inliers": 289,
+      "inlier_ratio": 0.6407982261640798,
+      "reprojection_error": 1.9117664541108763,
+      "homography_confidence": 0.6407982261640798,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1189,20 +1189,20 @@
         "identity2": "6",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025594.9436486
+      "timestamp": 1772530705.0347798
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.6152989231340512,
+      "verification_confidence": 0.7373358348968105,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2693,
-      "num_inliers": 1657,
-      "inlier_ratio": 0.6152989231340512,
-      "reprojection_error": 1.9645377046849655,
-      "homography_confidence": 0.6152989231340512,
+      "num_matches": 533,
+      "num_inliers": 393,
+      "inlier_ratio": 0.7373358348968105,
+      "reprojection_error": 1.6413448637985448,
+      "homography_confidence": 0.7373358348968105,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1217,20 +1217,20 @@
         "identity2": "24",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025596.4547837
+      "timestamp": 1772530706.3350978
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.38306451612903225,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.6945812807881774,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1488,
-      "num_inliers": 570,
-      "inlier_ratio": 0.38306451612903225,
-      "reprojection_error": 2.2412188348075723,
-      "homography_confidence": 0.38306451612903225,
+      "is_correct": true,
+      "num_matches": 406,
+      "num_inliers": 282,
+      "inlier_ratio": 0.6945812807881774,
+      "reprojection_error": 1.71737342655897,
+      "homography_confidence": 0.6945812807881774,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1245,20 +1245,20 @@
         "identity2": "44",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025597.6949773
+      "timestamp": 1772530707.3763752
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.35766423357664234,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7626262626262627,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 2329,
-      "num_inliers": 833,
-      "inlier_ratio": 0.35766423357664234,
-      "reprojection_error": 2.1680382928700674,
-      "homography_confidence": 0.35766423357664234,
+      "is_correct": true,
+      "num_matches": 198,
+      "num_inliers": 151,
+      "inlier_ratio": 0.7626262626262627,
+      "reprojection_error": 1.5561443317464942,
+      "homography_confidence": 0.7626262626262627,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1273,20 +1273,20 @@
         "identity2": "9",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025599.0553834
+      "timestamp": 1772530708.5689154
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.41720683559222155,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7463556851311953,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1697,
-      "num_inliers": 708,
-      "inlier_ratio": 0.41720683559222155,
-      "reprojection_error": 2.4659214691136695,
-      "homography_confidence": 0.41720683559222155,
+      "is_correct": true,
+      "num_matches": 343,
+      "num_inliers": 256,
+      "inlier_ratio": 0.7463556851311953,
+      "reprojection_error": 1.7367649661819087,
+      "homography_confidence": 0.7463556851311953,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1301,20 +1301,20 @@
         "identity2": "36",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025600.288217
+      "timestamp": 1772530709.829534
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.872,
+      "verification_confidence": 0.6831275720164609,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2750,
-      "num_inliers": 2398,
-      "inlier_ratio": 0.872,
-      "reprojection_error": 1.9590163556602835,
-      "homography_confidence": 0.872,
+      "num_matches": 486,
+      "num_inliers": 332,
+      "inlier_ratio": 0.6831275720164609,
+      "reprojection_error": 1.7695459118141652,
+      "homography_confidence": 0.6831275720164609,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1329,20 +1329,20 @@
         "identity2": "31",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025601.7146163
+      "timestamp": 1772530711.2370915
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5335314091680815,
+      "verification_confidence": 0.532,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2356,
-      "num_inliers": 1257,
-      "inlier_ratio": 0.5335314091680815,
-      "reprojection_error": 1.5600403396754274,
-      "homography_confidence": 0.5335314091680815,
+      "num_matches": 250,
+      "num_inliers": 133,
+      "inlier_ratio": 0.532,
+      "reprojection_error": 2.1211907782465427,
+      "homography_confidence": 0.532,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1357,20 +1357,20 @@
         "identity2": "32",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025603.06642
+      "timestamp": 1772530712.386167
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.6409707351891506,
+      "verification_confidence": 0.763744427934621,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2802,
-      "num_inliers": 1796,
-      "inlier_ratio": 0.6409707351891506,
-      "reprojection_error": 2.351021300027597,
-      "homography_confidence": 0.6409707351891506,
+      "num_matches": 673,
+      "num_inliers": 514,
+      "inlier_ratio": 0.763744427934621,
+      "reprojection_error": 2.0357661531186633,
+      "homography_confidence": 0.763744427934621,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1385,20 +1385,20 @@
         "identity2": "34",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025604.4775426
+      "timestamp": 1772530713.7498097
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.7726107652874405,
+      "verification_confidence": 0.8463726884779517,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2731,
-      "num_inliers": 2110,
-      "inlier_ratio": 0.7726107652874405,
-      "reprojection_error": 1.8785654701232262,
-      "homography_confidence": 0.7726107652874405,
+      "num_matches": 703,
+      "num_inliers": 595,
+      "inlier_ratio": 0.8463726884779517,
+      "reprojection_error": 1.7853705172489631,
+      "homography_confidence": 0.8463726884779517,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1413,20 +1413,20 @@
         "identity2": "17",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025605.8929565
+      "timestamp": 1772530715.0925274
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.828030954428203,
+      "verification_confidence": 0.7165775401069518,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2326,
-      "num_inliers": 1926,
-      "inlier_ratio": 0.828030954428203,
-      "reprojection_error": 1.5425912254712681,
-      "homography_confidence": 0.828030954428203,
+      "num_matches": 187,
+      "num_inliers": 134,
+      "inlier_ratio": 0.7165775401069518,
+      "reprojection_error": 1.7310687875889295,
+      "homography_confidence": 0.7165775401069518,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1441,20 +1441,20 @@
         "identity2": "43",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025607.2483563
+      "timestamp": 1772530716.2678773
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.8838251774374299,
+      "verification_confidence": 0.7065026362038664,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2677,
-      "num_inliers": 2366,
-      "inlier_ratio": 0.8838251774374299,
-      "reprojection_error": 1.6845118232865235,
-      "homography_confidence": 0.8838251774374299,
+      "num_matches": 569,
+      "num_inliers": 402,
+      "inlier_ratio": 0.7065026362038664,
+      "reprojection_error": 1.5058175410507881,
+      "homography_confidence": 0.7065026362038664,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1469,20 +1469,20 @@
         "identity2": "33",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025608.6387773
+      "timestamp": 1772530717.4755938
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.8727954971857411,
+      "verification_confidence": 0.8595825426944972,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2665,
-      "num_inliers": 2326,
-      "inlier_ratio": 0.8727954971857411,
-      "reprojection_error": 1.1913862880690376,
-      "homography_confidence": 0.8727954971857411,
+      "num_matches": 527,
+      "num_inliers": 453,
+      "inlier_ratio": 0.8595825426944972,
+      "reprojection_error": 1.4741243870211078,
+      "homography_confidence": 0.8595825426944972,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1497,20 +1497,20 @@
         "identity2": "13",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025610.045667
+      "timestamp": 1772530718.7555254
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.7673586256263422,
+      "verification_confidence": 0.8244047619047619,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2794,
-      "num_inliers": 2144,
-      "inlier_ratio": 0.7673586256263422,
-      "reprojection_error": 1.7419669232956023,
-      "homography_confidence": 0.7673586256263422,
+      "num_matches": 672,
+      "num_inliers": 554,
+      "inlier_ratio": 0.8244047619047619,
+      "reprojection_error": 1.6878932102565978,
+      "homography_confidence": 0.8244047619047619,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1525,20 +1525,20 @@
         "identity2": "18",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025611.453016
+      "timestamp": 1772530720.1192546
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.9384463462804477,
+      "verification_confidence": 0.8382352941176471,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 3038,
-      "num_inliers": 2851,
-      "inlier_ratio": 0.9384463462804477,
-      "reprojection_error": 1.2927228693931154,
-      "homography_confidence": 0.9384463462804477,
+      "num_matches": 816,
+      "num_inliers": 684,
+      "inlier_ratio": 0.8382352941176471,
+      "reprojection_error": 1.16166750774169,
+      "homography_confidence": 0.8382352941176471,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1553,20 +1553,20 @@
         "identity2": "12",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025612.9027286
+      "timestamp": 1772530721.4290383
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.6977067407922168,
+      "verification_confidence": 0.7641866330390921,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2878,
-      "num_inliers": 2008,
-      "inlier_ratio": 0.6977067407922168,
-      "reprojection_error": 1.6111674762581452,
-      "homography_confidence": 0.6977067407922168,
+      "num_matches": 793,
+      "num_inliers": 606,
+      "inlier_ratio": 0.7641866330390921,
+      "reprojection_error": 1.7833064762546542,
+      "homography_confidence": 0.7641866330390921,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1581,20 +1581,20 @@
         "identity2": "37",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025614.327717
+      "timestamp": 1772530722.728567
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.44467816575515356,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.8517110266159695,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 2377,
-      "num_inliers": 1057,
-      "inlier_ratio": 0.44467816575515356,
-      "reprojection_error": 2.3365119415560205,
-      "homography_confidence": 0.44467816575515356,
+      "is_correct": true,
+      "num_matches": 526,
+      "num_inliers": 448,
+      "inlier_ratio": 0.8517110266159695,
+      "reprojection_error": 1.3431590858770492,
+      "homography_confidence": 0.8517110266159695,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1609,20 +1609,20 @@
         "identity2": "41",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025615.6959958
+      "timestamp": 1772530723.9755285
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.9565670604586518,
+      "verification_confidence": 0.6965034965034965,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2878,
-      "num_inliers": 2753,
-      "inlier_ratio": 0.9565670604586518,
-      "reprojection_error": 1.2661012993546068,
-      "homography_confidence": 0.9565670604586518,
+      "num_matches": 715,
+      "num_inliers": 498,
+      "inlier_ratio": 0.6965034965034965,
+      "reprojection_error": 2.1238895569096354,
+      "homography_confidence": 0.6965034965034965,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1637,20 +1637,20 @@
         "identity2": "7",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025617.1010492
+      "timestamp": 1772530725.292046
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.33039875712066286,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.6794871794871795,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1931,
-      "num_inliers": 638,
-      "inlier_ratio": 0.33039875712066286,
-      "reprojection_error": 2.371547058911058,
-      "homography_confidence": 0.33039875712066286,
+      "is_correct": true,
+      "num_matches": 390,
+      "num_inliers": 265,
+      "inlier_ratio": 0.6794871794871795,
+      "reprojection_error": 1.6183380055212464,
+      "homography_confidence": 0.6794871794871795,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1665,20 +1665,20 @@
         "identity2": "28",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025618.3933918
+      "timestamp": 1772530726.548007
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.38768115942028986,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.45,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1380,
-      "num_inliers": 535,
-      "inlier_ratio": 0.38768115942028986,
-      "reprojection_error": 2.3510227945621898,
-      "homography_confidence": 0.38768115942028986,
+      "is_correct": true,
+      "num_matches": 180,
+      "num_inliers": 81,
+      "inlier_ratio": 0.45,
+      "reprojection_error": 1.9242147882781413,
+      "homography_confidence": 0.45,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1693,20 +1693,20 @@
         "identity2": "15",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025619.5880413
+      "timestamp": 1772530727.5485086
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5123323236694072,
+      "verification_confidence": 0.6286644951140065,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2311,
-      "num_inliers": 1184,
-      "inlier_ratio": 0.5123323236694072,
-      "reprojection_error": 2.0652002946127253,
-      "homography_confidence": 0.5123323236694072,
+      "num_matches": 307,
+      "num_inliers": 193,
+      "inlier_ratio": 0.6286644951140065,
+      "reprojection_error": 1.7953172959734698,
+      "homography_confidence": 0.6286644951140065,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1721,20 +1721,20 @@
         "identity2": "36",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025620.9375484
+      "timestamp": 1772530728.7319505
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.6710418375717802,
+      "verification_confidence": 0.7658730158730159,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2438,
-      "num_inliers": 1636,
-      "inlier_ratio": 0.6710418375717802,
-      "reprojection_error": 2.0121843636457726,
-      "homography_confidence": 0.6710418375717802,
+      "num_matches": 252,
+      "num_inliers": 193,
+      "inlier_ratio": 0.7658730158730159,
+      "reprojection_error": 1.2290129147478832,
+      "homography_confidence": 0.7658730158730159,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1749,20 +1749,20 @@
         "identity2": "20",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025622.3134723
+      "timestamp": 1772530729.9146252
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.40897097625329815,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.8422090729783037,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1516,
-      "num_inliers": 620,
-      "inlier_ratio": 0.40897097625329815,
-      "reprojection_error": 2.152114448614001,
-      "homography_confidence": 0.40897097625329815,
+      "is_correct": true,
+      "num_matches": 507,
+      "num_inliers": 427,
+      "inlier_ratio": 0.8422090729783037,
+      "reprojection_error": 2.0091050467458076,
+      "homography_confidence": 0.8422090729783037,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1777,20 +1777,20 @@
         "identity2": "44",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025623.5207012
+      "timestamp": 1772530731.1362534
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.6405693950177936,
+      "verification_confidence": 0.7096114519427403,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2248,
-      "num_inliers": 1440,
-      "inlier_ratio": 0.6405693950177936,
-      "reprojection_error": 2.6254347703203664,
-      "homography_confidence": 0.6405693950177936,
+      "num_matches": 489,
+      "num_inliers": 347,
+      "inlier_ratio": 0.7096114519427403,
+      "reprojection_error": 2.0171941438778167,
+      "homography_confidence": 0.7096114519427403,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1805,20 +1805,20 @@
         "identity2": "45",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025624.8482492
+      "timestamp": 1772530732.415687
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.4455216989843029,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.6702453987730062,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 2166,
-      "num_inliers": 965,
-      "inlier_ratio": 0.4455216989843029,
-      "reprojection_error": 2.4212686776874013,
-      "homography_confidence": 0.4455216989843029,
+      "is_correct": true,
+      "num_matches": 652,
+      "num_inliers": 437,
+      "inlier_ratio": 0.6702453987730062,
+      "reprojection_error": 2.491467484785645,
+      "homography_confidence": 0.6702453987730062,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1833,20 +1833,20 @@
         "identity2": "11",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025626.1587474
+      "timestamp": 1772530733.818393
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.8164535084687176,
+      "verification_confidence": 0.8201160541586073,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2893,
-      "num_inliers": 2362,
-      "inlier_ratio": 0.8164535084687176,
-      "reprojection_error": 1.8845945804967792,
-      "homography_confidence": 0.8164535084687176,
+      "num_matches": 517,
+      "num_inliers": 424,
+      "inlier_ratio": 0.8201160541586073,
+      "reprojection_error": 1.7673592921837618,
+      "homography_confidence": 0.8201160541586073,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1861,20 +1861,20 @@
         "identity2": "38",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025627.593003
+      "timestamp": 1772530735.0871732
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.30263838592860837,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7983606557377049,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1933,
-      "num_inliers": 585,
-      "inlier_ratio": 0.30263838592860837,
-      "reprojection_error": 2.5058797859538706,
-      "homography_confidence": 0.30263838592860837,
+      "is_correct": true,
+      "num_matches": 610,
+      "num_inliers": 487,
+      "inlier_ratio": 0.7983606557377049,
+      "reprojection_error": 1.6386403550848436,
+      "homography_confidence": 0.7983606557377049,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1889,20 +1889,20 @@
         "identity2": "41",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025628.9018924
+      "timestamp": 1772530736.411905
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.35020845741512807,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.6332703213610587,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1679,
-      "num_inliers": 588,
-      "inlier_ratio": 0.35020845741512807,
-      "reprojection_error": 2.654186993461842,
-      "homography_confidence": 0.35020845741512807,
+      "is_correct": true,
+      "num_matches": 529,
+      "num_inliers": 335,
+      "inlier_ratio": 0.6332703213610587,
+      "reprojection_error": 2.577868015338459,
+      "homography_confidence": 0.6332703213610587,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1917,20 +1917,20 @@
         "identity2": "29",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025630.1676471
+      "timestamp": 1772530737.729077
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.8039867109634552,
+      "verification_confidence": 0.49559082892416223,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 1806,
-      "num_inliers": 1452,
-      "inlier_ratio": 0.8039867109634552,
-      "reprojection_error": 2.167855240443998,
-      "homography_confidence": 0.8039867109634552,
+      "num_matches": 567,
+      "num_inliers": 281,
+      "inlier_ratio": 0.49559082892416223,
+      "reprojection_error": 2.579204231732223,
+      "homography_confidence": 0.49559082892416223,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1945,20 +1945,20 @@
         "identity2": "42",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025631.424644
+      "timestamp": 1772530739.0389032
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.37833238797504254,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.6805970149253732,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1763,
-      "num_inliers": 667,
-      "inlier_ratio": 0.37833238797504254,
-      "reprojection_error": 2.351485312600062,
-      "homography_confidence": 0.37833238797504254,
+      "is_correct": true,
+      "num_matches": 335,
+      "num_inliers": 228,
+      "inlier_ratio": 0.6805970149253732,
+      "reprojection_error": 1.2260252363633886,
+      "homography_confidence": 0.6805970149253732,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -1973,20 +1973,20 @@
         "identity2": "35",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025632.7033997
+      "timestamp": 1772530740.2328386
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.810459940652819,
+      "verification_confidence": 0.7504835589941973,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2696,
-      "num_inliers": 2185,
-      "inlier_ratio": 0.810459940652819,
-      "reprojection_error": 1.685371734818023,
-      "homography_confidence": 0.810459940652819,
+      "num_matches": 517,
+      "num_inliers": 388,
+      "inlier_ratio": 0.7504835589941973,
+      "reprojection_error": 2.035517883014631,
+      "homography_confidence": 0.7504835589941973,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2001,20 +2001,20 @@
         "identity2": "33",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025634.106747
+      "timestamp": 1772530741.6197314
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.7220166512488436,
+      "verification_confidence": 0.6835820895522388,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2162,
-      "num_inliers": 1561,
-      "inlier_ratio": 0.7220166512488436,
-      "reprojection_error": 1.921876350972284,
-      "homography_confidence": 0.7220166512488436,
+      "num_matches": 335,
+      "num_inliers": 229,
+      "inlier_ratio": 0.6835820895522388,
+      "reprojection_error": 1.87853808917348,
+      "homography_confidence": 0.6835820895522388,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2029,20 +2029,20 @@
         "identity2": "43",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025635.4012117
+      "timestamp": 1772530742.8466396
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.42164502164502166,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.6987951807228916,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 2310,
-      "num_inliers": 974,
-      "inlier_ratio": 0.42164502164502166,
-      "reprojection_error": 2.3962626692497966,
-      "homography_confidence": 0.42164502164502166,
+      "is_correct": true,
+      "num_matches": 498,
+      "num_inliers": 348,
+      "inlier_ratio": 0.6987951807228916,
+      "reprojection_error": 2.0506682426667138,
+      "homography_confidence": 0.6987951807228916,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2057,20 +2057,20 @@
         "identity2": "21",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025636.7481189
+      "timestamp": 1772530744.1605217
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5717866093805943,
+      "verification_confidence": 0.5121951219512195,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2793,
-      "num_inliers": 1597,
-      "inlier_ratio": 0.5717866093805943,
-      "reprojection_error": 2.340542438112865,
-      "homography_confidence": 0.5717866093805943,
+      "num_matches": 410,
+      "num_inliers": 210,
+      "inlier_ratio": 0.5121951219512195,
+      "reprojection_error": 2.033220496789378,
+      "homography_confidence": 0.5121951219512195,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2085,20 +2085,20 @@
         "identity2": "19",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025638.1643212
+      "timestamp": 1772530745.5748792
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.560740455071346,
+      "verification_confidence": 0.6694736842105263,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2593,
-      "num_inliers": 1454,
-      "inlier_ratio": 0.560740455071346,
-      "reprojection_error": 1.626460029671473,
-      "homography_confidence": 0.560740455071346,
+      "num_matches": 475,
+      "num_inliers": 318,
+      "inlier_ratio": 0.6694736842105263,
+      "reprojection_error": 2.097051947803804,
+      "homography_confidence": 0.6694736842105263,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2113,20 +2113,20 @@
         "identity2": "37",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025639.5568604
+      "timestamp": 1772530746.8004
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.6807318894697535,
+      "verification_confidence": 0.6994535519125683,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2678,
-      "num_inliers": 1823,
-      "inlier_ratio": 0.6807318894697535,
-      "reprojection_error": 2.063641772484148,
-      "homography_confidence": 0.6807318894697535,
+      "num_matches": 366,
+      "num_inliers": 256,
+      "inlier_ratio": 0.6994535519125683,
+      "reprojection_error": 1.847782905939825,
+      "homography_confidence": 0.6994535519125683,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2141,20 +2141,20 @@
         "identity2": "20",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025640.974074
+      "timestamp": 1772530747.955299
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.4559322033898305,
+      "verification_confidence": 0.6099009900990099,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 1180,
-      "num_inliers": 538,
-      "inlier_ratio": 0.4559322033898305,
-      "reprojection_error": 2.268209793241213,
-      "homography_confidence": 0.4559322033898305,
+      "num_matches": 505,
+      "num_inliers": 308,
+      "inlier_ratio": 0.6099009900990099,
+      "reprojection_error": 1.7701987356510145,
+      "homography_confidence": 0.6099009900990099,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2169,20 +2169,20 @@
         "identity2": "5",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025642.14782
+      "timestamp": 1772530749.1023686
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.8809332260659695,
+      "verification_confidence": 0.9544159544159544,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2486,
-      "num_inliers": 2190,
-      "inlier_ratio": 0.8809332260659695,
-      "reprojection_error": 1.7220999321533468,
-      "homography_confidence": 0.8809332260659695,
+      "num_matches": 702,
+      "num_inliers": 670,
+      "inlier_ratio": 0.9544159544159544,
+      "reprojection_error": 1.1895926604520144,
+      "homography_confidence": 0.9544159544159544,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2197,20 +2197,20 @@
         "identity2": "28",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025643.5559163
+      "timestamp": 1772530750.4311833
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.507600434310532,
+      "verification_confidence": 0.5244360902255639,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 1842,
-      "num_inliers": 935,
-      "inlier_ratio": 0.507600434310532,
-      "reprojection_error": 2.4455126079066747,
-      "homography_confidence": 0.507600434310532,
+      "num_matches": 532,
+      "num_inliers": 279,
+      "inlier_ratio": 0.5244360902255639,
+      "reprojection_error": 2.409551274759757,
+      "homography_confidence": 0.5244360902255639,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2225,20 +2225,20 @@
         "identity2": "15",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025644.7989733
+      "timestamp": 1772530751.6978335
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.618513906185139,
+      "verification_confidence": 0.7720090293453724,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2409,
-      "num_inliers": 1490,
-      "inlier_ratio": 0.618513906185139,
-      "reprojection_error": 1.92008334743254,
-      "homography_confidence": 0.618513906185139,
+      "num_matches": 443,
+      "num_inliers": 342,
+      "inlier_ratio": 0.7720090293453724,
+      "reprojection_error": 1.8655043257199442,
+      "homography_confidence": 0.7720090293453724,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2253,20 +2253,20 @@
         "identity2": "23",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025646.158821
+      "timestamp": 1772530752.9095051
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.29484029484029484,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.580952380952381,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1221,
-      "num_inliers": 360,
-      "inlier_ratio": 0.29484029484029484,
-      "reprojection_error": 2.356003343320777,
-      "homography_confidence": 0.29484029484029484,
+      "is_correct": true,
+      "num_matches": 210,
+      "num_inliers": 122,
+      "inlier_ratio": 0.580952380952381,
+      "reprojection_error": 2.2295337675635163,
+      "homography_confidence": 0.580952380952381,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2281,20 +2281,20 @@
         "identity2": "30",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025647.3678446
+      "timestamp": 1772530753.9494739
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5150022391401702,
+      "verification_confidence": 0.7307692307692307,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2233,
-      "num_inliers": 1150,
-      "inlier_ratio": 0.5150022391401702,
-      "reprojection_error": 2.241729298178679,
-      "homography_confidence": 0.5150022391401702,
+      "num_matches": 728,
+      "num_inliers": 532,
+      "inlier_ratio": 0.7307692307692307,
+      "reprojection_error": 0.9567399822510516,
+      "homography_confidence": 0.7307692307692307,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2309,20 +2309,20 @@
         "identity2": "37",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025648.688413
+      "timestamp": 1772530755.1912594
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.6266720713417105,
+      "verification_confidence": 0.603448275862069,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2467,
-      "num_inliers": 1546,
-      "inlier_ratio": 0.6266720713417105,
-      "reprojection_error": 2.1126697693449077,
-      "homography_confidence": 0.6266720713417105,
+      "num_matches": 580,
+      "num_inliers": 350,
+      "inlier_ratio": 0.603448275862069,
+      "reprojection_error": 2.0750631626456824,
+      "homography_confidence": 0.603448275862069,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2337,20 +2337,20 @@
         "identity2": "12",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025650.0390081
+      "timestamp": 1772530756.458007
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.4188150158299412,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.6737357259380098,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 2211,
-      "num_inliers": 926,
-      "inlier_ratio": 0.4188150158299412,
-      "reprojection_error": 2.5931050049367506,
-      "homography_confidence": 0.4188150158299412,
+      "is_correct": true,
+      "num_matches": 613,
+      "num_inliers": 413,
+      "inlier_ratio": 0.6737357259380098,
+      "reprojection_error": 1.9957309818374327,
+      "homography_confidence": 0.6737357259380098,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2365,20 +2365,20 @@
         "identity2": "1",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025651.3726394
+      "timestamp": 1772530757.7041433
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.23137697516930023,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7613941018766756,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1772,
-      "num_inliers": 410,
-      "inlier_ratio": 0.23137697516930023,
-      "reprojection_error": 2.1578791977910203,
-      "homography_confidence": 0.23137697516930023,
+      "is_correct": true,
+      "num_matches": 373,
+      "num_inliers": 284,
+      "inlier_ratio": 0.7613941018766756,
+      "reprojection_error": 1.947785240362459,
+      "homography_confidence": 0.7613941018766756,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2393,20 +2393,20 @@
         "identity2": "38",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025652.7180436
+      "timestamp": 1772530758.8738472
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.3884462151394422,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.8252427184466019,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 2008,
-      "num_inliers": 780,
-      "inlier_ratio": 0.3884462151394422,
-      "reprojection_error": 2.612257062705766,
-      "homography_confidence": 0.3884462151394422,
+      "is_correct": true,
+      "num_matches": 309,
+      "num_inliers": 255,
+      "inlier_ratio": 0.8252427184466019,
+      "reprojection_error": 1.492617963033964,
+      "homography_confidence": 0.8252427184466019,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2421,20 +2421,20 @@
         "identity2": "9",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025654.0147083
+      "timestamp": 1772530760.0909388
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.6775735294117647,
+      "verification_confidence": 0.7012263099219621,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2720,
-      "num_inliers": 1843,
-      "inlier_ratio": 0.6775735294117647,
-      "reprojection_error": 1.9689765748418102,
-      "homography_confidence": 0.6775735294117647,
+      "num_matches": 897,
+      "num_inliers": 629,
+      "inlier_ratio": 0.7012263099219621,
+      "reprojection_error": 1.4644459853670826,
+      "homography_confidence": 0.7012263099219621,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2449,20 +2449,20 @@
         "identity2": "45",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025655.4154212
+      "timestamp": 1772530761.388125
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.24202898550724639,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5626666666666666,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1380,
-      "num_inliers": 334,
-      "inlier_ratio": 0.24202898550724639,
-      "reprojection_error": 2.259988530731265,
-      "homography_confidence": 0.24202898550724639,
+      "is_correct": true,
+      "num_matches": 375,
+      "num_inliers": 211,
+      "inlier_ratio": 0.5626666666666666,
+      "reprojection_error": 1.611301883073558,
+      "homography_confidence": 0.5626666666666666,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2477,20 +2477,20 @@
         "identity2": "34",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025656.6796737
+      "timestamp": 1772530762.5277948
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.6049085659287776,
+      "verification_confidence": 0.7196467991169978,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2078,
-      "num_inliers": 1257,
-      "inlier_ratio": 0.6049085659287776,
-      "reprojection_error": 2.4263924219605473,
-      "homography_confidence": 0.6049085659287776,
+      "num_matches": 453,
+      "num_inliers": 326,
+      "inlier_ratio": 0.7196467991169978,
+      "reprojection_error": 2.6030038100777815,
+      "homography_confidence": 0.7196467991169978,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2505,20 +2505,20 @@
         "identity2": "6",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025657.966495
+      "timestamp": 1772530763.767339
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.8118994826311899,
+      "verification_confidence": 0.6782608695652174,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2706,
-      "num_inliers": 2197,
-      "inlier_ratio": 0.8118994826311899,
-      "reprojection_error": 1.6815348191088986,
-      "homography_confidence": 0.8118994826311899,
+      "num_matches": 460,
+      "num_inliers": 312,
+      "inlier_ratio": 0.6782608695652174,
+      "reprojection_error": 0.9647480716783341,
+      "homography_confidence": 0.6782608695652174,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2533,20 +2533,20 @@
         "identity2": "32",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025659.351359
+      "timestamp": 1772530764.9592838
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5949103045473508,
+      "verification_confidence": 0.6992481203007519,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2397,
-      "num_inliers": 1426,
-      "inlier_ratio": 0.5949103045473508,
-      "reprojection_error": 2.3794295293504986,
-      "homography_confidence": 0.5949103045473508,
+      "num_matches": 798,
+      "num_inliers": 558,
+      "inlier_ratio": 0.6992481203007519,
+      "reprojection_error": 1.5766484489641046,
+      "homography_confidence": 0.6992481203007519,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2561,20 +2561,20 @@
         "identity2": "39",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025660.7154863
+      "timestamp": 1772530766.286033
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.3826625386996904,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.6644295302013423,
       "ground_truth": true,
-      "is_correct": false,
-      "num_matches": 1615,
-      "num_inliers": 618,
-      "inlier_ratio": 0.3826625386996904,
-      "reprojection_error": 2.220880749149244,
-      "homography_confidence": 0.3826625386996904,
+      "is_correct": true,
+      "num_matches": 298,
+      "num_inliers": 198,
+      "inlier_ratio": 0.6644295302013423,
+      "reprojection_error": 1.7236844389967487,
+      "homography_confidence": 0.6644295302013423,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2589,20 +2589,20 @@
         "identity2": "36",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025661.9352055
+      "timestamp": 1772530767.391379
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.8336239972096268,
+      "verification_confidence": 0.7151515151515152,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2867,
-      "num_inliers": 2390,
-      "inlier_ratio": 0.8336239972096268,
-      "reprojection_error": 1.7096790452401232,
-      "homography_confidence": 0.8336239972096268,
+      "num_matches": 495,
+      "num_inliers": 354,
+      "inlier_ratio": 0.7151515151515152,
+      "reprojection_error": 1.6471240403537137,
+      "homography_confidence": 0.7151515151515152,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2617,20 +2617,20 @@
         "identity2": "25",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025663.3594055
+      "timestamp": 1772530768.6284251
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.4532967032967033,
+      "verification_confidence": 0.7009873060648801,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 1820,
-      "num_inliers": 825,
-      "inlier_ratio": 0.4532967032967033,
-      "reprojection_error": 1.6438482257683142,
-      "homography_confidence": 0.4532967032967033,
+      "num_matches": 709,
+      "num_inliers": 497,
+      "inlier_ratio": 0.7009873060648801,
+      "reprojection_error": 1.4728578504372436,
+      "homography_confidence": 0.7009873060648801,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2645,20 +2645,20 @@
         "identity2": "40",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025664.5964277
+      "timestamp": 1772530769.9011333
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.7476882430647291,
+      "verification_confidence": 0.7447552447552448,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2271,
-      "num_inliers": 1698,
-      "inlier_ratio": 0.7476882430647291,
-      "reprojection_error": 1.947328306027797,
-      "homography_confidence": 0.7476882430647291,
+      "num_matches": 286,
+      "num_inliers": 213,
+      "inlier_ratio": 0.7447552447552448,
+      "reprojection_error": 1.6357405972350874,
+      "homography_confidence": 0.7447552447552448,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2673,20 +2673,20 @@
         "identity2": "20",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025665.9144545
+      "timestamp": 1772530771.1923716
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5590062111801242,
+      "verification_confidence": 0.6481481481481481,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2093,
-      "num_inliers": 1170,
-      "inlier_ratio": 0.5590062111801242,
-      "reprojection_error": 2.263314600823123,
-      "homography_confidence": 0.5590062111801242,
+      "num_matches": 486,
+      "num_inliers": 315,
+      "inlier_ratio": 0.6481481481481481,
+      "reprojection_error": 2.2501460056777636,
+      "homography_confidence": 0.6481481481481481,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2701,20 +2701,20 @@
         "identity2": "26",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025667.2218783
+      "timestamp": 1772530772.4808455
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.5339285714285714,
+      "verification_confidence": 0.5353075170842825,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2240,
-      "num_inliers": 1196,
-      "inlier_ratio": 0.5339285714285714,
-      "reprojection_error": 1.67247253680944,
-      "homography_confidence": 0.5339285714285714,
+      "num_matches": 439,
+      "num_inliers": 235,
+      "inlier_ratio": 0.5353075170842825,
+      "reprojection_error": 1.5739098554903233,
+      "homography_confidence": 0.5353075170842825,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2729,20 +2729,20 @@
         "identity2": "22",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025668.577402
+      "timestamp": 1772530773.727339
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.8368067820558107,
+      "verification_confidence": 0.6662387676508345,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2831,
-      "num_inliers": 2369,
-      "inlier_ratio": 0.8368067820558107,
-      "reprojection_error": 1.714902378425068,
-      "homography_confidence": 0.8368067820558107,
+      "num_matches": 779,
+      "num_inliers": 519,
+      "inlier_ratio": 0.6662387676508345,
+      "reprojection_error": 1.753689615684765,
+      "homography_confidence": 0.6662387676508345,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2757,20 +2757,20 @@
         "identity2": "42",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025669.9846277
+      "timestamp": 1772530775.0297658
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.36363636363636365,
+      "verification_confidence": 0.3786764705882353,
       "ground_truth": true,
       "is_correct": false,
-      "num_matches": 297,
-      "num_inliers": 108,
-      "inlier_ratio": 0.36363636363636365,
-      "reprojection_error": 2.224169715457663,
-      "homography_confidence": 0.36363636363636365,
+      "num_matches": 272,
+      "num_inliers": 103,
+      "inlier_ratio": 0.3786764705882353,
+      "reprojection_error": 2.086523609819996,
+      "homography_confidence": 0.3786764705882353,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2785,20 +2785,20 @@
         "identity2": "2",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025670.9454782
+      "timestamp": 1772530776.1196358
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": true,
-      "verification_confidence": 0.6541149068322981,
+      "verification_confidence": 0.6925,
       "ground_truth": true,
       "is_correct": true,
-      "num_matches": 2576,
-      "num_inliers": 1685,
-      "inlier_ratio": 0.6541149068322981,
-      "reprojection_error": 1.9880645991465153,
-      "homography_confidence": 0.6541149068322981,
+      "num_matches": 800,
+      "num_inliers": 554,
+      "inlier_ratio": 0.6925,
+      "reprojection_error": 1.4961045930030534,
+      "homography_confidence": 0.6925,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2813,20 +2813,20 @@
         "identity2": "29",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025672.3162007
+      "timestamp": 1772530777.4038706
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.10020449897750511,
+      "verification_confidence": 0.375,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 489,
-      "num_inliers": 49,
-      "inlier_ratio": 0.10020449897750511,
-      "reprojection_error": 1.8661767170940455,
-      "homography_confidence": 0.10020449897750511,
+      "num_matches": 88,
+      "num_inliers": 33,
+      "inlier_ratio": 0.375,
+      "reprojection_error": 2.4464188036000802,
+      "homography_confidence": 0.375,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2841,20 +2841,20 @@
         "identity2": "36",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025673.3991616
+      "timestamp": 1772530778.3289704
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1872,
+      "verification_confidence": 0.4094488188976378,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 625,
-      "num_inliers": 117,
-      "inlier_ratio": 0.1872,
-      "reprojection_error": 2.368417234945907,
-      "homography_confidence": 0.1872,
+      "num_matches": 127,
+      "num_inliers": 52,
+      "inlier_ratio": 0.4094488188976378,
+      "reprojection_error": 2.2389918196273566,
+      "homography_confidence": 0.4094488188976378,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2869,20 +2869,20 @@
         "identity2": "1",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025674.4963598
+      "timestamp": 1772530779.2721002
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1282051282051282,
+      "verification_confidence": 0.3409090909090909,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 585,
+      "num_matches": 220,
       "num_inliers": 75,
-      "inlier_ratio": 0.1282051282051282,
-      "reprojection_error": 2.3633024145742096,
-      "homography_confidence": 0.1282051282051282,
+      "inlier_ratio": 0.3409090909090909,
+      "reprojection_error": 2.717140899277814,
+      "homography_confidence": 0.3409090909090909,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2897,20 +2897,20 @@
         "identity2": "5",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025675.5973284
+      "timestamp": 1772530780.3709595
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.0905109489051095,
+      "verification_confidence": 0.3735632183908046,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 685,
-      "num_inliers": 62,
-      "inlier_ratio": 0.0905109489051095,
-      "reprojection_error": 2.417952788714645,
-      "homography_confidence": 0.0905109489051095,
+      "num_matches": 174,
+      "num_inliers": 65,
+      "inlier_ratio": 0.3735632183908046,
+      "reprojection_error": 1.8991408747620584,
+      "homography_confidence": 0.3735632183908046,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2925,20 +2925,20 @@
         "identity2": "31",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025676.7173543
+      "timestamp": 1772530781.382397
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.10484927916120576,
+      "verification_confidence": 0.36936936936936937,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 763,
-      "num_inliers": 80,
-      "inlier_ratio": 0.10484927916120576,
-      "reprojection_error": 2.8014325495175214,
-      "homography_confidence": 0.10484927916120576,
+      "num_matches": 111,
+      "num_inliers": 41,
+      "inlier_ratio": 0.36936936936936937,
+      "reprojection_error": 1.7702355388981283,
+      "homography_confidence": 0.36936936936936937,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2953,20 +2953,20 @@
         "identity2": "7",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025677.851346
+      "timestamp": 1772530782.3250575
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.09748427672955975,
+      "verification_confidence": 0.3008849557522124,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 636,
-      "num_inliers": 62,
-      "inlier_ratio": 0.09748427672955975,
-      "reprojection_error": 2.4109392468036948,
-      "homography_confidence": 0.09748427672955975,
+      "num_matches": 113,
+      "num_inliers": 34,
+      "inlier_ratio": 0.3008849557522124,
+      "reprojection_error": 1.9323819457948952,
+      "homography_confidence": 0.3008849557522124,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -2981,20 +2981,20 @@
         "identity2": "8",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025678.9584687
+      "timestamp": 1772530783.5346353
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.12054329371816638,
+      "verification_confidence": 0.4024390243902439,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 589,
-      "num_inliers": 71,
-      "inlier_ratio": 0.12054329371816638,
-      "reprojection_error": 2.7324764882904065,
-      "homography_confidence": 0.12054329371816638,
+      "num_matches": 164,
+      "num_inliers": 66,
+      "inlier_ratio": 0.4024390243902439,
+      "reprojection_error": 1.3940411064496576,
+      "homography_confidence": 0.4024390243902439,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3009,20 +3009,20 @@
         "identity2": "11",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025680.0686524
+      "timestamp": 1772530784.5577922
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.13221153846153846,
+      "verification_confidence": 0.38860103626943004,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 416,
-      "num_inliers": 55,
-      "inlier_ratio": 0.13221153846153846,
-      "reprojection_error": 2.5279830959630214,
-      "homography_confidence": 0.13221153846153846,
+      "num_matches": 193,
+      "num_inliers": 75,
+      "inlier_ratio": 0.38860103626943004,
+      "reprojection_error": 2.4045745987877556,
+      "homography_confidence": 0.38860103626943004,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3037,20 +3037,20 @@
         "identity2": "11",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025681.1228995
+      "timestamp": 1772530785.5762036
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.08813559322033898,
+      "verification_confidence": 0.32142857142857145,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 295,
-      "num_inliers": 26,
-      "inlier_ratio": 0.08813559322033898,
-      "reprojection_error": 2.8359970783610082,
-      "homography_confidence": 0.08813559322033898,
+      "num_matches": 56,
+      "num_inliers": 18,
+      "inlier_ratio": 0.32142857142857145,
+      "reprojection_error": 1.6224486098865105,
+      "homography_confidence": 0.32142857142857145,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3065,20 +3065,20 @@
         "identity2": "35",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025682.143908
+      "timestamp": 1772530786.4839077
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.16367980884109917,
+      "verification_confidence": 0.3961352657004831,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 837,
-      "num_inliers": 137,
-      "inlier_ratio": 0.16367980884109917,
-      "reprojection_error": 2.644007177837338,
-      "homography_confidence": 0.16367980884109917,
+      "num_matches": 414,
+      "num_inliers": 164,
+      "inlier_ratio": 0.3961352657004831,
+      "reprojection_error": 2.3719178908453062,
+      "homography_confidence": 0.3961352657004831,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3093,20 +3093,20 @@
         "identity2": "46",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025683.3083978
+      "timestamp": 1772530787.6818588
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1296969696969697,
+      "verification_confidence": 0.4088050314465409,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 825,
-      "num_inliers": 107,
-      "inlier_ratio": 0.1296969696969697,
-      "reprojection_error": 2.5082567396379734,
-      "homography_confidence": 0.1296969696969697,
+      "num_matches": 159,
+      "num_inliers": 65,
+      "inlier_ratio": 0.4088050314465409,
+      "reprojection_error": 1.5879161770503727,
+      "homography_confidence": 0.4088050314465409,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3121,20 +3121,20 @@
         "identity2": "34",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025684.4523404
+      "timestamp": 1772530788.6778748
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1876750700280112,
+      "verification_confidence": 0.3953488372093023,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 714,
-      "num_inliers": 134,
-      "inlier_ratio": 0.1876750700280112,
-      "reprojection_error": 2.5178102359372287,
-      "homography_confidence": 0.1876750700280112,
+      "num_matches": 172,
+      "num_inliers": 68,
+      "inlier_ratio": 0.3953488372093023,
+      "reprojection_error": 2.2064505031775945,
+      "homography_confidence": 0.3953488372093023,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3149,20 +3149,20 @@
         "identity2": "42",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025685.5702894
+      "timestamp": 1772530789.65104
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.09760589318600368,
+      "verification_confidence": 0.41904761904761906,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 543,
-      "num_inliers": 53,
-      "inlier_ratio": 0.09760589318600368,
-      "reprojection_error": 2.1967524047165936,
-      "homography_confidence": 0.09760589318600368,
+      "num_matches": 105,
+      "num_inliers": 44,
+      "inlier_ratio": 0.41904761904761906,
+      "reprojection_error": 2.321620447612308,
+      "homography_confidence": 0.41904761904761906,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3177,20 +3177,20 @@
         "identity2": "8",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025686.6706095
+      "timestamp": 1772530790.6661446
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1391035548686244,
+      "verification_confidence": 0.41798941798941797,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 647,
-      "num_inliers": 90,
-      "inlier_ratio": 0.1391035548686244,
-      "reprojection_error": 2.9523449347629986,
-      "homography_confidence": 0.1391035548686244,
+      "num_matches": 189,
+      "num_inliers": 79,
+      "inlier_ratio": 0.41798941798941797,
+      "reprojection_error": 2.3940392401597403,
+      "homography_confidence": 0.41798941798941797,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3205,20 +3205,20 @@
         "identity2": "3",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025687.7984219
+      "timestamp": 1772530791.690556
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.08189655172413793,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.48148148148148145,
       "ground_truth": false,
-      "is_correct": true,
-      "num_matches": 464,
-      "num_inliers": 38,
-      "inlier_ratio": 0.08189655172413793,
-      "reprojection_error": 2.2762182109436195,
-      "homography_confidence": 0.08189655172413793,
+      "is_correct": false,
+      "num_matches": 27,
+      "num_inliers": 13,
+      "inlier_ratio": 0.48148148148148145,
+      "reprojection_error": 1.750054274768785,
+      "homography_confidence": 0.48148148148148145,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3233,20 +3233,20 @@
         "identity2": "25",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025688.8841412
+      "timestamp": 1772530792.5905142
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1692126909518214,
+      "verification_confidence": 0.3854166666666667,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 851,
-      "num_inliers": 144,
-      "inlier_ratio": 0.1692126909518214,
-      "reprojection_error": 2.2455027101437466,
-      "homography_confidence": 0.1692126909518214,
+      "num_matches": 96,
+      "num_inliers": 37,
+      "inlier_ratio": 0.3854166666666667,
+      "reprojection_error": 1.9762730343382195,
+      "homography_confidence": 0.3854166666666667,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3261,20 +3261,20 @@
         "identity2": "16",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025690.0346572
+      "timestamp": 1772530793.5551536
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.12855209742895804,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.4601226993865031,
       "ground_truth": false,
-      "is_correct": true,
-      "num_matches": 739,
-      "num_inliers": 95,
-      "inlier_ratio": 0.12855209742895804,
-      "reprojection_error": 2.3933267411479107,
-      "homography_confidence": 0.12855209742895804,
+      "is_correct": false,
+      "num_matches": 163,
+      "num_inliers": 75,
+      "inlier_ratio": 0.4601226993865031,
+      "reprojection_error": 1.8915476306635648,
+      "homography_confidence": 0.4601226993865031,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3289,20 +3289,20 @@
         "identity2": "18",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025691.166918
+      "timestamp": 1772530794.5365074
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.14860681114551083,
+      "verification_confidence": 0.4470046082949309,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 646,
-      "num_inliers": 96,
-      "inlier_ratio": 0.14860681114551083,
-      "reprojection_error": 2.865172275500552,
-      "homography_confidence": 0.14860681114551083,
+      "num_matches": 217,
+      "num_inliers": 97,
+      "inlier_ratio": 0.4470046082949309,
+      "reprojection_error": 2.0564310308241684,
+      "homography_confidence": 0.4470046082949309,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3317,20 +3317,20 @@
         "identity2": "21",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025692.2869027
+      "timestamp": 1772530795.6634653
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1528724440116845,
+      "verification_confidence": 0.2952755905511811,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 1027,
-      "num_inliers": 157,
-      "inlier_ratio": 0.1528724440116845,
-      "reprojection_error": 3.0415078537975444,
-      "homography_confidence": 0.1528724440116845,
+      "num_matches": 254,
+      "num_inliers": 75,
+      "inlier_ratio": 0.2952755905511811,
+      "reprojection_error": 2.6041080198107913,
+      "homography_confidence": 0.2952755905511811,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3345,20 +3345,20 @@
         "identity2": "27",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025693.4766355
+      "timestamp": 1772530796.8175526
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.14641744548286603,
+      "verification_confidence": 0.43636363636363634,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 321,
-      "num_inliers": 47,
-      "inlier_ratio": 0.14641744548286603,
-      "reprojection_error": 2.23451689036637,
-      "homography_confidence": 0.14641744548286603,
+      "num_matches": 55,
+      "num_inliers": 24,
+      "inlier_ratio": 0.43636363636363634,
+      "reprojection_error": 1.7640935812138816,
+      "homography_confidence": 0.43636363636363634,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3373,20 +3373,20 @@
         "identity2": "36",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025694.4996054
+      "timestamp": 1772530797.7081969
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.11691022964509394,
+      "verification_confidence": 0.38926174496644295,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 479,
-      "num_inliers": 56,
-      "inlier_ratio": 0.11691022964509394,
-      "reprojection_error": 2.0955078268549303,
-      "homography_confidence": 0.11691022964509394,
+      "num_matches": 149,
+      "num_inliers": 58,
+      "inlier_ratio": 0.38926174496644295,
+      "reprojection_error": 2.454783131489459,
+      "homography_confidence": 0.38926174496644295,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3401,20 +3401,20 @@
         "identity2": "7",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025695.5587533
+      "timestamp": 1772530798.729036
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.24025974025974026,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.4642857142857143,
       "ground_truth": false,
-      "is_correct": true,
-      "num_matches": 308,
-      "num_inliers": 74,
-      "inlier_ratio": 0.24025974025974026,
-      "reprojection_error": 2.564087340537917,
-      "homography_confidence": 0.24025974025974026,
+      "is_correct": false,
+      "num_matches": 28,
+      "num_inliers": 13,
+      "inlier_ratio": 0.4642857142857143,
+      "reprojection_error": 2.1255934145112034,
+      "homography_confidence": 0.4642857142857143,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3429,20 +3429,20 @@
         "identity2": "32",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025696.5610962
+      "timestamp": 1772530799.6814518
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.0784313725490196,
+      "verification_confidence": 0.44776119402985076,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 357,
-      "num_inliers": 28,
-      "inlier_ratio": 0.0784313725490196,
-      "reprojection_error": 1.9961394864635769,
-      "homography_confidence": 0.0784313725490196,
+      "num_matches": 134,
+      "num_inliers": 60,
+      "inlier_ratio": 0.44776119402985076,
+      "reprojection_error": 1.997922212365669,
+      "homography_confidence": 0.44776119402985076,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3457,20 +3457,20 @@
         "identity2": "6",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025697.5832896
+      "timestamp": 1772530800.6321723
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.07156673114119923,
+      "verification_confidence": 0.3076923076923077,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 517,
-      "num_inliers": 37,
-      "inlier_ratio": 0.07156673114119923,
-      "reprojection_error": 2.6225593856122456,
-      "homography_confidence": 0.07156673114119923,
+      "num_matches": 39,
+      "num_inliers": 12,
+      "inlier_ratio": 0.3076923076923077,
+      "reprojection_error": 1.398450053510768,
+      "homography_confidence": 0.3076923076923077,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3485,20 +3485,20 @@
         "identity2": "38",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025698.664147
+      "timestamp": 1772530801.5241876
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.14601769911504425,
+      "verification_confidence": 0.4158415841584158,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 678,
-      "num_inliers": 99,
-      "inlier_ratio": 0.14601769911504425,
-      "reprojection_error": 2.602270214307061,
-      "homography_confidence": 0.14601769911504425,
+      "num_matches": 202,
+      "num_inliers": 84,
+      "inlier_ratio": 0.4158415841584158,
+      "reprojection_error": 2.65629050397242,
+      "homography_confidence": 0.4158415841584158,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3513,20 +3513,20 @@
         "identity2": "11",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025699.7836647
+      "timestamp": 1772530802.594422
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.11965811965811966,
+      "verification_confidence": 0.4117647058823529,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 585,
-      "num_inliers": 70,
-      "inlier_ratio": 0.11965811965811966,
-      "reprojection_error": 2.871827093204972,
-      "homography_confidence": 0.11965811965811966,
+      "num_matches": 102,
+      "num_inliers": 42,
+      "inlier_ratio": 0.4117647058823529,
+      "reprojection_error": 1.534182183033546,
+      "homography_confidence": 0.4117647058823529,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3541,20 +3541,20 @@
         "identity2": "10",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025700.889273
+      "timestamp": 1772530803.5345194
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1314878892733564,
+      "verification_confidence": 0.3665158371040724,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 289,
-      "num_inliers": 38,
-      "inlier_ratio": 0.1314878892733564,
-      "reprojection_error": 2.32511560158476,
-      "homography_confidence": 0.1314878892733564,
+      "num_matches": 221,
+      "num_inliers": 81,
+      "inlier_ratio": 0.3665158371040724,
+      "reprojection_error": 2.0530107860650553,
+      "homography_confidence": 0.3665158371040724,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3569,20 +3569,20 @@
         "identity2": "37",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025701.9069746
+      "timestamp": 1772530804.58078
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.09499136442141623,
+      "verification_confidence": 0.28187919463087246,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 579,
-      "num_inliers": 55,
-      "inlier_ratio": 0.09499136442141623,
-      "reprojection_error": 2.617345727033224,
-      "homography_confidence": 0.09499136442141623,
+      "num_matches": 149,
+      "num_inliers": 42,
+      "inlier_ratio": 0.28187919463087246,
+      "reprojection_error": 2.6053367689429763,
+      "homography_confidence": 0.28187919463087246,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3597,20 +3597,20 @@
         "identity2": "5",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025702.99949
+      "timestamp": 1772530805.5661795
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.15007656967840735,
+      "verification_confidence": 0.4392523364485981,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 653,
-      "num_inliers": 98,
-      "inlier_ratio": 0.15007656967840735,
-      "reprojection_error": 2.628187663391752,
-      "homography_confidence": 0.15007656967840735,
+      "num_matches": 107,
+      "num_inliers": 47,
+      "inlier_ratio": 0.4392523364485981,
+      "reprojection_error": 2.390628337078835,
+      "homography_confidence": 0.4392523364485981,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3625,20 +3625,20 @@
         "identity2": "32",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025704.0985463
+      "timestamp": 1772530806.482082
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.11226611226611227,
+      "verification_confidence": 0.3939393939393939,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 481,
-      "num_inliers": 54,
-      "inlier_ratio": 0.11226611226611227,
-      "reprojection_error": 2.478598152394238,
-      "homography_confidence": 0.11226611226611227,
+      "num_matches": 99,
+      "num_inliers": 39,
+      "inlier_ratio": 0.3939393939393939,
+      "reprojection_error": 1.803709324237254,
+      "homography_confidence": 0.3939393939393939,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3653,20 +3653,20 @@
         "identity2": "40",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025705.1689832
+      "timestamp": 1772530807.4025064
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.19469026548672566,
+      "verification_confidence": 0.375,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 791,
-      "num_inliers": 154,
-      "inlier_ratio": 0.19469026548672566,
-      "reprojection_error": 2.7778484548504565,
-      "homography_confidence": 0.19469026548672566,
+      "num_matches": 136,
+      "num_inliers": 51,
+      "inlier_ratio": 0.375,
+      "reprojection_error": 2.5055983399921447,
+      "homography_confidence": 0.375,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3681,20 +3681,20 @@
         "identity2": "2",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025706.311095
+      "timestamp": 1772530808.406333
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.14228187919463087,
+      "verification_confidence": 0.3643410852713178,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 745,
-      "num_inliers": 106,
-      "inlier_ratio": 0.14228187919463087,
-      "reprojection_error": 2.8015940205452616,
-      "homography_confidence": 0.14228187919463087,
+      "num_matches": 258,
+      "num_inliers": 94,
+      "inlier_ratio": 0.3643410852713178,
+      "reprojection_error": 2.4159944574522014,
+      "homography_confidence": 0.3643410852713178,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3709,20 +3709,20 @@
         "identity2": "36",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025707.4450948
+      "timestamp": 1772530809.4925478
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.12518195050946143,
+      "verification_confidence": 0.23563218390804597,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 687,
-      "num_inliers": 86,
-      "inlier_ratio": 0.12518195050946143,
-      "reprojection_error": 2.443903876554225,
-      "homography_confidence": 0.12518195050946143,
+      "num_matches": 174,
+      "num_inliers": 41,
+      "inlier_ratio": 0.23563218390804597,
+      "reprojection_error": 2.9861666748696543,
+      "homography_confidence": 0.23563218390804597,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3737,20 +3737,20 @@
         "identity2": "45",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025708.5594442
+      "timestamp": 1772530810.5220919
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.14353312302839116,
+      "verification_confidence": 0.27638190954773867,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 634,
-      "num_inliers": 91,
-      "inlier_ratio": 0.14353312302839116,
-      "reprojection_error": 2.4941709377061625,
-      "homography_confidence": 0.14353312302839116,
+      "num_matches": 199,
+      "num_inliers": 55,
+      "inlier_ratio": 0.27638190954773867,
+      "reprojection_error": 1.9190923321786035,
+      "homography_confidence": 0.27638190954773867,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3765,20 +3765,20 @@
         "identity2": "46",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025709.663473
+      "timestamp": 1772530811.5959861
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1354679802955665,
+      "verification_confidence": 0.4230769230769231,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 406,
-      "num_inliers": 55,
-      "inlier_ratio": 0.1354679802955665,
-      "reprojection_error": 2.6412747272320902,
-      "homography_confidence": 0.1354679802955665,
+      "num_matches": 78,
+      "num_inliers": 33,
+      "inlier_ratio": 0.4230769230769231,
+      "reprojection_error": 2.126032347105034,
+      "homography_confidence": 0.4230769230769231,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3793,20 +3793,20 @@
         "identity2": "30",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025710.705715
+      "timestamp": 1772530812.4976726
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.14353312302839116,
+      "verification_confidence": 0.3516483516483517,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 634,
-      "num_inliers": 91,
-      "inlier_ratio": 0.14353312302839116,
-      "reprojection_error": 2.44268892148602,
-      "homography_confidence": 0.14353312302839116,
+      "num_matches": 91,
+      "num_inliers": 32,
+      "inlier_ratio": 0.3516483516483517,
+      "reprojection_error": 2.1754301199628756,
+      "homography_confidence": 0.3516483516483517,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3821,20 +3821,20 @@
         "identity2": "35",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025711.8041394
+      "timestamp": 1772530813.4249039
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.14201183431952663,
+      "verification_confidence": 0.40540540540540543,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 845,
-      "num_inliers": 120,
-      "inlier_ratio": 0.14201183431952663,
-      "reprojection_error": 2.238730816715413,
-      "homography_confidence": 0.14201183431952663,
+      "num_matches": 185,
+      "num_inliers": 75,
+      "inlier_ratio": 0.40540540540540543,
+      "reprojection_error": 2.2357906367533102,
+      "homography_confidence": 0.40540540540540543,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3849,20 +3849,20 @@
         "identity2": "6",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025712.9602926
+      "timestamp": 1772530814.3978431
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.10135135135135136,
+      "verification_confidence": 0.36619718309859156,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 592,
-      "num_inliers": 60,
-      "inlier_ratio": 0.10135135135135136,
-      "reprojection_error": 2.162352690795366,
-      "homography_confidence": 0.10135135135135136,
+      "num_matches": 71,
+      "num_inliers": 26,
+      "inlier_ratio": 0.36619718309859156,
+      "reprojection_error": 2.137757067737666,
+      "homography_confidence": 0.36619718309859156,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3877,20 +3877,20 @@
         "identity2": "17",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025714.0376081
+      "timestamp": 1772530815.3185904
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.15437392795883362,
+      "verification_confidence": 0.3037037037037037,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 583,
-      "num_inliers": 90,
-      "inlier_ratio": 0.15437392795883362,
-      "reprojection_error": 2.607774408708193,
-      "homography_confidence": 0.15437392795883362,
+      "num_matches": 135,
+      "num_inliers": 41,
+      "inlier_ratio": 0.3037037037037037,
+      "reprojection_error": 1.7533374008315208,
+      "homography_confidence": 0.3037037037037037,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3905,20 +3905,20 @@
         "identity2": "36",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025715.139723
+      "timestamp": 1772530816.3126123
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.15036045314109167,
+      "verification_confidence": 0.3014354066985646,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 971,
-      "num_inliers": 146,
-      "inlier_ratio": 0.15036045314109167,
-      "reprojection_error": 2.6705457066650684,
-      "homography_confidence": 0.15036045314109167,
+      "num_matches": 209,
+      "num_inliers": 63,
+      "inlier_ratio": 0.3014354066985646,
+      "reprojection_error": 2.2696604098780235,
+      "homography_confidence": 0.3014354066985646,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3933,20 +3933,20 @@
         "identity2": "18",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025716.311813
+      "timestamp": 1772530817.359835
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.16627634660421545,
+      "verification_confidence": 0.41106719367588934,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 427,
-      "num_inliers": 71,
-      "inlier_ratio": 0.16627634660421545,
-      "reprojection_error": 2.4251532019877744,
-      "homography_confidence": 0.16627634660421545,
+      "num_matches": 253,
+      "num_inliers": 104,
+      "inlier_ratio": 0.41106719367588934,
+      "reprojection_error": 2.079735727277983,
+      "homography_confidence": 0.41106719367588934,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3961,20 +3961,20 @@
         "identity2": "37",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025717.3470683
+      "timestamp": 1772530818.4647968
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.09915611814345991,
+      "verification_confidence": 0.2621359223300971,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 474,
-      "num_inliers": 47,
-      "inlier_ratio": 0.09915611814345991,
-      "reprojection_error": 2.430638894008455,
-      "homography_confidence": 0.09915611814345991,
+      "num_matches": 103,
+      "num_inliers": 27,
+      "inlier_ratio": 0.2621359223300971,
+      "reprojection_error": 2.144095432221302,
+      "homography_confidence": 0.2621359223300971,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -3989,20 +3989,20 @@
         "identity2": "45",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025718.407503
+      "timestamp": 1772530819.398613
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1375796178343949,
+      "verification_confidence": 0.375,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 785,
-      "num_inliers": 108,
-      "inlier_ratio": 0.1375796178343949,
-      "reprojection_error": 2.730034200876856,
-      "homography_confidence": 0.1375796178343949,
+      "num_matches": 168,
+      "num_inliers": 63,
+      "inlier_ratio": 0.375,
+      "reprojection_error": 2.411328270547989,
+      "homography_confidence": 0.375,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4017,20 +4017,20 @@
         "identity2": "35",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025719.564454
+      "timestamp": 1772530820.4465768
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.1297709923664122,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.4528301886792453,
       "ground_truth": false,
-      "is_correct": true,
-      "num_matches": 393,
-      "num_inliers": 51,
-      "inlier_ratio": 0.1297709923664122,
-      "reprojection_error": 1.948602657303398,
-      "homography_confidence": 0.1297709923664122,
+      "is_correct": false,
+      "num_matches": 106,
+      "num_inliers": 48,
+      "inlier_ratio": 0.4528301886792453,
+      "reprojection_error": 2.6438976343778973,
+      "homography_confidence": 0.4528301886792453,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4045,20 +4045,20 @@
         "identity2": "32",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025720.6201212
+      "timestamp": 1772530821.353637
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.2033096926713948,
+      "verification_confidence": 0.3972602739726027,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 423,
-      "num_inliers": 86,
-      "inlier_ratio": 0.2033096926713948,
-      "reprojection_error": 2.2926397331102755,
-      "homography_confidence": 0.2033096926713948,
+      "num_matches": 146,
+      "num_inliers": 58,
+      "inlier_ratio": 0.3972602739726027,
+      "reprojection_error": 2.0764691080237885,
+      "homography_confidence": 0.3972602739726027,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4073,20 +4073,20 @@
         "identity2": "30",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025721.6581304
+      "timestamp": 1772530822.2824295
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.10623229461756374,
+      "verification_confidence": 0.4017094017094017,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 706,
-      "num_inliers": 75,
-      "inlier_ratio": 0.10623229461756374,
-      "reprojection_error": 2.871883857780297,
-      "homography_confidence": 0.10623229461756374,
+      "num_matches": 117,
+      "num_inliers": 47,
+      "inlier_ratio": 0.4017094017094017,
+      "reprojection_error": 2.4804392737229963,
+      "homography_confidence": 0.4017094017094017,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4101,20 +4101,20 @@
         "identity2": "17",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025722.7808633
+      "timestamp": 1772530823.2023463
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.11917808219178082,
+      "verification_confidence": 0.325,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 730,
-      "num_inliers": 87,
-      "inlier_ratio": 0.11917808219178082,
-      "reprojection_error": 2.2749863436584263,
-      "homography_confidence": 0.11917808219178082,
+      "num_matches": 240,
+      "num_inliers": 78,
+      "inlier_ratio": 0.325,
+      "reprojection_error": 1.982053799329061,
+      "homography_confidence": 0.325,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4129,20 +4129,20 @@
         "identity2": "24",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025723.910875
+      "timestamp": 1772530824.2535193
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.13043478260869565,
+      "verification_confidence": 0.37222222222222223,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 437,
-      "num_inliers": 57,
-      "inlier_ratio": 0.13043478260869565,
-      "reprojection_error": 2.419383147338657,
-      "homography_confidence": 0.13043478260869565,
+      "num_matches": 180,
+      "num_inliers": 67,
+      "inlier_ratio": 0.37222222222222223,
+      "reprojection_error": 2.8363382004740707,
+      "homography_confidence": 0.37222222222222223,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4157,20 +4157,20 @@
         "identity2": "35",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025724.9628046
+      "timestamp": 1772530825.2558255
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.13980263157894737,
+      "verification_confidence": 0.3515625,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 608,
-      "num_inliers": 85,
-      "inlier_ratio": 0.13980263157894737,
-      "reprojection_error": 2.5942595224788403,
-      "homography_confidence": 0.13980263157894737,
+      "num_matches": 128,
+      "num_inliers": 45,
+      "inlier_ratio": 0.3515625,
+      "reprojection_error": 2.0726175693603652,
+      "homography_confidence": 0.3515625,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4185,20 +4185,20 @@
         "identity2": "35",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025726.062847
+      "timestamp": 1772530826.21096
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1827956989247312,
+      "verification_confidence": 0.39316239316239315,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 651,
-      "num_inliers": 119,
-      "inlier_ratio": 0.1827956989247312,
-      "reprojection_error": 2.71840328405002,
-      "homography_confidence": 0.1827956989247312,
+      "num_matches": 117,
+      "num_inliers": 46,
+      "inlier_ratio": 0.39316239316239315,
+      "reprojection_error": 2.40767939231352,
+      "homography_confidence": 0.39316239316239315,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4213,20 +4213,20 @@
         "identity2": "16",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025727.176107
+      "timestamp": 1772530827.1518257
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.17118093174431204,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5083333333333333,
       "ground_truth": false,
-      "is_correct": true,
-      "num_matches": 923,
-      "num_inliers": 158,
-      "inlier_ratio": 0.17118093174431204,
-      "reprojection_error": 2.4789961393075153,
-      "homography_confidence": 0.17118093174431204,
+      "is_correct": false,
+      "num_matches": 240,
+      "num_inliers": 122,
+      "inlier_ratio": 0.5083333333333333,
+      "reprojection_error": 2.521346176155001,
+      "homography_confidence": 0.5083333333333333,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4241,20 +4241,20 @@
         "identity2": "15",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025728.3549953
+      "timestamp": 1772530828.242112
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1639871382636656,
+      "verification_confidence": 0.36097560975609755,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 622,
-      "num_inliers": 102,
-      "inlier_ratio": 0.1639871382636656,
-      "reprojection_error": 2.7229921167551048,
-      "homography_confidence": 0.1639871382636656,
+      "num_matches": 205,
+      "num_inliers": 74,
+      "inlier_ratio": 0.36097560975609755,
+      "reprojection_error": 2.3055448665991607,
+      "homography_confidence": 0.36097560975609755,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4269,20 +4269,20 @@
         "identity2": "6",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025729.448491
+      "timestamp": 1772530829.329439
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.09953703703703703,
+      "verification_confidence": 0.3333333333333333,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 432,
-      "num_inliers": 43,
-      "inlier_ratio": 0.09953703703703703,
-      "reprojection_error": 2.529762401872343,
-      "homography_confidence": 0.09953703703703703,
+      "num_matches": 126,
+      "num_inliers": 42,
+      "inlier_ratio": 0.3333333333333333,
+      "reprojection_error": 2.306318194002186,
+      "homography_confidence": 0.3333333333333333,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4297,20 +4297,20 @@
         "identity2": "35",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025730.4817297
+      "timestamp": 1772530830.278143
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.17035775127768313,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5058823529411764,
       "ground_truth": false,
-      "is_correct": true,
-      "num_matches": 587,
-      "num_inliers": 100,
-      "inlier_ratio": 0.17035775127768313,
-      "reprojection_error": 2.1257025331470683,
-      "homography_confidence": 0.17035775127768313,
+      "is_correct": false,
+      "num_matches": 170,
+      "num_inliers": 86,
+      "inlier_ratio": 0.5058823529411764,
+      "reprojection_error": 1.8645275541936597,
+      "homography_confidence": 0.5058823529411764,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4325,20 +4325,20 @@
         "identity2": "11",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025731.5812304
+      "timestamp": 1772530831.2964709
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1285444234404537,
+      "verification_confidence": 0.2777777777777778,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 529,
-      "num_inliers": 68,
-      "inlier_ratio": 0.1285444234404537,
-      "reprojection_error": 2.4192804909201464,
-      "homography_confidence": 0.1285444234404537,
+      "num_matches": 72,
+      "num_inliers": 20,
+      "inlier_ratio": 0.2777777777777778,
+      "reprojection_error": 2.624120900767079,
+      "homography_confidence": 0.2777777777777778,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4353,20 +4353,20 @@
         "identity2": "38",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025732.6737285
+      "timestamp": 1772530832.2241666
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.11703511053315994,
+      "verification_confidence": 0.41304347826086957,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 769,
-      "num_inliers": 90,
-      "inlier_ratio": 0.11703511053315994,
-      "reprojection_error": 2.4749292895405794,
-      "homography_confidence": 0.11703511053315994,
+      "num_matches": 184,
+      "num_inliers": 76,
+      "inlier_ratio": 0.41304347826086957,
+      "reprojection_error": 1.860967034670494,
+      "homography_confidence": 0.41304347826086957,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4381,20 +4381,20 @@
         "identity2": "1",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025733.816127
+      "timestamp": 1772530833.2268755
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.09490740740740741,
+      "verification_confidence": 0.3007518796992481,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 432,
-      "num_inliers": 41,
-      "inlier_ratio": 0.09490740740740741,
-      "reprojection_error": 2.272183154278998,
-      "homography_confidence": 0.09490740740740741,
+      "num_matches": 133,
+      "num_inliers": 40,
+      "inlier_ratio": 0.3007518796992481,
+      "reprojection_error": 2.191415657095148,
+      "homography_confidence": 0.3007518796992481,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4409,20 +4409,20 @@
         "identity2": "13",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025734.9523473
+      "timestamp": 1772530834.2030964
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.11392405063291139,
+      "verification_confidence": 0.24,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 632,
-      "num_inliers": 72,
-      "inlier_ratio": 0.11392405063291139,
-      "reprojection_error": 2.4608310019575166,
-      "homography_confidence": 0.11392405063291139,
+      "num_matches": 50,
+      "num_inliers": 12,
+      "inlier_ratio": 0.24,
+      "reprojection_error": 1.9825168560867,
+      "homography_confidence": 0.24,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4437,20 +4437,20 @@
         "identity2": "33",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025736.3465436
+      "timestamp": 1772530835.1313143
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.11827956989247312,
+      "verification_confidence": 0.4334470989761092,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 279,
-      "num_inliers": 33,
-      "inlier_ratio": 0.11827956989247312,
-      "reprojection_error": 2.3641582652106243,
-      "homography_confidence": 0.11827956989247312,
+      "num_matches": 293,
+      "num_inliers": 127,
+      "inlier_ratio": 0.4334470989761092,
+      "reprojection_error": 2.2273985826952525,
+      "homography_confidence": 0.4334470989761092,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4465,20 +4465,20 @@
         "identity2": "37",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025736.978258
+      "timestamp": 1772530836.2797265
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.13229571984435798,
+      "verification_confidence": 0.3472222222222222,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 514,
-      "num_inliers": 68,
-      "inlier_ratio": 0.13229571984435798,
-      "reprojection_error": 2.715868283363483,
-      "homography_confidence": 0.13229571984435798,
+      "num_matches": 144,
+      "num_inliers": 50,
+      "inlier_ratio": 0.3472222222222222,
+      "reprojection_error": 1.8501115844420617,
+      "homography_confidence": 0.3472222222222222,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4493,20 +4493,20 @@
         "identity2": "33",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025737.3696349
+      "timestamp": 1772530837.2768414
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.13018867924528302,
+      "verification_confidence": 0.36666666666666664,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 530,
-      "num_inliers": 69,
-      "inlier_ratio": 0.13018867924528302,
-      "reprojection_error": 2.6895911114053415,
-      "homography_confidence": 0.13018867924528302,
+      "num_matches": 90,
+      "num_inliers": 33,
+      "inlier_ratio": 0.36666666666666664,
+      "reprojection_error": 1.9583866932351783,
+      "homography_confidence": 0.36666666666666664,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4521,20 +4521,20 @@
         "identity2": "9",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025737.7312703
+      "timestamp": 1772530838.2256675
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.08362989323843416,
+      "verification_confidence": 0.25,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 562,
-      "num_inliers": 47,
-      "inlier_ratio": 0.08362989323843416,
-      "reprojection_error": 2.221372706393572,
-      "homography_confidence": 0.08362989323843416,
+      "num_matches": 128,
+      "num_inliers": 32,
+      "inlier_ratio": 0.25,
+      "reprojection_error": 2.4776988878070036,
+      "homography_confidence": 0.25,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4549,20 +4549,20 @@
         "identity2": "12",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025738.0969236
+      "timestamp": 1772530839.1770673
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.11728395061728394,
+      "verification_confidence": 0.24390243902439024,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 324,
-      "num_inliers": 38,
-      "inlier_ratio": 0.11728395061728394,
-      "reprojection_error": 2.1318658902244407,
-      "homography_confidence": 0.11728395061728394,
+      "num_matches": 82,
+      "num_inliers": 20,
+      "inlier_ratio": 0.24390243902439024,
+      "reprojection_error": 2.4516622900151526,
+      "homography_confidence": 0.24390243902439024,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4577,20 +4577,20 @@
         "identity2": "30",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025738.452125
+      "timestamp": 1772530840.1079075
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.19432120674356698,
+      "verification_confidence": 0.44854881266490765,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 1127,
-      "num_inliers": 219,
-      "inlier_ratio": 0.19432120674356698,
-      "reprojection_error": 2.6366918565868445,
-      "homography_confidence": 0.19432120674356698,
+      "num_matches": 379,
+      "num_inliers": 170,
+      "inlier_ratio": 0.44854881266490765,
+      "reprojection_error": 2.6489534949750455,
+      "homography_confidence": 0.44854881266490765,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4605,20 +4605,20 @@
         "identity2": "28",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025738.863027
+      "timestamp": 1772530841.2574341
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.08442776735459662,
+      "verification_confidence": 0.3473684210526316,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 533,
-      "num_inliers": 45,
-      "inlier_ratio": 0.08442776735459662,
-      "reprojection_error": 2.0982521017183924,
-      "homography_confidence": 0.08442776735459662,
+      "num_matches": 95,
+      "num_inliers": 33,
+      "inlier_ratio": 0.3473684210526316,
+      "reprojection_error": 2.282974262190402,
+      "homography_confidence": 0.3473684210526316,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4633,20 +4633,20 @@
         "identity2": "7",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025739.2542617
+      "timestamp": 1772530842.1812205
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.13831258644536654,
+      "verification_confidence": 0.3644067796610169,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 723,
-      "num_inliers": 100,
-      "inlier_ratio": 0.13831258644536654,
-      "reprojection_error": 2.4976762849585437,
-      "homography_confidence": 0.13831258644536654,
+      "num_matches": 236,
+      "num_inliers": 86,
+      "inlier_ratio": 0.3644067796610169,
+      "reprojection_error": 2.639577379449194,
+      "homography_confidence": 0.3644067796610169,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4661,20 +4661,20 @@
         "identity2": "6",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025739.6725926
+      "timestamp": 1772530843.3080297
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.13399153737658676,
+      "verification_confidence": 0.3148148148148148,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 709,
-      "num_inliers": 95,
-      "inlier_ratio": 0.13399153737658676,
-      "reprojection_error": 2.4566752010831454,
-      "homography_confidence": 0.13399153737658676,
+      "num_matches": 108,
+      "num_inliers": 34,
+      "inlier_ratio": 0.3148148148148148,
+      "reprojection_error": 2.683474766677393,
+      "homography_confidence": 0.3148148148148148,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4689,20 +4689,20 @@
         "identity2": "6",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025740.0894785
+      "timestamp": 1772530844.2433796
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.09188361408882083,
+      "verification_confidence": 0.4090909090909091,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 653,
-      "num_inliers": 60,
-      "inlier_ratio": 0.09188361408882083,
-      "reprojection_error": 1.881989806873825,
-      "homography_confidence": 0.09188361408882083,
+      "num_matches": 132,
+      "num_inliers": 54,
+      "inlier_ratio": 0.4090909090909091,
+      "reprojection_error": 2.487716794064094,
+      "homography_confidence": 0.4090909090909091,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4717,20 +4717,20 @@
         "identity2": "32",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025740.6443694
+      "timestamp": 1772530845.1864305
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.15588235294117647,
+      "verification_confidence": 0.3348623853211009,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 680,
-      "num_inliers": 106,
-      "inlier_ratio": 0.15588235294117647,
-      "reprojection_error": 2.9843299997455808,
-      "homography_confidence": 0.15588235294117647,
+      "num_matches": 218,
+      "num_inliers": 73,
+      "inlier_ratio": 0.3348623853211009,
+      "reprojection_error": 2.7088772775082943,
+      "homography_confidence": 0.3348623853211009,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4745,20 +4745,20 @@
         "identity2": "6",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025741.9050138
+      "timestamp": 1772530846.2636406
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.14960629921259844,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.46511627906976744,
       "ground_truth": false,
-      "is_correct": true,
-      "num_matches": 254,
-      "num_inliers": 38,
-      "inlier_ratio": 0.14960629921259844,
-      "reprojection_error": 2.4610831124077777,
-      "homography_confidence": 0.14960629921259844,
+      "is_correct": false,
+      "num_matches": 86,
+      "num_inliers": 40,
+      "inlier_ratio": 0.46511627906976744,
+      "reprojection_error": 2.1612912051867417,
+      "homography_confidence": 0.46511627906976744,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4773,20 +4773,20 @@
         "identity2": "25",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025742.9900923
+      "timestamp": 1772530847.1522229
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.15021459227467812,
+      "verification_confidence": 0.4142857142857143,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 699,
-      "num_inliers": 105,
-      "inlier_ratio": 0.15021459227467812,
-      "reprojection_error": 2.7383698840405417,
-      "homography_confidence": 0.15021459227467812,
+      "num_matches": 140,
+      "num_inliers": 58,
+      "inlier_ratio": 0.4142857142857143,
+      "reprojection_error": 1.7174859000933251,
+      "homography_confidence": 0.4142857142857143,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4801,20 +4801,20 @@
         "identity2": "35",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025744.1420138
+      "timestamp": 1772530848.1423864
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.10638297872340426,
+      "verification_confidence": 0.3155339805825243,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 329,
-      "num_inliers": 35,
-      "inlier_ratio": 0.10638297872340426,
-      "reprojection_error": 2.925962686497278,
-      "homography_confidence": 0.10638297872340426,
+      "num_matches": 206,
+      "num_inliers": 65,
+      "inlier_ratio": 0.3155339805825243,
+      "reprojection_error": 1.7130401586285853,
+      "homography_confidence": 0.3155339805825243,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4829,20 +4829,20 @@
         "identity2": "22",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025745.2637346
+      "timestamp": 1772530849.202809
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.13846153846153847,
+      "verification_confidence": 0.3497536945812808,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 910,
-      "num_inliers": 126,
-      "inlier_ratio": 0.13846153846153847,
-      "reprojection_error": 2.705579444892262,
-      "homography_confidence": 0.13846153846153847,
+      "num_matches": 203,
+      "num_inliers": 71,
+      "inlier_ratio": 0.3497536945812808,
+      "reprojection_error": 2.3883372427694733,
+      "homography_confidence": 0.3497536945812808,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4857,20 +4857,20 @@
         "identity2": "32",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025746.1016748
+      "timestamp": 1772530850.2763758
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.14512471655328799,
+      "verification_confidence": 0.3815789473684211,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 882,
-      "num_inliers": 128,
-      "inlier_ratio": 0.14512471655328799,
-      "reprojection_error": 3.0284658665235398,
-      "homography_confidence": 0.14512471655328799,
+      "num_matches": 152,
+      "num_inliers": 58,
+      "inlier_ratio": 0.3815789473684211,
+      "reprojection_error": 2.624475523852213,
+      "homography_confidence": 0.3815789473684211,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4885,20 +4885,20 @@
         "identity2": "21",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025746.4786677
+      "timestamp": 1772530851.2895944
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.13703703703703704,
+      "verification_confidence": 0.37012987012987014,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 540,
-      "num_inliers": 74,
-      "inlier_ratio": 0.13703703703703704,
-      "reprojection_error": 2.7088239787262807,
-      "homography_confidence": 0.13703703703703704,
+      "num_matches": 154,
+      "num_inliers": 57,
+      "inlier_ratio": 0.37012987012987014,
+      "reprojection_error": 2.044730084044926,
+      "homography_confidence": 0.37012987012987014,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4913,20 +4913,20 @@
         "identity2": "1",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025746.8480654
+      "timestamp": 1772530852.241301
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.18567961165048544,
+      "verification_confidence": 0.4318181818181818,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 824,
-      "num_inliers": 153,
-      "inlier_ratio": 0.18567961165048544,
-      "reprojection_error": 2.632566498256123,
-      "homography_confidence": 0.18567961165048544,
+      "num_matches": 264,
+      "num_inliers": 114,
+      "inlier_ratio": 0.4318181818181818,
+      "reprojection_error": 2.1035984925424938,
+      "homography_confidence": 0.4318181818181818,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4941,20 +4941,20 @@
         "identity2": "14",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025747.2261057
+      "timestamp": 1772530853.322422
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.19705882352941176,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.48068669527896996,
       "ground_truth": false,
-      "is_correct": true,
-      "num_matches": 680,
-      "num_inliers": 134,
-      "inlier_ratio": 0.19705882352941176,
-      "reprojection_error": 2.3149463881637513,
-      "homography_confidence": 0.19705882352941176,
+      "is_correct": false,
+      "num_matches": 233,
+      "num_inliers": 112,
+      "inlier_ratio": 0.48068669527896996,
+      "reprojection_error": 2.1628633699393496,
+      "homography_confidence": 0.48068669527896996,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4969,20 +4969,20 @@
         "identity2": "19",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025747.5954444
+      "timestamp": 1772530854.3838556
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.14072847682119205,
+      "verification_confidence": 0.40588235294117647,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 604,
-      "num_inliers": 85,
-      "inlier_ratio": 0.14072847682119205,
-      "reprojection_error": 2.4954598690478544,
-      "homography_confidence": 0.14072847682119205,
+      "num_matches": 170,
+      "num_inliers": 69,
+      "inlier_ratio": 0.40588235294117647,
+      "reprojection_error": 2.5436251273111457,
+      "homography_confidence": 0.40588235294117647,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -4997,20 +4997,20 @@
         "identity2": "5",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025747.9744442
+      "timestamp": 1772530855.3842278
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.15294117647058825,
+      "verification_confidence": 0.4251968503937008,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 765,
-      "num_inliers": 117,
-      "inlier_ratio": 0.15294117647058825,
-      "reprojection_error": 2.482679302890145,
-      "homography_confidence": 0.15294117647058825,
+      "num_matches": 127,
+      "num_inliers": 54,
+      "inlier_ratio": 0.4251968503937008,
+      "reprojection_error": 2.32715678007112,
+      "homography_confidence": 0.4251968503937008,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5025,20 +5025,20 @@
         "identity2": "38",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025748.366962
+      "timestamp": 1772530856.323243
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.14150943396226415,
+      "verification_confidence": 0.44871794871794873,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 318,
-      "num_inliers": 45,
-      "inlier_ratio": 0.14150943396226415,
-      "reprojection_error": 2.51280963325135,
-      "homography_confidence": 0.14150943396226415,
+      "num_matches": 78,
+      "num_inliers": 35,
+      "inlier_ratio": 0.44871794871794873,
+      "reprojection_error": 1.9434932464179695,
+      "homography_confidence": 0.44871794871794873,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5053,20 +5053,20 @@
         "identity2": "9",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025748.6980755
+      "timestamp": 1772530857.2195168
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.15837937384898712,
+      "verification_confidence": 0.33613445378151263,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 543,
-      "num_inliers": 86,
-      "inlier_ratio": 0.15837937384898712,
-      "reprojection_error": 2.1662602492777934,
-      "homography_confidence": 0.15837937384898712,
+      "num_matches": 119,
+      "num_inliers": 40,
+      "inlier_ratio": 0.33613445378151263,
+      "reprojection_error": 2.3494902424722532,
+      "homography_confidence": 0.33613445378151263,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5081,20 +5081,20 @@
         "identity2": "10",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025749.0749557
+      "timestamp": 1772530858.1695566
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1956769055745165,
+      "verification_confidence": 0.44878048780487806,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 879,
-      "num_inliers": 172,
-      "inlier_ratio": 0.1956769055745165,
-      "reprojection_error": 1.811309495680591,
-      "homography_confidence": 0.1956769055745165,
+      "num_matches": 205,
+      "num_inliers": 92,
+      "inlier_ratio": 0.44878048780487806,
+      "reprojection_error": 1.6331390596380266,
+      "homography_confidence": 0.44878048780487806,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5109,20 +5109,20 @@
         "identity2": "42",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025749.4650126
+      "timestamp": 1772530859.1974337
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.08316831683168317,
+      "verification_confidence": 0.35542168674698793,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 505,
-      "num_inliers": 42,
-      "inlier_ratio": 0.08316831683168317,
-      "reprojection_error": 2.5332383452446083,
-      "homography_confidence": 0.08316831683168317,
+      "num_matches": 166,
+      "num_inliers": 59,
+      "inlier_ratio": 0.35542168674698793,
+      "reprojection_error": 1.9586468447081433,
+      "homography_confidence": 0.35542168674698793,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5137,20 +5137,20 @@
         "identity2": "8",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025750.2907684
+      "timestamp": 1772530860.2551436
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.0876923076923077,
+      "verification_confidence": 0.3438914027149321,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 650,
-      "num_inliers": 57,
-      "inlier_ratio": 0.0876923076923077,
-      "reprojection_error": 2.8194048492730746,
-      "homography_confidence": 0.0876923076923077,
+      "num_matches": 221,
+      "num_inliers": 76,
+      "inlier_ratio": 0.3438914027149321,
+      "reprojection_error": 1.7114501370311317,
+      "homography_confidence": 0.3438914027149321,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5165,20 +5165,20 @@
         "identity2": "19",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025751.465221
+      "timestamp": 1772530861.3932915
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.145,
+      "verification_confidence": 0.40310077519379844,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 600,
-      "num_inliers": 87,
-      "inlier_ratio": 0.145,
-      "reprojection_error": 2.517018679476112,
-      "homography_confidence": 0.145,
+      "num_matches": 129,
+      "num_inliers": 52,
+      "inlier_ratio": 0.40310077519379844,
+      "reprojection_error": 2.320006103882899,
+      "homography_confidence": 0.40310077519379844,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5193,20 +5193,20 @@
         "identity2": "32",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025752.5961418
+      "timestamp": 1772530862.3661823
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.1079646017699115,
+      "verification_confidence": 0.3287671232876712,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 565,
-      "num_inliers": 61,
-      "inlier_ratio": 0.1079646017699115,
-      "reprojection_error": 2.1718200293095307,
-      "homography_confidence": 0.1079646017699115,
+      "num_matches": 219,
+      "num_inliers": 72,
+      "inlier_ratio": 0.3287671232876712,
+      "reprojection_error": 2.361696301827427,
+      "homography_confidence": 0.3287671232876712,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5221,20 +5221,20 @@
         "identity2": "40",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025753.6722445
+      "timestamp": 1772530863.4627023
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.0997624703087886,
+      "verification_confidence": 0.35294117647058826,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 421,
-      "num_inliers": 42,
-      "inlier_ratio": 0.0997624703087886,
-      "reprojection_error": 2.6771741968712925,
-      "homography_confidence": 0.0997624703087886,
+      "num_matches": 34,
+      "num_inliers": 12,
+      "inlier_ratio": 0.35294117647058826,
+      "reprojection_error": 1.7528308974840592,
+      "homography_confidence": 0.35294117647058826,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5249,20 +5249,20 @@
         "identity2": "10",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025754.7330444
+      "timestamp": 1772530864.364171
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.07777777777777778,
+      "verification_confidence": 0.2872340425531915,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 450,
-      "num_inliers": 35,
-      "inlier_ratio": 0.07777777777777778,
-      "reprojection_error": 2.283505985228373,
-      "homography_confidence": 0.07777777777777778,
+      "num_matches": 94,
+      "num_inliers": 27,
+      "inlier_ratio": 0.2872340425531915,
+      "reprojection_error": 2.18279845083341,
+      "homography_confidence": 0.2872340425531915,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5277,20 +5277,20 @@
         "identity2": "10",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025755.8805923
+      "timestamp": 1772530865.3149111
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.17405582922824303,
+      "verification_confidence": 0.37398373983739835,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 609,
-      "num_inliers": 106,
-      "inlier_ratio": 0.17405582922824303,
-      "reprojection_error": 1.9188546912623126,
-      "homography_confidence": 0.17405582922824303,
+      "num_matches": 123,
+      "num_inliers": 46,
+      "inlier_ratio": 0.37398373983739835,
+      "reprojection_error": 2.292139536083329,
+      "homography_confidence": 0.37398373983739835,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5305,20 +5305,20 @@
         "identity2": "26",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025757.023567
+      "timestamp": 1772530866.2597616
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.11948331539289558,
+      "verification_confidence": 0.23943661971830985,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 929,
-      "num_inliers": 111,
-      "inlier_ratio": 0.11948331539289558,
-      "reprojection_error": 2.6068089752066674,
-      "homography_confidence": 0.11948331539289558,
+      "num_matches": 142,
+      "num_inliers": 34,
+      "inlier_ratio": 0.23943661971830985,
+      "reprojection_error": 2.1956649537682065,
+      "homography_confidence": 0.23943661971830985,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5333,20 +5333,20 @@
         "identity2": "18",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025758.2043827
+      "timestamp": 1772530867.2213147
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.14385964912280702,
+      "verification_confidence": 0.2645739910313901,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 570,
-      "num_inliers": 82,
-      "inlier_ratio": 0.14385964912280702,
-      "reprojection_error": 2.8312491367035975,
-      "homography_confidence": 0.14385964912280702,
+      "num_matches": 223,
+      "num_inliers": 59,
+      "inlier_ratio": 0.2645739910313901,
+      "reprojection_error": 2.44187023294475,
+      "homography_confidence": 0.2645739910313901,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5361,20 +5361,20 @@
         "identity2": "14",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025759.289542
+      "timestamp": 1772530868.2691536
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.148014440433213,
+      "verification_confidence": 0.40444444444444444,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 277,
-      "num_inliers": 41,
-      "inlier_ratio": 0.148014440433213,
-      "reprojection_error": 2.7281099568560547,
-      "homography_confidence": 0.148014440433213,
+      "num_matches": 225,
+      "num_inliers": 91,
+      "inlier_ratio": 0.40444444444444444,
+      "reprojection_error": 2.423473794200489,
+      "homography_confidence": 0.40444444444444444,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5389,20 +5389,20 @@
         "identity2": "7",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025760.2798743
+      "timestamp": 1772530869.2926311
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.12947658402203857,
+      "verification_confidence": 0.3413173652694611,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 363,
-      "num_inliers": 47,
-      "inlier_ratio": 0.12947658402203857,
-      "reprojection_error": 2.8427154626724165,
-      "homography_confidence": 0.12947658402203857,
+      "num_matches": 167,
+      "num_inliers": 57,
+      "inlier_ratio": 0.3413173652694611,
+      "reprojection_error": 2.4489275360979628,
+      "homography_confidence": 0.3413173652694611,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5417,20 +5417,20 @@
         "identity2": "30",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025761.3849628
+      "timestamp": 1772530870.2370794
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.15568862275449102,
+      "verification_confidence": 0.4368421052631579,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 835,
-      "num_inliers": 130,
-      "inlier_ratio": 0.15568862275449102,
-      "reprojection_error": 2.8095678798004937,
-      "homography_confidence": 0.15568862275449102,
+      "num_matches": 190,
+      "num_inliers": 83,
+      "inlier_ratio": 0.4368421052631579,
+      "reprojection_error": 2.354028910783297,
+      "homography_confidence": 0.4368421052631579,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5445,20 +5445,20 @@
         "identity2": "16",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025762.78188
+      "timestamp": 1772530871.3037622
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.11848341232227488,
+      "verification_confidence": 0.3163265306122449,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 633,
-      "num_inliers": 75,
-      "inlier_ratio": 0.11848341232227488,
-      "reprojection_error": 2.571111398063895,
-      "homography_confidence": 0.11848341232227488,
+      "num_matches": 98,
+      "num_inliers": 31,
+      "inlier_ratio": 0.3163265306122449,
+      "reprojection_error": 0.7587794994529521,
+      "homography_confidence": 0.3163265306122449,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5473,20 +5473,20 @@
         "identity2": "19",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025764.0394602
+      "timestamp": 1772530872.2243235
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.11530398322851153,
+      "verification_confidence": 0.32954545454545453,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 477,
-      "num_inliers": 55,
-      "inlier_ratio": 0.11530398322851153,
-      "reprojection_error": 2.407748027590818,
-      "homography_confidence": 0.11530398322851153,
+      "num_matches": 176,
+      "num_inliers": 58,
+      "inlier_ratio": 0.32954545454545453,
+      "reprojection_error": 2.390774252100043,
+      "homography_confidence": 0.32954545454545453,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5501,20 +5501,20 @@
         "identity2": "7",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025765.2010117
+      "timestamp": 1772530873.2057023
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.11526479750778816,
+      "verification_confidence": 0.29927007299270075,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 642,
-      "num_inliers": 74,
-      "inlier_ratio": 0.11526479750778816,
-      "reprojection_error": 2.3869473061533504,
-      "homography_confidence": 0.11526479750778816,
+      "num_matches": 137,
+      "num_inliers": 41,
+      "inlier_ratio": 0.29927007299270075,
+      "reprojection_error": 2.354307135938919,
+      "homography_confidence": 0.29927007299270075,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5529,20 +5529,20 @@
         "identity2": "18",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025766.3449256
+      "timestamp": 1772530874.154453
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
-      "is_same_person_pred": false,
-      "verification_confidence": 0.2249705535924617,
+      "is_same_person_pred": true,
+      "verification_confidence": 0.4966216216216216,
       "ground_truth": false,
-      "is_correct": true,
-      "num_matches": 849,
-      "num_inliers": 191,
-      "inlier_ratio": 0.2249705535924617,
-      "reprojection_error": 2.665478925279766,
-      "homography_confidence": 0.2249705535924617,
+      "is_correct": false,
+      "num_matches": 296,
+      "num_inliers": 147,
+      "inlier_ratio": 0.4966216216216216,
+      "reprojection_error": 2.128657029697167,
+      "homography_confidence": 0.4966216216216216,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5557,20 +5557,20 @@
         "identity2": "14",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025767.5523643
+      "timestamp": 1772530875.2328215
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.15742128935532235,
+      "verification_confidence": 0.3584905660377358,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 667,
-      "num_inliers": 105,
-      "inlier_ratio": 0.15742128935532235,
-      "reprojection_error": 2.949986353811464,
-      "homography_confidence": 0.15742128935532235,
+      "num_matches": 212,
+      "num_inliers": 76,
+      "inlier_ratio": 0.3584905660377358,
+      "reprojection_error": 2.266806129249969,
+      "homography_confidence": 0.3584905660377358,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5585,20 +5585,20 @@
         "identity2": "7",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025768.6723423
+      "timestamp": 1772530876.2322626
     },
     {
       "method_name": "LoFTR_indoor",
       "modality": "iris",
       "is_same_person_pred": false,
-      "verification_confidence": 0.15,
+      "verification_confidence": 0.3352941176470588,
       "ground_truth": false,
       "is_correct": true,
-      "num_matches": 440,
-      "num_inliers": 66,
-      "inlier_ratio": 0.15,
-      "reprojection_error": 2.8908202306433743,
-      "homography_confidence": 0.15,
+      "num_matches": 170,
+      "num_inliers": 57,
+      "inlier_ratio": 0.3352941176470588,
+      "reprojection_error": 2.4356092413066697,
+      "homography_confidence": 0.3352941176470588,
       "matcher_params": {
         "model_type": "indoor",
         "confidence_threshold": 0.9,
@@ -5613,26 +5613,7 @@
         "identity2": "38",
         "dataset_name": "MMU-Iris"
       },
-      "timestamp": 1772025769.7399867
+      "timestamp": 1772530877.264406
     }
-  ],
-  "metrics": {
-    "LoFTR_indoor": {
-      "total_pairs": 200,
-      "accuracy": 0.825,
-      "genuine_count": 100,
-      "impostor_count": 100,
-      "genuine_accuracy": 0.65,
-      "impostor_accuracy": 1.0,
-      "correct_predictions": 165,
-      "wrong_predictions": 35,
-      "avg_matches": 1429.885,
-      "std_matches": 914.1028781132899,
-      "avg_inliers": 724.72,
-      "std_inliers": 804.9210592350034,
-      "avg_inlier_ratio": 0.3537257945458699,
-      "std_inlier_ratio": 0.2593317279693131
-    }
-  },
-  "errors": null
+  ]
 }

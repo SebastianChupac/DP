@@ -1,0 +1,62 @@
+# Example Experiment: Multiple matcher evaluation on iris amf dataset 500 pairs
+# This experiment evaluates multiple matchers on a single dataset (irisamf).
+# masked
+
+experiment:
+  name: "All matchers 500 Iris AMF masked"
+  description: "Evaluate multiple matchers on iris amf pairs"
+  purpose: "multiple_matchers"
+  created: "2026-03-05"
+
+# Input pairs
+dataset: "bioverify/data/pairs/pairs_iris_amf_500.csv"
+base_path: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+#filter_modality: "hand"
+
+# Multiple matcher configuration
+matchers:
+  - name: loftr
+    config_base: "bioverify/config/matching/loftr.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+  - name: orb
+    config_base: "bioverify/config/matching/orb.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+  - name: sift
+    config_base: "bioverify/config/matching/sift.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+  - name: superglue
+    config_base: "bioverify/config/matching/superglue.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+  - name: sgmnet
+    config_base: "bioverify/config/matching/sgmnet.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+  - name: aspanformer
+    config_base: "bioverify/config/matching/aspanformer.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+  - name: deepdetect
+    config_base: "bioverify/config/matching/deepdetect.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+
+# Output
+output_dir: "bioverify/results/iris_amf_500_all_matchers"
+save_visualization_results: false
+save_pair_images: false
+
+# Options
+batch_size: 1
+verbose: true
+device: "cuda"

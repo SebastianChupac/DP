@@ -76,6 +76,8 @@ class VerificationResult:
     is_correct: Optional[bool] = None
     
     # Quality metrics
+    num_keypoints_image1: int = 0
+    num_keypoints_image2: int = 0
     num_matches: int = 0
     num_inliers: int = 0
     inlier_ratio: float = 0.0
@@ -102,6 +104,7 @@ class VerificationResult:
             f"Prediction: {self.is_same_person_pred} (confidence: {self.verification_confidence:.3f})",
             f"Ground truth: {self.ground_truth}",
             f"Correct: {'✅ Yes' if self.is_correct else '❌ No'}",
+            f"Keypoints: img1={self.num_keypoints_image1}, img2={self.num_keypoints_image2}",
             f"Matches: {self.num_matches} total, {self.num_inliers} inliers (ratio: {self.inlier_ratio:.3f})",
         ]
         if self.reprojection_error is not None:

@@ -82,7 +82,7 @@ class HierachicalAttention(Module):
             q,k,v,sample_pixel,mask_sample=self.partition_token(q,k,v,o,s,mask0) #B*Head*D*G*N(G*N=H*W for q)
             message_list.append(self.group_attention(q,k,v,1,mask_sample).view(bs,self.d_model,h0//sub_sample0[index],w0//sub_sample0[index]))
         #fuse
-        all_message=torch.cat([F.upsample(message_list[idx],scale_factor=sub_sample0[idx],mode='nearest') \
+        all_message=torch.cat([F.interpolate(message_list[idx],scale_factor=sub_sample0[idx],mode='nearest') \
                     for idx in range(self.nlevel)],dim=1).view(bs,-1,h0*w0) #b*3d*H*W
         
         all_message=self.merge_head(all_message).view(bs,-1,h0,w0) #b*d*H*W
@@ -105,11 +105,11 @@ class HierachicalAttention(Module):
         q = q.view(bs, -1 , h // self.nsample[0], self.nsample[0], w // self.nsample[0], self.nsample[0]).\
                 permute(0, 1, 2, 4, 3, 5).contiguous().view(bs, self.nhead,self.d_model//self.nhead, -1,self.nsample[0]**2)#B*head*D*G*N(G*N=H*W for q)
         #sample token
-        k=F.grid_sample(k, grid=sample_norm).view(bs, self.nhead,self.d_model//self.nhead,-1, self.nsample[1]**2) #B*head*D*G*r^2
-        v=F.grid_sample(v, grid=sample_norm).view(bs, self.nhead,self.d_model//self.nhead,-1, self.nsample[1]**2) #B*head*D*G*r^2
+        k=F.grid_sample(k, grid=sample_norm, align_corners=False).view(bs, self.nhead,self.d_model//self.nhead,-1, self.nsample[1]**2) #B*head*D*G*r^2
+        v=F.grid_sample(v, grid=sample_norm, align_corners=False).view(bs, self.nhead,self.d_model//self.nhead,-1, self.nsample[1]**2) #B*head*D*G*r^2
         #import pdb;pdb.set_trace()
         if maskv is not None:
-            mask_sample=F.grid_sample(maskv.view(bs,-1,h,w).float(),grid=sample_norm,mode='nearest')==1 #B*1*G*r^2
+            mask_sample=F.grid_sample(maskv.view(bs,-1,h,w).float(),grid=sample_norm,mode='nearest',align_corners=False)==1 #B*1*G*r^2
         else:
             mask_sample=None
         return q,k,v,sample_pixel,mask_sample

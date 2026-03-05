@@ -1,0 +1,26 @@
+base_path: C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset
+batch_size: 1
+dataset: bioverify/data/pairs/test001_iris_mmu.csv
+device: cuda
+experiment:
+  created: '2026-03-03'
+  description: Evaluate multiple matchers on iris pairs
+  name: Multiple matcher 200 Iris
+  purpose: multiple_matchers
+  researcher: null
+filter_dataset: null
+filter_modality: iris
+matchers:
+- config_base: bioverify/config/matching/loftr.yaml
+  config_overrides: null
+  name: loftr
+- config_base: bioverify/config/matching/orb.yaml
+  config_overrides: null
+  name: orb
+- config_base: bioverify/config/matching/sift.yaml
+  config_overrides: null
+  name: sift
+output_dir: bioverify/results/multiple_matchers_iris
+save_pair_images: false
+save_visualization_results: false
+verbose: true

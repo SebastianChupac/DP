@@ -18,6 +18,6 @@ output:
 datasets:
   - dataset_path: "HandGeometry"
     dataset_name: "11k_Hands"
-    modality: "hand"
+    modality: "handGeometry"
     match_constraints:
       

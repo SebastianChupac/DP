@@ -17,7 +17,7 @@ matchers:
   - name: sift
     config_base: "config/matching/sift.yaml"
     config_overrides:
-      use_masking: false  # Disable for speed (or enable with mask_cache_dir)
+      use_masking: false  # Enable only after running precompute_masks.py
   
   - name: orb
     config_base: "config/matching/orb.yaml"

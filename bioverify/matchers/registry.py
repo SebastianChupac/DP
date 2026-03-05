@@ -26,12 +26,21 @@ MATCHER_REGISTRY: Dict[str, Type[BaseMatcher]] = {
 
 
 def get_matcher_class(name: str) -> Type[BaseMatcher]:
-    """Return matcher class by name (case-insensitive)."""
-    key = name.strip().lower()
-    if key not in MATCHER_REGISTRY:
+    """Return matcher class by name (case-insensitive).
+    
+    Supports versioned matcher names by extracting the base name before "-".
+    Examples:
+    - "sift" -> SIFTMatcher
+    - "sift-v1" -> SIFTMatcher
+    - "sift-optimized" -> SIFTMatcher
+    """
+    # Extract base name before first "-" if present
+    base_name = name.strip().lower().split('-')[0]
+    
+    if base_name not in MATCHER_REGISTRY:
         available = ", ".join(sorted(MATCHER_REGISTRY.keys()))
-        raise ValueError(f"Unknown matcher '{name}'. Available: {available}")
-    return MATCHER_REGISTRY[key]
+        raise ValueError(f"Unknown matcher '{name}' (base: '{base_name}'). Available: {available}")
+    return MATCHER_REGISTRY[base_name]
 
 
 def create_matcher(name: str, config_dict: dict) -> BaseMatcher:

@@ -134,7 +134,8 @@ class SuperPoint(nn.Module):
             kernel_size=1, stride=1, padding=0)
 
         path = Path(__file__).parent / 'weights/superpoint_v1.pth'
-        self.load_state_dict(torch.load(str(path)))
+        # weights_only=False is safe here as we control the model file
+        self.load_state_dict(torch.load(str(path), weights_only=False))
 
         mk = self.config['max_keypoints']
         if mk == 0 or mk < -1:

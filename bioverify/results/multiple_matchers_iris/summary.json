@@ -1,0 +1,35 @@
+{
+  "LoFTR_indoor": {
+    "num_pairs": 200,
+    "num_genuine": 100,
+    "num_impostor": 100,
+    "accuracy": 0.95,
+    "precision": 0.9166666666666666,
+    "recall": 0.99,
+    "genuine_accuracy": 0.99,
+    "impostor_accuracy": 0.91,
+    "avg_inlier_ratio": 0.5365013175370964
+  },
+  "ORB": {
+    "num_pairs": 200,
+    "num_genuine": 100,
+    "num_impostor": 100,
+    "accuracy": 0.74,
+    "precision": 0.7448979591836735,
+    "recall": 0.73,
+    "genuine_accuracy": 0.73,
+    "impostor_accuracy": 0.75,
+    "avg_inlier_ratio": 0.38229363098923513
+  },
+  "SIFT": {
+    "num_pairs": 200,
+    "num_genuine": 100,
+    "num_impostor": 100,
+    "accuracy": 0.805,
+    "precision": 0.9420289855072463,
+    "recall": 0.65,
+    "genuine_accuracy": 0.65,
+    "impostor_accuracy": 0.96,
+    "avg_inlier_ratio": 0.2899553346979816
+  }
+}

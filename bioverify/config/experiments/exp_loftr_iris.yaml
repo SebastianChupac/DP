@@ -18,13 +18,8 @@ matchers:
   - name: loftr
     config_base: "bioverify/config/matching/loftr.yaml"
     config_overrides:
-      # PERFORMANCE: Disable masking to run experiments 10x faster
-      # Iris masking runs a DL model on each image (very slow without caching)
-      use_masking: false
-      
-      # To enable masking with caching, use:
-      # use_masking: true
-      # mask_cache_dir: "bioverify/cache/masks"
+      # Disable masking for faster experiments
+      #use_masking: false
 
 # Output
 output_dir: "bioverify/results/loftr_threshold_tuning_iris"

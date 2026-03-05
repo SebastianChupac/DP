@@ -16,6 +16,57 @@ from mediapipe.tasks.python import vision
 from ..results import ImageData, ImageType
 
 
+# Global cache for IRIS pipeline (loaded once for performance)
+_iris_pipeline_cache = None
+
+# Global cache for MediaPipe face segmenter (loaded once for performance)
+_face_segmenter_cache = None
+
+
+def _get_iris_pipeline():
+    """
+    Get or create cached IRIS pipeline.
+    
+    Creates the pipeline once and reuses it to avoid expensive model reloading.
+    IRIS library runs on CPU.
+    
+    Returns:
+        Cached IRIS pipeline
+    """
+    global _iris_pipeline_cache
+    
+    if _iris_pipeline_cache is None:
+        _iris_pipeline_cache = iris.IRISPipeline()
+    
+    return _iris_pipeline_cache
+
+
+def _get_face_segmenter(model_path: str = 'face_segmentation/selfie_multiclass_256x256.tflite'):
+    """
+    Get or create cached MediaPipe face segmenter.
+    
+    Creates the segmenter once and reuses it to avoid expensive model reloading.
+    This prevents logging output for each image.
+    
+    Args:
+        model_path: Path to TFLite segmentation model
+        
+    Returns:
+        Cached ImageSegmenter instance
+    """
+    global _face_segmenter_cache
+    
+    if _face_segmenter_cache is None:
+        base_options = python.BaseOptions(model_asset_path=model_path)
+        options = vision.ImageSegmenterOptions(
+            base_options=base_options,
+            output_category_mask=True
+        )
+        _face_segmenter_cache = vision.ImageSegmenter.create_from_options(options)
+    
+    return _face_segmenter_cache
+
+
 def prepare_image_data(
     image_path: str, 
     resize_target: Optional[Tuple[int, int]] = None, 
@@ -85,25 +136,37 @@ def resize_image(
         return cv2.resize(img, target_size, interpolation=cv2.INTER_AREA)
 
 
-def create_iris_mask(img: np.ndarray, exclude_pupil: bool = True) -> np.ndarray:
+def create_iris_mask(img: np.ndarray, exclude_pupil: bool = True, side: str = "left") -> np.ndarray:
     """Create segmentation mask for iris region.
+    
+    Uses cached IRIS pipeline for performance (model loaded once, reused across calls).
+    IRIS library runs on CPU; GPU acceleration not available.
     
     Args:
         img: Input image (will be converted to grayscale if needed)
         exclude_pupil: If True, masks only iris without pupil
+        side: Eye side: 'left', 'right', 'l', 'r' (case-insensitive, default: 'left')
         
     Returns:
         Binary mask (0/1) where 1 represents iris region
     """
-    iris_pipeline = iris.IRISPipeline()
+    # Get cached pipeline
+    iris_pipeline = _get_iris_pipeline()
+
+    # Normalize side to lowercase
+    side_normalized = side.lower().strip()
+    if side_normalized in ('r', 'right'):
+        eye_side = "right"
+    else:
+        eye_side = "left"
 
     # Ensure image is in GRAYSCALE
     if len(img.shape) == 3:
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    # Run the pipeline
+    # Run the pipeline (uses cached model)
     output = iris_pipeline(
-        iris.IRImage(img_data=img, image_id="image_id", eye_side="left")
+        iris.IRImage(img_data=img, image_id="image_id", eye_side=eye_side)
     )
 
     # Get segmentation map object
@@ -122,10 +185,10 @@ def create_iris_mask(img: np.ndarray, exclude_pupil: bool = True) -> np.ndarray:
         iris_probs = preds[:, :, 1]
         iris_mask = (iris_probs > 0.5).astype(np.uint8)
 
-    # Clean up the mask
-    kernel = np.ones((3, 3), np.uint8)
-    iris_mask = cv2.morphologyEx(iris_mask, cv2.MORPH_OPEN, kernel)
-    iris_mask = cv2.morphologyEx(iris_mask, cv2.MORPH_CLOSE, kernel)
+    # Clean up the mask with minimal morphology (faster)
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
+    iris_mask = cv2.morphologyEx(iris_mask, cv2.MORPH_OPEN, kernel, iterations=1)
+    iris_mask = cv2.morphologyEx(iris_mask, cv2.MORPH_CLOSE, kernel, iterations=1)
 
     return iris_mask
 
@@ -189,32 +252,27 @@ def create_face_mask(img: np.ndarray, model_path: str = 'face_segmentation/selfi
     Returns:
         Binary mask (0/1) where 1 represents foreground (everything except background)
     """
-    base_options = python.BaseOptions(model_asset_path=model_path)
-    options = vision.ImageSegmenterOptions(
-        base_options=base_options,
-        output_category_mask=True
-    )
-
+    segmenter = _get_face_segmenter(model_path)
+    
     # Original image size (for resizing output)
     orig_h, orig_w = img.shape[:2]
 
-    with vision.ImageSegmenter.create_from_options(options) as segmenter:
-        mp_image = mp.Image(
-            image_format=mp.ImageFormat.SRGB,
-            data=img
-        )
+    mp_image = mp.Image(
+        image_format=mp.ImageFormat.SRGB,
+        data=img
+    )
 
-        result = segmenter.segment(mp_image)
-        category_mask = result.category_mask.numpy_view()  # H × W with class IDs
+    result = segmenter.segment(mp_image)
+    category_mask = result.category_mask.numpy_view()  # H × W with class IDs
 
-        # Combine everything except background into 1 class
-        final_mask = (category_mask != 0).astype(np.uint8)
+    # Combine everything except background into 1 class
+    final_mask = (category_mask != 0).astype(np.uint8)
 
-        # Resize to original image size
-        final_mask = cv2.resize(
-            final_mask,
-            (orig_w, orig_h),
-            interpolation=cv2.INTER_NEAREST
-        )
+    # Resize to original image size
+    final_mask = cv2.resize(
+        final_mask,
+        (orig_w, orig_h),
+        interpolation=cv2.INTER_NEAREST
+    )
 
-        return final_mask  # 0/1 binary mask
+    return final_mask  # 0/1 binary mask

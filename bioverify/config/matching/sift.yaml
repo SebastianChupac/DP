@@ -16,7 +16,7 @@ matcher:
     
     # Masking
     use_masking: true
-    mask_cache_dir: null
+
     
     # Device
     device: cpu

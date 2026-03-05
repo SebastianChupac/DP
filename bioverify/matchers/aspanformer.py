@@ -41,20 +41,22 @@ class ASpanFormerMatcher(BaseMatcher):
         
         # Import ASpanFormer components
         try:
-            # Add the matchers/aspanformer_models path to sys.path for imports
+            # Add aspanformer_models to sys.path for config file imports
+            # (config files use absolute imports like 'from config.default import ...')
             aspanformer_models_path = Path(__file__).parent / "aspanformer_models"
             if str(aspanformer_models_path) not in sys.path:
                 sys.path.insert(0, str(aspanformer_models_path))
             
-            from ASpanFormer.aspanformer import ASpanFormer
-            from config.default import get_cfg_defaults
-            from utils.misc import lower_config
+            from .aspanformer_models.ASpanFormer.aspanformer import ASpanFormer
+            from .aspanformer_models.config.default import get_cfg_defaults
+            from .aspanformer_models.utils.misc import lower_config
             
             # Load config
             config_obj = get_cfg_defaults()
             config_path = aspanformer_models_path / "config" / "aspan" / self._model_type / "aspan_test.py"
             if config_path.exists():
                 config_obj.merge_from_file(str(config_path))
+            _config = lower_config(config_obj)
             _config = lower_config(config_obj)
             
             # Load model
@@ -63,7 +65,8 @@ class ASpanFormerMatcher(BaseMatcher):
                 raise FileNotFoundError(f"ASpanFormer weights not found: {weights_path}")
             
             self._matcher = ASpanFormer(config=_config['aspan'])
-            state_dict = torch.load(str(weights_path), map_location='cpu')['state_dict']
+            # weights_only=False is safe here as we control the model file
+            state_dict = torch.load(str(weights_path), map_location='cpu', weights_only=False)['state_dict']
             self._matcher.load_state_dict(state_dict, strict=False)
             self._matcher.eval().to(self._device)
             

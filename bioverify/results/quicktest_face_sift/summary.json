@@ -1,0 +1,17 @@
+{
+  "SIFT": {
+    "num_pairs": 20,
+    "num_genuine": 10,
+    "num_impostor": 10,
+    "accuracy": 0.7,
+    "precision": 1.0,
+    "recall": 0.4,
+    "genuine_accuracy": 0.4,
+    "impostor_accuracy": 1.0,
+    "tar": 0.4,
+    "far": 0.0,
+    "frr": 0.6,
+    "trr": 1.0,
+    "avg_inlier_ratio": 0.17096137873754153
+  }
+}

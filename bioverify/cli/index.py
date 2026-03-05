@@ -12,6 +12,7 @@ from ..data.indexer import DatasetIndexer
 from ..data.validation import CSVValidator, print_csv_statistics
 from ..matchers.registry import create_matcher
 from ..experiments.runner import run_experiment
+from ..evaluation.cli import threshold_sweep_command, compare_matchers_command
 
 
 def load_config(config_path: str) -> dict:
@@ -143,6 +144,7 @@ def match_command(args):
         modality=args.modality,
         visualize=args.visualize,
         ground_truth=ground_truth,
+        matcher_name=matcher_name,  # Pass the full matcher name (e.g., "sift-v1")
     )
     if args.full:
         print(result)
@@ -159,19 +161,11 @@ def experiment_command(args):
     try:
         results, metrics = run_experiment(args.config)
         
+        # Note: Summary metrics are already printed by the runner
+        # Just print experiment completion message
         print("\n" + "=" * 60)
-        print("EXPERIMENT SUMMARY")
+        print("EXPERIMENT COMPLETE")
         print("=" * 60)
-        print(f"Results saved to: {args.config}")
-        print(f"Total pairs processed: {len(results)}")
-        print(f"\nMetrics by matcher:")
-        for matcher_name, matcher_metrics in metrics.items():
-            print(f"\n  {matcher_name}:")
-            for key, value in matcher_metrics.items():
-                if isinstance(value, float):
-                    print(f"    {key}: {value:.4f}")
-                else:
-                    print(f"    {key}: {value}")
     
     except Exception as e:
         print(f"❌ Experiment failed: {str(e)}")
@@ -314,6 +308,51 @@ Examples:
         help='Print verbose output including tracebacks'
     )
     
+    # Evaluate command (with subcommands)
+    evaluate_parser = subparsers.add_parser('evaluate', help='Evaluate experiment results')
+    evaluate_subparsers = evaluate_parser.add_subparsers(dest='evaluate_command', help='Evaluation subcommand')
+    
+    # Threshold sweep subcommand
+    threshold_parser = evaluate_subparsers.add_parser('threshold', help='Perform threshold sweep analysis')
+    threshold_parser.add_argument(
+        '--experiment', '-e',
+        required=True,
+        dest='experiment_name',
+        help='Name of the experiment (found in bioverify/results/{experiment_name})'
+    )
+    threshold_parser.add_argument(
+        '--matcher', '-m',
+        help='Optional: analyze specific matcher only (if not specified, analyzes all)'
+    )
+    threshold_parser.add_argument(
+        '--output', '-o',
+        help='Output directory for plots and results (default: {experiment_dir}/evaluation)'
+    )
+    
+    # Matcher comparison subcommand
+    compare_parser = evaluate_subparsers.add_parser('compare', help='Compare matchers')
+    compare_parser.add_argument(
+        '--experiment', '-e',
+        required=True,
+        dest='experiment_name',
+        help='Name of the experiment'
+    )
+    compare_parser.add_argument(
+        '--mode',
+        choices=['eer', 'far', 'frr', 'threshold'],
+        default='eer',
+        help='Comparison mode: eer (default, recommended) | far (fixed FAR) | frr (fixed FRR) | threshold (raw threshold)'
+    )
+    compare_parser.add_argument(
+        '--value',
+        type=float,
+        help='Target value for mode: FAR value (e.g., 0.001), FRR value (e.g., 0.01), or threshold value (e.g., 0.5). Not used for EER mode.'
+    )
+    compare_parser.add_argument(
+        '--output', '-o',
+        help='Output directory for results'
+    )
+    
     # Parse arguments
     args = parser.parse_args()
     
@@ -328,6 +367,19 @@ Examples:
         match_command(args)
     elif args.command == 'experiment':
         experiment_command(args)
+    elif args.command == 'evaluate':
+        if args.evaluate_command == 'threshold':
+            threshold_sweep_command(args)
+        elif args.evaluate_command == 'compare':
+            # Validate required arguments for compare modes
+            if args.mode in ['far', 'frr', 'threshold'] and args.value is None:
+                print(f"❌ --value is required for mode '{args.mode}'")
+                print(f"   Example: --mode {args.mode} --value 0.01")
+                compare_parser.print_help()
+                exit(1)
+            compare_matchers_command(args)
+        else:
+            evaluate_parser.print_help()
     else:
         parser.print_help()
 

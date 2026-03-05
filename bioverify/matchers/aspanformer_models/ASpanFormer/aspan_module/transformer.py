@@ -174,10 +174,10 @@ class flow_initializer(nn.Module):
 
         sub_feat0, sub_flow_feature0 = decoupled_feature0[:,:self.dim], decoupled_feature0[:, self.dim:]
         sub_feat1, sub_flow_feature1 = decoupled_feature1[:,:self.dim], decoupled_feature1[:, self.dim:]
-        update_feat0, flow_feature0 = F.upsample(sub_feat0, scale_factor=ds0, mode='bilinear'),\
-                                        F.upsample(sub_flow_feature0, scale_factor=ds0, mode='bilinear')
-        update_feat1, flow_feature1 = F.upsample(sub_feat1, scale_factor=ds1, mode='bilinear'),\
-                                        F.upsample(sub_flow_feature1, scale_factor=ds1, mode='bilinear')
+        update_feat0, flow_feature0 = F.interpolate(sub_feat0, scale_factor=ds0, mode='bilinear'),\
+                                        F.interpolate(sub_flow_feature0, scale_factor=ds0, mode='bilinear')
+        update_feat1, flow_feature1 = F.interpolate(sub_feat1, scale_factor=ds1, mode='bilinear'),\
+                                        F.interpolate(sub_flow_feature1, scale_factor=ds1, mode='bilinear')
         
         feat0 = feat0+self.up_merge(torch.cat([feat0, update_feat0], dim=1))
         feat1 = feat1+self.up_merge(torch.cat([feat1, update_feat1], dim=1))

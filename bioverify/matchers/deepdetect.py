@@ -400,4 +400,5 @@ class DeepDetectMatcher(BaseMatcher):
             inlier_ratio=inlier_ratio,
             reprojection_error=reprojection_error,
             homography_confidence=confidence if homography is not None else 0.0,
+            matcher_params=self._get_matcher_params(),
         )

@@ -223,7 +223,8 @@ class SuperGlue(nn.Module):
         assert self.config['weights'] in ['indoor', 'outdoor']
         path = Path(__file__).parent
         path = path / 'weights/superglue_{}.pth'.format(self.config['weights'])
-        self.load_state_dict(torch.load(str(path)))
+        # weights_only=False is safe here as we control the model file
+        self.load_state_dict(torch.load(str(path), weights_only=False))
         print('Loaded SuperGlue model (\"{}\" weights)'.format(
             self.config['weights']))
 

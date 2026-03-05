@@ -1,0 +1,20 @@
+base_path: C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset
+batch_size: 1
+dataset: bioverify/data/pairs/quicktest_face_multipie.csv
+device: cuda
+experiment:
+  created: '2026-03-04'
+  description: Evaluate sift on face pairs
+  name: Sift 10 Face
+  purpose: single_matcher
+  researcher: null
+filter_dataset: null
+filter_modality: face
+matchers:
+- config_base: bioverify/config/matching/sift.yaml
+  config_overrides: null
+  name: sift
+output_dir: bioverify/results/quicktest_face_sift
+save_pair_images: false
+save_visualization_results: false
+verbose: true

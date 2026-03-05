@@ -15,8 +15,7 @@ matcher:
     min_matches: 4
     
     # Masking
-    use_masking: false
-    mask_cache_dir: null
+    use_masking: true
     
     # Device
     device: cpu

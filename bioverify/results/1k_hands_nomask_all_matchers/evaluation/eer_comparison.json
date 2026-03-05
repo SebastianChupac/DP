@@ -1,0 +1,44 @@
+{
+  "ASpanFormer_indoor": {
+    "eer": 0.446,
+    "threshold": 0.5205205205205206,
+    "far": 0.446,
+    "frr": 0.446
+  },
+  "DeepDetect": {
+    "eer": 0.443,
+    "threshold": 0.5255255255255256,
+    "far": 0.442,
+    "frr": 0.444
+  },
+  "LoFTR_indoor": {
+    "eer": 0.439,
+    "threshold": 0.257917261878371,
+    "far": 0.442,
+    "frr": 0.436
+  },
+  "ORB": {
+    "eer": 0.433,
+    "threshold": 0.001001001001001001,
+    "far": 0.244,
+    "frr": 0.622
+  },
+  "SGMNet_root_SGM": {
+    "eer": 0.429,
+    "threshold": 0.2732732732732733,
+    "far": 0.428,
+    "frr": 0.43
+  },
+  "SIFT": {
+    "eer": 0.394,
+    "threshold": 0.001001001001001001,
+    "far": 0.138,
+    "frr": 0.65
+  },
+  "SuperGlue": {
+    "eer": 0.464,
+    "threshold": 0.3083083083083083,
+    "far": 0.464,
+    "frr": 0.464
+  }
+}

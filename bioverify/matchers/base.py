@@ -46,7 +46,6 @@ class MatcherConfig:
         ransac_max_iters: Maximum RANSAC iterations
         min_matches: Minimum matches required for valid result
         use_masking: Whether to apply modality-specific masking
-        mask_cache_dir: Directory for cached masks (None = compute on-the-fly)
         device: Device for torch models ('cuda' or 'cpu')
         extra_params: Method-specific parameters
     """
@@ -56,7 +55,6 @@ class MatcherConfig:
     ransac_max_iters: int = 10000
     min_matches: int = 4
     use_masking: bool = False
-    mask_cache_dir: Optional[str] = None
     device: str = "cuda"
     extra_params: Dict[str, Any] = field(default_factory=dict)
     
@@ -75,7 +73,7 @@ class MatcherConfig:
         known_fields = {
             "resize_width", "resize_height", "ransac_thresh", 
             "ransac_max_iters", "min_matches", "use_masking",
-            "mask_cache_dir", "device"
+            "device"
         }
         
         main_params = {k: v for k, v in config_dict.items() if k in known_fields}
@@ -266,6 +264,7 @@ class BaseMatcher(ABC):
         modality: Optional[str] = None,
         visualize: bool = False,
         ground_truth: Optional[bool] = None,
+        matcher_name: Optional[str] = None,
     ) -> Optional[VerificationResult]:
         """
         Main entry point for matching two images.
@@ -283,6 +282,8 @@ class BaseMatcher(ABC):
             img2_path: Path to second image
             modality: Modality hint for masking ('iris', 'face', 'hand', 'fingervein')
             visualize: If True, returns VisualizationResult; if False, returns VerificationResult
+            matcher_name: Optional override for the matcher name in results (e.g., "sift-v1").
+                         If not provided, uses get_name() which returns the base matcher name.
             
         Returns:
             VerificationResult (lightweight) or VisualizationResult (rich) depending on visualize flag
@@ -335,10 +336,16 @@ class BaseMatcher(ABC):
             reprojection_error=reprojection_error,
             ground_truth=ground_truth,
         )
+        verification_result.num_keypoints_image1 = len(keypoints1) if keypoints1 is not None else 0
+        verification_result.num_keypoints_image2 = len(keypoints2) if keypoints2 is not None else 0
         verification_result.modality = modality
+        
+        # Override matcher name if provided (for versioned matchers like "sift-v1")
+        if matcher_name is not None:
+            verification_result.method_name = matcher_name
 
         if visualize:
-            return self._create_visualization_result(
+            viz_result = self._create_visualization_result(
                 img1_path=img1_path,
                 img2_path=img2_path,
                 img1=img1,
@@ -354,6 +361,10 @@ class BaseMatcher(ABC):
                 decision=verification_result,
                 modality=modality,
             )
+            # Override matcher name in visualization result too
+            if matcher_name is not None:
+                viz_result.method_name = matcher_name
+            return viz_result
         return verification_result
     
     def _get_matcher_params(self) -> Dict[str, Any]:
@@ -429,70 +440,101 @@ class BaseMatcher(ABC):
         modality: str,
     ) -> Optional[np.ndarray]:
         """
-        Get mask from cache or compute it.
+        Load precomputed mask from _masks folder structure.
         
-        Strategy:
-        1. If mask_cache_dir is set, check for cached mask
-        2. If not found, compute mask
-        3. Optionally save to cache
-        4. Resize mask to match image dimensions
+        Expects masks to be pre-computed at:
+          PUBLIC_DATASET_ROOT/_masks/{Modality}/{dataset_path}/{image_stem}_mask.png
+        
+        Example:
+          Image: PublicDataset/Iris/001-CASIA/S001.jpg
+          Mask:  PublicDataset/_masks/Iris/001-CASIA/S001_mask.png
         
         IMPORTANT: Must be called AFTER image preprocessing so mask dimensions
         match the preprocessed image size.
         
         Args:
-            img_path: Path to image (used for cache lookup)
+            img_path: Path to image (absolute or relative to PUBLIC_DATASET_ROOT)
             img: Image array (AFTER preprocessing/resizing)
-            modality: Modality type ('iris', 'face', 'hand', 'fingervein')
+            modality: Modality type ('iris', 'face', 'hand', 'handGeometry', 'fingervein')
             
         Returns:
-            Binary mask matching image dimensions, or None if computation fails
-        """
-        mask = None
-        
-        # Try loading from cache
-        if self.config.mask_cache_dir:
-            cache_dir = Path(self.config.mask_cache_dir)
-            # Create cache filename based on image path
-            img_name = Path(img_path).stem
-            mask_path = cache_dir / f"{img_name}_{modality}_mask.png"
+            Binary mask matching image dimensions, or raises error if not found
             
-            if mask_path.exists():
-                cached_mask = cv2.imread(str(mask_path), cv2.IMREAD_GRAYSCALE)
-                if cached_mask is not None:
-                    # Ensure binary
-                    cached_mask = (cached_mask > 127).astype(np.uint8) * 255
-                    
-                    # CRITICAL: Resize mask to match preprocessed image dimensions
-                    if cached_mask.shape != img.shape[:2]:
-                        cached_mask = cv2.resize(
-                            cached_mask,
-                            (img.shape[1], img.shape[0]),
-                            interpolation=cv2.INTER_NEAREST
-                        )
-                    
-                    return cached_mask
+        Raises:
+            FileNotFoundError: If mask not found (run precompute_masks.py first)
+        """
+        if modality == "fingervein":
+            # Fingervein doesn't need masking (ROI already extracted)
+            return None
         
-        # Compute mask
-        if modality == "iris":
-            # TODO pass eye side
-            exclude_pupil = bool(self.config.extra_params.get("iris_exclude_pupil", True))
-            mask = create_iris_mask(img, exclude_pupil=exclude_pupil)
-        elif modality == "face":
-            mask = create_face_mask(img)
-        elif modality == "hand":
-            mask = create_hand_mask(img)
-        elif modality == "fingervein":
-            # Fingervein typically doesn't need masking (ROI already extracted)
-            mask = None
+        # Resolve image path to absolute
+        img_abs_path = Path(img_path)
+        if not img_abs_path.is_absolute():
+            img_abs_path = Path(PUBLIC_DATASET_ROOT) / img_path
         
-        # Save to cache if successful and cache is enabled
-        if mask is not None and self.config.mask_cache_dir:
-            cache_dir = Path(self.config.mask_cache_dir)
-            cache_dir.mkdir(parents=True, exist_ok=True)
-            img_name = Path(img_path).stem
-            mask_path = cache_dir / f"{img_name}_{modality}_mask.png"
-            cv2.imwrite(str(mask_path), mask)
+        # Extract relative path from modality folder
+        # E.g., PublicDataset/Iris/001-CASIA/S001.jpg -> 001-CASIA/S001.jpg
+        try:
+            # Normalize modality name to match possible folder names
+            # Map lowercase/variant names to actual folder names in PublicDataset
+            modality_variants = {
+                'hand': ['HandGeometry', 'Hand'],
+                'handgeometry': ['HandGeometry', 'Hand'],
+                'iris': ['Iris'],
+                'face': ['Face'],
+                'fingervein': ['FingerVein'],
+            }
+            
+            # Try to find the modality folder in the path
+            parts = img_abs_path.parts
+            modality_idx = None
+            modality_folder = None
+            
+            # Get list of possible folder names for this modality
+            possible_names = modality_variants.get(modality.lower(), [modality.capitalize()])
+            
+            # Search for any of these folder names in the path
+            for i, part in enumerate(parts):
+                if part in possible_names:
+                    modality_idx = i
+                    modality_folder = part
+                    break
+            
+            if modality_idx is None:
+                raise FileNotFoundError(
+                    f"Cannot find modality folder for '{modality}' in path: {img_abs_path}\n"
+                    f"Expected one of: {possible_names}"
+                )
+            
+            # Relative path from modality folder
+            rel_from_modality = Path(*parts[modality_idx+1:])
+        except Exception as e:
+            raise FileNotFoundError(f"Error extracting relative path from {img_abs_path}: {e}")
+        
+        # Look for mask in _masks/{ActualFolder}/{relative_path}/{image_stem}_mask.png
+        mask_path = Path(PUBLIC_DATASET_ROOT) / "_masks" / modality_folder / rel_from_modality.parent / f"{rel_from_modality.stem}_mask.png"
+        
+        if not mask_path.exists():
+            raise FileNotFoundError(
+                f"Mask not found: {mask_path}\n"
+                f"Run: python -m bioverify.experiments.precompute_masks --dataset-root {PUBLIC_DATASET_ROOT}"
+            )
+        
+        # Load mask
+        mask = cv2.imread(str(mask_path), cv2.IMREAD_GRAYSCALE)
+        if mask is None:
+            raise RuntimeError(f"Failed to load mask: {mask_path}")
+        
+        # Ensure binary
+        mask = (mask > 127).astype(np.uint8) * 255
+        
+        # Resize to match preprocessed image dimensions
+        if mask.shape != img.shape[:2]:
+            mask = cv2.resize(
+                mask,
+                (img.shape[1], img.shape[0]),
+                interpolation=cv2.INTER_NEAREST
+            )
         
         return mask
     
@@ -504,28 +546,47 @@ class BaseMatcher(ABC):
         """
         Estimate homography using RANSAC.
         
+        Rejects degenerate or ill-conditioned homographies (e.g., singular matrices
+        or matrices with very small condition numbers).
+        
         Args:
             pts1: Nx2 array of points in first image
             pts2: Nx2 array of corresponding points in second image
             
         Returns:
             Tuple of (homography, inliers):
-            - homography: 3x3 matrix or None if estimation fails
+            - homography: 3x3 matrix or None if estimation fails or is degenerate
             - inliers: Boolean array of inlier mask or None
         """
         if len(pts1) < 4:
             return None, None
-        
         
         H, mask = cv2.findHomography(
             pts1,
             pts2,
             cv2.RANSAC,
             self.config.ransac_thresh
-            #maxIters=self.config.ransac_max_iters,
         )
         
         if H is None:
+            return None, None
+        
+        # Check for degenerate homography
+        try:
+            # Check determinant (singular matrix has det ≈ 0)
+            det = float(np.linalg.det(H))
+            if abs(det) < 1e-6:
+                # Singular or near-singular matrix
+                return None, None
+            
+            # Check condition number (measures numerical stability)
+            # High condition number means slight perturbations in input cause large changes in output
+            cond = float(np.linalg.cond(H))
+            if cond > 1e6:  # Ill-conditioned matrix
+                return None, None
+        
+        except Exception:
+            # If any matrix operation fails, treat as degenerate
             return None, None
         
         inliers = mask.ravel().astype(bool)
@@ -554,7 +615,14 @@ class BaseMatcher(ABC):
         # Transform pts1 using homography
         pts1_homogeneous = np.column_stack([pts1, np.ones(len(pts1))])
         pts1_transformed = (homography @ pts1_homogeneous.T).T
-        pts1_transformed = pts1_transformed[:, :2] / pts1_transformed[:, 2:3]
+        
+        # Check for degenerate homography (divide by zero)
+        z_coords = pts1_transformed[:, 2:3]
+        if np.any(np.abs(z_coords) < 1e-8):
+            # Degenerate homography - return infinite error
+            return float("inf")
+        
+        pts1_transformed = pts1_transformed[:, :2] / z_coords
         
         # Compute Euclidean distances
         errors = np.linalg.norm(pts1_transformed - pts2, axis=1)

@@ -163,7 +163,8 @@ class BatchExperimentRunner:
                         img2_path=pair.image2_path,
                         modality=pair.modality,
                         visualize=False,
-                        ground_truth=pair.ground_truth
+                        ground_truth=pair.ground_truth,
+                        matcher_name=matcher_name,  # Pass experiment matcher name (e.g., "sift-v1")
                     )
                     
                     if result is not None:
@@ -203,6 +204,9 @@ class BatchExperimentRunner:
         
         self._save_results()
         
+        # Print summary metrics at the end
+        if self.config.verbose:
+            self._print_summary()
         
         return self.results, self.metrics
     
@@ -243,6 +247,16 @@ class BatchExperimentRunner:
             precision = true_positives / (true_positives + false_positives) if (true_positives + false_positives) > 0 else 0.0
             recall = true_positives / (true_positives + false_negatives) if (true_positives + false_negatives) > 0 else 0.0
             
+            # Compute biometric verification metrics (at current threshold)
+            # TAR (True Acceptance Rate) = % of genuine pairs correctly matched
+            tar = genuine_correct / len(genuine) if genuine else 0.0
+            # FAR (False Acceptance Rate) = % of impostor pairs incorrectly matched
+            far = (len(impostor) - impostor_correct) / len(impostor) if impostor else 0.0
+            # FRR (False Rejection Rate) = % of genuine pairs incorrectly rejected
+            frr = (len(genuine) - genuine_correct) / len(genuine) if genuine else 0.0
+            # TRR (True Rejection Rate) = % of impostor pairs correctly rejected
+            trr = impostor_correct / len(impostor) if impostor else 0.0
+            
             self.metrics[matcher_name] = {
                 'num_pairs': len(results),
                 'num_genuine': len(genuine),
@@ -252,22 +266,26 @@ class BatchExperimentRunner:
                 'recall': recall,
                 'genuine_accuracy': genuine_accuracy,
                 'impostor_accuracy': impostor_accuracy,
+                'tar': tar,
+                'far': far,
+                'frr': frr,
+                'trr': trr,
                 'avg_inlier_ratio': sum(r.verification_confidence for r in results) / len(results) if results else 0.0,
             }
-        
-        # Print summary
-        if self.config.verbose:
-            print("\n📈 Summary Metrics:")
-            for matcher_name, metrics in self.metrics.items():
-                print(f"\n  {matcher_name}:")
-                print(f"    Pairs: {metrics['num_pairs']}")
-                print(f"    Num Genuine: {metrics['num_genuine']}")
-                print(f"    Num Impostor: {metrics['num_impostor']}")
-                print(f"    Accuracy: {metrics['accuracy']:.2%}")
-                print(f"    Precision: {metrics['precision']:.2%}")
-                print(f"    Recall: {metrics['recall']:.2%}")
-                print(f"    Genuine Acc: {metrics['genuine_accuracy']:.2%}")
-                print(f"    Impostor Acc: {metrics['impostor_accuracy']:.2%}")
+    
+    def _print_summary(self):
+        """Print summary metrics in formatted style."""
+        print("\n📈 Summary Metrics:")
+        for matcher_name, metrics in self.metrics.items():
+            print(f"\n  {matcher_name}:")
+            print(f"    Pairs: {metrics['num_pairs']} (Genuine: {metrics['num_genuine']}, Impostor: {metrics['num_impostor']})")
+            print(f"    Accuracy: {metrics['accuracy']:.2%}")
+            print(f"    Precision: {metrics['precision']:.2%}, Recall: {metrics['recall']:.2%}")
+            print(f"    Genuine Accuracy: {metrics['genuine_accuracy']:.2%}, Impostor Accuracy: {metrics['impostor_accuracy']:.2%}")
+            print(f"    TAR (True Acceptance Rate):  {metrics['tar']:.2%}")
+            print(f"    FAR (False Acceptance Rate): {metrics['far']:.2%}")
+            print(f"    FRR (False Rejection Rate):  {metrics['frr']:.2%}")
+            print(f"    TRR (True Rejection Rate):   {metrics['trr']:.2%}")
     
     def _save_results(self):
         """Save results to JSON, CSV, and summary JSON."""
@@ -299,6 +317,8 @@ class BatchExperimentRunner:
                     'verification_confidence': float(r.verification_confidence),
                     'ground_truth': r.ground_truth,
                     'is_correct': r.is_correct,
+                    'num_keypoints_image1': r.num_keypoints_image1,
+                    'num_keypoints_image2': r.num_keypoints_image2,
                     'num_matches': r.num_matches,
                     'num_inliers': r.num_inliers,
                     'inlier_ratio': r.inlier_ratio,
@@ -321,6 +341,7 @@ class BatchExperimentRunner:
             writer = csv.writer(f)
             writer.writerow([
                 'matcher', 'modality', 'pair_id', 'identity1', 'identity2',
+                'num_keypoints_image1', 'num_keypoints_image2',
                 'num_matches', 'num_inliers', 'inlier_ratio',
                 'is_same_person_pred', 'confidence', 'ground_truth', 'is_correct',
                 'reprojection_error'
@@ -333,6 +354,8 @@ class BatchExperimentRunner:
                     r.metadata.get('pair_id', ''),
                     r.metadata.get('identity1', ''),
                     r.metadata.get('identity2', ''),
+                    r.num_keypoints_image1,
+                    r.num_keypoints_image2,
                     r.num_matches,
                     r.num_inliers,
                     f"{r.inlier_ratio:.4f}" if r.inlier_ratio else '',

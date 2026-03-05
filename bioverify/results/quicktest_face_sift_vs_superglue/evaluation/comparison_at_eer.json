@@ -1,0 +1,40 @@
+{
+  "matchers": {
+    "SIFT": {
+      "threshold": 8.334166750008335e-05,
+      "eer": 0.25,
+      "tar": 0.5,
+      "far": 0.0,
+      "frr": 0.5,
+      "trr": 1.0
+    },
+    "SuperGlue": {
+      "threshold": 0.35137788871823983,
+      "eer": 0.2,
+      "tar": 0.8,
+      "far": 0.2,
+      "frr": 0.2,
+      "trr": 0.8
+    }
+  },
+  "ranking": [
+    {
+      "matcher": "SuperGlue",
+      "threshold": 0.35137788871823983,
+      "eer": 0.2,
+      "tar": 0.8,
+      "far": 0.2,
+      "frr": 0.2,
+      "trr": 0.8
+    },
+    {
+      "matcher": "SIFT",
+      "threshold": 8.334166750008335e-05,
+      "eer": 0.25,
+      "tar": 0.5,
+      "far": 0.0,
+      "frr": 0.5,
+      "trr": 1.0
+    }
+  ]
+}
