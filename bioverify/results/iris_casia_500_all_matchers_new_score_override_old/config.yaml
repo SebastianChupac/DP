@@ -1,0 +1,46 @@
+base_path: C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset
+batch_size: 1
+dataset: bioverify/data/pairs/pairs_iris_casia_500.csv
+device: cuda
+experiment:
+  created: '2026-03-08'
+  description: Evaluate multiple matchers on iris casia pairs with new scoring method
+    but actually using old scoring method
+  name: All matchers 500 Iris CASIA masked new_score_override_old
+  purpose: multiple_matchers
+  researcher: null
+filter_dataset: null
+filter_modality: null
+matchers:
+- config_base: bioverify/config/matching/loftr.yaml
+  config_overrides:
+    use_masking: true
+  name: loftr
+- config_base: bioverify/config/matching/orb.yaml
+  config_overrides:
+    use_masking: true
+  name: orb
+- config_base: bioverify/config/matching/sift.yaml
+  config_overrides:
+    use_masking: true
+  name: sift
+- config_base: bioverify/config/matching/superglue.yaml
+  config_overrides:
+    use_masking: true
+  name: superglue
+- config_base: bioverify/config/matching/sgmnet.yaml
+  config_overrides:
+    use_masking: true
+  name: sgmnet
+- config_base: bioverify/config/matching/aspanformer.yaml
+  config_overrides:
+    use_masking: true
+  name: aspanformer
+- config_base: bioverify/config/matching/deepdetect.yaml
+  config_overrides:
+    use_masking: true
+  name: deepdetect
+output_dir: bioverify/results/iris_casia_500_all_matchers_new_score_override_old
+save_pair_images: false
+save_visualization_results: false
+verbose: true

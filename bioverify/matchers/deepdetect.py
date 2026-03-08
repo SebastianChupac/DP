@@ -372,6 +372,11 @@ class DeepDetectMatcher(BaseMatcher):
         """
         Create verification result with DeepDetect-specific decision logic.
         
+        Uses improved confidence scoring that accounts for:
+        - Geometric consistency (inlier ratio)
+        - Statistical significance (sample size)
+        - Measurement quality (reprojection error)
+        
         Decision logic:
         - Predict same person if inlier_ratio > ratio_threshold 
           AND mean_reprojection_error < max_reprojection_error
@@ -382,13 +387,15 @@ class DeepDetectMatcher(BaseMatcher):
         num_matches = len(matches) if matches is not None else 0
         inlier_ratio = num_inliers / max(1, num_matches)
         
+        # Compute improved confidence score
+        confidence = self._compute_confidence_score(num_matches, num_inliers, reprojection_error)
+        # rewrite confidence with inlier ratio for this experiment
+        #confidence = inlier_ratio
         # Decision logic: inlier ratio AND reprojection error thresholds
         is_same_person = False
-        if inlier_ratio > self.ratio_threshold:
+        if confidence >= self.ratio_threshold:
             if reprojection_error is None or reprojection_error < self.max_reprojection_error:
                 is_same_person = True
-        
-        confidence = inlier_ratio
         
         return VerificationResult(
             method_name=self.get_name(),

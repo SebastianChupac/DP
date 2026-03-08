@@ -628,6 +628,61 @@ class BaseMatcher(ABC):
         errors = np.linalg.norm(pts1_transformed - pts2, axis=1)
         return float(np.mean(errors))
     
+    def _compute_confidence_score(
+        self,
+        num_matches: int,
+        num_inliers: int,
+        reprojection_error: Optional[float] = None,
+    ) -> float:
+        """
+          Compute a calibrated confidence score in [0, 1].
+
+          This uses a gentle calibration around inlier_ratio instead of the previous
+          aggressive error damping. The prior variant over-penalized reprojection
+          error and reduced ROC separability for several learned matchers.
+
+          Strategy:
+          - Base signal remains inlier_ratio.
+          - A light significance term penalizes tiny inlier counts.
+          - A light reprojection penalty only starts after an error margin.
+          - DeepDetect keeps ratio-only confidence to avoid regression.
+        
+        Args:
+            num_matches: Number of matches found between images
+            num_inliers: Number of matches that fit the homography
+            reprojection_error: Mean reprojection error in pixels (None → 0)
+            
+        Returns:
+            Confidence score in [0, 1]
+        """
+        # No matches = no confidence
+        if num_matches == 0 or num_inliers == 0:
+            return 0.0
+        
+        # 1. Base geometric consistency
+        inlier_ratio = num_inliers / num_matches
+
+        matcher_name = self.get_name().lower()
+
+        # DeepDetect is strongly bimodal; ratio-only score preserves its separation.
+        if matcher_name == "deepdetect":
+            return float(np.clip(inlier_ratio, 0.0, 1.0))
+
+        # 2. Light statistical significance (much gentler than previous version)
+        significance_weight = 1.0 / (1.0 + np.exp(-(num_inliers - 3.0) / 3.0))
+        scaled_significance = 0.2 * significance_weight + 0.8
+
+        # 3. Light quality term with margin (no penalty for small errors)
+        if reprojection_error is None or not np.isfinite(reprojection_error):
+            quality_weight = 1.0
+        else:
+            effective_error = max(0.0, reprojection_error - 1.5)
+            quality_weight = float(np.exp(-0.05 * effective_error))
+
+        score = inlier_ratio * scaled_significance * quality_weight
+        
+        return float(np.clip(score, 0.0, 1.0))
+    
     def _get_device(self) -> Any:
         """
         Get torch device based on config.

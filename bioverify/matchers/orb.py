@@ -152,7 +152,11 @@ class ORBMatcher(BaseMatcher):
         reprojection_error: Optional[float],
         ground_truth: Optional[bool] = None,
     ) -> VerificationResult:
-        """Create lightweight verification result for experiment tracking."""
+        """Create lightweight verification result for experiment tracking.
+        
+        Uses improved confidence scoring that accounts for geometric consistency,
+        statistical significance, and measurement quality.
+        """
         # Compute metrics
         inlier_mask = inliers.astype(bool) if inliers is not None else None
         num_inliers = int(inlier_mask.sum()) if inlier_mask is not None else 0
@@ -160,8 +164,11 @@ class ORBMatcher(BaseMatcher):
         inlier_ratio = num_inliers / max(1, num_matches)
 
         # Make prediction based on inlier ratio
-        is_match = inlier_ratio >= self._ratio_thresh if inlier_mask is not None else False
-        confidence = inlier_ratio
+        #is_match = inlier_ratio >= self._ratio_thresh if inlier_mask is not None else False
+        confidence = self._compute_confidence_score(num_matches, num_inliers, reprojection_error)
+                # rewrite confidence with inlier ratio for this experiment
+        #confidence = inlier_ratio
+        is_match = confidence >= self._ratio_thresh
 
         return VerificationResult(
             method_name=self.get_name(),
