@@ -171,6 +171,103 @@ def plot_roc_comparison(
     plt.close(fig)
 
 
+def plot_score_distribution(
+    scores: np.ndarray,
+    ground_truth: np.ndarray,
+    matcher_name: str,
+    current_threshold: Optional[float] = None,
+    eer_threshold: Optional[float] = None,
+    output_path: Optional[Path] = None,
+    show: bool = False,
+):
+    """Plot genuine and impostor score distributions for a matcher.
+
+    Args:
+        scores: Array of verification confidence scores
+        ground_truth: Binary labels (1=genuine, 0=impostor)
+        matcher_name: Name of matcher for plot title
+        current_threshold: Currently configured decision threshold
+        eer_threshold: Threshold at Equal Error Rate (minimum FAR/FRR gap)
+        output_path: Path to save plot
+        show: Whether to display plot
+    """
+    try:
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print("Warning: matplotlib not available. Skipping score distribution plot.")
+        return
+
+    scores = np.asarray(scores, dtype=float)
+    ground_truth = np.asarray(ground_truth)
+
+    genuine_scores = scores[ground_truth == 1]
+    impostor_scores = scores[ground_truth == 0]
+
+    if genuine_scores.size == 0 or impostor_scores.size == 0:
+        print(f"Warning: insufficient score classes for distribution plot: {matcher_name}")
+        return
+
+    fig, ax = plt.subplots(figsize=(8, 6))
+
+    score_min = float(np.min(scores))
+    score_max = float(np.max(scores))
+    bins = np.linspace(score_min, score_max, 40)
+
+    ax.hist(
+        impostor_scores,
+        bins=bins,
+        alpha=0.55,
+        density=True,
+        color="#d62728",
+        label=f"Impostor (n={impostor_scores.size})",
+    )
+    ax.hist(
+        genuine_scores,
+        bins=bins,
+        alpha=0.55,
+        density=True,
+        color="#1f77b4",
+        label=f"Genuine (n={genuine_scores.size})",
+    )
+
+    ax.axvline(np.mean(impostor_scores), color="#d62728", linestyle="--", linewidth=1.5)
+    ax.axvline(np.mean(genuine_scores), color="#1f77b4", linestyle="--", linewidth=1.5)
+
+    if current_threshold is not None:
+        ax.axvline(
+            float(current_threshold),
+            color="#2ca02c",
+            linestyle="-.",
+            linewidth=1.8,
+            label=f"Current threshold={float(current_threshold):.4f}",
+        )
+
+    if eer_threshold is not None:
+        ax.axvline(
+            float(eer_threshold),
+            color="#9467bd",
+            linestyle=":",
+            linewidth=2.0,
+            label=f"EER threshold={float(eer_threshold):.4f}",
+        )
+
+    ax.set_title(f"Score Distribution - {matcher_name}")
+    ax.set_xlabel("Verification Confidence Score")
+    ax.set_ylabel("Density")
+    ax.legend()
+    ax.grid(alpha=0.3)
+
+    if output_path:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        plt.savefig(output_path, dpi=150, bbox_inches="tight")
+        print(f"✓ Score distribution plot saved to {output_path}")
+
+    if show:
+        plt.show()
+
+    plt.close(fig)
+
+
 def save_analysis_report(analysis_results: Dict, output_path: Path):
     """
     Save analysis results as formatted JSON.

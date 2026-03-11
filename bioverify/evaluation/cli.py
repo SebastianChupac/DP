@@ -9,7 +9,14 @@ from pathlib import Path
 from typing import Optional
 
 from .analyzer import ThresholdAnalyzer, MatcherComparator
-from .plotter import plot_roc_curve, plot_det_curve, plot_roc_comparison, save_analysis_report, NumpyEncoder
+from .plotter import (
+    plot_roc_curve,
+    plot_det_curve,
+    plot_roc_comparison,
+    plot_score_distribution,
+    save_analysis_report,
+    NumpyEncoder,
+)
 
 
 def threshold_sweep_command(args):
@@ -55,6 +62,7 @@ def threshold_sweep_command(args):
     print(f"   Output: {output_dir}\n")
     
     all_analysis = {}
+    all_scores = {}
     
     for matcher_name in matchers_to_analyze:
         print(f"   Analyzing {matcher_name}...", end=" ", flush=True)
@@ -63,6 +71,10 @@ def threshold_sweep_command(args):
             analyzer = ThresholdAnalyzer(results_dict, matcher_name)
             analysis = analyzer.sweep_threshold(num_points=1000)
             all_analysis[matcher_name] = analysis
+            all_scores[matcher_name] = {
+                'scores': analyzer.scores,
+                'ground_truth': analyzer.ground_truth,
+            }
             
             # Print key metrics
             eer = analysis['eer']
@@ -83,10 +95,20 @@ def threshold_sweep_command(args):
         # Save plots
         roc_path = output_dir / f"{matcher_name}_roc.png"
         det_path = output_dir / f"{matcher_name}_det.png"
+        dist_path = output_dir / f"{matcher_name}_score_distribution.png"
         
         try:
             plot_roc_curve(analysis, roc_path)
             plot_det_curve(analysis, det_path)
+            if matcher_name in all_scores:
+                plot_score_distribution(
+                    all_scores[matcher_name]['scores'],
+                    all_scores[matcher_name]['ground_truth'],
+                    matcher_name,
+                    analysis['current_operating_point'].get('threshold'),
+                    analysis['eer'].get('threshold'),
+                    dist_path,
+                )
         except Exception as e:
             print(f"⚠ Could not generate plots: {e}")
     
