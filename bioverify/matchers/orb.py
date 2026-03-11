@@ -32,6 +32,14 @@ class ORBMatcher(BaseMatcher):
         # ORB detector parameters
         self._orb = cv2.ORB_create(
             nfeatures=int(params.get("nfeatures", 1000)),
+            scaleFactor=float(params.get("scaleFactor", 1.2)),
+            nlevels=int(params.get("nlevels", 8)),
+            edgeThreshold=int(params.get("edgeThreshold", 31)),
+            firstLevel=int(params.get("firstLevel", 0)),
+            WTA_K=int(params.get("WTA_K", 2)),
+            scoreType=cv2.ORB_HARRIS_SCORE if params.get("scoreType", "HARRIS") == "HARRIS" else cv2.ORB_FAST_SCORE,
+            patchSize=int(params.get("patchSize", 31)),
+            fastThreshold=int(params.get("fastThreshold", 20)),
         )
         
         # Matching parameters

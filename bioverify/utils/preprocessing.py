@@ -276,3 +276,54 @@ def create_face_mask(img: np.ndarray, model_path: str = 'face_segmentation/selfi
     )
 
     return final_mask  # 0/1 binary mask
+
+
+def enhance_fingervein_image(
+    img: np.ndarray,
+    clip_limit: float = 3.0,
+    tile_grid_size: Tuple[int, int] = (8, 8),
+) -> np.ndarray:
+    """Enhance fingervein image using CLAHE (Contrast Limited Adaptive Histogram Equalization).
+    
+    CLAHE improves local contrast and makes vein patterns more visible in small ROI images.
+    This is particularly useful for fingervein images which are typically small, cropped regions
+    that lack detail and texture.
+    
+    The algorithm divides the image into small tiles and applies histogram equalization
+    to each tile with contrast limiting to avoid over-amplification of noise.
+    
+    Args:
+        img: Input fingervein image (grayscale or BGR)
+        clip_limit: Threshold for contrast limiting (typical range: 2.0-4.0)
+                   Higher values = more contrast enhancement but more noise
+        tile_grid_size: Size of grid for histogram equalization (e.g., (8, 8))
+                       Smaller tiles = more local enhancement but potentially more artifacts
+        
+    Returns:
+        Enhanced image with the same number of channels as input (grayscale or BGR)
+        
+    References:
+        - Zuiderveld, K. (1994). "Contrast Limited Adaptive Histogram Equalization"
+        - Commonly used in medical imaging and biometric vein pattern recognition
+    """
+    # Remember if input was color (3 channels) or grayscale (1 channel)
+    is_color = len(img.shape) == 3 and img.shape[2] == 3
+    
+    # Convert to grayscale if needed
+    if is_color:
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    else:
+        gray = img.copy()
+    
+    # Create CLAHE object
+    clahe = cv2.createCLAHE(clipLimit=clip_limit, tileGridSize=tile_grid_size)
+    
+    # Apply CLAHE
+    enhanced = clahe.apply(gray)
+    
+    # Convert back to 3 channels if input was color
+    # This is necessary for matchers like DeepDetect that expect 3-channel input
+    if is_color:
+        enhanced = cv2.cvtColor(enhanced, cv2.COLOR_GRAY2BGR)
+    
+    return enhanced

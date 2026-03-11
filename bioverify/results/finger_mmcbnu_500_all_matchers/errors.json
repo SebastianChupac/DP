@@ -1,0 +1,30 @@
+[
+  {
+    "type": "match_execution",
+    "pair_id": "MMCBNU_6000_genuine_125",
+    "matcher": "deepdetect",
+    "error": "OpenCV(4.11.0) D:\\a\\opencv-python\\opencv-python\\opencv\\modules\\flann\\src\\miniflann.cpp:521: error: (-215:Assertion failed) (size_t)knn <= index_->size() in function 'cv::flann::runKnnSearch_'\n",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\sebas\\Documents\\VUT_FIT_MIT\\DP\\src\\bioverify\\experiments\\runner.py\", line 161, in run\n    result = matcher.match(\n  File \"C:\\Users\\sebas\\Documents\\VUT_FIT_MIT\\DP\\src\\bioverify\\matchers\\base.py\", line 307, in match\n    keypoints1, keypoints2, matches = self._match_impl(img1, img2, mask1, mask2)\n  File \"C:\\Users\\sebas\\Documents\\VUT_FIT_MIT\\DP\\src\\bioverify\\matchers\\deepdetect.py\", line 317, in _match_impl\n    matches = flann.knnMatch(des1, des2, k=2)\ncv2.error: OpenCV(4.11.0) D:\\a\\opencv-python\\opencv-python\\opencv\\modules\\flann\\src\\miniflann.cpp:521: error: (-215:Assertion failed) (size_t)knn <= index_->size() in function 'cv::flann::runKnnSearch_'\n\n"
+  },
+  {
+    "type": "match_execution",
+    "pair_id": "MMCBNU_6000_genuine_234",
+    "matcher": "deepdetect",
+    "error": "OpenCV(4.11.0) D:\\a\\opencv-python\\opencv-python\\opencv\\modules\\flann\\src\\miniflann.cpp:521: error: (-215:Assertion failed) (size_t)knn <= index_->size() in function 'cv::flann::runKnnSearch_'\n",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\sebas\\Documents\\VUT_FIT_MIT\\DP\\src\\bioverify\\experiments\\runner.py\", line 161, in run\n    result = matcher.match(\n  File \"C:\\Users\\sebas\\Documents\\VUT_FIT_MIT\\DP\\src\\bioverify\\matchers\\base.py\", line 307, in match\n    keypoints1, keypoints2, matches = self._match_impl(img1, img2, mask1, mask2)\n  File \"C:\\Users\\sebas\\Documents\\VUT_FIT_MIT\\DP\\src\\bioverify\\matchers\\deepdetect.py\", line 317, in _match_impl\n    matches = flann.knnMatch(des1, des2, k=2)\ncv2.error: OpenCV(4.11.0) D:\\a\\opencv-python\\opencv-python\\opencv\\modules\\flann\\src\\miniflann.cpp:521: error: (-215:Assertion failed) (size_t)knn <= index_->size() in function 'cv::flann::runKnnSearch_'\n\n"
+  },
+  {
+    "type": "match_execution",
+    "pair_id": "MMCBNU_6000_impostor_4",
+    "matcher": "deepdetect",
+    "error": "OpenCV(4.11.0) D:\\a\\opencv-python\\opencv-python\\opencv\\modules\\flann\\src\\miniflann.cpp:521: error: (-215:Assertion failed) (size_t)knn <= index_->size() in function 'cv::flann::runKnnSearch_'\n",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\sebas\\Documents\\VUT_FIT_MIT\\DP\\src\\bioverify\\experiments\\runner.py\", line 161, in run\n    result = matcher.match(\n  File \"C:\\Users\\sebas\\Documents\\VUT_FIT_MIT\\DP\\src\\bioverify\\matchers\\base.py\", line 307, in match\n    keypoints1, keypoints2, matches = self._match_impl(img1, img2, mask1, mask2)\n  File \"C:\\Users\\sebas\\Documents\\VUT_FIT_MIT\\DP\\src\\bioverify\\matchers\\deepdetect.py\", line 317, in _match_impl\n    matches = flann.knnMatch(des1, des2, k=2)\ncv2.error: OpenCV(4.11.0) D:\\a\\opencv-python\\opencv-python\\opencv\\modules\\flann\\src\\miniflann.cpp:521: error: (-215:Assertion failed) (size_t)knn <= index_->size() in function 'cv::flann::runKnnSearch_'\n\n"
+  },
+  {
+    "type": "match_execution",
+    "pair_id": "MMCBNU_6000_impostor_198",
+    "matcher": "deepdetect",
+    "error": "OpenCV(4.11.0) D:\\a\\opencv-python\\opencv-python\\opencv\\modules\\flann\\src\\miniflann.cpp:521: error: (-215:Assertion failed) (size_t)knn <= index_->size() in function 'cv::flann::runKnnSearch_'\n",
+    "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\sebas\\Documents\\VUT_FIT_MIT\\DP\\src\\bioverify\\experiments\\runner.py\", line 161, in run\n    result = matcher.match(\n  File \"C:\\Users\\sebas\\Documents\\VUT_FIT_MIT\\DP\\src\\bioverify\\matchers\\base.py\", line 307, in match\n    keypoints1, keypoints2, matches = self._match_impl(img1, img2, mask1, mask2)\n  File \"C:\\Users\\sebas\\Documents\\VUT_FIT_MIT\\DP\\src\\bioverify\\matchers\\deepdetect.py\", line 317, in _match_impl\n    matches = flann.knnMatch(des1, des2, k=2)\ncv2.error: OpenCV(4.11.0) D:\\a\\opencv-python\\opencv-python\\opencv\\modules\\flann\\src\\miniflann.cpp:521: error: (-215:Assertion failed) (size_t)knn <= index_->size() in function 'cv::flann::runKnnSearch_'\n\n"
+  }
+]

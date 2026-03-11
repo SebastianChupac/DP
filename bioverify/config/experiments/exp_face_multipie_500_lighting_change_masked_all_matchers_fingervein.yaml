@@ -1,0 +1,62 @@
+# Configuration file for evaluating multiple matchers on the Multi-PIE face dataset, 500 pairs, with masking
+# masked
+# with fingervein config for some moatchers
+
+experiment:
+  name: "All matchers 500 faces Multi-PIE with masking and matched side"
+  description: "Evaluate multiple matchers on face Multi-PIE pairs"
+  purpose: "multiple_matchers"
+  created: "2026-03-10"
+
+# Input pairs
+dataset: "bioverify/data/pairs/pairs_face_multipie_500_lighting_change.csv"
+base_path: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+#filter_modality: "hand"
+
+# Multiple matcher configuration
+matchers:
+  - name: loftr
+    config_base: "bioverify/config/matching/loftr.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+  - name: orb-fingervein
+    config_base: "bioverify/config/matching/orb_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+  - name: sift-fingervein
+    config_base: "bioverify/config/matching/sift_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+  - name: superglue-fingervein
+    config_base: "bioverify/config/matching/superglue_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+  - name: sgmnet-fingervein
+    config_base: "bioverify/config/matching/sgmnet_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+  - name: aspanformer
+    config_base: "bioverify/config/matching/aspanformer.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+  - name: deepdetect
+    config_base: "bioverify/config/matching/deepdetect.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+
+# Output
+output_dir: "bioverify/results/face_multipie_500_lighting_change_masked_all_matchers_fingervein"
+save_visualization_results: false
+save_pair_images: false
+
+# Options
+batch_size: 1
+verbose: true
+device: "cuda"

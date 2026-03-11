@@ -29,6 +29,7 @@ from ..utils.preprocessing import (
     create_iris_mask,
     create_hand_mask,
     create_face_mask,
+    enhance_fingervein_image,
 )
 
 PUBLIC_DATASET_ROOT = "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
@@ -46,6 +47,9 @@ class MatcherConfig:
         ransac_max_iters: Maximum RANSAC iterations
         min_matches: Minimum matches required for valid result
         use_masking: Whether to apply modality-specific masking
+        use_enhancement: Whether to apply image enhancement for fingervein modality
+        enhancement_clip_limit: CLAHE clip limit for fingervein enhancement (2.0-4.0)
+        enhancement_tile_size: CLAHE tile grid size for fingervein enhancement
         device: Device for torch models ('cuda' or 'cpu')
         extra_params: Method-specific parameters
     """
@@ -55,6 +59,9 @@ class MatcherConfig:
     ransac_max_iters: int = 10000
     min_matches: int = 4
     use_masking: bool = False
+    use_enhancement: bool = True
+    enhancement_clip_limit: float = 3.0
+    enhancement_tile_size: int = 8
     device: str = "cuda"
     extra_params: Dict[str, Any] = field(default_factory=dict)
     
@@ -73,6 +80,7 @@ class MatcherConfig:
         known_fields = {
             "resize_width", "resize_height", "ransac_thresh", 
             "ransac_max_iters", "min_matches", "use_masking",
+            "use_enhancement", "enhancement_clip_limit", "enhancement_tile_size",
             "device"
         }
         
@@ -303,6 +311,19 @@ class BaseMatcher(ABC):
             mask1 = self._get_or_compute_mask(img1_path, img1, modality)
             mask2 = self._get_or_compute_mask(img2_path, img2, modality)
         
+        # Apply enhancement for fingervein images (instead of masking)
+        if self.config.use_enhancement and modality and modality.lower() in ["fingervein", "finger_vein", "finger"]:
+            img1 = enhance_fingervein_image(
+                img1,
+                clip_limit=self.config.enhancement_clip_limit,
+                tile_grid_size=(self.config.enhancement_tile_size, self.config.enhancement_tile_size),
+            )
+            img2 = enhance_fingervein_image(
+                img2,
+                clip_limit=self.config.enhancement_clip_limit,
+                tile_grid_size=(self.config.enhancement_tile_size, self.config.enhancement_tile_size),
+            )
+        
         # Perform matching
         keypoints1, keypoints2, matches = self._match_impl(img1, img2, mask1, mask2)
         
@@ -463,7 +484,7 @@ class BaseMatcher(ABC):
         Raises:
             FileNotFoundError: If mask not found (run precompute_masks.py first)
         """
-        if modality == "fingervein":
+        if modality in ["fingervein", "finger_vein", "finger"]:
             # Fingervein doesn't need masking (ROI already extracted)
             return None
         
@@ -482,7 +503,6 @@ class BaseMatcher(ABC):
                 'handgeometry': ['HandGeometry', 'Hand'],
                 'iris': ['Iris'],
                 'face': ['Face'],
-                'fingervein': ['FingerVein'],
             }
             
             # Try to find the modality folder in the path

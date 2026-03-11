@@ -1,0 +1,24 @@
+#  Configuration for indexing thufvfdt finger dorsal pairs 500 pairs
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+
+random_seed: 42
+
+pair_generation:
+  #genuine_per_identity: 2          # Or use max_genuine_pairs
+  max_genuine_pairs: 250          # Hard limit, set to -1 for maximum possible pairs up to cap
+  impostor_ratio: 1.0
+  #max_impostor_pairs: 100         # no longer used
+
+output:
+  csv_path: "bioverify/data/pairs/pairs_finger_thufvfdt_dorsal_500.csv"
+  relative_paths: true
+
+# Just one small dataset for testing
+datasets:
+  - dataset_path: "FingerVein/004-THU-FVFDT"
+    dataset_name: "THU-FVFDT"
+    modality: "finger"
+    image_type: "roi"
+    modality_type: "dorsal"
+    match_constraints:

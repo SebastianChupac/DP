@@ -1,0 +1,44 @@
+{
+  "aspanformer": {
+    "eer": 0.346,
+    "threshold": 0.7096587867945008,
+    "far": 0.0,
+    "frr": 0.692
+  },
+  "deepdetect": {
+    "eer": 0.428,
+    "threshold": 0.4330708661417323,
+    "far": 0.04,
+    "frr": 0.816
+  },
+  "loftr": {
+    "eer": 0.112,
+    "threshold": 0.6785667392448087,
+    "far": 0.112,
+    "frr": 0.112
+  },
+  "orb": {
+    "eer": 0.5,
+    "threshold": 5e-324,
+    "far": 0.0,
+    "frr": 1.0
+  },
+  "sgmnet": {
+    "eer": 0.636,
+    "threshold": 0.2681564081750761,
+    "far": 0.636,
+    "frr": 0.636
+  },
+  "sift": {
+    "eer": 0.5,
+    "threshold": 5e-324,
+    "far": 0.0,
+    "frr": 1.0
+  },
+  "superglue": {
+    "eer": 0.2,
+    "threshold": 0.2860036878729789,
+    "far": 0.2,
+    "frr": 0.2
+  }
+}

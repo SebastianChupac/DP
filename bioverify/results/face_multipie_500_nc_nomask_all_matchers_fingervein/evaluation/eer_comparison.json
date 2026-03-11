@@ -1,0 +1,44 @@
+{
+  "aspanformer": {
+    "eer": 0.456,
+    "threshold": 0.3725522063418651,
+    "far": 0.456,
+    "frr": 0.456
+  },
+  "deepdetect": {
+    "eer": 0.428,
+    "threshold": 0.42105263157894735,
+    "far": 0.428,
+    "frr": 0.428
+  },
+  "loftr": {
+    "eer": 0.384,
+    "threshold": 0.14782778725465393,
+    "far": 0.384,
+    "frr": 0.384
+  },
+  "orb-fingervein": {
+    "eer": 0.42,
+    "threshold": 0.03494147876559035,
+    "far": 0.272,
+    "frr": 0.568
+  },
+  "sgmnet-fingervein": {
+    "eer": 0.52,
+    "threshold": 0.07321195616966823,
+    "far": 0.52,
+    "frr": 0.52
+  },
+  "sift-fingervein": {
+    "eer": 0.428,
+    "threshold": 0.005168746584695062,
+    "far": 0.228,
+    "frr": 0.628
+  },
+  "superglue-fingervein": {
+    "eer": 0.404,
+    "threshold": 0.17119805468910676,
+    "far": 0.404,
+    "frr": 0.404
+  }
+}

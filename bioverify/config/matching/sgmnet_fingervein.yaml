@@ -1,0 +1,106 @@
+# SGMNet Matcher Configuration - Optimized for Fingervein Images
+#
+# SGMNet uses a learned detector + graph matching framework.
+# Standard parameters are too sensitive (det_th too low) and create noise.
+# These parameters balance sensitivity with precision for vein patterns.
+
+matcher:
+  name: sgmnet
+  config:
+    # Image preprocessing
+    resize_width: 640
+    resize_height: 480
+    resize_keep_aspect: true
+
+    # RANSAC parameters
+    ransac_thresh: 3.0
+    ransac_max_iters: 10000
+    min_matches: 4
+
+    # Masking
+    use_masking: false  # Fingervein uses enhancement instead
+    
+    # Enhancement (CLAHE for fingervein)
+    use_enhancement: true
+    enhancement_clip_limit: 3.0
+    enhancement_tile_size: 8
+
+    # Device
+    device: cuda
+
+    # Load color images for feature extraction
+    color: false  # Keep grayscale for fingervein
+
+    # Extractor configuration - OPTIMIZED FOR FINGERVEIN
+    extractor:
+      name: root
+      num_kpt: 2000  # DEFAULT: 4000, REDUCED to limit noise
+      resize: [-1]
+      det_th: 0.0001  # DEFAULT: 0.00001, INCREASED to reduce noise (10x higher)
+
+    # Matcher configuration - RELAXED FOR FINGERVEIN
+    matcher:
+      name: SGM
+      model_dir: SGMNet/weights/sgm/root
+      seed_top_k: [512, 512]  # DEFAULT: [256, 256], INCREASED for more seeds
+      seed_radius_coe: 0.02  # DEFAULT: 0.01, INCREASED for larger seed regions
+      net_channels: 128
+      layer_num: 9
+      head: 4
+      seedlayer: [0, 6]
+      use_mc_seeding: true
+      use_score_encoding: false
+      conf_bar: [0.5, 0.05]  # DEFAULT: [1.11, 0.1], LOWERED for vein patterns
+      sink_iter: [10, 100]
+      detach_iter: 1000000
+      p_th: 0.1  # DEFAULT: 0.2, LOWERED to accept more matches
+
+    # Prediction thresholds - LOWERED FOR FINGERVEIN
+    ratio_threshold: 0.2  # DEFAULT: 0.4, LOWERED due to low inlier ratios
+    max_reprojection_error: 5.0
+
+    # Iris masking parameter
+    iris_exclude_pupil: true
+
+# Parameter explanation for fingervein:
+#
+# det_th (Detector threshold - CRITICAL):
+#   - Standard: 0.00001 (extremely sensitive, detects everything)
+#   - Fingervein: 0.0001 (10x higher = less sensitive, reduces noise)
+#   - Problem: Standard value detects too many false features
+#   - Solution: Increase threshold to be more selective
+#   - This is the OPPOSITE of SIFT/ORB where we lowered thresholds!
+#   - Learned detector is already very sensitive, needs higher bar
+#
+# num_kpt (Number of keypoints):
+#   - Standard: 4000 (many keypoints, many false positives)
+#   - Fingervein: 2000 (fewer but higher quality)
+#   - Reduces computational cost and noise
+#
+# conf_bar (Confidence barrier for matching):
+#   - Standard: [1.11, 0.1] (strict confidence requirement)
+#   - Fingervein: [0.5, 0.05] (more permissive)
+#   - First value: initial confidence threshold
+#   - Second value: relaxed threshold
+#   - Vein patterns may have lower confidence in learned descriptor space
+#
+# p_th (Matching probability threshold):
+#   - Standard: 0.2 (20% probability required)
+#   - Fingervein: 0.1 (10% probability, more permissive)
+#   - Lower = accept more tentative matches (RANSAC filters later)
+#
+# seed_top_k and seed_radius_coe:
+#   - Increased to allow more flexible seeding for vein geometry
+#   - Vein patterns have different spatial distribution than natural images
+#
+# ratio_threshold (Verification decision):
+#   - Standard: 0.4 (40% inlier ratio needed)
+#   - Fingervein: 0.2 (20% inlier ratio acceptable)
+#   - Current results show 0.10-0.20 inlier ratios
+#   - This threshold allows some matches to be accepted
+#
+# STRATEGY:
+# The key insight is that SGMNet's detector is TOO SENSITIVE (det_th too low),
+# detecting noise as features. We INCREASE det_th to be more selective,
+# while LOWERING matching thresholds to compensate.
+# This is opposite to SIFT/ORB where we needed MORE sensitivity!

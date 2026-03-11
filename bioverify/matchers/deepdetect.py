@@ -309,6 +309,15 @@ class DeepDetectMatcher(BaseMatcher):
                 np.array([]).reshape(0, 2)
             )
         
+        # FLANN knnMatch with k=2 requires at least 2 descriptors in the search index
+        # If either descriptor set has fewer than 2 descriptors, we cannot apply NNDR filtering
+        if len(des1) < 2 or len(des2) < 2:
+            return (
+                np.array([kp.pt for kp in kp1]),
+                np.array([kp.pt for kp in kp2]),
+                np.array([]).reshape(0, 2)
+            )
+        
         # Match with FLANN
         FLANN_INDEX_KDTREE = 1
         index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)

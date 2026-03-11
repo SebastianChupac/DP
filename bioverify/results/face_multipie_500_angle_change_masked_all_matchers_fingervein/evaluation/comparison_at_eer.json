@@ -1,0 +1,125 @@
+{
+  "matchers": {
+    "aspanformer": {
+      "threshold": 0.3766104055186586,
+      "eer": 0.524,
+      "tar": 0.476,
+      "far": 0.524,
+      "frr": 0.524,
+      "trr": 0.476
+    },
+    "deepdetect": {
+      "threshold": 0.4578313253012048,
+      "eer": 0.408,
+      "tar": 0.5920000000000001,
+      "far": 0.408,
+      "frr": 0.408,
+      "trr": 0.5920000000000001
+    },
+    "loftr": {
+      "threshold": 0.21655004399540628,
+      "eer": 0.288,
+      "tar": 0.712,
+      "far": 0.288,
+      "frr": 0.288,
+      "trr": 0.712
+    },
+    "orb-fingervein": {
+      "threshold": 0.16480445600405397,
+      "eer": 0.364,
+      "tar": 0.636,
+      "far": 0.364,
+      "frr": 0.364,
+      "trr": 0.636
+    },
+    "sgmnet-fingervein": {
+      "threshold": 0.07907958396885569,
+      "eer": 0.304,
+      "tar": 0.696,
+      "far": 0.304,
+      "frr": 0.304,
+      "trr": 0.696
+    },
+    "sift-fingervein": {
+      "threshold": 0.0007565605860761548,
+      "eer": 0.35,
+      "tar": 0.556,
+      "far": 0.256,
+      "frr": 0.444,
+      "trr": 0.744
+    },
+    "superglue-fingervein": {
+      "threshold": 0.19403886498010472,
+      "eer": 0.392,
+      "tar": 0.608,
+      "far": 0.392,
+      "frr": 0.392,
+      "trr": 0.608
+    }
+  },
+  "ranking": [
+    {
+      "matcher": "loftr",
+      "threshold": 0.21655004399540628,
+      "eer": 0.288,
+      "tar": 0.712,
+      "far": 0.288,
+      "frr": 0.288,
+      "trr": 0.712
+    },
+    {
+      "matcher": "sgmnet-fingervein",
+      "threshold": 0.07907958396885569,
+      "eer": 0.304,
+      "tar": 0.696,
+      "far": 0.304,
+      "frr": 0.304,
+      "trr": 0.696
+    },
+    {
+      "matcher": "sift-fingervein",
+      "threshold": 0.0007565605860761548,
+      "eer": 0.35,
+      "tar": 0.556,
+      "far": 0.256,
+      "frr": 0.444,
+      "trr": 0.744
+    },
+    {
+      "matcher": "orb-fingervein",
+      "threshold": 0.16480445600405397,
+      "eer": 0.364,
+      "tar": 0.636,
+      "far": 0.364,
+      "frr": 0.364,
+      "trr": 0.636
+    },
+    {
+      "matcher": "superglue-fingervein",
+      "threshold": 0.19403886498010472,
+      "eer": 0.392,
+      "tar": 0.608,
+      "far": 0.392,
+      "frr": 0.392,
+      "trr": 0.608
+    },
+    {
+      "matcher": "deepdetect",
+      "threshold": 0.4578313253012048,
+      "eer": 0.408,
+      "tar": 0.5920000000000001,
+      "far": 0.408,
+      "frr": 0.408,
+      "trr": 0.5920000000000001
+    },
+    {
+      "matcher": "aspanformer",
+      "threshold": 0.3766104055186586,
+      "eer": 0.524,
+      "tar": 0.476,
+      "far": 0.524,
+      "frr": 0.524,
+      "trr": 0.476
+    }
+  ]
+}

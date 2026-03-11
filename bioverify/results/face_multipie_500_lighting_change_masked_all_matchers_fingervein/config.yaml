@@ -1,0 +1,45 @@
+base_path: C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset
+batch_size: 1
+dataset: bioverify/data/pairs/pairs_face_multipie_500_lighting_change.csv
+device: cuda
+experiment:
+  created: '2026-03-10'
+  description: Evaluate multiple matchers on face Multi-PIE pairs
+  name: All matchers 500 faces Multi-PIE with masking and matched side
+  purpose: multiple_matchers
+  researcher: null
+filter_dataset: null
+filter_modality: null
+matchers:
+- config_base: bioverify/config/matching/loftr.yaml
+  config_overrides:
+    use_masking: true
+  name: loftr
+- config_base: bioverify/config/matching/orb_fingervein.yaml
+  config_overrides:
+    use_masking: true
+  name: orb-fingervein
+- config_base: bioverify/config/matching/sift_fingervein.yaml
+  config_overrides:
+    use_masking: true
+  name: sift-fingervein
+- config_base: bioverify/config/matching/superglue_fingervein.yaml
+  config_overrides:
+    use_masking: true
+  name: superglue-fingervein
+- config_base: bioverify/config/matching/sgmnet_fingervein.yaml
+  config_overrides:
+    use_masking: true
+  name: sgmnet-fingervein
+- config_base: bioverify/config/matching/aspanformer.yaml
+  config_overrides:
+    use_masking: true
+  name: aspanformer
+- config_base: bioverify/config/matching/deepdetect.yaml
+  config_overrides:
+    use_masking: true
+  name: deepdetect
+output_dir: bioverify/results/face_multipie_500_lighting_change_masked_all_matchers_fingervein
+save_pair_images: false
+save_visualization_results: false
+verbose: true

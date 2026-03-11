@@ -1,0 +1,125 @@
+{
+  "matchers": {
+    "aspanformer": {
+      "threshold": 0.7096587867945008,
+      "eer": 0.346,
+      "tar": 0.30800000000000005,
+      "far": 0.0,
+      "frr": 0.692,
+      "trr": 1.0
+    },
+    "deepdetect": {
+      "threshold": 0.4330708661417323,
+      "eer": 0.428,
+      "tar": 0.18400000000000005,
+      "far": 0.04,
+      "frr": 0.816,
+      "trr": 0.96
+    },
+    "loftr": {
+      "threshold": 0.6785667392448087,
+      "eer": 0.112,
+      "tar": 0.888,
+      "far": 0.112,
+      "frr": 0.112,
+      "trr": 0.888
+    },
+    "orb": {
+      "threshold": 5e-324,
+      "eer": 0.5,
+      "tar": 0.0,
+      "far": 0.0,
+      "frr": 1.0,
+      "trr": 1.0
+    },
+    "sgmnet": {
+      "threshold": 0.2681564081750761,
+      "eer": 0.636,
+      "tar": 0.364,
+      "far": 0.636,
+      "frr": 0.636,
+      "trr": 0.364
+    },
+    "sift": {
+      "threshold": 5e-324,
+      "eer": 0.5,
+      "tar": 0.0,
+      "far": 0.0,
+      "frr": 1.0,
+      "trr": 1.0
+    },
+    "superglue": {
+      "threshold": 0.2860036878729789,
+      "eer": 0.2,
+      "tar": 0.8,
+      "far": 0.2,
+      "frr": 0.2,
+      "trr": 0.8
+    }
+  },
+  "ranking": [
+    {
+      "matcher": "loftr",
+      "threshold": 0.6785667392448087,
+      "eer": 0.112,
+      "tar": 0.888,
+      "far": 0.112,
+      "frr": 0.112,
+      "trr": 0.888
+    },
+    {
+      "matcher": "superglue",
+      "threshold": 0.2860036878729789,
+      "eer": 0.2,
+      "tar": 0.8,
+      "far": 0.2,
+      "frr": 0.2,
+      "trr": 0.8
+    },
+    {
+      "matcher": "aspanformer",
+      "threshold": 0.7096587867945008,
+      "eer": 0.346,
+      "tar": 0.30800000000000005,
+      "far": 0.0,
+      "frr": 0.692,
+      "trr": 1.0
+    },
+    {
+      "matcher": "deepdetect",
+      "threshold": 0.4330708661417323,
+      "eer": 0.428,
+      "tar": 0.18400000000000005,
+      "far": 0.04,
+      "frr": 0.816,
+      "trr": 0.96
+    },
+    {
+      "matcher": "orb",
+      "threshold": 5e-324,
+      "eer": 0.5,
+      "tar": 0.0,
+      "far": 0.0,
+      "frr": 1.0,
+      "trr": 1.0
+    },
+    {
+      "matcher": "sift",
+      "threshold": 5e-324,
+      "eer": 0.5,
+      "tar": 0.0,
+      "far": 0.0,
+      "frr": 1.0,
+      "trr": 1.0
+    },
+    {
+      "matcher": "sgmnet",
+      "threshold": 0.2681564081750761,
+      "eer": 0.636,
+      "tar": 0.364,
+      "far": 0.636,
+      "frr": 0.636,
+      "trr": 0.364
+    }
+  ]
+}

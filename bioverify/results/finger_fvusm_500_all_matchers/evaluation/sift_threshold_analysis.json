@@ -1,0 +1,80 @@
+{
+  "matcher": "sift",
+  "num_pairs": 500,
+  "num_genuine": 250,
+  "num_impostor": 250,
+  "score_statistics": {
+    "overall": {
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "std": 0.0
+    },
+    "genuine": {
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "std": 0.0,
+      "count": 250
+    },
+    "impostor": {
+      "min": 0.0,
+      "max": 0.0,
+      "mean": 0.0,
+      "std": 0.0,
+      "count": 250
+    }
+  },
+  "roc": {
+    "thresholds": [
+      5e-324,
+      0.0,
+      -5e-324
+    ],
+    "tar": [
+      0.0,
+      1.0,
+      1.0
+    ],
+    "far": [
+      0.0,
+      1.0,
+      1.0
+    ],
+    "auc": 0.5
+  },
+  "det": {
+    "thresholds": [
+      5e-324,
+      0.0,
+      -5e-324
+    ],
+    "frr": [
+      1.0,
+      0.0,
+      0.0
+    ],
+    "far": [
+      0.0,
+      1.0,
+      1.0
+    ]
+  },
+  "eer": {
+    "eer": 0.5,
+    "threshold": 5e-324,
+    "far": 0.0,
+    "frr": 1.0
+  },
+  "current_operating_point": {
+    "threshold": 0.45,
+    "tar": 0.0,
+    "frr": 1.0,
+    "far": 0.0,
+    "trr": 1.0,
+    "tp": 0,
+    "fn": 250,
+    "fp": 0,
+    "tn": 250
+  }
+}

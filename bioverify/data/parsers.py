@@ -29,6 +29,7 @@ class ImageRecord:
     angle: Optional[str] = None  # For face
     lighting: Optional[str] = None  # For face
     expression: Optional[str] = None  # For face
+    aspect_of_hand: Optional[str] = None  # For hand geometry
     metadata: Dict[str, Any] = None
     
     def __post_init__(self):
@@ -232,7 +233,8 @@ class MultiPIEParser(DatasetParser):
                         lighting=lighting,
                         metadata={'version': version,
                                   'angle': angle,
-                                  'lighting': lighting}
+                                  'lighting': lighting,
+                                  'expression': expression}
                     )
                     records.append(record)
         
@@ -289,6 +291,7 @@ class _11kHandsParser(DatasetParser):
                 identity=identity,
                 modality=self.modality,
                 dataset_name=self.dataset_name,
+                aspect_of_hand=metadata.get('aspectOfHand'),
                 metadata=metadata
             )
             records.append(record)

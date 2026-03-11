@@ -1,0 +1,93 @@
+# ORB Matcher Configuration - Optimized for Fingervein Images
+#
+# Fingervein images are low-contrast, small ROI crops with subtle vein patterns.
+# Standard ORB parameters (designed for corners in natural images) miss these features.
+#
+# Key changes from default ORB config:
+# - Increased nfeatures (1000 → 5000) to capture more of the sparse features
+# - Lower fastThreshold (20 → 5) to detect weak corners in vein patterns
+# - Smaller scaleFactor (1.2 → 1.1) for finer scale sampling
+# - More pyramid levels for better multi-scale detection
+
+matcher:
+  name: orb
+  config:
+    # Image preprocessing
+    resize_width: 640
+    resize_height: 480
+    resize_keep_aspect: true
+    
+    # RANSAC parameters
+    ransac_thresh: 5.0
+    ransac_max_iters: 10000
+    min_matches: 4
+    
+    # Masking
+    use_masking: false  # Fingervein uses enhancement instead
+    
+    # Enhancement (CLAHE for fingervein)
+    use_enhancement: true
+    enhancement_clip_limit: 3.0
+    enhancement_tile_size: 8
+    
+    # Device
+    device: cpu
+    
+    # ORB detector parameters - OPTIMIZED FOR FINGERVEIN
+    nfeatures: 5000  # DEFAULT: 1000, INCREASED to capture sparse features
+    scaleFactor: 1.1  # DEFAULT: 1.2, DECREASED for finer scale steps
+    nlevels: 10  # DEFAULT: 8, INCREASED for more pyramid levels
+    edgeThreshold: 15  # DEFAULT: 31, DECREASED to detect closer to edges
+    firstLevel: 0  # Start at original image scale
+    WTA_K: 2  # Use pairs for binary descriptor (standard)
+    scoreType: HARRIS  # HARRIS or FAST (HARRIS is more stable)
+    patchSize: 31  # Patch size for descriptor (standard)
+    fastThreshold: 5  # DEFAULT: 20, LOWERED for weak corner detection
+    
+    # Matching strategy: "BF" (BruteForce) or "FLANN"
+    matcher_type: "FLANN"
+    
+    # BruteForce options
+    use_cross_check: false  # Only used when matcher_type="BF"
+    
+    # FLANN-LSH options (only used when matcher_type="FLANN")
+    flann_lsh_table_number: 6
+    flann_lsh_key_size: 12
+    flann_lsh_multi_probe_level: 1
+    flann_checks: 50
+    
+    # Lowe's ratio test (only used when use_cross_check=false)
+    lowe_ratio: 0.75
+    
+    # Prediction threshold
+    ratio_threshold: 0.45
+
+# Parameter explanation for fingervein:
+#
+# fastThreshold:
+#   - Standard: 20 (designed for strong corners in natural images)
+#   - Fingervein: 5 (much lower to detect weak corners in vein patterns)
+#   - Lower values = more sensitive, detects weaker features
+#
+# nfeatures:
+#   - Standard: 1000 
+#   - Fingervein: 5000 (increased to capture more of the limited features)
+#   - Fingervein images have sparse features, need to capture more
+#
+# scaleFactor:
+#   - Standard: 1.2 (20% size reduction between pyramid levels)
+#   - Fingervein: 1.1 (10% reduction = finer scale sampling)
+#   - Smaller factor = more scales = better for small features
+#
+# edgeThreshold:
+#   - Standard: 31 (border size to ignore)
+#   - Fingervein: 15 (smaller border = detect closer to edges)
+#   - Useful for small ROI images where edges may contain features
+#
+# nlevels:
+#   - Standard: 8
+#   - Fingervein: 10 (more pyramid levels for multi-scale detection)
+#
+# scoreType:
+#   - HARRIS: More stable, better for low-contrast (RECOMMENDED for fingervein)  
+#   - FAST: Faster but less stable

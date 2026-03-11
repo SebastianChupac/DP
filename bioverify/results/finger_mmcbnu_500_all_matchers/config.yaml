@@ -1,0 +1,38 @@
+base_path: C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset
+batch_size: 1
+dataset: bioverify/data/pairs/pairs_finger_mmcbnu_500.csv
+device: cuda
+experiment:
+  created: '2026-03-08'
+  description: Evaluate multiple matchers on finger mmcbnu pairs
+  name: All matchers 500 Finger MMCBNU ROIs
+  purpose: multiple_matchers
+  researcher: null
+filter_dataset: null
+filter_modality: null
+matchers:
+- config_base: bioverify/config/matching/loftr.yaml
+  config_overrides: null
+  name: loftr
+- config_base: bioverify/config/matching/orb.yaml
+  config_overrides: null
+  name: orb
+- config_base: bioverify/config/matching/sift.yaml
+  config_overrides: null
+  name: sift
+- config_base: bioverify/config/matching/superglue.yaml
+  config_overrides: null
+  name: superglue
+- config_base: bioverify/config/matching/sgmnet.yaml
+  config_overrides: null
+  name: sgmnet
+- config_base: bioverify/config/matching/aspanformer.yaml
+  config_overrides: null
+  name: aspanformer
+- config_base: bioverify/config/matching/deepdetect.yaml
+  config_overrides: null
+  name: deepdetect
+output_dir: bioverify/results/finger_mmcbnu_500_all_matchers
+save_pair_images: false
+save_visualization_results: false
+verbose: true

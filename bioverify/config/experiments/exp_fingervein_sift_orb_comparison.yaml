@@ -1,0 +1,58 @@
+# Example Experiment: Compare Standard vs Fingervein-Optimized SIFT/ORB
+# This experiment demonstrates the improvement from using fingervein-optimized parameters
+
+experiment:
+  name: "SIFT/ORB Fingervein Optimization Comparison"
+  description: "Compare standard vs optimized parameters for SIFT and ORB on fingervein images"
+  purpose: "multiple_matchers"
+  created: "2026-03-08"
+
+# Input pairs
+dataset: "bioverify/data/pairs/pairs_finger_fvusm_500.csv"
+base_path: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+
+# Compare standard configs vs fingervein-optimized configs
+matchers:
+  # Standard SIFT (poor performance on fingervein)
+  - name: sift_standard
+    config_base: "bioverify/config/matching/sift.yaml"
+    config_overrides:
+      use_masking: false
+      use_enhancement: true
+  
+  # Optimized SIFT for fingervein (should detect more features)
+  - name: sift_fingervein
+    config_base: "bioverify/config/matching/sift_fingervein.yaml"
+    # No overrides needed - already optimized
+  
+  # Standard ORB (poor performance on fingervein)
+  - name: orb_standard
+    config_base: "bioverify/config/matching/orb.yaml"
+    config_overrides:
+      use_masking: false
+      use_enhancement: true
+  
+  # Optimized ORB for fingervein (should detect more features)
+  - name: orb_fingervein
+    config_base: "bioverify/config/matching/orb_fingervein.yaml"
+    # No overrides needed - already optimized
+
+# Output
+output_dir: "bioverify/results/fingervein_sift_orb_optimization_test"
+save_visualization_results: false
+save_pair_images: false
+
+# Options
+batch_size: 1
+verbose: true
+
+# Expected improvements:
+# - SIFT standard (contrast_threshold=0.04): Few or no keypoints detected
+# - SIFT fingervein (contrast_threshold=0.01): More keypoints on vein patterns
+# - ORB standard (fastThreshold=20): Few or no keypoints detected
+# - ORB fingervein (fastThreshold=5): More keypoints on vein patterns
+#
+# The optimized versions should show:
+# - Higher number of detected keypoints
+# - More matches between image pairs
+# - Better verification accuracy

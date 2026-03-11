@@ -1,0 +1,75 @@
+# SuperGlue Matcher Configuration - Optimized for Fingervein Images
+#
+# SuperPoint (the detector) was trained on synthetic corner/edge/blob patterns.
+# Fingervein images have different feature characteristics (thin lines, bifurcations).
+# These parameters make SuperPoint more sensitive to detect weaker features.
+
+matcher:
+  name: superglue
+  config:
+    # Image preprocessing
+    resize_width: 640
+    resize_height: 480
+    resize_keep_aspect: true
+    
+    # RANSAC parameters
+    ransac_thresh: 5.0
+    ransac_max_iters: 10000
+    min_matches: 4
+    
+    # Masking
+    use_masking: false  # Fingervein uses enhancement instead
+    
+    # Enhancement (CLAHE for fingervein)
+    use_enhancement: true
+    enhancement_clip_limit: 3.0
+    enhancement_tile_size: 8
+    
+    # Device
+    device: cuda
+    
+    # SuperPoint parameters - OPTIMIZED FOR FINGERVEIN
+    nms_radius: 3  # DEFAULT: 4, DECREASED to detect closer features
+    keypoint_threshold: 0.001  # DEFAULT: 0.005, LOWERED for weak vein features
+    max_keypoints: 2048  # DEFAULT: 1024, INCREASED to capture more features
+    
+    # SuperGlue parameters - RELAXED FOR FINGERVEIN
+    weights: indoor  # indoor | outdoor (indoor works better for ROI images)
+    sinkhorn_iterations: 100  # DEFAULT: 20, INCREASED for better optimization
+    match_threshold: 0.05  # DEFAULT: 0.2, LOWERED to accept more matches
+    
+    # Prediction threshold - LOWERED FOR FINGERVEIN
+    ratio_threshold: 0.15  # DEFAULT: 0.45, LOWERED due to sparse features
+
+# Parameter explanation for fingervein:
+#
+# keypoint_threshold (SuperPoint detector sensitivity):
+#   - Standard: 0.005 (designed for corners in natural images)
+#   - Fingervein: 0.001 (5x more sensitive for weak vein features)
+#   - Lower = detects weaker keypoints (but may include noise)
+#   - Critical for detecting vein bifurcations and crossings
+#
+# match_threshold (SuperGlue matching confidence):
+#   - Standard: 0.2 (rejects matches below 20% confidence)
+#   - Fingervein: 0.05 (much more permissive)
+#   - SuperGlue's network is trained on natural images
+#   - Vein matches may have lower confidence scores
+#   - Lower threshold accepts more tentative matches (RANSAC will filter)
+#
+# max_keypoints:
+#   - Standard: 1024
+#   - Fingervein: 2048 (capture more of the sparse vein features)
+#
+# sinkhorn_iterations:
+#   - Standard: 20 (fast convergence for natural images)
+#   - Fingervein: 100 (more iterations for difficult vein matching)
+#
+# ratio_threshold (verification decision):
+#   - Standard: 0.45 (45% inlier ratio needed)
+#   - Fingervein: 0.15 (more permissive due to sparse features)
+#   - May need further tuning based on results
+#
+# NOTE: Even with these optimizations, SuperGlue may still struggle
+# because the underlying SuperPoint network and SuperGlue matching network
+# were trained on natural images. LoFTR and ASpanFormer work better because
+# they use transformer-based dense matching instead of sparse keypoints.
