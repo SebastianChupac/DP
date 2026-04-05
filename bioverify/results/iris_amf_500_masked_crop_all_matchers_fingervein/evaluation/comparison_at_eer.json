@@ -1,0 +1,74 @@
+{
+  "matchers": {
+    "orb-fingervein": {
+      "threshold": 0.35851972067429366,
+      "eer": 0.034,
+      "tar": 0.964,
+      "far": 0.032,
+      "frr": 0.036,
+      "trr": 0.968
+    },
+    "sgmnet-fingervein": {
+      "threshold": 0.10217226553235541,
+      "eer": 0.012,
+      "tar": 0.988,
+      "far": 0.012,
+      "frr": 0.012,
+      "trr": 0.988
+    },
+    "sift-fingervein": {
+      "threshold": 0.46607563687658177,
+      "eer": 0.064,
+      "tar": 0.9359999999999999,
+      "far": 0.064,
+      "frr": 0.064,
+      "trr": 0.9359999999999999
+    },
+    "superglue-fingervein": {
+      "threshold": 0.34671231601365143,
+      "eer": 0.092,
+      "tar": 0.908,
+      "far": 0.092,
+      "frr": 0.092,
+      "trr": 0.908
+    }
+  },
+  "ranking": [
+    {
+      "matcher": "sgmnet-fingervein",
+      "threshold": 0.10217226553235541,
+      "eer": 0.012,
+      "tar": 0.988,
+      "far": 0.012,
+      "frr": 0.012,
+      "trr": 0.988
+    },
+    {
+      "matcher": "orb-fingervein",
+      "threshold": 0.35851972067429366,
+      "eer": 0.034,
+      "tar": 0.964,
+      "far": 0.032,
+      "frr": 0.036,
+      "trr": 0.968
+    },
+    {
+      "matcher": "sift-fingervein",
+      "threshold": 0.46607563687658177,
+      "eer": 0.064,
+      "tar": 0.9359999999999999,
+      "far": 0.064,
+      "frr": 0.064,
+      "trr": 0.9359999999999999
+    },
+    {
+      "matcher": "superglue-fingervein",
+      "threshold": 0.34671231601365143,
+      "eer": 0.092,
+      "tar": 0.908,
+      "far": 0.092,
+      "frr": 0.092,
+      "trr": 0.908
+    }
+  ]
+}

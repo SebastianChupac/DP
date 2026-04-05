@@ -1,0 +1,62 @@
+{
+  "orb-fingervein": {
+    "num_pairs": 500,
+    "num_genuine": 250,
+    "num_impostor": 250,
+    "accuracy": 0.658,
+    "precision": 0.9540229885057471,
+    "recall": 0.332,
+    "genuine_accuracy": 0.332,
+    "impostor_accuracy": 0.984,
+    "tar": 0.332,
+    "far": 0.016,
+    "frr": 0.668,
+    "trr": 0.984,
+    "avg_inlier_ratio": 0.23068803789457304
+  },
+  "sift-fingervein": {
+    "num_pairs": 500,
+    "num_genuine": 250,
+    "num_impostor": 250,
+    "accuracy": 0.594,
+    "precision": 0.7831325301204819,
+    "recall": 0.26,
+    "genuine_accuracy": 0.26,
+    "impostor_accuracy": 0.928,
+    "tar": 0.26,
+    "far": 0.072,
+    "frr": 0.74,
+    "trr": 0.928,
+    "avg_inlier_ratio": 0.21003850784762576
+  },
+  "superglue-fingervein": {
+    "num_pairs": 500,
+    "num_genuine": 250,
+    "num_impostor": 250,
+    "accuracy": 0.6,
+    "precision": 0.5612745098039216,
+    "recall": 0.916,
+    "genuine_accuracy": 0.916,
+    "impostor_accuracy": 0.284,
+    "tar": 0.916,
+    "far": 0.716,
+    "frr": 0.084,
+    "trr": 0.284,
+    "avg_inlier_ratio": 0.2480149409664416
+  },
+  "sgmnet-fingervein": {
+    "num_pairs": 500,
+    "num_genuine": 250,
+    "num_impostor": 250,
+    "accuracy": 0.618,
+    "precision": 0.9154929577464789,
+    "recall": 0.26,
+    "genuine_accuracy": 0.26,
+    "impostor_accuracy": 0.976,
+    "tar": 0.26,
+    "far": 0.024,
+    "frr": 0.74,
+    "trr": 0.976,
+    "avg_inlier_ratio": 0.10313262445978645
+  }
+}

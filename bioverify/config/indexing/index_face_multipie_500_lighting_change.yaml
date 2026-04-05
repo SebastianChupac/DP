@@ -14,7 +14,6 @@ output:
   csv_path: "bioverify/data/pairs/pairs_face_multipie_500_lighting_change.csv"
   relative_paths: true
 
-# Just one small dataset for testing
 datasets:
   - dataset_path: "Face"
     dataset_name: "Multi-PIE"

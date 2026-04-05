@@ -1,0 +1,74 @@
+base_path: C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset
+batch_size: 1
+dataset: bioverify/data/pairs/pairs_hand_11khands_500.csv
+device: cuda
+experiment:
+  created: '2026-04-04'
+  description: Evaluate multiple matchers on hand 11khands pairs
+  name: All matchers fingervien version 500 hands 11khands with masking, crop and
+    matched side and palmar/dorsal
+  purpose: multiple_matchers
+  researcher: null
+filter_dataset: null
+filter_modality: null
+matchers:
+- config_base: bioverify/config/matching/loftr.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: loftr
+- config_base: bioverify/config/matching/orb_fingervein.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: orb-fingervein
+- config_base: bioverify/config/matching/sift_fingervein.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: sift-fingervein
+- config_base: bioverify/config/matching/superglue_fingervein.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: superglue-fingervein
+- config_base: bioverify/config/matching/sgmnet_fingervein.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: sgmnet-fingervein
+- config_base: bioverify/config/matching/aspanformer.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: aspanformer
+- config_base: bioverify/config/matching/deepdetect.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: deepdetect
+output_dir: bioverify/results/hand_11khands_500_masked_crop_all_matchers_fingervein
+save_pair_images: false
+save_visualization_results: false
+verbose: true

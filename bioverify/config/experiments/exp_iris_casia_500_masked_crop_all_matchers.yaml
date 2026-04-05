@@ -1,0 +1,75 @@
+# Example Experiment: Multiple matcher evaluation on iris casia dataset 500 pairs
+# This experiment evaluates multiple matchers on a single dataset (casia).
+# masked
+
+experiment:
+  name: "All matchers 500 Iris CASIA masked crop"
+  description: "Evaluate multiple matchers on iris casia pairs with cropping based on mask"
+  purpose: "multiple_matchers"
+  created: "2026-04-04"
+
+# Input pairs
+dataset: "bioverify/data/pairs/pairs_iris_casia_500.csv"
+base_path: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+
+# Multiple matcher configuration
+matchers:
+  - name: loftr
+    config_base: "bioverify/config/matching/loftr.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["iris"]
+  - name: orb
+    config_base: "bioverify/config/matching/orb.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["iris"]
+  - name: sift
+    config_base: "bioverify/config/matching/sift.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["iris"]
+  - name: superglue
+    config_base: "bioverify/config/matching/superglue.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["iris"]
+  - name: sgmnet
+    config_base: "bioverify/config/matching/sgmnet.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["iris"]
+  - name: aspanformer
+    config_base: "bioverify/config/matching/aspanformer.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["iris"]
+  - name: deepdetect
+    config_base: "bioverify/config/matching/deepdetect.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["iris"]
+
+# Output
+output_dir: "bioverify/results/iris_casia_500_masked_crop_all_matchers"
+save_visualization_results: false
+save_pair_images: false
+
+# Options
+batch_size: 1
+verbose: true
+device: "cuda"

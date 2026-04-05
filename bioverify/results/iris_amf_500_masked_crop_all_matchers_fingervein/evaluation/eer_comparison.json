@@ -1,0 +1,26 @@
+{
+  "orb-fingervein": {
+    "eer": 0.034,
+    "threshold": 0.35851972067429366,
+    "far": 0.032,
+    "frr": 0.036
+  },
+  "sgmnet-fingervein": {
+    "eer": 0.012,
+    "threshold": 0.10217226553235541,
+    "far": 0.012,
+    "frr": 0.012
+  },
+  "sift-fingervein": {
+    "eer": 0.064,
+    "threshold": 0.46607563687658177,
+    "far": 0.064,
+    "frr": 0.064
+  },
+  "superglue-fingervein": {
+    "eer": 0.092,
+    "threshold": 0.34671231601365143,
+    "far": 0.092,
+    "frr": 0.092
+  }
+}

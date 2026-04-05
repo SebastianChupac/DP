@@ -310,6 +310,14 @@ class BaseMatcher(ABC):
         if self.config.use_masking and modality:
             mask1 = self._get_or_compute_mask(img1_path, img1, modality)
             mask2 = self._get_or_compute_mask(img2_path, img2, modality)
+
+        # Optional ROI focusing step for sparse masks (e.g., iris and hand geometry).
+        # Crops image+mask to mask bounding box, then resizes back to target shape.
+        if self._should_crop_to_mask_roi(modality):
+            if mask1 is not None:
+                img1, mask1 = self._crop_and_resize_to_mask_roi(img1, mask1)
+            if mask2 is not None:
+                img2, mask2 = self._crop_and_resize_to_mask_roi(img2, mask2)
         
         # Apply enhancement for fingervein images (instead of masking)
         if self.config.use_enhancement and modality and modality.lower() in ["fingervein", "finger_vein", "finger"]:
@@ -387,6 +395,96 @@ class BaseMatcher(ABC):
                 viz_result.method_name = matcher_name
             return viz_result
         return verification_result
+
+    def _should_crop_to_mask_roi(self, modality: Optional[str]) -> bool:
+        """Check whether mask-bbox ROI crop should be applied for this modality.
+
+        Behavior is controlled via matcher config extra params:
+        - roi_crop_from_mask: bool (default: False)
+        - roi_crop_modalities: list[str] or comma-separated str
+          (default: ["iris", "hand", "handgeometry"])
+        """
+        if modality is None:
+            return False
+
+        enabled = bool(self.config.extra_params.get("roi_crop_from_mask", False))
+        if not enabled:
+            return False
+
+        raw_modalities = self.config.extra_params.get(
+            "roi_crop_modalities",
+            ["iris", "hand", "handgeometry"],
+        )
+        if isinstance(raw_modalities, str):
+            modalities = {m.strip().lower() for m in raw_modalities.split(",") if m.strip()}
+        else:
+            modalities = {
+                str(m).strip().lower() for m in raw_modalities
+                if str(m).strip()
+            }
+
+        modality_norm = str(modality).strip().lower().replace("_", "")
+        if modality_norm == "handgeometry":
+            return "handgeometry" in modalities or "hand" in modalities
+        if modality_norm == "hand":
+            return "hand" in modalities or "handgeometry" in modalities
+
+        return modality_norm in modalities
+
+    def _crop_and_resize_to_mask_roi(
+        self,
+        img: np.ndarray,
+        mask: np.ndarray,
+    ) -> Tuple[np.ndarray, np.ndarray]:
+        """Crop image/mask to mask bbox with padding and resize back to original shape."""
+        target_h, target_w = img.shape[:2]
+
+        if mask.ndim == 3:
+            mask_gray = cv2.cvtColor(mask, cv2.COLOR_BGR2GRAY)
+        else:
+            mask_gray = mask
+
+        mask_bin = (mask_gray > 127).astype(np.uint8) * 255
+        nonzero = cv2.findNonZero(mask_bin)
+        if nonzero is None:
+            return img, mask_bin
+
+        x, y, w, h = cv2.boundingRect(nonzero)
+
+        # Skip tiny ROIs that are likely noise.
+        min_area_frac = float(self.config.extra_params.get("roi_crop_min_area_frac", 0.01))
+        if (w * h) < (min_area_frac * target_w * target_h):
+            return img, mask_bin
+
+        pad_frac = float(self.config.extra_params.get("roi_crop_padding_frac", 0.10))
+        pad_px = int(round(max(w, h) * max(0.0, pad_frac)))
+
+        x0 = max(0, x - pad_px)
+        y0 = max(0, y - pad_px)
+        x1 = min(target_w, x + w + pad_px)
+        y1 = min(target_h, y + h + pad_px)
+
+        if x1 <= x0 or y1 <= y0:
+            return img, mask_bin
+
+        cropped_img = img[y0:y1, x0:x1]
+        cropped_mask = mask_bin[y0:y1, x0:x1]
+        if cropped_img.size == 0 or cropped_mask.size == 0:
+            return img, mask_bin
+
+        resized_img = cv2.resize(
+            cropped_img,
+            (target_w, target_h),
+            interpolation=cv2.INTER_AREA,
+        )
+        resized_mask = cv2.resize(
+            cropped_mask,
+            (target_w, target_h),
+            interpolation=cv2.INTER_NEAREST,
+        )
+        resized_mask = (resized_mask > 127).astype(np.uint8) * 255
+
+        return resized_img, resized_mask
     
     def _get_matcher_params(self) -> Dict[str, Any]:
         """
@@ -688,7 +786,7 @@ class BaseMatcher(ABC):
         if matcher_name == "deepdetect":
             return float(np.clip(inlier_ratio, 0.0, 1.0))
 
-        # 2. Light statistical significance (much gentler than previous version)
+        # 2. Light statistical significance
         significance_weight = 1.0 / (1.0 + np.exp(-(num_inliers - 3.0) / 3.0))
         scaled_significance = 0.2 * significance_weight + 0.8
 

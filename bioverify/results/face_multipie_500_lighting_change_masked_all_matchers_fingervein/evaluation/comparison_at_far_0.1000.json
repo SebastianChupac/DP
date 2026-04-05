@@ -1,0 +1,112 @@
+{
+  "target_far": 0.1,
+  "matchers": {
+    "aspanformer": {
+      "threshold": 0.6658665866586659,
+      "tar": 0.996,
+      "far": 0.1,
+      "frr": 0.004,
+      "trr": 0.9
+    },
+    "deepdetect": {
+      "threshold": 0.7273727372737274,
+      "tar": 0.872,
+      "far": 0.104,
+      "frr": 0.128,
+      "trr": 0.896
+    },
+    "loftr": {
+      "threshold": 0.315253930514222,
+      "tar": 0.98,
+      "far": 0.1,
+      "frr": 0.02,
+      "trr": 0.9
+    },
+    "orb-fingervein": {
+      "threshold": 0.30029203793741815,
+      "tar": 0.808,
+      "far": 0.104,
+      "frr": 0.192,
+      "trr": 0.896
+    },
+    "sgmnet-fingervein": {
+      "threshold": 0.0863392540804468,
+      "tar": 0.952,
+      "far": 0.1,
+      "frr": 0.048,
+      "trr": 0.9
+    },
+    "sift-fingervein": {
+      "threshold": 0.2839283927791916,
+      "tar": 0.912,
+      "far": 0.108,
+      "frr": 0.088,
+      "trr": 0.892
+    },
+    "superglue-fingervein": {
+      "threshold": 0.27346002705284334,
+      "tar": 0.996,
+      "far": 0.1,
+      "frr": 0.004,
+      "trr": 0.9
+    }
+  },
+  "ranking": [
+    {
+      "matcher": "aspanformer",
+      "threshold": 0.6658665866586659,
+      "tar": 0.996,
+      "far": 0.1,
+      "frr": 0.004,
+      "trr": 0.9
+    },
+    {
+      "matcher": "superglue-fingervein",
+      "threshold": 0.27346002705284334,
+      "tar": 0.996,
+      "far": 0.1,
+      "frr": 0.004,
+      "trr": 0.9
+    },
+    {
+      "matcher": "loftr",
+      "threshold": 0.315253930514222,
+      "tar": 0.98,
+      "far": 0.1,
+      "frr": 0.02,
+      "trr": 0.9
+    },
+    {
+      "matcher": "sgmnet-fingervein",
+      "threshold": 0.0863392540804468,
+      "tar": 0.952,
+      "far": 0.1,
+      "frr": 0.048,
+      "trr": 0.9
+    },
+    {
+      "matcher": "sift-fingervein",
+      "threshold": 0.2839283927791916,
+      "tar": 0.912,
+      "far": 0.108,
+      "frr": 0.088,
+      "trr": 0.892
+    },
+    {
+      "matcher": "deepdetect",
+      "threshold": 0.7273727372737274,
+      "tar": 0.872,
+      "far": 0.104,
+      "frr": 0.128,
+      "trr": 0.896
+    },
+    {
+      "matcher": "orb-fingervein",
+      "threshold": 0.30029203793741815,
+      "tar": 0.808,
+      "far": 0.104,
+      "frr": 0.192,
+      "trr": 0.896
+    }
+  ]
+}

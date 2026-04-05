@@ -1,0 +1,76 @@
+# Example Experiment: Multiple matcher evaluation on iris mmu dataset 500 pairs
+# This experiment evaluates multiple matchers on a single dataset (irismmu).
+# masked and cropped, fingervien matcher config
+
+experiment:
+  name: "All matchers 500 Iris MMU masked cropped fingervien"
+  description: "Evaluate multiple matchers on iris mmu pairs"
+  purpose: "multiple_matchers"
+  created: "2026-04-05"
+
+# Input pairs
+dataset: "bioverify/data/pairs/pairs_iris_mmu_500.csv"
+base_path: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+#filter_modality: "hand"
+
+# Multiple matcher configuration
+matchers:
+  - name: loftr
+    config_base: "bioverify/config/matching/loftr.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["iris"]
+  - name: orb-fingervein
+    config_base: "bioverify/config/matching/orb_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["iris"]
+  - name: sift-fingervein
+    config_base: "bioverify/config/matching/sift_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["iris"]
+  - name: superglue-fingervein
+    config_base: "bioverify/config/matching/superglue_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["iris"]
+  - name: sgmnet-fingervein
+    config_base: "bioverify/config/matching/sgmnet_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["iris"]
+  - name: aspanformer
+    config_base: "bioverify/config/matching/aspanformer.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["iris"]
+  - name: deepdetect
+    config_base: "bioverify/config/matching/deepdetect.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["iris"]
+
+# Output
+output_dir: "bioverify/results/iris_mmu_500_masked_crop_all_matchers_fingervein"
+save_visualization_results: false
+save_pair_images: false
+
+# Options
+batch_size: 1
+verbose: true
+device: "cuda"
