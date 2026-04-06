@@ -157,15 +157,32 @@ def _blend_annotations(base: np.ndarray, overlay: np.ndarray, alpha: float = ANN
     return cv2.addWeighted(base, 1.0 - alpha, overlay, alpha, 0.0)
 
 
-def _draw_match_panel(result: VisualizationResult, viz_mode: str = "m") -> Tuple[np.ndarray, int]:
+def _select_image_source(image_data, image_mode: str) -> np.ndarray:
+    """Select visualization image by mode: original ('o') or processed ('p')."""
+    if image_data is None:
+        return None
+
+    mode = (image_mode or "p").lower()
+    if mode == "o":
+        if image_data.original is not None:
+            return image_data.original
+        return image_data.processed
+
+    if image_data.processed is not None:
+        return image_data.processed
+    return image_data.original
+
+
+def _draw_match_panel(result: VisualizationResult, viz_mode: str = "m", image_mode: str = "p") -> Tuple[np.ndarray, int]:
     """Draw image pair with match overlays.
     
     Args:
         result: VisualizationResult containing images, keypoints, matches
         viz_mode: Visualization mode: 'm' (matches), 'k' (keypoints), 'b' (both)
+        image_mode: Image mode: 'o' (original), 'p' (processed)
     """
-    img1_src = result.image1.processed if result.image1 and result.image1.processed is not None else (result.image1.original if result.image1 else None)
-    img2_src = result.image2.processed if result.image2 and result.image2.processed is not None else (result.image2.original if result.image2 else None)
+    img1_src = _select_image_source(result.image1, image_mode)
+    img2_src = _select_image_source(result.image2, image_mode)
 
     img1 = _to_bgr(img1_src)
     img2 = _to_bgr(img2_src)
@@ -233,14 +250,15 @@ def _draw_match_panel(result: VisualizationResult, viz_mode: str = "m") -> Tuple
     return _blend_annotations(vis, overlay), left_width
 
 
-def render_match_visualization(result: VisualizationResult, viz_mode: str = "m") -> np.ndarray:
+def render_match_visualization(result: VisualizationResult, viz_mode: str = "m", image_mode: str = "p") -> np.ndarray:
     """Render a single-image-pair matching summary image from VisualizationResult.
     
     Args:
         result: VisualizationResult containing images, keypoints, matches
         viz_mode: Visualization mode: 'm' (matches), 'k' (keypoints), 'b' (both)
+        image_mode: Image mode: 'o' (original), 'p' (processed)
     """
-    main_panel, left_img_w = _draw_match_panel(result, viz_mode=viz_mode)
+    main_panel, left_img_w = _draw_match_panel(result, viz_mode=viz_mode, image_mode=image_mode)
     h, w = main_panel.shape[:2]
 
     canvas_w = max(w, MIN_CANVAS_WIDTH)
@@ -283,8 +301,13 @@ def render_match_visualization(result: VisualizationResult, viz_mode: str = "m")
         'b': 'Matches + Keypoints'
     }.get(viz_mode, viz_mode)
 
+    image_mode_display = {
+        'o': 'Original',
+        'p': 'Processed',
+    }.get((image_mode or 'p').lower(), image_mode)
+
     matcher_text = _truncate_to_pixel_width(
-        f"Matcher: {result.method_name} | Mode: {mode_display}",
+        f"Matcher: {result.method_name} | Viz: {mode_display} | Image: {image_mode_display}",
         int(canvas_w * 0.72),
         font,
         0.62,

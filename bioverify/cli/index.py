@@ -158,7 +158,11 @@ def match_command(args):
     )
 
     if args.viz and isinstance(result, VisualizationResult):
-        rendered = render_match_visualization(result, viz_mode=args.viz_mode)
+        rendered = render_match_visualization(
+            result,
+            viz_mode=args.viz_mode,
+            image_mode=args.image_mode,
+        )
         if args.viz_output:
             output_path = args.viz_output
         else:
@@ -331,6 +335,12 @@ Examples:
         choices=['m', 'k', 'b'],
         default='m',
         help='Visualization mode: m=matches (default), k=keypoints, b=both'
+    )
+    match_parser.add_argument(
+        '--image-mode',
+        choices=['o', 'p'],
+        default='p',
+        help='Image source mode: o=original image, p=processed matcher input (default)'
     )
 
     # Experiment command

@@ -190,8 +190,10 @@ class BaseMatcher(ABC):
         self,
         img1_path: str,
         img2_path: str,
-        img1: np.ndarray,
-        img2: np.ndarray,
+        img1_original: np.ndarray,
+        img2_original: np.ndarray,
+        img1_processed: np.ndarray,
+        img2_processed: np.ndarray,
         mask1: Optional[np.ndarray],
         mask2: Optional[np.ndarray],
         keypoints1: np.ndarray,
@@ -212,8 +214,10 @@ class BaseMatcher(ABC):
         Args:
             img1_path: Path to first image
             img2_path: Path to second image
-            img1: First image array
-            img2: Second image array
+            img1_original: First image before matcher preprocessing
+            img2_original: Second image before matcher preprocessing
+            img1_processed: First image at matcher input stage
+            img2_processed: Second image at matcher input stage
             mask1: Optional mask for first image
             mask2: Optional mask for second image
             keypoints1: Keypoints in img1 (Nx2 array)
@@ -231,24 +235,27 @@ class BaseMatcher(ABC):
         num_inliers = int(inlier_mask.sum()) if inlier_mask is not None else 0
         num_matches = len(matches) if matches is not None else 0
         inlier_ratio = num_inliers / max(1, num_matches)
+
+        img1_vis_processed = self._build_visualization_processed_image(img1_processed, mask1)
+        img2_vis_processed = self._build_visualization_processed_image(img2_processed, mask2)
         
         return VisualizationResult(
             method_name=self.get_name(),
             modality=modality,
             image1=ImageData(
-                original=img1,
-                processed=img1,
+                original=img1_original,
+                processed=img1_vis_processed,
                 image_type=ImageType.GRAYSCALE,
                 mask=mask1,
                 filename=Path(img1_path).name,
-            ) if img1 is not None else None,
+            ) if img1_original is not None else None,
             image2=ImageData(
-                original=img2,
-                processed=img2,
+                original=img2_original,
+                processed=img2_vis_processed,
                 image_type=ImageType.GRAYSCALE,
                 mask=mask2,
                 filename=Path(img2_path).name,
-            ) if img2 is not None else None,
+            ) if img2_original is not None else None,
             keypoints1=[Keypoint(x=float(kp[0]), y=float(kp[1])) for kp in keypoints1] if len(keypoints1) > 0 else [],
             keypoints2=[Keypoint(x=float(kp[0]), y=float(kp[1])) for kp in keypoints2] if len(keypoints2) > 0 else [],
             matches=[Match(kp1_idx=int(m[0]), kp2_idx=int(m[1]), distance=0.0, is_inlier=bool(inlier_mask[i]) if inlier_mask is not None and i < len(inlier_mask) else None) for i, m in enumerate(matches)] if matches is not None and len(matches) > 0 else [],
@@ -297,8 +304,19 @@ class BaseMatcher(ABC):
             VerificationResult (lightweight) or VisualizationResult (rich) depending on visualize flag
         """
         # Load images
-        img1 = self._load_image(img1_path)
-        img2 = self._load_image(img2_path)
+        img1_original = self._load_image(img1_path)
+        img2_original = self._load_image(img2_path)
+
+        # Keep a pre-pipeline snapshot only when rich visualization is requested.
+        if visualize:
+            img1_vis_original = img1_original.copy()
+            img2_vis_original = img2_original.copy()
+        else:
+            img1_vis_original = None
+            img2_vis_original = None
+
+        img1 = img1_original
+        img2 = img2_original
         
         # Preprocess
         img1 = self._preprocess_image(img1)
@@ -377,8 +395,10 @@ class BaseMatcher(ABC):
             viz_result = self._create_visualization_result(
                 img1_path=img1_path,
                 img2_path=img2_path,
-                img1=img1,
-                img2=img2,
+                img1_original=img1_vis_original,
+                img2_original=img2_vis_original,
+                img1_processed=img1,
+                img2_processed=img2,
                 mask1=mask1,
                 mask2=mask2,
                 keypoints1=keypoints1,
@@ -395,6 +415,38 @@ class BaseMatcher(ABC):
                 viz_result.method_name = matcher_name
             return viz_result
         return verification_result
+
+    def _build_visualization_processed_image(
+        self,
+        img: np.ndarray,
+        mask: Optional[np.ndarray],
+    ) -> np.ndarray:
+        """Build visualization image that reflects effective matcher inputs.
+
+        The pipeline-level processed image already includes resize, optional ROI crop,
+        and optional enhancement. This helper applies mask visualization when
+        masking is enabled, mirroring matchers that either consume masked pixels
+        directly or use detector masks to constrain features.
+        """
+        if img is None:
+            return img
+
+        out = img.copy()
+        if not self.config.use_masking or mask is None:
+            return out
+
+        mask_u8 = mask
+        if mask_u8.ndim == 3:
+            mask_u8 = cv2.cvtColor(mask_u8, cv2.COLOR_BGR2GRAY)
+        if mask_u8.dtype != np.uint8:
+            mask_u8 = mask_u8.astype(np.uint8)
+        if mask_u8.max() <= 1:
+            mask_u8 = mask_u8 * 255
+
+        if mask_u8.shape[:2] != out.shape[:2]:
+            mask_u8 = cv2.resize(mask_u8, (out.shape[1], out.shape[0]), interpolation=cv2.INTER_NEAREST)
+
+        return cv2.bitwise_and(out, out, mask=mask_u8)
 
     def _should_crop_to_mask_roi(self, modality: Optional[str]) -> bool:
         """Check whether mask-bbox ROI crop should be applied for this modality.
