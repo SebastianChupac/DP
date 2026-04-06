@@ -1,0 +1,125 @@
+{
+  "matchers": {
+    "aspanformer": {
+      "threshold": 0.5194371465035168,
+      "eer": 0.112,
+      "tar": 0.888,
+      "far": 0.112,
+      "frr": 0.112,
+      "trr": 0.888
+    },
+    "deepdetect": {
+      "threshold": 0.7777777777777778,
+      "eer": 0.208,
+      "tar": 0.792,
+      "far": 0.208,
+      "frr": 0.208,
+      "trr": 0.792
+    },
+    "loftr": {
+      "threshold": 0.24787577282468634,
+      "eer": 0.016,
+      "tar": 0.984,
+      "far": 0.016,
+      "frr": 0.016,
+      "trr": 0.984
+    },
+    "orb-fingervein": {
+      "threshold": 0.276636051149662,
+      "eer": 0.192,
+      "tar": 0.808,
+      "far": 0.192,
+      "frr": 0.192,
+      "trr": 0.808
+    },
+    "sgmnet-fingervein": {
+      "threshold": 0.07097376938535142,
+      "eer": 0.092,
+      "tar": 0.908,
+      "far": 0.092,
+      "frr": 0.092,
+      "trr": 0.908
+    },
+    "sift-fingervein": {
+      "threshold": 0.2223220964997455,
+      "eer": 0.18,
+      "tar": 0.8200000000000001,
+      "far": 0.18,
+      "frr": 0.18,
+      "trr": 0.8200000000000001
+    },
+    "superglue-fingervein": {
+      "threshold": 0.2643948769124568,
+      "eer": 0.104,
+      "tar": 0.896,
+      "far": 0.104,
+      "frr": 0.104,
+      "trr": 0.896
+    }
+  },
+  "ranking": [
+    {
+      "matcher": "loftr",
+      "threshold": 0.24787577282468634,
+      "eer": 0.016,
+      "tar": 0.984,
+      "far": 0.016,
+      "frr": 0.016,
+      "trr": 0.984
+    },
+    {
+      "matcher": "sgmnet-fingervein",
+      "threshold": 0.07097376938535142,
+      "eer": 0.092,
+      "tar": 0.908,
+      "far": 0.092,
+      "frr": 0.092,
+      "trr": 0.908
+    },
+    {
+      "matcher": "superglue-fingervein",
+      "threshold": 0.2643948769124568,
+      "eer": 0.104,
+      "tar": 0.896,
+      "far": 0.104,
+      "frr": 0.104,
+      "trr": 0.896
+    },
+    {
+      "matcher": "aspanformer",
+      "threshold": 0.5194371465035168,
+      "eer": 0.112,
+      "tar": 0.888,
+      "far": 0.112,
+      "frr": 0.112,
+      "trr": 0.888
+    },
+    {
+      "matcher": "sift-fingervein",
+      "threshold": 0.2223220964997455,
+      "eer": 0.18,
+      "tar": 0.8200000000000001,
+      "far": 0.18,
+      "frr": 0.18,
+      "trr": 0.8200000000000001
+    },
+    {
+      "matcher": "orb-fingervein",
+      "threshold": 0.276636051149662,
+      "eer": 0.192,
+      "tar": 0.808,
+      "far": 0.192,
+      "frr": 0.192,
+      "trr": 0.808
+    },
+    {
+      "matcher": "deepdetect",
+      "threshold": 0.7777777777777778,
+      "eer": 0.208,
+      "tar": 0.792,
+      "far": 0.208,
+      "frr": 0.208,
+      "trr": 0.792
+    }
+  ]
+}

@@ -21,7 +21,9 @@ matcher:
     min_matches: 4
     
     # Masking
-    use_masking: false  # Fingervein uses enhancement instead
+    use_masking: true
+    roi_crop_from_mask: true
+    roi_crop_modalities: ["iris"]
     
     # Enhancement (CLAHE for fingervein)
     use_enhancement: true

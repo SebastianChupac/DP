@@ -7,12 +7,19 @@ import argparse
 from typing import Optional
 import yaml
 from pathlib import Path
+from datetime import datetime
 
 from ..data.indexer import DatasetIndexer
 from ..data.validation import CSVValidator, print_csv_statistics
 from ..matchers.registry import create_matcher
 from ..experiments.runner import run_experiment
 from ..evaluation.cli import threshold_sweep_command, compare_matchers_command
+from ..results import VisualizationResult
+from ..visualization import (
+    render_match_visualization,
+    save_visualization_image,
+    show_visualization_image,
+)
 
 
 def load_config(config_path: str) -> dict:
@@ -136,16 +143,37 @@ def match_command(args):
     matcher_config = matcher_block.get("config", {})
     matcher = create_matcher(matcher_name, matcher_config)
 
+    if args.viz_output and not args.viz:
+        print("⚠ --viz-output is ignored unless --viz is enabled.")
+
     ground_truth = parse_ground_truth(args.ground_truth)
 
     result = matcher.match(
         args.image1,
         args.image2,
         modality=args.modality,
-        visualize=args.visualize,
+        visualize=args.viz,
         ground_truth=ground_truth,
         matcher_name=matcher_name,  # Pass the full matcher name (e.g., "sift-v1")
     )
+
+    if args.viz and isinstance(result, VisualizationResult):
+        rendered = render_match_visualization(result, viz_mode=args.viz_mode)
+        if args.viz_output:
+            output_path = args.viz_output
+        else:
+            image1_stem = Path(args.image1).stem
+            image2_stem = Path(args.image2).stem
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            output_path = str(
+                Path("bioverify/results/single_match_visualizations")
+                / f"{matcher_name}_{image1_stem}_vs_{image2_stem}_{timestamp}.png"
+            )
+
+        saved_path = save_visualization_image(rendered, output_path)
+        print(f"✓ Visualization saved to: {saved_path}")
+        show_visualization_image(rendered, title=f"{matcher_name} match visualization")
+
     if args.full:
         print(result)
     else:
@@ -290,9 +318,19 @@ Examples:
         help='Print full VerificationResult instead of summary'
     )
     match_parser.add_argument(
-        '--visualize',
+        '--viz',
         action='store_true',
-        help='Return VisualizationResult instead of VerificationResult'
+        help='Enable single-pair visualization (render, save, and display)'
+    )
+    match_parser.add_argument(
+        '--viz-output',
+        help='Output file path for rendered visualization image'
+    )
+    match_parser.add_argument(
+        '--viz-mode',
+        choices=['m', 'k', 'b'],
+        default='m',
+        help='Visualization mode: m=matches (default), k=keypoints, b=both'
     )
 
     # Experiment command

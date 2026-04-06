@@ -16,6 +16,8 @@ matcher:
     
     # Masking
     use_masking: true
+    roi_crop_from_mask: true
+    roi_crop_modalities: ["iris"]
     
     # Device
     device: cuda
