@@ -57,6 +57,9 @@ class ORBMatcher(BaseMatcher):
     def get_name(self) -> str:
         return "ORB"
 
+    def _visualization_uses_grayscale_input(self) -> bool:
+        return True
+
     def _match_impl(
         self,
         img1: np.ndarray,

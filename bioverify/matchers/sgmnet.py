@@ -75,6 +75,9 @@ class SGMNetMatcher(BaseMatcher):
         matcher_name = self._matcher_config.get("name", "SGM")
         return f"SGMNet_{extractor_name}_{matcher_name}"
 
+    def _visualization_uses_grayscale_input(self) -> bool:
+        return not bool(self._color)
+
     def _prepare_extractor_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
         config = dict(config)
         if config.get("name") == "sp":

@@ -1,7 +1,7 @@
 """Render/save/show utilities for single-pair matcher visualization."""
 
 from pathlib import Path
-from typing import List, Tuple
+from typing import List, Optional, Tuple
 
 import cv2
 import numpy as np
@@ -157,20 +157,99 @@ def _blend_annotations(base: np.ndarray, overlay: np.ndarray, alpha: float = ANN
     return cv2.addWeighted(base, 1.0 - alpha, overlay, alpha, 0.0)
 
 
-def _select_image_source(image_data, image_mode: str) -> np.ndarray:
-    """Select visualization image by mode: original ('o') or processed ('p')."""
+def _apply_transform_to_points(points: np.ndarray, transform: np.ndarray) -> np.ndarray:
+    """Apply 3x3 homography-like transform to Nx2 points."""
+    if points.size == 0:
+        return points
+
+    ones = np.ones((points.shape[0], 1), dtype=np.float32)
+    homog = np.hstack([points.astype(np.float32), ones])
+    mapped = (transform @ homog.T).T
+    w = mapped[:, 2:3]
+    w = np.where(np.abs(w) < 1e-8, 1.0, w)
+    return mapped[:, :2] / w
+
+
+def _metadata_transform(result: VisualizationResult, key: str) -> np.ndarray:
+    """Read a 3x3 transform matrix from result metadata."""
+    raw = result.metadata.get(key)
+    if raw is None:
+        return np.eye(3, dtype=np.float32)
+    try:
+        mat = np.asarray(raw, dtype=np.float32)
+        if mat.shape == (3, 3):
+            return mat
+    except Exception:
+        pass
+    return np.eye(3, dtype=np.float32)
+
+
+def _display_image_and_keypoints(
+    result: VisualizationResult,
+    image_data,
+    keypoints: List[Keypoint],
+    image_mode: str,
+    transform_key: str,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """Prepare display image and keypoints in that image coordinate frame.
+
+    Keypoints are stored in processed-image coordinates. For original mode, they
+    are mapped back through inverse(original->processed) transform, then scaled
+    to the display size.
+    """
     if image_data is None:
-        return None
+        return np.zeros((64, 64, 3), dtype=np.uint8), np.empty((0, 2), dtype=np.float32)
+
+    original = _to_bgr(image_data.original)
+    processed = _to_bgr(image_data.processed)
+
+    if processed is not None and processed.size > 0:
+        target_h, target_w = processed.shape[:2]
+    elif original is not None and original.size > 0:
+        target_h, target_w = original.shape[:2]
+    else:
+        target_h, target_w = 64, 64
+
+    base_pts = np.array([[float(kp.x), float(kp.y)] for kp in keypoints], dtype=np.float32) if keypoints else np.empty((0, 2), dtype=np.float32)
 
     mode = (image_mode or "p").lower()
     if mode == "o":
-        if image_data.original is not None:
-            return image_data.original
-        return image_data.processed
+        src = original if original is not None and original.size > 0 else processed
+        if src is None or src.size == 0:
+            src = np.zeros((target_h, target_w, 3), dtype=np.uint8)
 
-    if image_data.processed is not None:
-        return image_data.processed
-    return image_data.original
+        transform_orig_to_processed = _metadata_transform(result, transform_key)
+        try:
+            transform_processed_to_orig = np.linalg.inv(transform_orig_to_processed).astype(np.float32)
+        except np.linalg.LinAlgError:
+            transform_processed_to_orig = np.eye(3, dtype=np.float32)
+
+        pts_in_orig = _apply_transform_to_points(base_pts, transform_processed_to_orig)
+
+        src_h, src_w = src.shape[:2]
+        sx = float(target_w) / float(max(1, src_w))
+        sy = float(target_h) / float(max(1, src_h))
+        pts_display = pts_in_orig.copy()
+        if pts_display.size > 0:
+            pts_display[:, 0] *= sx
+            pts_display[:, 1] *= sy
+    else:
+        src = processed if processed is not None and processed.size > 0 else original
+        if src is None or src.size == 0:
+            src = np.zeros((target_h, target_w, 3), dtype=np.uint8)
+
+        src_h, src_w = src.shape[:2]
+        sx = float(target_w) / float(max(1, src_w))
+        sy = float(target_h) / float(max(1, src_h))
+        pts_display = base_pts.copy()
+        if pts_display.size > 0:
+            pts_display[:, 0] *= sx
+            pts_display[:, 1] *= sy
+
+    if src.shape[0] != target_h or src.shape[1] != target_w:
+        src = cv2.resize(src, (target_w, target_h), interpolation=cv2.INTER_AREA)
+
+    return src, pts_display
 
 
 def _draw_match_panel(result: VisualizationResult, viz_mode: str = "m", image_mode: str = "p") -> Tuple[np.ndarray, int]:
@@ -181,18 +260,40 @@ def _draw_match_panel(result: VisualizationResult, viz_mode: str = "m", image_mo
         viz_mode: Visualization mode: 'm' (matches), 'k' (keypoints), 'b' (both)
         image_mode: Image mode: 'o' (original), 'p' (processed)
     """
-    img1_src = _select_image_source(result.image1, image_mode)
-    img2_src = _select_image_source(result.image2, image_mode)
+    img1, pts1 = _display_image_and_keypoints(
+        result,
+        result.image1,
+        result.keypoints1,
+        image_mode,
+        "visualization_transform_img1_orig_to_processed",
+    )
+    img2, pts2 = _display_image_and_keypoints(
+        result,
+        result.image2,
+        result.keypoints2,
+        image_mode,
+        "visualization_transform_img2_orig_to_processed",
+    )
 
-    img1 = _to_bgr(img1_src)
-    img2 = _to_bgr(img2_src)
     if img1.shape[0] != img2.shape[0]:
         target_h = max(img1.shape[0], img2.shape[0])
+        old_w1 = max(1, img1.shape[1])
+        old_h1 = max(1, img1.shape[0])
+        old_w2 = max(1, img2.shape[1])
+        old_h2 = max(1, img2.shape[0])
+
         img1 = cv2.resize(img1, (int(img1.shape[1] * (target_h / img1.shape[0])), target_h), interpolation=cv2.INTER_AREA)
         img2 = cv2.resize(img2, (int(img2.shape[1] * (target_h / img2.shape[0])), target_h), interpolation=cv2.INTER_AREA)
 
-    kpts1 = _cv2_keypoints(result.keypoints1)
-    kpts2 = _cv2_keypoints(result.keypoints2)
+        if pts1.size > 0:
+            pts1[:, 0] *= float(img1.shape[1]) / float(old_w1)
+            pts1[:, 1] *= float(img1.shape[0]) / float(old_h1)
+        if pts2.size > 0:
+            pts2[:, 0] *= float(img2.shape[1]) / float(old_w2)
+            pts2[:, 1] *= float(img2.shape[0]) / float(old_h2)
+
+    kpts1 = _cv2_keypoints([Keypoint(x=float(x), y=float(y)) for x, y in pts1])
+    kpts2 = _cv2_keypoints([Keypoint(x=float(x), y=float(y)) for x, y in pts2])
 
     vis = cv2.hconcat([img1.copy(), img2.copy()])
     left_width = img1.shape[1]

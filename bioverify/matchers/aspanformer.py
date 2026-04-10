@@ -78,6 +78,9 @@ class ASpanFormerMatcher(BaseMatcher):
     def get_name(self) -> str:
         return f"ASpanFormer_{self._model_type}"
 
+    def _visualization_uses_grayscale_input(self) -> bool:
+        return True
+
     def _match_impl(
         self,
         img1: np.ndarray,

@@ -57,6 +57,9 @@ class SuperGlueMatcher(BaseMatcher):
     def get_name(self) -> str:
         return "SuperGlue"
 
+    def _visualization_uses_grayscale_input(self) -> bool:
+        return True
+
     def _match_impl(
         self,
         img1: np.ndarray,

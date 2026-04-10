@@ -22,8 +22,8 @@ matcher:
     
     # Masking
     use_masking: true
-    roi_crop_from_mask: false
-    roi_crop_modalities: ["iris"]
+    roi_crop_from_mask: true
+    roi_crop_modalities: ["iris", "hand", "handgeometry"]
     
     # Enhancement (CLAHE for fingervein)
     use_enhancement: true

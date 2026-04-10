@@ -204,6 +204,8 @@ class BaseMatcher(ABC):
         reprojection_error: Optional[float],
         decision: Optional[VerificationResult] = None,
         modality: Optional[str] = None,
+        transform_img1_orig_to_processed: Optional[np.ndarray] = None,
+        transform_img2_orig_to_processed: Optional[np.ndarray] = None,
     ) -> VisualizationResult:
         """
         Create rich VisualizationResult for debugging and visualization.
@@ -238,6 +240,21 @@ class BaseMatcher(ABC):
 
         img1_vis_processed = self._build_visualization_processed_image(img1_processed, mask1)
         img2_vis_processed = self._build_visualization_processed_image(img2_processed, mask2)
+
+        metadata: Dict[str, Any] = {
+            "visualization_transform_img1_orig_to_processed": (
+                transform_img1_orig_to_processed.tolist()
+                if transform_img1_orig_to_processed is not None else np.eye(3, dtype=np.float32).tolist()
+            ),
+            "visualization_transform_img2_orig_to_processed": (
+                transform_img2_orig_to_processed.tolist()
+                if transform_img2_orig_to_processed is not None else np.eye(3, dtype=np.float32).tolist()
+            ),
+            "visualization_processed_shape_img1": list(img1_vis_processed.shape[:2]) if img1_vis_processed is not None else None,
+            "visualization_processed_shape_img2": list(img2_vis_processed.shape[:2]) if img2_vis_processed is not None else None,
+            "visualization_original_shape_img1": list(img1_original.shape[:2]) if img1_original is not None else None,
+            "visualization_original_shape_img2": list(img2_original.shape[:2]) if img2_original is not None else None,
+        }
         
         return VisualizationResult(
             method_name=self.get_name(),
@@ -270,6 +287,7 @@ class BaseMatcher(ABC):
             inlier_ratio=inlier_ratio,
             reprojection_error=reprojection_error,
             matcher_params=self._get_matcher_params(),
+            metadata=metadata,
         )
     
     def match(
@@ -317,10 +335,22 @@ class BaseMatcher(ABC):
 
         img1 = img1_original
         img2 = img2_original
+        transform_img1_orig_to_processed = np.eye(3, dtype=np.float32)
+        transform_img2_orig_to_processed = np.eye(3, dtype=np.float32)
         
         # Preprocess
         img1 = self._preprocess_image(img1)
         img2 = self._preprocess_image(img2)
+        transform_img1_orig_to_processed = self._compose_with_resize_transform(
+            transform_img1_orig_to_processed,
+            img1_original.shape[:2],
+            img1.shape[:2],
+        )
+        transform_img2_orig_to_processed = self._compose_with_resize_transform(
+            transform_img2_orig_to_processed,
+            img2_original.shape[:2],
+            img2.shape[:2],
+        )
         
         # Get masks if needed (AFTER preprocessing so masks match image size)
         mask1 = None
@@ -333,9 +363,11 @@ class BaseMatcher(ABC):
         # Crops image+mask to mask bounding box, then resizes back to target shape.
         if self._should_crop_to_mask_roi(modality):
             if mask1 is not None:
-                img1, mask1 = self._crop_and_resize_to_mask_roi(img1, mask1)
+                img1, mask1, crop_transform1 = self._crop_and_resize_to_mask_roi(img1, mask1)
+                transform_img1_orig_to_processed = crop_transform1 @ transform_img1_orig_to_processed
             if mask2 is not None:
-                img2, mask2 = self._crop_and_resize_to_mask_roi(img2, mask2)
+                img2, mask2, crop_transform2 = self._crop_and_resize_to_mask_roi(img2, mask2)
+                transform_img2_orig_to_processed = crop_transform2 @ transform_img2_orig_to_processed
         
         # Apply enhancement for fingervein images (instead of masking)
         if self.config.use_enhancement and modality and modality.lower() in ["fingervein", "finger_vein", "finger"]:
@@ -409,6 +441,8 @@ class BaseMatcher(ABC):
                 reprojection_error=reprojection_error,
                 decision=verification_result,
                 modality=modality,
+                transform_img1_orig_to_processed=transform_img1_orig_to_processed,
+                transform_img2_orig_to_processed=transform_img2_orig_to_processed,
             )
             # Override matcher name in visualization result too
             if matcher_name is not None:
@@ -432,6 +466,9 @@ class BaseMatcher(ABC):
             return img
 
         out = img.copy()
+        if self._visualization_uses_grayscale_input() and out.ndim == 3:
+            out = cv2.cvtColor(out, cv2.COLOR_BGR2GRAY)
+
         if not self.config.use_masking or mask is None:
             return out
 
@@ -447,6 +484,31 @@ class BaseMatcher(ABC):
             mask_u8 = cv2.resize(mask_u8, (out.shape[1], out.shape[0]), interpolation=cv2.INTER_NEAREST)
 
         return cv2.bitwise_and(out, out, mask=mask_u8)
+
+    def _visualization_uses_grayscale_input(self) -> bool:
+        """Whether matcher internally consumes grayscale image inputs."""
+        return False
+
+    @staticmethod
+    def _compose_with_resize_transform(
+        current_transform: np.ndarray,
+        src_shape: Tuple[int, int],
+        dst_shape: Tuple[int, int],
+    ) -> np.ndarray:
+        """Compose current transform with a shape-based resize transform."""
+        src_h, src_w = src_shape
+        dst_h, dst_w = dst_shape
+
+        if src_w <= 0 or src_h <= 0 or dst_w <= 0 or dst_h <= 0:
+            return current_transform
+
+        sx = float(dst_w) / float(src_w)
+        sy = float(dst_h) / float(src_h)
+        resize_transform = np.array(
+            [[sx, 0.0, 0.0], [0.0, sy, 0.0], [0.0, 0.0, 1.0]],
+            dtype=np.float32,
+        )
+        return resize_transform @ current_transform
 
     def _should_crop_to_mask_roi(self, modality: Optional[str]) -> bool:
         """Check whether mask-bbox ROI crop should be applied for this modality.
@@ -487,8 +549,12 @@ class BaseMatcher(ABC):
         self,
         img: np.ndarray,
         mask: np.ndarray,
-    ) -> Tuple[np.ndarray, np.ndarray]:
-        """Crop image/mask to mask bbox with padding and resize back to original shape."""
+    ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
+        """Crop image/mask to mask bbox with padding and resize back to original shape.
+
+        Returns:
+            (cropped_resized_image, cropped_resized_mask, transform_pre_to_post)
+        """
         target_h, target_w = img.shape[:2]
 
         if mask.ndim == 3:
@@ -499,14 +565,14 @@ class BaseMatcher(ABC):
         mask_bin = (mask_gray > 127).astype(np.uint8) * 255
         nonzero = cv2.findNonZero(mask_bin)
         if nonzero is None:
-            return img, mask_bin
+            return img, mask_bin, np.eye(3, dtype=np.float32)
 
         x, y, w, h = cv2.boundingRect(nonzero)
 
         # Skip tiny ROIs that are likely noise.
         min_area_frac = float(self.config.extra_params.get("roi_crop_min_area_frac", 0.01))
         if (w * h) < (min_area_frac * target_w * target_h):
-            return img, mask_bin
+            return img, mask_bin, np.eye(3, dtype=np.float32)
 
         pad_frac = float(self.config.extra_params.get("roi_crop_padding_frac", 0.10))
         pad_px = int(round(max(w, h) * max(0.0, pad_frac)))
@@ -517,12 +583,12 @@ class BaseMatcher(ABC):
         y1 = min(target_h, y + h + pad_px)
 
         if x1 <= x0 or y1 <= y0:
-            return img, mask_bin
+            return img, mask_bin, np.eye(3, dtype=np.float32)
 
         cropped_img = img[y0:y1, x0:x1]
         cropped_mask = mask_bin[y0:y1, x0:x1]
         if cropped_img.size == 0 or cropped_mask.size == 0:
-            return img, mask_bin
+            return img, mask_bin, np.eye(3, dtype=np.float32)
 
         resized_img = cv2.resize(
             cropped_img,
@@ -536,7 +602,15 @@ class BaseMatcher(ABC):
         )
         resized_mask = (resized_mask > 127).astype(np.uint8) * 255
 
-        return resized_img, resized_mask
+        crop_h, crop_w = cropped_img.shape[:2]
+        sx = float(target_w) / float(crop_w)
+        sy = float(target_h) / float(crop_h)
+        transform = np.array(
+            [[sx, 0.0, -sx * float(x0)], [0.0, sy, -sy * float(y0)], [0.0, 0.0, 1.0]],
+            dtype=np.float32,
+        )
+
+        return resized_img, resized_mask, transform
     
     def _get_matcher_params(self) -> Dict[str, Any]:
         """

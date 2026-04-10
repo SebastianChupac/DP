@@ -59,6 +59,9 @@ class SIFTMatcher(BaseMatcher):
                 )
         return img
 
+    def _visualization_uses_grayscale_input(self) -> bool:
+        return True
+
     def _match_impl(
         self,
         img1: np.ndarray,
