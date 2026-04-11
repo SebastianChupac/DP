@@ -68,19 +68,40 @@ def index_datasets_command(args):
         public_dataset_root=config['public_dataset_root'],
         random_seed=config.get('random_seed', 42)
     )
-    
-    # Index and generate pairs
-    pairs = indexer.index_and_generate(
-        dataset_configs=config['datasets'],
-        output_csv=config['output']['csv_path'],
-        genuine_per_identity=config['pair_generation'].get('genuine_per_identity'),
-        max_genuine_pairs=config['pair_generation'].get('max_genuine_pairs'),
-        impostor_ratio=config['pair_generation'].get('impostor_ratio', 1.0),
-        relative_paths=config['output'].get('relative_paths', True)
-    )
-    
-    # Print statistics
-    indexer.print_statistics(pairs)
+
+    identification_generation = config.get('identification_generation')
+    if identification_generation:
+        rows = indexer.index_and_generate_identification(
+            dataset_configs=config['datasets'],
+            output_csv=config['output']['csv_path'],
+            gallery_samples_per_identity=identification_generation['gallery_samples_per_identity'],
+            probes_per_identity=identification_generation['probes_per_identity'],
+            number_of_identities=identification_generation.get(
+                'number_of_identities',
+                identification_generation.get('num_identities', -1)
+            ),
+            relative_paths=config['output'].get('relative_paths', True),
+            require_session_disjoint=identification_generation.get('require_session_disjoint', False),
+            identification_filters=(
+                identification_generation.get('filters')
+                or identification_generation.get('match_constraints')
+            ),
+        )
+        indexer.print_statistics()
+        print(f"\nGenerated identification manifest with {len(rows)} rows")
+    else:
+        # Index and generate verification pairs
+        pairs = indexer.index_and_generate(
+            dataset_configs=config['datasets'],
+            output_csv=config['output']['csv_path'],
+            genuine_per_identity=config['pair_generation'].get('genuine_per_identity'),
+            max_genuine_pairs=config['pair_generation'].get('max_genuine_pairs'),
+            impostor_ratio=config['pair_generation'].get('impostor_ratio', 1.0),
+            relative_paths=config['output'].get('relative_paths', True)
+        )
+
+        # Print statistics
+        indexer.print_statistics(pairs)
     
     print(f"\n✅ Indexing complete!")
     print(f"   Output saved to: {config['output']['csv_path']}")

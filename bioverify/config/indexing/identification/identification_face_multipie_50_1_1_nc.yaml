@@ -1,0 +1,20 @@
+# Identification manifest generation example (closed-set)
+# Face modality, Multi-PIE dataset, no constraints, 50 identities, 1 gallery sample and 1 probe sample per identity.
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+random_seed: 42
+
+identification_generation:
+  number_of_identities: 50  # -1 means: use all identities
+  gallery_samples_per_identity: 1
+  probes_per_identity: 1 # -1 means: use all remaining samples per identity
+
+output:
+  csv_path: "bioverify/data/identification/identification_face_multipie_50_1_1_nc.csv"
+  relative_paths: true
+
+datasets:
+  - dataset_path: "Face"
+    dataset_name: "Multi-PIE"
+    modality: "face"
+    image_type: "HR_128"  #HR_128 or "LR_4x" or "both"

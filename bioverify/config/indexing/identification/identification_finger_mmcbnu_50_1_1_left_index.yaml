@@ -1,0 +1,23 @@
+# Identification manifest generation example (closed-set)
+# MCCBNU_6000 finger vein dataset, left index finger, 50 identities, 1 gallery sample and 1 probe sample per identity.
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+random_seed: 42
+
+identification_generation:
+  number_of_identities: 50  # -1 means: use all identities
+  gallery_samples_per_identity: 1
+  probes_per_identity: 1 # -1 means: use all remaining samples per identity
+  filters:
+    side: "L" # filter by side, e.g., "L" for left or "R" for right
+    finger: "fore" # filter by finger, e.g., "fore", "middle", "ring"
+
+output:
+  csv_path: "bioverify/data/identification/identification_finger_mmcbnu_50_1_1_left_index.csv"
+  relative_paths: true
+
+datasets:
+  - dataset_path: "FingerVein/002-MMCBNU_6000"
+    dataset_name: "MMCBNU_6000"
+    modality: "finger"
+    image_type: "roi"

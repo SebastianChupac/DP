@@ -1,0 +1,22 @@
+# Identification manifest generation example (closed-set)
+# Uses CASIA-Iris dataset parser and generates a single CSV with split=gallery/probe.
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+random_seed: 42
+
+identification_generation:
+  number_of_identities: 50  # -1 means: use all identities
+  gallery_samples_per_identity: 1
+  probes_per_identity: 1  # -1 means: use all remaining samples per identity
+  require_session_disjoint: false
+  filters:
+    side: "L" # CASIA-Iris-Thousand has "L" and "R"
+
+output:
+  csv_path: "bioverify/data/identification/test_identification_iris_casia.csv"
+  relative_paths: true
+
+datasets:
+  - dataset_path: "Iris/001-CASIA-Iris-Thousand"
+    dataset_name: "CASIA-Iris-Thousand"
+    modality: "iris"

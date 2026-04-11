@@ -1,0 +1,23 @@
+# Identification manifest generation example (closed-set)
+# Finger modality example with parser filters and fixed probes per identity.
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+random_seed: 42
+
+identification_generation:
+  number_of_identities: 50  # -1 means: use all identities
+  gallery_samples_per_identity: 1
+  probes_per_identity: 1 # -1 means: use all remaining samples per identity
+  require_session_disjoint: false
+  filters:
+    finger:
+      - "1"
+
+output:
+  csv_path: "bioverify/data/identification/test_identification_finger_eemscdbm.csv"
+  relative_paths: true
+
+datasets:
+  - dataset_path: "FingerVein/005-EEMSC-DBM"
+    dataset_name: "EEMSC-DBM"
+    modality: "finger"
