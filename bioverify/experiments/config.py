@@ -151,6 +151,7 @@ class IdentificationExperimentConfig:
     strategy: str = "single"                  # single | multiple
     aggregation_method: str = "max"           # max | mean
     top_k_ranks: List[int] = field(default_factory=lambda: [1, 5, 10])
+    cache_gallery_templates: bool = True
 
     # Output configuration
     output_dir: str = "results"
@@ -213,6 +214,7 @@ class IdentificationExperimentConfig:
             strategy=strategy,
             aggregation_method=aggregation_method,
             top_k_ranks=top_k_ranks,
+            cache_gallery_templates=data.get('cache_gallery_templates', True),
             output_dir=data.get('output_dir', 'results'),
             verbose=data.get('verbose', True),
             device=data.get('device', 'cuda'),

@@ -1,0 +1,38 @@
+# Test experiment for identification. 11k hands, 50 identities, 1 probe, 3 gallery per identity
+# masked
+
+experiment:
+  name: "Identification test experiment 11k hands 50 identities 1 probe 3 gallery dorsal right masked sift-fingervein and sift, with test of caching"
+  description: "Test identification on sift-fingervein and sift matchers"
+  purpose: "id_test"
+  created: "2026-04-12"
+
+# Input data
+identification_dataset: "bioverify/data/identification/identification_hand_11khands_50_1_3_dorsal_right.csv"
+base_path: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+
+strategy: "multiple"  # Use single gallery template per identity or multiple
+top_k_ranks: [1, 5, 10]
+aggregation_method: "max"  # Method to aggregate multiple matches if strategy is "multiple". Options: "max", "mean""
+cache_gallery_templates: true
+
+# Multiple matcher configuration
+matchers:
+  - name: sift
+    config_base: "bioverify/config/matching/sift.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: false
+  - name: sift-fingervein
+    config_base: "bioverify/config/matching/sift_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: false
+
+# Output
+output_dir: "bioverify/results/identification/hand_11khands_50_1_3_dorsal_right_nomask_sift_both_cached.yaml"
+
+# Options
+batch_size: 1
+verbose: true
+device: "cuda"

@@ -1,0 +1,94 @@
+{
+  "sift": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.32,
+    "rank_k_accuracy": {
+      "1": 0.32,
+      "5": 0.66,
+      "10": 0.84
+    },
+    "recall_at_k": {
+      "1": 0.32,
+      "5": 0.66,
+      "10": 0.84
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "values": [
+        0.32,
+        0.48,
+        0.5,
+        0.56,
+        0.66,
+        0.72,
+        0.76,
+        0.78,
+        0.82,
+        0.84
+      ]
+    },
+    "mean_average_precision": 0.47621124246124247,
+    "mean_rank": 5.78,
+    "median_rank": 3.5,
+    "std_rank": 6.865245807689627,
+    "cache_gallery_templates": true
+  },
+  "sift-fingervein": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.88,
+    "rank_k_accuracy": {
+      "1": 0.88,
+      "5": 0.98,
+      "10": 1.0
+    },
+    "recall_at_k": {
+      "1": 0.88,
+      "5": 0.98,
+      "10": 1.0
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "values": [
+        0.88,
+        0.92,
+        0.96,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        0.98,
+        1.0
+      ]
+    },
+    "mean_average_precision": 0.9203333333333333,
+    "mean_rank": 1.36,
+    "median_rank": 1.0,
+    "std_rank": 1.3676256797823008,
+    "cache_gallery_templates": true
+  }
+}

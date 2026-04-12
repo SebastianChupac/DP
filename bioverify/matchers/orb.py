@@ -60,6 +60,27 @@ class ORBMatcher(BaseMatcher):
     def _visualization_uses_grayscale_input(self) -> bool:
         return True
 
+    def _extract_features(
+        self,
+        img: np.ndarray,
+        mask: Optional[np.ndarray],
+    ) -> Tuple[np.ndarray, Optional[np.ndarray]]:
+        """Extract ORB keypoints and descriptors from a prepared image."""
+        gray = self._to_grayscale(img)
+        mask = self._prepare_mask(mask)
+        kpts, des = self._orb.detectAndCompute(gray, mask)
+        keypoints = self._keypoints_to_array(kpts)
+        return keypoints, des
+
+    def prepare_identification_template(self, img_path: str, modality: Optional[str] = None) -> dict:
+        template = super().prepare_identification_template(img_path, modality)
+        keypoints, descriptors = self._extract_features(template["processed"], template.get("mask"))
+        template["cache"] = {
+            "keypoints": keypoints,
+            "descriptors": descriptors,
+        }
+        return template
+
     def _match_impl(
         self,
         img1: np.ndarray,
@@ -68,17 +89,8 @@ class ORBMatcher(BaseMatcher):
         mask2: Optional[np.ndarray],
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Stateless ORB matching."""
-        # Convert to grayscale
-        gray1 = self._to_grayscale(img1)
-        gray2 = self._to_grayscale(img2)
-
-        # Prepare masks
-        mask1 = self._prepare_mask(mask1)
-        mask2 = self._prepare_mask(mask2)
-
-        # Detect and compute
-        kpts1, des1 = self._orb.detectAndCompute(gray1, mask1)
-        kpts2, des2 = self._orb.detectAndCompute(gray2, mask2)
+        kpts1, des1 = self._extract_features(img1, mask1)
+        kpts2, des2 = self._extract_features(img2, mask2)
 
         # Convert keypoints to array
         keypoints1 = self._keypoints_to_array(kpts1)
@@ -103,6 +115,60 @@ class ORBMatcher(BaseMatcher):
             dtype=int,
         )
         return keypoints1, keypoints2, matches
+
+    def compare_identification_templates(
+        self,
+        template1: dict,
+        template2: dict,
+        ground_truth: Optional[bool] = None,
+        matcher_name: Optional[str] = None,
+    ) -> VerificationResult:
+        cache1 = template1.get("cache", {})
+        cache2 = template2.get("cache", {})
+        des1 = cache1.get("descriptors")
+        des2 = cache2.get("descriptors")
+        keypoints1 = cache1.get("keypoints")
+        keypoints2 = cache2.get("keypoints")
+
+        if des1 is None or des2 is None or keypoints1 is None or keypoints2 is None:
+            return super().compare_identification_templates(template1, template2, ground_truth, matcher_name)
+
+        if len(des1) < 2 or len(des2) < 2:
+            matches = np.empty((0, 2), dtype=int)
+        else:
+            if self._matcher_type == "FLANN":
+                good_matches = self._match_flann(des1, des2)
+            else:
+                good_matches = self._match_bruteforce(des1, des2)
+
+            matches = np.array([[m.queryIdx, m.trainIdx] for m in good_matches], dtype=int) if good_matches else np.empty((0, 2), dtype=int)
+
+        homography = None
+        inliers = None
+        reprojection_error = None
+        if len(matches) >= self.config.min_matches:
+            pts1 = keypoints1[matches[:, 0]]
+            pts2 = keypoints2[matches[:, 1]]
+            homography, inliers = self._estimate_homography(pts1, pts2)
+            if homography is not None and inliers is not None and np.any(inliers):
+                reprojection_error = self._compute_reprojection_error(pts1[inliers], pts2[inliers], homography)
+
+        verification_result = self._create_verification_result(
+            img1_path=template1["img_path"],
+            img2_path=template2["img_path"],
+            keypoints1=keypoints1,
+            keypoints2=keypoints2,
+            matches=matches,
+            homography=homography,
+            inliers=inliers,
+            reprojection_error=reprojection_error,
+            ground_truth=ground_truth,
+        )
+        verification_result.num_keypoints_image1 = len(keypoints1) if keypoints1 is not None else 0
+        verification_result.num_keypoints_image2 = len(keypoints2) if keypoints2 is not None else 0
+        if matcher_name is not None:
+            verification_result.method_name = matcher_name
+        return verification_result
 
     def _match_bruteforce(self, des1: np.ndarray, des2: np.ndarray) -> list:
         """Match using BruteForce matcher with optional cross-check."""

@@ -677,6 +677,98 @@ class BaseMatcher(ABC):
             )
         
         return img
+
+    def supports_identification_template_cache(self) -> bool:
+        """Whether this matcher can reuse precomputed identification templates."""
+        return True
+
+    def prepare_identification_template(self, img_path: str, modality: Optional[str] = None) -> Dict[str, Any]:
+        """Prepare a reusable template for identification matching.
+
+        The default implementation caches the fully prepared matcher input:
+        loaded image, preprocessed image, and optional mask.
+        Subclasses can extend this with matcher-specific cached features.
+        """
+        original_img = self._load_image(img_path)
+        processed_img = self._preprocess_image(original_img)
+        mask = None
+
+        if self.config.use_masking and modality:
+            mask = self._get_or_compute_mask(img_path, processed_img, modality)
+
+        if self._should_crop_to_mask_roi(modality):
+            if mask is not None:
+                processed_img, mask, _ = self._crop_and_resize_to_mask_roi(processed_img, mask)
+
+        if self.config.use_enhancement and modality and modality.lower() in ["fingervein", "finger_vein", "finger"]:
+            processed_img = enhance_fingervein_image(
+                processed_img,
+                clip_limit=self.config.enhancement_clip_limit,
+                tile_grid_size=(self.config.enhancement_tile_size, self.config.enhancement_tile_size),
+            )
+
+        return {
+            "img_path": img_path,
+            "modality": modality,
+            "original": original_img,
+            "processed": processed_img,
+            "mask": mask,
+            "cache": {},
+        }
+
+    def compare_identification_templates(
+        self,
+        template1: Dict[str, Any],
+        template2: Dict[str, Any],
+        ground_truth: Optional[bool] = None,
+        matcher_name: Optional[str] = None,
+    ) -> VerificationResult:
+        """Compare two precomputed identification templates.
+
+        The default implementation reuses the matcher's existing image-based
+        matching logic, but skips image loading and preprocessing.
+        """
+        keypoints1, keypoints2, matches = self._match_impl(
+            template1["processed"],
+            template2["processed"],
+            template1.get("mask"),
+            template2.get("mask"),
+        )
+
+        homography = None
+        inliers = None
+        reprojection_error = None
+
+        if len(matches) >= self.config.min_matches:
+            pts1 = keypoints1[matches[:, 0]]
+            pts2 = keypoints2[matches[:, 1]]
+            homography, inliers = self._estimate_homography(pts1, pts2)
+            if homography is not None and inliers is not None and np.any(inliers):
+                reprojection_error = self._compute_reprojection_error(
+                    pts1[inliers],
+                    pts2[inliers],
+                    homography,
+                )
+
+        verification_result = self._create_verification_result(
+            img1_path=template1["img_path"],
+            img2_path=template2["img_path"],
+            keypoints1=keypoints1,
+            keypoints2=keypoints2,
+            matches=matches,
+            homography=homography,
+            inliers=inliers,
+            reprojection_error=reprojection_error,
+            ground_truth=ground_truth,
+        )
+        verification_result.num_keypoints_image1 = len(keypoints1) if keypoints1 is not None else 0
+        verification_result.num_keypoints_image2 = len(keypoints2) if keypoints2 is not None else 0
+        verification_result.modality = template1.get("modality") or template2.get("modality")
+
+        if matcher_name is not None:
+            verification_result.method_name = matcher_name
+
+        return verification_result
     
     def _get_or_compute_mask(
         self,

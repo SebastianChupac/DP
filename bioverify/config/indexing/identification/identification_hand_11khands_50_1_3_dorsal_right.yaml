@@ -1,0 +1,22 @@
+# Identification manifest generation example (closed-set)
+# 11kHands handgeometry dataset, 50 identities, 3 gallery sample and 1 probe sample per identity.
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+random_seed: 42
+
+identification_generation:
+  number_of_identities: 50  # -1 means: use all identities
+  gallery_samples_per_identity: 3
+  probes_per_identity: 1 # -1 means: use all remaining samples per identity
+  filters:
+    aspect_of_hand: "dorsal right" # filter by aspect of hand, e.g., "dorsal right", "dorsal left", "palmar right", "palmar left"
+    
+
+output:
+  csv_path: "bioverify/data/identification/identification_hand_11khands_50_1_3_dorsal_right.csv"
+  relative_paths: true
+
+datasets:
+  - dataset_path: "HandGeometry"
+    dataset_name: "11k_Hands"
+    modality: "handGeometry"

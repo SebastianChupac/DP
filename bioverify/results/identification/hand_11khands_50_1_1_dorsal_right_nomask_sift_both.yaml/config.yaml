@@ -1,0 +1,29 @@
+aggregation_method: max
+base_path: C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset
+device: cuda
+experiment:
+  created: '2026-04-12'
+  description: Test identification on sift-fingervein and sift matchers
+  name: Identification test experiment 11k hands 50 identities 1 probe 1 gallery dorsal
+    right masked sift-fingervein and sift
+  purpose: id_test
+  researcher: null
+filter_dataset: null
+filter_modality: null
+identification_dataset: bioverify/data/identification/identification_hand_11khands_50_1_1_dorsal_right.csv
+matchers:
+- config_base: bioverify/config/matching/sift.yaml
+  config_overrides:
+    use_masking: false
+  name: sift
+- config_base: bioverify/config/matching/sift_fingervein.yaml
+  config_overrides:
+    use_masking: false
+  name: sift-fingervein
+output_dir: bioverify/results/identification/hand_11khands_50_1_1_dorsal_right_nomask_sift_both.yaml
+strategy: single
+top_k_ranks:
+- 1
+- 5
+- 10
+verbose: true

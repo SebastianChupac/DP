@@ -79,29 +79,49 @@ class IdentificationExperimentRunner:
             return float(np.mean(scores))
         return float(np.max(scores))
 
+    def _prepare_gallery_templates(
+        self,
+        matcher,
+        gallery_by_identity: Dict[str, List[IdentificationSample]],
+    ) -> Dict[str, List[Dict]]:
+        """Prepare cached gallery templates once per matcher."""
+        gallery_templates: Dict[str, List[Dict]] = {}
+        for identity, gallery_samples in gallery_by_identity.items():
+            gallery_templates[identity] = [
+                matcher.prepare_identification_template(
+                    sample.image_path,
+                    modality=sample.modality,
+                )
+                for sample in gallery_samples
+            ]
+        return gallery_templates
+
     def _rank_probe(
         self,
         probe: IdentificationSample,
-        gallery_by_identity: Dict[str, List[IdentificationSample]],
+        gallery_templates_by_identity: Dict[str, List[Dict]],
         matcher,
         matcher_name: str,
     ) -> IdentificationResult:
+        probe_template = matcher.prepare_identification_template(
+            probe.image_path,
+            modality=probe.modality,
+        )
+
         scores_by_identity: Dict[str, float] = {}
 
-        for identity, gallery_samples in gallery_by_identity.items():
+        for identity, gallery_templates in gallery_templates_by_identity.items():
             try:
                 if self.config.strategy == 'single':
-                    candidate_samples = [gallery_samples[0]]
+                    candidate_templates = [gallery_templates[0]]
                 else:
-                    candidate_samples = gallery_samples
+                    candidate_templates = gallery_templates
 
                 identity_scores: List[float] = []
-                for gallery_sample in candidate_samples:
-                    result = matcher.match(
-                        img1_path=probe.image_path,
-                        img2_path=gallery_sample.image_path,
-                        modality=probe.modality,
-                        visualize=False,
+                for gallery_template in candidate_templates:
+                    result = matcher.compare_identification_templates(
+                        probe_template,
+                        gallery_template,
                         ground_truth=None,
                         matcher_name=matcher_name,
                     )
@@ -141,7 +161,7 @@ class IdentificationExperimentRunner:
             modality=probe.modality,
             ranked_identities=ranked_identities,
             rank_of_true_identity=rank_of_true_identity,
-            gallery_size=len(gallery_by_identity),
+            gallery_size=len(gallery_templates_by_identity),
             strategy=self.config.strategy,
             aggregation_method=self.config.aggregation_method,
             metadata={
@@ -183,6 +203,7 @@ class IdentificationExperimentRunner:
                 'mean_rank': float(np.mean(valid_ranks)) if valid_ranks else None,
                 'median_rank': float(np.median(valid_ranks)) if valid_ranks else None,
                 'std_rank': float(np.std(valid_ranks)) if valid_ranks else None,
+                'cache_gallery_templates': self.config.cache_gallery_templates,
             }
 
     def _save_results(self):
@@ -341,6 +362,16 @@ class IdentificationExperimentRunner:
         if not matchers:
             raise RuntimeError("No matchers successfully instantiated!")
 
+        gallery_templates_by_matcher: Dict[str, Dict[str, List[Dict]]] = {}
+        if self.config.cache_gallery_templates:
+            if self.config.verbose:
+                print("\n🗃️  Preparing cached gallery templates...")
+            for matcher_name, matcher in matchers.items():
+                gallery_templates_by_matcher[matcher_name] = self._prepare_gallery_templates(matcher, gallery)
+                if self.config.verbose:
+                    total_templates = sum(len(v) for v in gallery_templates_by_matcher[matcher_name].values())
+                    print(f"   ✓ {matcher_name}: cached {total_templates} gallery templates")
+
         progress_bar = tqdm(
             probes,
             desc='Probes',
@@ -350,9 +381,14 @@ class IdentificationExperimentRunner:
 
         for probe in progress_bar:
             for matcher_name, matcher in matchers.items():
+                if self.config.cache_gallery_templates:
+                    gallery_templates = gallery_templates_by_matcher[matcher_name]
+                else:
+                    gallery_templates = self._prepare_gallery_templates(matcher, gallery)
+
                 result = self._rank_probe(
                     probe=probe,
-                    gallery_by_identity=gallery,
+                    gallery_templates_by_identity=gallery_templates,
                     matcher=matcher,
                     matcher_name=matcher_name,
                 )
