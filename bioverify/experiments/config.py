@@ -129,3 +129,97 @@ class ExperimentConfig:
     def to_yaml(self) -> str:
         """Convert config to YAML string."""
         return yaml.dump(self.to_dict(), default_flow_style=False)
+
+
+@dataclass
+class IdentificationExperimentConfig:
+    """Configuration for closed-set identification experiments."""
+
+    # Experiment metadata
+    experiment: ExperimentMetadata
+
+    # Data configuration
+    identification_dataset: str
+    base_path: Optional[str] = None
+    filter_modality: Optional[str] = None
+    filter_dataset: Optional[str] = None
+
+    # Matcher configuration
+    matchers: List[MatcherExperimentConfig] = field(default_factory=list)
+
+    # Identification strategy configuration
+    strategy: str = "single"                  # single | multiple
+    aggregation_method: str = "max"           # max | mean
+    top_k_ranks: List[int] = field(default_factory=lambda: [1, 5, 10])
+
+    # Output configuration
+    output_dir: str = "results"
+    verbose: bool = True
+    device: str = "cuda"
+
+    @classmethod
+    def from_yaml(cls, yaml_path: str) -> "IdentificationExperimentConfig":
+        """Load identification experiment config from YAML."""
+        yaml_path = Path(yaml_path)
+        if not yaml_path.exists():
+            raise FileNotFoundError(f"Experiment config not found: {yaml_path}")
+
+        with open(yaml_path, 'r') as f:
+            data = yaml.safe_load(f)
+
+        if not isinstance(data, dict):
+            raise ValueError(f"Invalid YAML format: expected dict, got {type(data)}")
+
+        experiment_data = data.get('experiment', {})
+        if not isinstance(experiment_data, dict):
+            raise ValueError("experiment field must be a dict")
+        experiment = ExperimentMetadata(**experiment_data)
+
+        matchers: List[MatcherExperimentConfig] = []
+        matchers_data = data.get('matchers', [])
+        if not isinstance(matchers_data, list):
+            raise ValueError("matchers field must be a list")
+        for m in matchers_data:
+            matcher = MatcherExperimentConfig(
+                name=m['name'],
+                config_base=m.get('config_base'),
+                config_overrides=m.get('config_overrides', {}),
+            )
+            matchers.append(matcher)
+
+        strategy = data.get('strategy', 'single')
+        if strategy not in ('single', 'multiple'):
+            raise ValueError("strategy must be one of: single, multiple")
+
+        aggregation_method = data.get('aggregation_method', 'max')
+        if aggregation_method not in ('max', 'mean'):
+            raise ValueError("aggregation_method must be one of: max, mean")
+
+        top_k_ranks = data.get('top_k_ranks', [1, 5, 10])
+        if not isinstance(top_k_ranks, list) or not top_k_ranks:
+            raise ValueError("top_k_ranks must be a non-empty list")
+
+        dataset_path = data.get('identification_dataset') or data.get('dataset')
+        if not dataset_path:
+            raise ValueError("identification_dataset is required")
+
+        return cls(
+            experiment=experiment,
+            identification_dataset=dataset_path,
+            base_path=data.get('base_path'),
+            filter_modality=data.get('filter_modality'),
+            filter_dataset=data.get('filter_dataset'),
+            matchers=matchers,
+            strategy=strategy,
+            aggregation_method=aggregation_method,
+            top_k_ranks=top_k_ranks,
+            output_dir=data.get('output_dir', 'results'),
+            verbose=data.get('verbose', True),
+            device=data.get('device', 'cuda'),
+        )
+
+    def to_dict(self) -> dict:
+        return asdict(self)
+
+    def to_yaml(self) -> str:
+        return yaml.dump(self.to_dict(), default_flow_style=False)

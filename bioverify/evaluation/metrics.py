@@ -238,3 +238,53 @@ def find_eer(
         'far': float(eer_far),
         'frr': float(eer_frr),
     }
+
+
+def compute_rank_k_accuracy(ranks: List[Optional[int]], k: int) -> float:
+    """Compute rank-k accuracy from a list of 1-based ranks."""
+    if not ranks:
+        return 0.0
+    valid_ranks = [r for r in ranks if r is not None]
+    if not valid_ranks:
+        return 0.0
+    hits = sum(1 for rank in valid_ranks if rank <= k)
+    return float(hits / len(valid_ranks))
+
+
+def compute_recall_at_k(ranks: List[Optional[int]], k: int) -> float:
+    """Compute recall@k for identification.
+
+    In closed-set identification with one relevant identity per probe,
+    recall@k is equivalent to rank-k hit rate.
+    """
+    return compute_rank_k_accuracy(ranks, k)
+
+
+def compute_cmc_curve(ranks: List[Optional[int]], max_rank: int) -> Dict[str, List[float]]:
+    """Compute CMC curve from a list of 1-based ranks."""
+    valid_ranks = [r for r in ranks if r is not None]
+    if not valid_ranks or max_rank <= 0:
+        return {'ranks': [], 'values': []}
+
+    cmc_values: List[float] = []
+    rank_axis: List[int] = list(range(1, max_rank + 1))
+    denominator = len(valid_ranks)
+
+    for k in rank_axis:
+        hits = sum(1 for rank in valid_ranks if rank <= k)
+        cmc_values.append(float(hits / denominator))
+
+    return {
+        'ranks': rank_axis,
+        'values': cmc_values,
+    }
+
+
+def compute_mean_average_precision(ranks: List[Optional[int]]) -> float:
+    """Compute simplified mAP for one relevant identity per probe."""
+    valid_ranks = [r for r in ranks if r is not None and r > 0]
+    if not valid_ranks:
+        return 0.0
+
+    ap_values = [1.0 / rank for rank in valid_ranks]
+    return float(np.mean(ap_values))

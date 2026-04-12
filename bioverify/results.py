@@ -117,6 +117,36 @@ class VerificationResult:
 
 
 @dataclass
+class IdentificationResult:
+    """Closed-set identification result for one probe sample."""
+
+    method_name: str
+    probe_record_id: str
+    probe_sample_id: str
+    probe_identity: str
+    modality: Optional[str] = None
+
+    ranked_identities: List[Tuple[str, float]] = field(default_factory=list)
+    rank_of_true_identity: Optional[int] = None
+
+    gallery_size: int = 0
+    strategy: str = "single"
+    aggregation_method: Optional[str] = None
+
+    matcher_params: Dict[str, Any] = field(default_factory=dict)
+    metadata: Dict[str, Any] = field(default_factory=dict)
+    timestamp: float = field(default_factory=lambda: time.time())
+
+    def is_rank_k_hit(self, k: int) -> bool:
+        if self.rank_of_true_identity is None:
+            return False
+        return self.rank_of_true_identity <= k
+
+    def is_rank_1_hit(self) -> bool:
+        return self.is_rank_k_hit(1)
+
+
+@dataclass
 class VisualizationResult:
     """Rich result container for visualization and debugging.
     

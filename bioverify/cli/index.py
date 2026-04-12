@@ -13,6 +13,7 @@ from ..data.indexer import DatasetIndexer
 from ..data.validation import CSVValidator, print_csv_statistics
 from ..matchers.registry import create_matcher
 from ..experiments.runner import run_experiment
+from ..experiments.identification_runner import run_identification_experiment
 from ..evaluation.cli import threshold_sweep_command, compare_matchers_command
 from ..results import VisualizationResult
 from ..visualization import (
@@ -228,6 +229,27 @@ def experiment_command(args):
         exit(1)
 
 
+def identification_experiment_command(args):
+    """Execute a batch closed-set identification experiment.
+
+    Args:
+        args: Parsed command-line arguments
+    """
+    try:
+        results, metrics = run_identification_experiment(args.config)
+
+        print("\n" + "=" * 60)
+        print("IDENTIFICATION EXPERIMENT COMPLETE")
+        print("=" * 60)
+
+    except Exception as e:
+        print(f"❌ Identification experiment failed: {str(e)}")
+        if args.verbose:
+            import traceback
+            traceback.print_exc()
+        exit(1)
+
+
 def main():
     """Main CLI entry point."""
     parser = argparse.ArgumentParser(
@@ -255,6 +277,10 @@ Examples:
   # Run a batch experiment
   python -m bioverify.cli.index experiment \
       --config config/experiments/exp_loftr_iris.yaml
+
+    # Run a closed-set identification experiment
+    python -m bioverify.cli.index identification \
+            --config config/experiments/id_iris_casia.yaml
         """
     )
     
@@ -376,6 +402,22 @@ Examples:
         action='store_true',
         help='Print verbose output including tracebacks'
     )
+
+    # Identification experiment command
+    identification_parser = subparsers.add_parser(
+        'identification',
+        help='Run batch closed-set identification experiment'
+    )
+    identification_parser.add_argument(
+        '--config', '-c',
+        required=True,
+        help='Path to identification experiment YAML configuration file'
+    )
+    identification_parser.add_argument(
+        '--verbose', '-v',
+        action='store_true',
+        help='Print verbose output including tracebacks'
+    )
     
     # Evaluate command (with subcommands)
     evaluate_parser = subparsers.add_parser('evaluate', help='Evaluate experiment results')
@@ -436,6 +478,8 @@ Examples:
         match_command(args)
     elif args.command == 'experiment':
         experiment_command(args)
+    elif args.command == 'identification':
+        identification_experiment_command(args)
     elif args.command == 'evaluate':
         if args.evaluate_command == 'threshold':
             threshold_sweep_command(args)

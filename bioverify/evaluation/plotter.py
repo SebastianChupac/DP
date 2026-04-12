@@ -280,3 +280,57 @@ def save_analysis_report(analysis_results: Dict, output_path: Path):
     with open(output_path, 'w') as f:
         json.dump(analysis_results, f, indent=2, cls=NumpyEncoder)
     print(f"✓ Analysis report saved to {output_path}")
+
+
+def plot_cmc_curve(
+    identification_metrics: Dict[str, Dict],
+    output_path: Optional[Path] = None,
+    show: bool = False,
+):
+    """Plot CMC curve comparison for identification metrics.
+
+    Args:
+        identification_metrics: Dict keyed by matcher name, where each value
+            contains a 'cmc' object with keys 'ranks' and 'values'.
+        output_path: Optional save path for the figure.
+        show: Whether to display the plot window.
+    """
+    try:
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print("Warning: matplotlib not available. Skipping CMC curve plot.")
+        return
+
+    fig, ax = plt.subplots(figsize=(9, 7))
+
+    has_any_curve = False
+    for matcher_name, metrics in identification_metrics.items():
+        cmc = metrics.get('cmc', {})
+        ranks = cmc.get('ranks', [])
+        values = cmc.get('values', [])
+        if not ranks or not values:
+            continue
+        has_any_curve = True
+        ax.plot(ranks, values, linewidth=2, marker='o', markersize=3, label=matcher_name)
+
+    if not has_any_curve:
+        plt.close(fig)
+        print("Warning: no valid CMC data found. Skipping CMC plot.")
+        return
+
+    ax.set_xlabel('Rank (k)')
+    ax.set_ylabel('Identification Rate')
+    ax.set_title('CMC Curve Comparison')
+    ax.set_ylim([0.0, 1.0])
+    ax.grid(alpha=0.3)
+    ax.legend(loc='lower right')
+
+    if output_path:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        plt.savefig(output_path, dpi=150, bbox_inches='tight')
+        print(f"✓ CMC curve plot saved to {output_path}")
+
+    if show:
+        plt.show()
+
+    plt.close(fig)
