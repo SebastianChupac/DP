@@ -148,8 +148,16 @@ class IdentificationExperimentConfig:
     matchers: List[MatcherExperimentConfig] = field(default_factory=list)
 
     # Identification strategy configuration
-    strategy: str = "single"                  # single | multiple
-    aggregation_method: str = "max"           # max | mean
+    ranking_strategy: str = "bruteforce"                  # bruteforce | cascade
+    samples_per_gallery: str = "single"                   # single | multiple - how many gallery samples to use
+    aggregation_method: str = "max"                       # max | mean - how to combine scores from multiple samples
+    
+    # Cascade strategy specific parameters
+    shortlist_matcher: MatcherExperimentConfig = field(
+        default_factory=lambda: MatcherExperimentConfig(name="sift-fingervein")
+    )
+    shortlist_k: int = 15                                 # Number of top candidates to keep in shortlist
+    
     top_k_ranks: List[int] = field(default_factory=lambda: [1, 5, 10])
     cache_gallery_templates: bool = True
 
@@ -188,9 +196,15 @@ class IdentificationExperimentConfig:
             )
             matchers.append(matcher)
 
-        strategy = data.get('strategy', 'single')
-        if strategy not in ('single', 'multiple'):
-            raise ValueError("strategy must be one of: single, multiple")
+        # Handle new ranking_strategy field (bruteforce | cascade)
+        ranking_strategy = data.get('ranking_strategy', 'bruteforce')
+        if ranking_strategy not in ('bruteforce', 'cascade'):
+            raise ValueError("ranking_strategy must be one of: bruteforce, cascade")
+
+        # Handle samples_per_gallery (single | multiple)
+        samples_per_gallery = data.get('samples_per_gallery', 'single')
+        if samples_per_gallery not in ('single', 'multiple'):
+            raise ValueError("samples_per_gallery must be one of: single, multiple")
 
         aggregation_method = data.get('aggregation_method', 'max')
         if aggregation_method not in ('max', 'mean'):
@@ -204,6 +218,24 @@ class IdentificationExperimentConfig:
         if not dataset_path:
             raise ValueError("identification_dataset is required")
 
+        shortlist_matcher_data = data.get('shortlist_matcher', {'name': 'sift-fingervein'})
+        # Backward compatibility: allow string shorthand for shortlist matcher name.
+        if isinstance(shortlist_matcher_data, str):
+            shortlist_matcher_data = {'name': shortlist_matcher_data}
+        if not isinstance(shortlist_matcher_data, dict):
+            raise ValueError("shortlist_matcher must be a dict with keys: name, config_base, config_overrides")
+        if 'name' not in shortlist_matcher_data:
+            raise ValueError("shortlist_matcher.name is required")
+        shortlist_matcher = MatcherExperimentConfig(
+            name=shortlist_matcher_data['name'],
+            config_base=shortlist_matcher_data.get('config_base'),
+            config_overrides=shortlist_matcher_data.get('config_overrides', {}),
+        )
+
+        shortlist_k = data.get('shortlist_k', 15)
+        if not isinstance(shortlist_k, int) or shortlist_k < 1:
+            raise ValueError("shortlist_k must be a positive integer")
+
         return cls(
             experiment=experiment,
             identification_dataset=dataset_path,
@@ -211,8 +243,11 @@ class IdentificationExperimentConfig:
             filter_modality=data.get('filter_modality'),
             filter_dataset=data.get('filter_dataset'),
             matchers=matchers,
-            strategy=strategy,
+            ranking_strategy=ranking_strategy,
+            samples_per_gallery=samples_per_gallery,
             aggregation_method=aggregation_method,
+            shortlist_matcher=shortlist_matcher,
+            shortlist_k=shortlist_k,
             top_k_ranks=top_k_ranks,
             cache_gallery_templates=data.get('cache_gallery_templates', True),
             output_dir=data.get('output_dir', 'results'),

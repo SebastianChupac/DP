@@ -9,7 +9,7 @@ import yaml
 from dataclasses import asdict
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 
 import numpy as np
 
@@ -47,7 +47,12 @@ class IdentificationExperimentRunner:
             print(f"✓ Identification experiment: {self.config.experiment.name}")
             print(f"✓ Output dir: {self.config.output_dir}")
             print(f"✓ Identification CSV: {self.config.identification_dataset}")
-            print(f"✓ Strategy: {self.config.strategy} ({self.config.aggregation_method})")
+            print(f"✓ Ranking strategy: {self.config.ranking_strategy}")
+            if self.config.ranking_strategy == "cascade":
+                print(
+                    f"  - Shortlist matcher: {self.config.shortlist_matcher.name} (K={self.config.shortlist_k})"
+                )
+            print(f"✓ Samples per gallery: {self.config.samples_per_gallery} ({self.config.aggregation_method})")
             print(f"✓ Matchers: {[m.name for m in self.config.matchers]}")
 
     def _load_matcher_config(self, matcher_cfg: MatcherExperimentConfig) -> dict:
@@ -96,6 +101,60 @@ class IdentificationExperimentRunner:
             ]
         return gallery_templates
 
+    def _compute_probe_shortlist(
+        self,
+        probe: IdentificationSample,
+        shortlist_matcher,
+        shortlist_matcher_name: str,
+        shortlist_gallery_templates_by_identity: Dict[str, List[Dict]],
+    ) -> Tuple[Set[str], Optional[int]]:
+        """Compute top-K candidate identities for one probe using the shortlist matcher."""
+        shortlist_scores: Dict[str, float] = {}
+        shortlist_probe_template = shortlist_matcher.prepare_identification_template(
+            probe.image_path,
+            modality=probe.modality,
+        )
+
+        for identity, gallery_templates in shortlist_gallery_templates_by_identity.items():
+            try:
+                # Shortlist stage intentionally uses one gallery sample per identity for speed.
+                gallery_template = gallery_templates[0]
+                result = shortlist_matcher.compare_identification_templates(
+                    shortlist_probe_template,
+                    gallery_template,
+                    ground_truth=None,
+                    matcher_name=shortlist_matcher_name,
+                )
+                if result is not None:
+                    shortlist_scores[identity] = float(result.verification_confidence)
+                else:
+                    shortlist_scores[identity] = 0.0
+            except Exception as e:
+                self.errors.append(
+                    {
+                        'type': 'identification_shortlist_execution',
+                        'probe_record_id': probe.record_id,
+                        'gallery_identity': identity,
+                        'shortlist_matcher': shortlist_matcher_name,
+                        'error': str(e),
+                        'traceback': traceback.format_exc(),
+                    }
+                )
+                shortlist_scores[identity] = 0.0
+
+        ranked_shortlist = sorted(shortlist_scores.items(), key=lambda x: x[1], reverse=True)
+        top_k_identities = {
+            identity for identity, _ in ranked_shortlist[: self.config.shortlist_k]
+        }
+
+        shortlist_rank_of_true_identity = None
+        for idx, (identity, _score) in enumerate(ranked_shortlist, start=1):
+            if identity == probe.identity:
+                shortlist_rank_of_true_identity = idx
+                break
+
+        return top_k_identities, shortlist_rank_of_true_identity
+
     def _rank_probe(
         self,
         probe: IdentificationSample,
@@ -112,7 +171,7 @@ class IdentificationExperimentRunner:
 
         for identity, gallery_templates in gallery_templates_by_identity.items():
             try:
-                if self.config.strategy == 'single':
+                if self.config.samples_per_gallery == 'single':
                     candidate_templates = [gallery_templates[0]]
                 else:
                     candidate_templates = gallery_templates
@@ -162,11 +221,105 @@ class IdentificationExperimentRunner:
             ranked_identities=ranked_identities,
             rank_of_true_identity=rank_of_true_identity,
             gallery_size=len(gallery_templates_by_identity),
-            strategy=self.config.strategy,
+            ranking_strategy=self.config.ranking_strategy,
+            samples_per_gallery=self.config.samples_per_gallery,
             aggregation_method=self.config.aggregation_method,
             metadata={
                 'dataset_name': probe.dataset_name,
                 'probe_metadata': probe.metadata,
+            },
+        )
+
+    def _rank_probe_cascade(
+        self,
+        probe: IdentificationSample,
+        gallery_templates_by_identity: Dict[str, List[Dict]],
+        shortlist_matcher_name: str,
+        top_k_identities: Set[str],
+        shortlist_rank_of_true_identity: Optional[int],
+        main_matcher,
+        matcher_name: str,
+    ) -> IdentificationResult:
+        """Two-stage cascade ranking: rerank shortlist candidates with the main matcher."""
+        probe_template = main_matcher.prepare_identification_template(
+            probe.image_path,
+            modality=probe.modality,
+        )
+
+        # Stage 2: Detailed ranking with main matcher on shortlisted identities
+        scores_by_identity: Dict[str, float] = {}
+
+        for identity, gallery_templates in gallery_templates_by_identity.items():
+            # Skip identities not in shortlist
+            if identity not in top_k_identities:
+                scores_by_identity[identity] = 0.0
+                continue
+
+            try:
+                # Use samples_per_gallery setting for main matcher ranking
+                if self.config.samples_per_gallery == 'single':
+                    candidate_templates = [gallery_templates[0]]
+                else:
+                    candidate_templates = gallery_templates
+
+                identity_scores: List[float] = []
+                for gallery_template in candidate_templates:
+                    result = main_matcher.compare_identification_templates(
+                        probe_template,
+                        gallery_template,
+                        ground_truth=None,
+                        matcher_name=matcher_name,
+                    )
+                    if result is not None:
+                        identity_scores.append(float(result.verification_confidence))
+
+                if identity_scores:
+                    scores_by_identity[identity] = self._aggregate_scores(identity_scores)
+                else:
+                    scores_by_identity[identity] = 0.0
+            except Exception as e:
+                self.errors.append(
+                    {
+                        'type': 'identification_match_execution',
+                        'probe_record_id': probe.record_id,
+                        'gallery_identity': identity,
+                        'matcher': matcher_name,
+                        'error': str(e),
+                        'traceback': traceback.format_exc(),
+                    }
+                )
+                scores_by_identity[identity] = 0.0
+
+        ranked_identities = sorted(scores_by_identity.items(), key=lambda x: x[1], reverse=True)
+
+        rank_of_true_identity = None
+        for idx, (identity, _score) in enumerate(ranked_identities, start=1):
+            if identity == probe.identity:
+                rank_of_true_identity = idx
+                break
+
+        return IdentificationResult(
+            method_name=matcher_name,
+            probe_record_id=probe.record_id,
+            probe_sample_id=probe.sample_id,
+            probe_identity=probe.identity,
+            modality=probe.modality,
+            ranked_identities=ranked_identities,
+            rank_of_true_identity=rank_of_true_identity,
+            gallery_size=len(gallery_templates_by_identity),
+            ranking_strategy=self.config.ranking_strategy,
+            samples_per_gallery=self.config.samples_per_gallery,
+            aggregation_method=self.config.aggregation_method,
+            metadata={
+                'dataset_name': probe.dataset_name,
+                'probe_metadata': probe.metadata,
+                'shortlist_matcher': shortlist_matcher_name,
+                'shortlist_k': self.config.shortlist_k,
+                'shortlist_rank_of_true_identity': shortlist_rank_of_true_identity,
+                'shortlist_hit_at_k': (
+                    shortlist_rank_of_true_identity is not None
+                    and shortlist_rank_of_true_identity <= self.config.shortlist_k
+                ),
             },
         )
 
@@ -230,7 +383,8 @@ class IdentificationExperimentRunner:
                     'modality': r.modality,
                     'rank_of_true_identity': r.rank_of_true_identity,
                     'gallery_size': r.gallery_size,
-                    'strategy': r.strategy,
+                    'ranking_strategy': r.ranking_strategy,
+                    'samples_per_gallery': r.samples_per_gallery,
                     'aggregation_method': r.aggregation_method,
                     'ranked_identities': r.ranked_identities,
                     'metadata': r.metadata,
@@ -254,7 +408,8 @@ class IdentificationExperimentRunner:
                     'rank_of_true_identity',
                     'rank_1_hit',
                     'gallery_size',
-                    'strategy',
+                    'ranking_strategy',
+                    'samples_per_gallery',
                     'aggregation_method',
                     'top_5_identities',
                 ]
@@ -271,7 +426,8 @@ class IdentificationExperimentRunner:
                         r.rank_of_true_identity,
                         r.is_rank_1_hit(),
                         r.gallery_size,
-                        r.strategy,
+                        r.ranking_strategy,
+                        r.samples_per_gallery,
                         r.aggregation_method,
                         ';'.join(top5),
                     ]
@@ -362,7 +518,35 @@ class IdentificationExperimentRunner:
         if not matchers:
             raise RuntimeError("No matchers successfully instantiated!")
 
+        # Instantiate shortlist matcher if using cascade strategy
+        shortlist_matcher = None
+        shortlist_matcher_name = None
+        if self.config.ranking_strategy == "cascade":
+            shortlist_matcher_cfg = self.config.shortlist_matcher
+            shortlist_matcher_name = shortlist_matcher_cfg.name
+            if self.config.verbose:
+                print(f"\n🔧 Instantiating shortlist matcher: {shortlist_matcher_name}...")
+            try:
+                shortlist_matcher_config = self._load_matcher_config(shortlist_matcher_cfg)
+                shortlist_matcher = create_matcher(shortlist_matcher_name, shortlist_matcher_config)
+                if self.config.verbose:
+                    print(f"   ✓ {shortlist_matcher_name}")
+            except Exception as e:
+                self.errors.append(
+                    {
+                        'type': 'shortlist_matcher_initialization',
+                        'matcher': shortlist_matcher_name,
+                        'error': str(e),
+                        'traceback': traceback.format_exc(),
+                    }
+                )
+                if self.config.verbose:
+                    print(f"   ✗ Failed {shortlist_matcher_name}: {e}")
+                raise RuntimeError(f"Failed to instantiate shortlist matcher: {e}")
+
         gallery_templates_by_matcher: Dict[str, Dict[str, List[Dict]]] = {}
+        shortlist_gallery_templates: Dict[str, List[Dict]] = None
+
         if self.config.cache_gallery_templates:
             if self.config.verbose:
                 print("\n🗃️  Preparing cached gallery templates...")
@@ -372,6 +556,15 @@ class IdentificationExperimentRunner:
                     total_templates = sum(len(v) for v in gallery_templates_by_matcher[matcher_name].values())
                     print(f"   ✓ {matcher_name}: cached {total_templates} gallery templates")
 
+            # Cache shortlist matcher gallery templates if cascade strategy
+            if self.config.ranking_strategy == "cascade" and shortlist_matcher:
+                if self.config.verbose:
+                    print(f"   Preparing shortlist matcher templates...")
+                shortlist_gallery_templates = self._prepare_gallery_templates(shortlist_matcher, gallery)
+                if self.config.verbose:
+                    total_templates = sum(len(v) for v in shortlist_gallery_templates.values())
+                    print(f"   ✓ {shortlist_matcher_name}: cached {total_templates} gallery templates")
+
         progress_bar = tqdm(
             probes,
             desc='Probes',
@@ -380,18 +573,46 @@ class IdentificationExperimentRunner:
         )
 
         for probe in progress_bar:
+            probe_top_k_identities: Optional[Set[str]] = None
+            probe_shortlist_rank: Optional[int] = None
+
+            if self.config.ranking_strategy == "cascade":
+                if shortlist_matcher is None:
+                    raise RuntimeError("Cascade strategy requires a shortlist matcher")
+
+                if shortlist_gallery_templates is None:
+                    shortlist_gallery_templates = self._prepare_gallery_templates(shortlist_matcher, gallery)
+
+                probe_top_k_identities, probe_shortlist_rank = self._compute_probe_shortlist(
+                    probe=probe,
+                    shortlist_matcher=shortlist_matcher,
+                    shortlist_matcher_name=shortlist_matcher_name or "shortlist",
+                    shortlist_gallery_templates_by_identity=shortlist_gallery_templates,
+                )
+
             for matcher_name, matcher in matchers.items():
                 if self.config.cache_gallery_templates:
                     gallery_templates = gallery_templates_by_matcher[matcher_name]
                 else:
                     gallery_templates = self._prepare_gallery_templates(matcher, gallery)
 
-                result = self._rank_probe(
-                    probe=probe,
-                    gallery_templates_by_identity=gallery_templates,
-                    matcher=matcher,
-                    matcher_name=matcher_name,
-                )
+                if self.config.ranking_strategy == "cascade":
+                    result = self._rank_probe_cascade(
+                        probe=probe,
+                        gallery_templates_by_identity=gallery_templates,
+                        shortlist_matcher_name=shortlist_matcher_name or "shortlist",
+                        top_k_identities=probe_top_k_identities or set(),
+                        shortlist_rank_of_true_identity=probe_shortlist_rank,
+                        main_matcher=matcher,
+                        matcher_name=matcher_name,
+                    )
+                else:
+                    result = self._rank_probe(
+                        probe=probe,
+                        gallery_templates_by_identity=gallery_templates,
+                        matcher=matcher,
+                        matcher_name=matcher_name,
+                    )
                 self.results.append(result)
 
         if self.config.verbose:

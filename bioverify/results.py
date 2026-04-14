@@ -130,7 +130,8 @@ class IdentificationResult:
     rank_of_true_identity: Optional[int] = None
 
     gallery_size: int = 0
-    strategy: str = "single"
+    ranking_strategy: str = "bruteforce"           # bruteforce | cascade
+    samples_per_gallery: str = "single"            # single | multiple
     aggregation_method: Optional[str] = None
 
     matcher_params: Dict[str, Any] = field(default_factory=dict)
