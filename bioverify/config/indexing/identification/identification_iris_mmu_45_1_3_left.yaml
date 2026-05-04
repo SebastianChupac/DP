@@ -1,0 +1,22 @@
+# Identification manifest generation example (closed-set)
+# MMU iris dataset, 45 identities, 3 gallery sample and 1 probe sample per identity.
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+random_seed: 42
+
+identification_generation:
+  number_of_identities: 45  # -1 means: use all identities
+  gallery_samples_per_identity: 3
+  probes_per_identity: 1 # -1 means: use all remaining samples per identity
+  filters:
+    side: "L" # filter by eye side e.g., "L" or "R"
+    
+
+output:
+  csv_path: "bioverify/data/identification/identification_iris_mmu_45_1_3_left.csv"
+  relative_paths: true
+
+datasets:
+  - dataset_path: "Iris/002-MMU-Iris-Database"
+    dataset_name: "MMU-Iris"
+    modality: "iris"

@@ -101,6 +101,6 @@ matcher:
 #
 # STRATEGY:
 # The key insight is that SGMNet's detector is TOO SENSITIVE (det_th too low),
-# detecting noise as features. We INCREASE det_th to be more selective,
+# detecting noise as features. INCREASE det_th to be more selective,
 # while LOWERING matching thresholds to compensate.
 # This is opposite to SIFT/ORB where we needed MORE sensitivity!

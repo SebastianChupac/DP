@@ -5,9 +5,11 @@ matcher:
   name: aspanformer
   config:
     # Image preprocessing
-    resize_width: 512
-    resize_height: 512
-    resize_keep_aspect: true
+    # ASpanFormer supports online resize to match training resolution, so our preprocessing resize is not used.
+    # If you want to use preprocessing resize, disable online resize in this config
+    resize_width: null
+    resize_height: null
+    resize_keep_aspect: false
     
     # RANSAC parameters
     ransac_thresh: 5.0
@@ -23,6 +25,31 @@ matcher:
     # ASpanFormer model type: 'indoor' or 'outdoor'
     model_type: indoor
     
+    # Use ASpanFormer's internal online resize to match training resolution
+    # If true: resize input to train_res ([480, 640] for indoor) inside the model
+    # If false: no internal resize, use base resize_width/height instead
+    # Recommendation: keep true for better accuracy (training resolution)
+    online_resize: true
+
+    # Minimal inference-safe ASpanFormer tuning merged into preloaded aspan_test config.
+    # Only these keys are used by the matcher to avoid architecture changes.
+    aspanformer_config:
+      match_coarse:
+        # Coarse matching threshold in conf_matrix (default loaded for indoor: 0.2)
+        # Lower: more matches (higher recall, more outliers)
+        # Higher: fewer but stricter matches
+        thr: 0.2
+
+        # Border suppression at coarse level (default loaded for indoor: 0)
+        # 0 keeps border matches; larger values reduce edge artifacts.
+        border_rm: 0
+
+      coarse:
+        # Online resize target used during inference preprocessing inside ASpanFormer
+        # (default loaded for indoor: [480, 640])
+        # Keep this close to training resolution for stable behavior.
+        train_res: [480, 640]
+    
     # Confidence threshold for filtering matches
     # ASpanFormer outputs matches with confidence scores
     # Only matches with confidence >= threshold are kept
@@ -30,7 +57,6 @@ matcher:
     
     # Prediction threshold
     ratio_threshold: 0.4
-    max_reprojection_error: 5.0
     
     # Iris masking parameter
     iris_exclude_pupil: true

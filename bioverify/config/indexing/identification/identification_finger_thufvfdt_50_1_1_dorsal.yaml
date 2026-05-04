@@ -1,0 +1,22 @@
+# Identification manifest generation example (closed-set)
+# thufvfdt finger vein dataset, left index finger, 50 identities, 1 gallery sample and 1 probe sample per identity.
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+random_seed: 42
+
+identification_generation:
+  number_of_identities: 50  # -1 means: use all identities
+  gallery_samples_per_identity: 1
+  probes_per_identity: 1 # -1 means: use all remaining samples per identity
+  filters:
+  
+output:
+  csv_path: "bioverify/data/identification/identification_finger_thufvfdt_50_1_1_dorsal.csv"
+  relative_paths: true
+
+datasets:
+  - dataset_path: "FingerVein/004-THU-FVFDT"
+    dataset_name: "THU-FVFDT"
+    modality: "finger"
+    image_type: "roi"
+    modality_type: "dorsal"

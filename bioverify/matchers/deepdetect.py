@@ -77,9 +77,18 @@ class DeepDetectMatcher(BaseMatcher):
         
         params = config.extra_params
         
-        # Model parameters
+        # CNN keypoint detection parameters
         self.model_threshold = params.get('model_threshold', 0.5)
+        
+        # FLANN matching parameters
+        self.flann_trees = int(params.get('flann_trees', 5))
+        self.flann_checks = int(params.get('flann_checks', 50))
+        
+        # NNDR filtering parameter
         self.nndr_threshold = params.get('nndr_threshold', 0.8)
+        
+        # Keypoint representation
+        self.keypoint_size = float(params.get('keypoint_size', 3.0))
         
         # Decision thresholds
         self.ratio_threshold = params.get('ratio_threshold', 0.3)
@@ -207,19 +216,18 @@ class DeepDetectMatcher(BaseMatcher):
         
         return mask1, mask2
         
-    def _mask_to_keypoints(self, mask: np.ndarray, size: float = 3.0) -> list:
+    def _mask_to_keypoints(self, mask: np.ndarray) -> list:
         """
         Convert binary mask to list of cv2.KeyPoint objects.
         
         Args:
             mask: Binary mask (1 = keypoint, 0 = background)
-            size: Keypoint size parameter
             
         Returns:
-            List of cv2.KeyPoint objects
+            List of cv2.KeyPoint objects with size from config (keypoint_size)
         """
         ys, xs = np.where(mask == 1)
-        keypoints = [cv2.KeyPoint(float(x), float(y), size) for (y, x) in zip(ys, xs)]
+        keypoints = [cv2.KeyPoint(float(x), float(y), self.keypoint_size) for (y, x) in zip(ys, xs)]
         return keypoints
         
     @staticmethod
@@ -318,10 +326,10 @@ class DeepDetectMatcher(BaseMatcher):
                 np.array([]).reshape(0, 2)
             )
         
-        # Match with FLANN
+        # Match with FLANN KD-tree (tunable parameters: trees and checks)
         FLANN_INDEX_KDTREE = 1
-        index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=5)
-        search_params = dict(checks=50)
+        index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=self.flann_trees)
+        search_params = dict(checks=self.flann_checks)
         flann = cv2.FlannBasedMatcher(index_params, search_params)
         matches = flann.knnMatch(des1, des2, k=2)
         
@@ -360,6 +368,9 @@ class DeepDetectMatcher(BaseMatcher):
         """Return matcher parameters for logging/debugging."""
         return {
             "model_threshold": self.model_threshold,
+            "flann_trees": self.flann_trees,
+            "flann_checks": self.flann_checks,
+            "keypoint_size": self.keypoint_size,
             "nndr_threshold": self.nndr_threshold,
             "ratio_threshold": self.ratio_threshold,
             "max_reprojection_error": self.max_reprojection_error,

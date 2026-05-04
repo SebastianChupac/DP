@@ -11,8 +11,8 @@ matcher:
 
     # RANSAC parameters
     ransac_thresh: 3.0
-    ransac_max_iters: 10000
-    min_matches: 4
+    ransac_max_iters: 10000  
+    min_matches: 4 
 
     # Masking
     use_masking: true
@@ -25,31 +25,31 @@ matcher:
 
     # Extractor configuration (from sgm_config.yaml)
     extractor:
-      name: root
-      num_kpt: 4000
-      resize: [-1]
-      det_th: 0.00001
+      name: root  # root is sift extractor, sp is superpoint extractor.
+      num_kpt: 4000  # TUNABLE-SAFE: number of detected keypoints; affects speed/quality only
+      resize: [-1]  # TUNABLE-SAFE: extractor-side resize behavior; keep consistent with base resize strategy
+      det_th: 0.00001  # TUNABLE-SAFE: detector sensitivity; lower=more points, higher=fewer points
 
     # Matcher configuration (from sgm_config.yaml)
     matcher:
-      name: SGM
-      model_dir: SGMNet/weights/sgm/root
-      seed_top_k: [256, 256]
-      seed_radius_coe: 0.01
-      net_channels: 128
-      layer_num: 9
-      head: 4
-      seedlayer: [0, 6]
-      use_mc_seeding: true
-      use_score_encoding: false
-      conf_bar: [1.11, 0.1]
-      sink_iter: [10, 100]
-      detach_iter: 1000000
-      p_th: 0.2
+      name: SGM  # SGM is SHMNet, SG is SuperGlue, NN is nearest neighbor
+      model_dir: SGMNet/weights/sgm/root 
+      seed_top_k: [256, 256]  # TUNABLE-SAFE: inference seeding hyperparameter only
+      seed_radius_coe: 0.01  # TUNABLE-SAFE: inference NMS radius coefficient only
+      net_channels: 128  # DO-NOT-CHANGE
+      layer_num: 9  # DO-NOT-CHANGE
+      head: 4  # DO-NOT-CHANGE
+      seedlayer: [0, 6]  # DO-CHANGE
+      use_mc_seeding: true  # TUNABLE-SAFE: inference matching policy only
+      use_score_encoding: false  # DO-CHANGE
+      conf_bar: [1.11, 0.1]  # TUNABLE-SAFE: inference confidence gating only
+      sink_iter: [10, 100]  # TUNABLE-SAFE: sinkhorn iteration counts at inference
+      detach_iter: 1000000  # TUNABLE-SAFE: training-oriented control; effectively inert in eval, keep high
+      p_th: 0.2  # TUNABLE-SAFE: final match probability threshold
 
     # Prediction thresholds
-    ratio_threshold: 0.4
-    max_reprojection_error: 5.0
+    ratio_threshold: 0.4  
+    max_reprojection_error: 5.0 
 
     # Iris masking parameter
-    iris_exclude_pupil: true
+    iris_exclude_pupil: true  

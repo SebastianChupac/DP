@@ -41,7 +41,7 @@ class SIFTMatcher(BaseMatcher):
         return "SIFT"
 
     def _preprocess_image(self, img: np.ndarray) -> np.ndarray:
-        """Resize image based on config (keep color for mask computation)."""
+        """Resize image based on config."""
         if self.config.resize_width and self.config.resize_height:
             keep_aspect = bool(
                 self.config.extra_params.get("resize_keep_aspect", False)
@@ -94,9 +94,12 @@ class SIFTMatcher(BaseMatcher):
         kpts1, des1 = self._extract_features(img1, mask1)
         kpts2, des2 = self._extract_features(img2, mask2)
 
-        # Convert keypoints to array
-        keypoints1 = self._keypoints_to_array(kpts1)
-        keypoints2 = self._keypoints_to_array(kpts2)
+        # Convert keypoints to array - already done in _extract_features, 
+        #keypoints1 = self._keypoints_to_array(kpts1)
+        #keypoints2 = self._keypoints_to_array(kpts2)
+
+        keypoints1 = kpts1
+        keypoints2 = kpts2
 
         # Check if we have enough features
         if des1 is None or des2 is None or len(des1) < 2 or len(des2) < 2:

@@ -1,0 +1,23 @@
+# Identification manifest generation example (closed-set)
+# FVUSM finger vein dataset, right middle finger, 50 identities, 3 gallery sample and 1 probe sample per identity.
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+random_seed: 42
+
+identification_generation:
+  number_of_identities: 50  # -1 means: use all identities
+  gallery_samples_per_identity: 3
+  probes_per_identity: 1 # -1 means: use all remaining samples per identity
+  filters:
+    side: "R" # filter by side, e.g., "L" for left or "R" for right
+    finger: "middle" # filter by finger, e.g., "index", "middle"
+
+output:
+  csv_path: "bioverify/data/identification/identification_finger_fvusm_50_1_3_right_middle.csv"
+  relative_paths: true
+
+datasets:
+  - dataset_path: "FingerVein/003-FV-USM"
+    dataset_name: "FV-USM"
+    modality: "finger"
+    image_type: "roi"

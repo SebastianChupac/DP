@@ -1,0 +1,21 @@
+# Identification manifest generation example (closed-set)
+# eemscdbm finger vein dataset, finger number 1, 50 identities, 3 gallery sample and 1 probe sample per identity.
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+random_seed: 42
+
+identification_generation:
+  number_of_identities: 50  # -1 means: use all identities
+  gallery_samples_per_identity: 3
+  probes_per_identity: 1 # -1 means: use all remaining samples per identity
+  filters:
+    finger: "1" # filter by finger number 1-6
+  
+output:
+  csv_path: "bioverify/data/identification/identification_finger_eemscdbm_50_1_3_f1.csv"
+  relative_paths: true
+
+datasets:
+  - dataset_path: "FingerVein/005-EEMSC-DBM"
+    dataset_name: "EEMSC-DBM"
+    modality: "finger"

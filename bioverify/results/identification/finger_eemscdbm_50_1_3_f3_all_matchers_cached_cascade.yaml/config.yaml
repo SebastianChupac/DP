@@ -1,0 +1,59 @@
+aggregation_method: mean
+base_path: C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset
+cache_gallery_templates: true
+device: cuda
+experiment:
+  created: '2026-04-19'
+  description: Test identification on all matchers with masked images, with caching
+    enabled
+  name: Identification test experiment finger eemscdbm 50 identities 1 probe 3 gallery
+    masked all matchers cached cascade
+  purpose: id_test
+  researcher: null
+filter_dataset: null
+filter_modality: null
+identification_dataset: bioverify/data/identification/identification_finger_eemscdbm_50_1_3_f3.csv
+matchers:
+- config_base: bioverify/config/matching/loftr.yaml
+  config_overrides:
+    use_masking: true
+  name: loftr
+- config_base: bioverify/config/matching/orb_fingervein.yaml
+  config_overrides:
+    use_masking: true
+  name: orb-fingervein
+- config_base: bioverify/config/matching/sift_fingervein.yaml
+  config_overrides:
+    use_masking: true
+  name: sift-fingervein
+- config_base: bioverify/config/matching/superglue_fingervein.yaml
+  config_overrides:
+    use_masking: true
+  name: superglue-fingervein
+- config_base: bioverify/config/matching/sgmnet_fingervein.yaml
+  config_overrides:
+    use_masking: true
+  name: sgmnet-fingervein
+- config_base: bioverify/config/matching/aspanformer.yaml
+  config_overrides:
+    use_masking: true
+  name: aspanformer
+- config_base: bioverify/config/matching/deepdetect.yaml
+  config_overrides:
+    use_masking: true
+  name: deepdetect
+output_dir: bioverify/results/identification/finger_eemscdbm_50_1_3_f3_all_matchers_cached_cascade.yaml
+ranking_strategy: cascade
+samples_per_gallery: multiple
+shortlist_k: 15
+shortlist_matcher:
+  config_base: bioverify/config/matching/sift_fingervein.yaml
+  config_overrides:
+    use_masking: true
+  name: sift-fingervein
+top_k_ranks:
+- 1
+- 5
+- 10
+- 15
+verbose: true

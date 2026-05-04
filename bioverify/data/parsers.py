@@ -514,6 +514,7 @@ class THUFVFDTParser(DatasetParser):
                             dataset_name=self.dataset_name,
                             modality_type=modality_type_str,
                             image_type=img_type,
+                            session=session,
                             metadata={
                                 'session': session
                             }

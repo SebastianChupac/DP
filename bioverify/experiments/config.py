@@ -33,9 +33,7 @@ class ExperimentConfig:
     
     Typical use cases:
     - Single matcher, single dataset, parameter sweep (threshold tuning)
-    - Single matcher, multiple datasets (cross-dataset evaluation)
     - Multiple matchers, single dataset (matcher comparison)
-    - Multiple matchers, multiple datasets (comprehensive evaluation)
     """
     # Experiment metadata
     experiment: ExperimentMetadata

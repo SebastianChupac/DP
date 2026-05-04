@@ -311,7 +311,18 @@ def plot_cmc_curve(
         if not ranks or not values:
             continue
         has_any_curve = True
-        ax.plot(ranks, values, linewidth=2, marker='o', markersize=3, label=matcher_name)
+
+        # Prefer explicitly computed rank-1 metric, fallback to first CMC point.
+        rank1_value = metrics.get('rank_1_accuracy')
+        if rank1_value is None and len(values) > 0:
+            rank1_value = values[0]
+
+        if rank1_value is not None:
+            label = f"{matcher_name} (Rank-1={float(rank1_value):.2%})"
+        else:
+            label = matcher_name
+
+        ax.plot(ranks, values, linewidth=2, marker='o', markersize=3, label=label)
 
     if not has_any_curve:
         plt.close(fig)

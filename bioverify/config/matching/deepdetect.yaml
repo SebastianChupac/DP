@@ -1,31 +1,52 @@
 # DeepDetect Matcher Configuration
 # Ported from DeepDetect/DeepDetect.py
+#
+# Pipeline: CNN keypoint detection -> SIFT descriptor -> FLANN KD-tree matching -> NNDR filtering -> RANSAC verification
+# 
+# Tuning notes:
+# - CNN parameters (model_threshold) affect keypoint quantity/quality
+# - FLANN parameters (flann_trees, flann_checks) control matching speed vs accuracy
+# - NNDR threshold filters matches; lower = stricter
+# - RANSAC verifies geometric consistency
 
 matcher:
-  name: deepdetect
+  name: deepdetect  # FIXED: do not change unless you also register a different matcher class
   config:
-    # Image preprocessing
-    resize_width: 320
-    resize_height: 320
-    resize_keep_aspect: false
+    # Image preprocessing (CNN input size)
+    resize_width: 320  # TUNABLE-SAFE: preprocessing only; does not affect pretrained CNN architecture
+    resize_height: 320  # TUNABLE-SAFE: preprocessing only; does not affect pretrained CNN architecture
+    resize_keep_aspect: false  # TUNABLE-SAFE: controls padding behavior during resize
     
-    # RANSAC parameters
-    ransac_thresh: 7
-    min_matches: 4
+    # RANSAC parameters (post-matching geometric verification)
+    ransac_thresh: 7  # TUNABLE-SAFE: inlier threshold in pixels; lower=stricter, higher=relaxed
+    min_matches: 4  # TUNABLE-SAFE: minimum correspondences for homography estimation
     
-    # Masking
-    use_masking: true
+    # Masking (ROI preprocessing)
+    use_masking: true  # TUNABLE-SAFE: enables/disables mask application; no model impact
+    
+    # Device selection
+    device: cuda  # TUNABLE-SAFE: runtime device (cuda/cpu) only
 
+    # ========== CNN Keypoint Detection ==========
+    # CNN predicts pixel-wise probability of being a keypoint, then threshold to binary mask
+    model_threshold: 0.5  # TUNABLE-SAFE: CNN output threshold (0-1); lower=more keypoints, higher=fewer
     
-    # Device
-    device: cuda
+    # ========== SIFT Descriptor Computation ==========
+    # SIFT descriptors are computed at detected keypoint locations
+    keypoint_size: 3.0  # TUNABLE-SAFE: keypoint size parameter (affects descriptor scale); default 3.0
     
-    # CNN model parameters
-    model_threshold: 0.5          # Threshold for CNN keypoint mask prediction (Tau)
+    # ========== FLANN Matching Parameters ==========
+    # FLANN = Fast Library for Approximate Nearest Neighbors
+    # Uses KD-tree algorithm for descriptor matching
+    flann_trees: 5  # TUNABLE-SAFE: number of KD-trees to build; 5 is default, more=better accuracy but slower build
+    flann_checks: 50  # TUNABLE-SAFE: max leaf checks during search; 50 is balanced, higher=more accurate, lower=faster
     
-    # FLANN matching parameters
-    nndr_threshold: 0.8           # Nearest Neighbor Distance Ratio (Lowe's ratio test)
+    # ========== NNDR (Nearest Neighbor Distance Ratio) Filtering ==========
+    # Lowe's ratio test: accepts match only if distance to 1st NN << distance to 2nd NN
+    # Filters ambiguous matches where descriptor is equally close to multiple candidates
+    nndr_threshold: 0.8  # TUNABLE-SAFE: ratio threshold (0-1); lower=stricter, higher=more permissive
     
-    # Decision thresholds
-    ratio_threshold: 0.3          # Minimum inlier ratio to predict same person
-    max_reprojection_error: 5.0   # Maximum mean reprojection error for same person
+    # ========== Decision Thresholds ==========
+    # Used in _create_verification_result to predict same/different person
+    ratio_threshold: 0.3  # TUNABLE-SAFE: minimum inlier ratio (0-1) to predict same person
+    max_reprojection_error: 5.0  # TUNABLE-SAFE: max mean reprojection error (pixels) for same person prediction

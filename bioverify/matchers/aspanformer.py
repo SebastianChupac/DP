@@ -4,7 +4,7 @@ ASpanFormer matcher implementation.
 Uses the ASpanFormer model for robust feature matching.
 """
 
-from typing import Optional, Tuple
+from typing import Any, Optional, Tuple
 import sys
 from pathlib import Path
 
@@ -13,7 +13,7 @@ import numpy as np
 
 try:
     import torch
-except Exception:  # pragma: no cover
+except Exception:
     torch = None
 
 from .base import BaseMatcher, MatcherConfig
@@ -36,6 +36,8 @@ class ASpanFormerMatcher(BaseMatcher):
         self._model_type = params.get("model_type", "indoor")  # 'indoor' or 'outdoor'
         self._confidence_threshold = float(params.get("confidence_threshold", 0.3))
         self._ratio_thresh = float(params.get("ratio_threshold", 0.45))
+        self._online_resize = bool(params.get("online_resize", True))
+        self._aspanformer_tuning = self._extract_safe_aspanformer_tuning(params)
 
         self._device = self._get_device()
         
@@ -56,7 +58,7 @@ class ASpanFormerMatcher(BaseMatcher):
             config_path = aspanformer_models_path / "config" / "aspan" / self._model_type / "aspan_test.py"
             if config_path.exists():
                 config_obj.merge_from_file(str(config_path))
-            _config = lower_config(config_obj)
+            self._apply_safe_aspanformer_tuning(config_obj, self._aspanformer_tuning)
             _config = lower_config(config_obj)
             
             # Load model
@@ -74,6 +76,61 @@ class ASpanFormerMatcher(BaseMatcher):
             raise ImportError(f"Failed to import ASpanFormer components: {e}")
         except Exception as e:
             raise RuntimeError(f"Failed to load ASpanFormer model: {e}")
+
+    @staticmethod
+    def _extract_safe_aspanformer_tuning(params: dict) -> dict:
+        """Extract only inference-safe ASpanFormer tuning keys from matcher params.
+
+        Allowed overrides (shape-safe for pretrained inference):
+        - aspanformer_config.match_coarse.thr
+        - aspanformer_config.match_coarse.border_rm
+        - aspanformer_config.coarse.train_res
+        - aspanformer_config.online_resize (handled separately as self._online_resize)
+        """
+        raw = params.get("aspanformer_config", {})
+        if not isinstance(raw, dict):
+            return {}
+
+        out = {}
+
+        match_coarse = raw.get("match_coarse", {})
+        if isinstance(match_coarse, dict):
+            if "thr" in match_coarse:
+                try:
+                    out["match_coarse_thr"] = float(match_coarse["thr"])
+                except (TypeError, ValueError):
+                    pass
+            if "border_rm" in match_coarse:
+                try:
+                    out["match_coarse_border_rm"] = int(match_coarse["border_rm"])
+                except (TypeError, ValueError):
+                    pass
+
+        coarse = raw.get("coarse", {})
+        if isinstance(coarse, dict) and "train_res" in coarse:
+            train_res = coarse["train_res"]
+            if isinstance(train_res, (list, tuple)) and len(train_res) in (1, 2):
+                try:
+                    out["coarse_train_res"] = [int(v) for v in train_res]
+                except (TypeError, ValueError):
+                    pass
+
+        return out
+
+    @staticmethod
+    def _apply_safe_aspanformer_tuning(config_obj, tuning: dict) -> None:
+        """Apply safe inference tuning into loaded YACS config object."""
+        if not tuning:
+            return
+
+        if "match_coarse_thr" in tuning:
+            config_obj.ASPAN.MATCH_COARSE.THR = tuning["match_coarse_thr"]
+
+        if "match_coarse_border_rm" in tuning:
+            config_obj.ASPAN.MATCH_COARSE.BORDER_RM = tuning["match_coarse_border_rm"]
+
+        if "coarse_train_res" in tuning:
+            config_obj.ASPAN.COARSE.TRAIN_RES = tuning["coarse_train_res"]
 
     def get_name(self) -> str:
         return f"ASpanFormer_{self._model_type}"
@@ -111,7 +168,7 @@ class ASpanFormerMatcher(BaseMatcher):
         }
         
         with torch.no_grad():
-            self._matcher(batch, online_resize=True)
+            self._matcher(batch, online_resize=self._online_resize)
 
         # Extract results
         keypoints1 = batch["mkpts0_f"].cpu().numpy()
@@ -193,9 +250,11 @@ class ASpanFormerMatcher(BaseMatcher):
             "model_type": self._model_type,
             "confidence_threshold": self._confidence_threshold,
             "ratio_threshold": self._ratio_thresh,
+            "online_resize": self._online_resize,
+            "aspanformer_tuning": self._aspanformer_tuning,
         }
 
-    def _to_tensor(self, gray: np.ndarray) -> torch.Tensor:
+    def _to_tensor(self, gray: np.ndarray) -> Any:
         """Convert grayscale image to torch tensor [1,1,H,W] on device."""
         tensor = torch.from_numpy(gray.astype(np.float32) / 255.0)
         return tensor[None, None]

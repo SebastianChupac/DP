@@ -24,6 +24,24 @@ matcher:
     
     # LoFTR model type: 'indoor' or 'outdoor'
     model_type: indoor
+
+    # Minimal inference-safe LoFTR tuning passed to kornia.feature.LoFTR(config=...)
+    # Only these keys are used by the matcher to avoid changing model architecture.
+    loftr_config:
+      match_coarse:
+        # Coarse matching threshold (default: 0.2)
+        # Lower -> more candidate matches (higher recall, more outliers)
+        # Higher -> stricter matches (higher precision, fewer matches)
+        thr: 0.2
+
+        # Remove matches near image border by this many coarse-grid pixels (default: 2)
+        # 0 keeps border matches; larger values are safer but can reduce recall.
+        border_rm: 2
+
+        # Dual-softmax temperature (default: 0.1)
+        # Lower -> sharper assignment; higher -> softer assignment.
+        # Suggested range for quick tuning: 0.05 to 0.2
+        dsmax_temperature: 0.1
     
     # Confidence threshold for filtering matches
     # LoFTR outputs matches with confidence scores

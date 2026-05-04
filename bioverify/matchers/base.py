@@ -363,10 +363,10 @@ class BaseMatcher(ABC):
         # Crops image+mask to mask bounding box, then resizes back to target shape.
         if self._should_crop_to_mask_roi(modality):
             if mask1 is not None:
-                img1, mask1, crop_transform1 = self._crop_and_resize_to_mask_roi(img1, mask1)
+                img1, mask1, crop_transform1 = self._crop_to_mask(img1, mask1)
                 transform_img1_orig_to_processed = crop_transform1 @ transform_img1_orig_to_processed
             if mask2 is not None:
-                img2, mask2, crop_transform2 = self._crop_and_resize_to_mask_roi(img2, mask2)
+                img2, mask2, crop_transform2 = self._crop_to_mask(img2, mask2)
                 transform_img2_orig_to_processed = crop_transform2 @ transform_img2_orig_to_processed
         
         # Apply enhancement for fingervein images (instead of masking)
@@ -545,7 +545,7 @@ class BaseMatcher(ABC):
 
         return modality_norm in modalities
 
-    def _crop_and_resize_to_mask_roi(
+    def _crop_to_mask(
         self,
         img: np.ndarray,
         mask: np.ndarray,
@@ -698,7 +698,7 @@ class BaseMatcher(ABC):
 
         if self._should_crop_to_mask_roi(modality):
             if mask is not None:
-                processed_img, mask, _ = self._crop_and_resize_to_mask_roi(processed_img, mask)
+                processed_img, mask, _ = self._crop_to_mask(processed_img, mask)
 
         if self.config.use_enhancement and modality and modality.lower() in ["fingervein", "finger_vein", "finger"]:
             processed_img = enhance_fingervein_image(

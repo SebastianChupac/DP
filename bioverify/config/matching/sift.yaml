@@ -1,5 +1,4 @@
 # SIFT Matcher Configuration
-# Ported from SIFT/sift-orb.py
 
 matcher:
   name: sift

@@ -16,8 +16,8 @@ base_path: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
 ranking_strategy: "cascade"
 top_k_ranks: [1, 5, 10, 15]
 samples_per_gallery: "multiple"
-aggregation_method: "max"  # Method to aggregate multiple matches if strategy is "multiple". Options: "max", "mean""
-cache_gallery_templates: false
+aggregation_method: "max"  # Method to aggregate multiple matches if samples_per_gallery is "multiple". Options: "max", "mean""
+cache_gallery_templates: true
 
 # Cascade-specific parameters
 shortlist_matcher:

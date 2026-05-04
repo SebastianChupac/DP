@@ -4,7 +4,8 @@ LoFTR (Local Feature Transformer) matcher implementation.
 Uses Kornia's LoFTR implementation via kornia.feature (KF).
 """
 
-from typing import Optional, Tuple
+from copy import deepcopy
+from typing import Any, Dict, Optional, Tuple
 
 import cv2
 import numpy as np
@@ -36,10 +37,108 @@ class LoFTRMatcher(BaseMatcher):
         self._model_type = params.get("model_type", "indoor")  # 'indoor' or 'outdoor'
         self._confidence_threshold = float(params.get("confidence_threshold", 0.9))
         self._ratio_thresh = float(params.get("ratio_threshold", 0.45))
+        self._loftr_tuning = self._extract_safe_loftr_tuning(params)
+        self._loftr_config = self._build_loftr_config(self._loftr_tuning)
 
         self._device = self._get_device()
-        self._matcher = KF.LoFTR(pretrained=self._model_type).to(self._device)
+        self._matcher = KF.LoFTR(pretrained=self._model_type, config=self._loftr_config).to(self._device)
         self._matcher.eval()
+
+    @staticmethod
+    def _default_loftr_config() -> Dict[str, Any]:
+        """Return LoFTR config defaults aligned with Kornia pretrained settings."""
+        return {
+            "backbone_type": "ResNetFPN",
+            "resolution": [8, 2],
+            "fine_window_size": 5,
+            "fine_concat_coarse_feat": True,
+            "resnetfpn": {
+                "initial_dim": 128,
+                "block_dims": [128, 196, 256],
+            },
+            "coarse": {
+                "d_model": 256,
+                "d_ffn": 256,
+                "nhead": 8,
+                "layer_names": [
+                    "self",
+                    "cross",
+                    "self",
+                    "cross",
+                    "self",
+                    "cross",
+                    "self",
+                    "cross",
+                ],
+                "attention": "linear",
+                "temp_bug_fix": False,
+            },
+            "match_coarse": {
+                "thr": 0.2,
+                "border_rm": 2,
+                "match_type": "dual_softmax",
+                "dsmax_temperature": 0.1,
+                "skh_iters": 3,
+                "skh_init_bin_score": 1.0,
+                "skh_prefilter": True,
+                "train_coarse_percent": 0.4,
+                "train_pad_num_gt_min": 200,
+            },
+            "fine": {
+                "d_model": 128,
+                "d_ffn": 128,
+                "nhead": 8,
+                "layer_names": ["self", "cross"],
+                "attention": "linear",
+            },
+        }
+
+    @staticmethod
+    def _extract_safe_loftr_tuning(params: Dict[str, Any]) -> Dict[str, Any]:
+        """Extract only inference-safe LoFTR tuning keys from config.
+
+        We intentionally expose a small subset that does not alter model
+        architecture, keeping compatibility with pretrained checkpoints.
+        """
+        raw = params.get("loftr_config", {})
+        if not isinstance(raw, dict):
+            return {}
+
+        match_coarse = raw.get("match_coarse", {})
+        if not isinstance(match_coarse, dict):
+            return {}
+
+        out: Dict[str, Any] = {}
+
+        if "thr" in match_coarse:
+            try:
+                out["thr"] = float(match_coarse["thr"])
+            except (TypeError, ValueError):
+                pass
+
+        if "border_rm" in match_coarse:
+            try:
+                out["border_rm"] = int(match_coarse["border_rm"])
+            except (TypeError, ValueError):
+                pass
+
+        if "dsmax_temperature" in match_coarse:
+            try:
+                out["dsmax_temperature"] = float(match_coarse["dsmax_temperature"])
+            except (TypeError, ValueError):
+                pass
+
+        return out
+
+    @classmethod
+    def _build_loftr_config(cls, tuning: Dict[str, Any]) -> Dict[str, Any]:
+        """Build LoFTR init config from Kornia defaults plus safe tuning keys."""
+        config = deepcopy(cls._default_loftr_config())
+        if not tuning:
+            return config
+
+        config["match_coarse"].update(tuning)
+        return config
 
     def get_name(self) -> str:
         return f"LoFTR_{self._model_type}"
@@ -155,9 +254,10 @@ class LoFTRMatcher(BaseMatcher):
             "model_type": self._model_type,
             "confidence_threshold": self._confidence_threshold,
             "ratio_threshold": self._ratio_thresh,
+            "loftr_tuning": self._loftr_tuning,
         }
 
-    def _to_tensor(self, gray: np.ndarray) -> torch.Tensor:
+    def _to_tensor(self, gray: np.ndarray) -> Any:
         """Convert grayscale image to torch tensor [1,1,H,W] on device."""
         tensor = torch.from_numpy(gray.astype(np.float32) / 255.0)
         return tensor[None, None].to(self._device)
