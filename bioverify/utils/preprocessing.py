@@ -7,7 +7,6 @@ import os
 from typing import Optional, Tuple
 import numpy as np
 import cv2
-import matplotlib.pyplot as plt
 import iris
 import mediapipe as mp
 from mediapipe.tasks import python

@@ -18,6 +18,9 @@ from pathlib import Path
 from typing import Optional, Dict, Any, Tuple
 import cv2
 import numpy as np
+
+
+import os
 try:
     import torch
 except Exception:  # pragma: no cover - guard for missing/broken torch installs
@@ -32,9 +35,34 @@ from ..utils.preprocessing import (
     enhance_fingervein_image,
 )
 
-PUBLIC_DATASET_ROOT = "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+def _get_dataset_root() -> str:
+    """
+    Get the public dataset root path.
+    
+    Configurable via BIOVERIFY_DATASET_ROOT environment variable.
+    Defaults to a reasonable path, but users should set the env var
+    or provide paths relative to their dataset location.
+    
+    Returns:
+        Path to public dataset root directory
+        
+    Raises:
+        FileNotFoundError: If BIOVERIFY_DATASET_ROOT is set but path doesn't exist
+    """
+    env_root = os.environ.get('BIOVERIFY_DATASET_ROOT')
+    if env_root:
+        env_path = Path(env_root)
+        if not env_path.exists():
+            raise FileNotFoundError(
+                f"BIOVERIFY_DATASET_ROOT points to non-existent path: {env_root}\n"
+                f"Please verify the environment variable is set correctly."
+            )
+        return str(env_path)
+    
+    # Default fallback - relative path for development
+    return "PublicDataset"
 
-
+PUBLIC_DATASET_ROOT = _get_dataset_root()
 @dataclass
 class MatcherConfig:
     """
@@ -861,9 +889,9 @@ class BaseMatcher(ABC):
         if not mask_path.exists():
             raise FileNotFoundError(
                 f"Mask not found: {mask_path}\n"
-                f"Run: python -m bioverify.experiments.precompute_masks --dataset-root {PUBLIC_DATASET_ROOT}"
+                f"Precompute masks with: python -m bioverify.experiments.precompute_masks --dataset-root <your-dataset-root>\n"
+                f"Or set BIOVERIFY_DATASET_ROOT environment variable to your dataset location."
             )
-        
         # Load mask
         mask = cv2.imread(str(mask_path), cv2.IMREAD_GRAYSCALE)
         if mask is None:
@@ -915,21 +943,20 @@ class BaseMatcher(ABC):
         if H is None:
             return None, None
         
-        # Check for degenerate homography
+        # Check for degenerate homography using specific numerical exceptions
         try:
             # Check determinant (singular matrix has det ≈ 0)
             det = float(np.linalg.det(H))
             if abs(det) < 1e-6:
                 # Singular or near-singular matrix
                 return None, None
-            
+
             # Check condition number (measures numerical stability)
             # High condition number means slight perturbations in input cause large changes in output
             cond = float(np.linalg.cond(H))
             if cond > 1e6:  # Ill-conditioned matrix
                 return None, None
-        
-        except Exception:
+        except (np.linalg.LinAlgError, ValueError):
             # If any matrix operation fails, treat as degenerate
             return None, None
         

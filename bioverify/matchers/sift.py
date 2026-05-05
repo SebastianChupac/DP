@@ -5,7 +5,7 @@ Ported from SIFT/sift-orb.py into the unified matcher framework.
 Visualization logic is intentionally omitted (visualization handled by VisualizationResult).
 """
 
-from pathlib import Path
+
 from typing import Optional, Tuple
 
 import cv2
