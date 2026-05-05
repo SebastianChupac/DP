@@ -49,7 +49,7 @@ class LoFTRMatcher(BaseMatcher):
         """Return LoFTR config defaults aligned with Kornia pretrained settings."""
         return {
             "backbone_type": "ResNetFPN",
-            "resolution": [8, 2],
+            "resolution": (8, 2),
             "fine_window_size": 5,
             "fine_concat_coarse_feat": True,
             "resnetfpn": {
@@ -135,9 +135,15 @@ class LoFTRMatcher(BaseMatcher):
         """Build LoFTR init config from Kornia defaults plus safe tuning keys."""
         config = deepcopy(cls._default_loftr_config())
         if not tuning:
+            # ensure resolution is a tuple (Kornia expects tuples for exact match)
+            if isinstance(config.get("resolution"), list):
+                config["resolution"] = tuple(config["resolution"])
             return config
 
         config["match_coarse"].update(tuning)
+        # ensure resolution is a tuple (user input might be a list)
+        if isinstance(config.get("resolution"), list):
+            config["resolution"] = tuple(config["resolution"])
         return config
 
     def get_name(self) -> str:

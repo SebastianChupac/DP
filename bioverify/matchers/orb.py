@@ -57,6 +57,10 @@ class ORBMatcher(BaseMatcher):
     def get_name(self) -> str:
         return "ORB"
 
+    def get_cache_type(self) -> str:
+        """ORB caches full features (keypoints + descriptors)."""
+        return "full_features"
+
     def _visualization_uses_grayscale_input(self) -> bool:
         return True
 

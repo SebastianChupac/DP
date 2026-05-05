@@ -554,7 +554,12 @@ class IdentificationExperimentRunner:
                 gallery_templates_by_matcher[matcher_name] = self._prepare_gallery_templates(matcher, gallery)
                 if self.config.verbose:
                     total_templates = sum(len(v) for v in gallery_templates_by_matcher[matcher_name].values())
-                    print(f"   ✓ {matcher_name}: cached {total_templates} gallery templates")
+                    cache_type = matcher.get_cache_type()
+                    if cache_type == "full_features":
+                        cache_desc = f"full features (keypoints + descriptors)"
+                    else:
+                        cache_desc = f"preprocessed images only"
+                    print(f"   ✓ {matcher_name}: cached {total_templates} templates ({cache_desc})")
 
             # Cache shortlist matcher gallery templates if cascade strategy
             if self.config.ranking_strategy == "cascade" and shortlist_matcher:
@@ -563,7 +568,12 @@ class IdentificationExperimentRunner:
                 shortlist_gallery_templates = self._prepare_gallery_templates(shortlist_matcher, gallery)
                 if self.config.verbose:
                     total_templates = sum(len(v) for v in shortlist_gallery_templates.values())
-                    print(f"   ✓ {shortlist_matcher_name}: cached {total_templates} gallery templates")
+                    cache_type = shortlist_matcher.get_cache_type()
+                    if cache_type == "full_features":
+                        cache_desc = f"full features (keypoints + descriptors)"
+                    else:
+                        cache_desc = f"preprocessed images only"
+                    print(f"   ✓ {shortlist_matcher_name}: cached {total_templates} templates ({cache_desc})")
 
         progress_bar = tqdm(
             probes,

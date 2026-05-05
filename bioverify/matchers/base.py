@@ -678,9 +678,17 @@ class BaseMatcher(ABC):
         
         return img
 
-    def supports_identification_template_cache(self) -> bool:
-        """Whether this matcher can reuse precomputed identification templates."""
-        return True
+    def get_cache_type(self) -> str:
+        """Get the type of caching this matcher supports.
+        
+        Returns:
+            - "full_features": Keypoints and descriptors are pre-computed and cached
+            - "preprocessed_only": Only preprocessed images are cached; features computed at match time
+        
+        Note: All matchers cache preprocessed images/masks; this indicates what additional
+        data is cached beyond preprocessing.
+        """
+        return "preprocessed_only"
 
     def prepare_identification_template(self, img_path: str, modality: Optional[str] = None) -> Dict[str, Any]:
         """Prepare a reusable template for identification matching.

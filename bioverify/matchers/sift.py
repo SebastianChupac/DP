@@ -40,6 +40,10 @@ class SIFTMatcher(BaseMatcher):
     def get_name(self) -> str:
         return "SIFT"
 
+    def get_cache_type(self) -> str:
+        """SIFT caches full features (keypoints + descriptors)."""
+        return "full_features"
+
     def _preprocess_image(self, img: np.ndarray) -> np.ndarray:
         """Resize image based on config."""
         if self.config.resize_width and self.config.resize_height:
