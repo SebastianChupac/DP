@@ -88,6 +88,10 @@ class BatchExperimentRunner:
         # Apply overrides
         if matcher_cfg.config_overrides:
             config_dict.update(matcher_cfg.config_overrides)
+
+        # Pass experiment base path through to matchers for mask/image lookup.
+        if self.config.base_path and "public_dataset_root" not in config_dict:
+            config_dict["public_dataset_root"] = self.config.base_path
         
         # Ensure device is set
         if 'device' not in config_dict:

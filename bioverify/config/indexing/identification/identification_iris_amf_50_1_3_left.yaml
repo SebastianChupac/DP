@@ -1,0 +1,22 @@
+# Identification manifest generation example (closed-set)
+# AMF iris dataset, 50 identities, 3 gallery sample and 1 probe sample per identity.
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+random_seed: 42
+
+identification_generation:
+  number_of_identities: 50  # -1 means: use all identities
+  gallery_samples_per_identity: 3
+  probes_per_identity: 1 # -1 means: use all remaining samples per identity
+  filters:
+    side: "Left" # filter by eye side e.g., "L" or "R"
+    
+
+output:
+  csv_path: "bioverify/data/identification/identification_iris_amf_50_1_3_left.csv"
+  relative_paths: true
+
+datasets:
+  - dataset_path: "Iris/003-AMF-Iris-Dataset"
+    dataset_name: "AMF-Iris"
+    modality: "iris"

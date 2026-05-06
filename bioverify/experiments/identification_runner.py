@@ -18,7 +18,6 @@ from ..data.identification import IdentificationDataset, IdentificationSample
 from ..evaluation.metrics import (
     compute_cmc_curve,
     compute_mean_average_precision,
-    compute_recall_at_k,
     compute_rank_k_accuracy,
 )
 from ..evaluation.plotter import plot_cmc_curve
@@ -71,6 +70,10 @@ class IdentificationExperimentRunner:
 
         if matcher_cfg.config_overrides:
             config_dict.update(matcher_cfg.config_overrides)
+        
+        # Pass experiment base path through to matchers for mask/image lookup.
+        if self.config.base_path and "public_dataset_root" not in config_dict:
+            config_dict["public_dataset_root"] = self.config.base_path
 
         if 'device' not in config_dict:
             config_dict['device'] = self.config.device
@@ -252,7 +255,7 @@ class IdentificationExperimentRunner:
         for identity, gallery_templates in gallery_templates_by_identity.items():
             # Skip identities not in shortlist
             if identity not in top_k_identities:
-                scores_by_identity[identity] = 0.0
+                scores_by_identity[identity] = -1.0
                 continue
 
             try:
@@ -276,7 +279,7 @@ class IdentificationExperimentRunner:
                 if identity_scores:
                     scores_by_identity[identity] = self._aggregate_scores(identity_scores)
                 else:
-                    scores_by_identity[identity] = 0.0
+                        scores_by_identity[identity] = -1.0
             except Exception as e:
                 self.errors.append(
                     {
@@ -340,17 +343,11 @@ class IdentificationExperimentRunner:
                 for k in self.config.top_k_ranks
             }
 
-            recall_k = {
-                str(k): compute_recall_at_k(ranks, int(k))
-                for k in self.config.top_k_ranks
-            }
-
             self.metrics[matcher_name] = {
                 'num_probes': len(matcher_results),
                 'num_valid_ranks': len(valid_ranks),
                 'rank_1_accuracy': compute_rank_k_accuracy(ranks, 1),
                 'rank_k_accuracy': rank_k,
-                'recall_at_k': recall_k,
                 'cmc': cmc,
                 'mean_average_precision': compute_mean_average_precision(ranks),
                 'mean_rank': float(np.mean(valid_ranks)) if valid_ranks else None,
@@ -456,8 +453,6 @@ class IdentificationExperimentRunner:
             print(f"    Rank-1: {metrics['rank_1_accuracy']:.2%}")
             for k, value in metrics['rank_k_accuracy'].items():
                 print(f"    Rank-{k}: {value:.2%}")
-            for k, value in metrics.get('recall_at_k', {}).items():
-                print(f"    Recall@{k}: {value:.2%}")
             print(f"    mAP: {metrics['mean_average_precision']:.4f}")
 
     def run(self) -> Tuple[List[IdentificationResult], Dict]:

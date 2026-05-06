@@ -162,7 +162,9 @@ def match_command(args):
     if not matcher_name:
         raise ValueError("Matcher name is required (use --matcher or config.matcher.name)")
 
-    matcher_config = matcher_block.get("config", {})
+    matcher_config = matcher_block.get("config", {}).copy()
+    if config.get("base_path") and "public_dataset_root" not in matcher_config:
+        matcher_config["public_dataset_root"] = config["base_path"]
     matcher = create_matcher(matcher_name, matcher_config)
 
     if args.viz_output and not args.viz:

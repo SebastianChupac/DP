@@ -18,9 +18,6 @@ from pathlib import Path
 from typing import Optional, Dict, Any, Tuple
 import cv2
 import numpy as np
-
-
-import os
 try:
     import torch
 except Exception:  # pragma: no cover - guard for missing/broken torch installs
@@ -35,34 +32,8 @@ from ..utils.preprocessing import (
     enhance_fingervein_image,
 )
 
-def _get_dataset_root() -> str:
-    """
-    Get the public dataset root path.
-    
-    Configurable via BIOVERIFY_DATASET_ROOT environment variable.
-    Defaults to a reasonable path, but users should set the env var
-    or provide paths relative to their dataset location.
-    
-    Returns:
-        Path to public dataset root directory
-        
-    Raises:
-        FileNotFoundError: If BIOVERIFY_DATASET_ROOT is set but path doesn't exist
-    """
-    env_root = os.environ.get('BIOVERIFY_DATASET_ROOT')
-    if env_root:
-        env_path = Path(env_root)
-        if not env_path.exists():
-            raise FileNotFoundError(
-                f"BIOVERIFY_DATASET_ROOT points to non-existent path: {env_root}\n"
-                f"Please verify the environment variable is set correctly."
-            )
-        return str(env_path)
-    
-    # Default fallback - relative path for development
-    return "PublicDataset"
 
-PUBLIC_DATASET_ROOT = _get_dataset_root()
+PUBLIC_DATASET_ROOT = "PublicDataset"
 @dataclass
 class MatcherConfig:
     """
@@ -91,6 +62,7 @@ class MatcherConfig:
     enhancement_clip_limit: float = 3.0
     enhancement_tile_size: int = 8
     device: str = "cuda"
+    public_dataset_root: Optional[str] = None
     extra_params: Dict[str, Any] = field(default_factory=dict)
     
     @classmethod
@@ -109,7 +81,7 @@ class MatcherConfig:
             "resize_width", "resize_height", "ransac_thresh", 
             "ransac_max_iters", "min_matches", "use_masking",
             "use_enhancement", "enhancement_clip_limit", "enhancement_tile_size",
-            "device"
+            "device", "public_dataset_root"
         }
         
         main_params = {k: v for k, v in config_dict.items() if k in known_fields}
@@ -143,6 +115,18 @@ class BaseMatcher(ABC):
             config: Matcher configuration
         """
         self.config = config
+        self._public_dataset_root = self._resolve_public_dataset_root()
+
+    def _resolve_public_dataset_root(self) -> Path:
+        """Resolve the root used for dataset-relative image and mask paths."""
+        root_value = self.config.public_dataset_root
+        if root_value is None:
+            root_value = self.config.extra_params.get("public_dataset_root")
+        if root_value is None:
+            root_value = self.config.extra_params.get("base_path")
+
+        root = Path(root_value) if root_value else Path(PUBLIC_DATASET_ROOT)
+        return root
         
     @abstractmethod
     def get_name(self) -> str:
@@ -667,7 +651,7 @@ class BaseMatcher(ABC):
             ValueError: If image can't be read
         """
         if not Path(img_path).exists():
-            img_path = Path(PUBLIC_DATASET_ROOT) / img_path
+            img_path = self._public_dataset_root / img_path
             if not img_path.exists():
                 raise FileNotFoundError(f"Image not found: {img_path}")
         
@@ -816,7 +800,7 @@ class BaseMatcher(ABC):
         Load precomputed mask from _masks folder structure.
         
         Expects masks to be pre-computed at:
-          PUBLIC_DATASET_ROOT/_masks/{Modality}/{dataset_path}/{image_stem}_mask.png
+          <public_dataset_root>/_masks/{Modality}/{dataset_path}/{image_stem}_mask.png
         
         Example:
           Image: PublicDataset/Iris/001-CASIA/S001.jpg
@@ -826,7 +810,7 @@ class BaseMatcher(ABC):
         match the preprocessed image size.
         
         Args:
-            img_path: Path to image (absolute or relative to PUBLIC_DATASET_ROOT)
+            img_path: Path to image (absolute or relative to the public dataset root)
             img: Image array (AFTER preprocessing/resizing)
             modality: Modality type ('iris', 'face', 'hand', 'handGeometry', 'fingervein')
             
@@ -843,7 +827,7 @@ class BaseMatcher(ABC):
         # Resolve image path to absolute
         img_abs_path = Path(img_path)
         if not img_abs_path.is_absolute():
-            img_abs_path = Path(PUBLIC_DATASET_ROOT) / img_path
+            img_abs_path = self._public_dataset_root / img_path
         
         # Extract relative path from modality folder
         # E.g., PublicDataset/Iris/001-CASIA/S001.jpg -> 001-CASIA/S001.jpg
@@ -884,13 +868,12 @@ class BaseMatcher(ABC):
             raise FileNotFoundError(f"Error extracting relative path from {img_abs_path}: {e}")
         
         # Look for mask in _masks/{ActualFolder}/{relative_path}/{image_stem}_mask.png
-        mask_path = Path(PUBLIC_DATASET_ROOT) / "_masks" / modality_folder / rel_from_modality.parent / f"{rel_from_modality.stem}_mask.png"
+        mask_path = self._public_dataset_root / "_masks" / modality_folder / rel_from_modality.parent / f"{rel_from_modality.stem}_mask.png"
         
         if not mask_path.exists():
             raise FileNotFoundError(
                 f"Mask not found: {mask_path}\n"
-                f"Precompute masks with: python -m bioverify.experiments.precompute_masks --dataset-root <your-dataset-root>\n"
-                f"Or set BIOVERIFY_DATASET_ROOT environment variable to your dataset location."
+                f"Precompute masks with: python -m bioverify.experiments.precompute_masks --dataset-root <your-dataset-root>"
             )
         # Load mask
         mask = cv2.imread(str(mask_path), cv2.IMREAD_GRAYSCALE)

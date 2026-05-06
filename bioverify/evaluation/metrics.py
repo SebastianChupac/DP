@@ -251,15 +251,6 @@ def compute_rank_k_accuracy(ranks: List[Optional[int]], k: int) -> float:
     return float(hits / len(valid_ranks))
 
 
-def compute_recall_at_k(ranks: List[Optional[int]], k: int) -> float:
-    """Compute recall@k for identification.
-
-    In closed-set identification with one relevant identity per probe,
-    recall@k is equivalent to rank-k hit rate.
-    """
-    return compute_rank_k_accuracy(ranks, k)
-
-
 def compute_cmc_curve(ranks: List[Optional[int]], max_rank: int) -> Dict[str, List[float]]:
     """Compute CMC curve from a list of 1-based ranks."""
     valid_ranks = [r for r in ranks if r is not None]

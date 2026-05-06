@@ -1,0 +1,118 @@
+# Test experiment for identification. iris amf, 50 identities, 1 probe, 3 gallery per identity
+# masked and cropped, test for cascade optimization
+# this version has fixed shortlist matcher parameters
+
+experiment:
+  name: "Identification test experiment iris amf 50 identities 1 probe 3 gallery masked all matchers cached cascade"
+  description: "Test identification on all matchers with masked images, with caching enabled"
+  purpose: "id_test"
+  created: "2026-05-06"
+
+# Input data
+identification_dataset: "bioverify/data/identification/identification_iris_amf_50_1_3_left.csv"
+base_path: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+
+# Ranking Strategy: "cascade" for two-stage, "bruteforce" for all-against-all
+ranking_strategy: "cascade"
+top_k_ranks: [1, 5, 10, 15]
+samples_per_gallery: "multiple"
+aggregation_method: "mean"  # Method to aggregate multiple matches if samples_per_gallery is "multiple". Options: "max", "mean""
+cache_gallery_templates: true
+
+# Cascade-specific parameters
+shortlist_matcher:
+  name: "sift-fingervein"                # Fast matcher for stage 1 (shortlist creation)
+  config_base: "bioverify/config/matching/sift_fingervein.yaml"
+  config_overrides:
+    use_masking: true
+    roi_crop_from_mask: true
+    roi_crop_modalities: ["hand", "handgeometry", "iris"]
+shortlist_k: 15  
+
+# Multiple matcher configuration
+matchers:
+  - name: loftr
+    config_base: "bioverify/config/matching/loftr.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["hand", "handgeometry", "iris"]
+  - name: orb-fingervein
+    config_base: "bioverify/config/matching/orb_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["hand", "handgeometry", "iris"]
+  - name: orb
+    config_base: "bioverify/config/matching/orb.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["hand", "handgeometry", "iris"]
+  - name: sift-fingervein
+    config_base: "bioverify/config/matching/sift_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["hand", "handgeometry", "iris"]
+  - name: sift
+    config_base: "bioverify/config/matching/sift.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["hand", "handgeometry", "iris"]
+  - name: superglue-fingervein
+    config_base: "bioverify/config/matching/superglue_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["hand", "handgeometry", "iris"]
+  - name: superglue
+    config_base: "bioverify/config/matching/superglue.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["hand", "handgeometry", "iris"]
+  - name: sgmnet-fingervein
+    config_base: "bioverify/config/matching/sgmnet_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["hand", "handgeometry", "iris"]
+  - name: sgmnet
+    config_base: "bioverify/config/matching/sgmnet.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["hand", "handgeometry", "iris"]
+  - name: aspanformer
+    config_base: "bioverify/config/matching/aspanformer.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["hand", "handgeometry", "iris"]
+  - name: deepdetect
+    config_base: "bioverify/config/matching/deepdetect.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: true
+      roi_crop_from_mask: true
+      roi_crop_modalities: ["hand", "handgeometry", "iris"]
+
+# Output
+output_dir: "bioverify/results/identification/iris_amf_50_1_3_left_masked_crop_all_matchers_cached_cascade.yaml"
+
+# Options
+batch_size: 1
+verbose: true
+device: "cuda"
