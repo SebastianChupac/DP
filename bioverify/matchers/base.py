@@ -33,7 +33,7 @@ from ..utils.preprocessing import (
 )
 
 
-PUBLIC_DATASET_ROOT = "PublicDataset"
+PUBLIC_DATASET_ROOT = "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
 @dataclass
 class MatcherConfig:
     """

@@ -5,7 +5,7 @@
 # These parameters balance sensitivity with precision for vein patterns.
 
 matcher:
-  name: sgmnet
+  name: sgmnet-fingervein
   config:
     # Image preprocessing
     resize_width: 640

@@ -10,7 +10,7 @@
 # - More pyramid levels for better multi-scale detection
 
 matcher:
-  name: orb
+  name: orb-fingervein
   config:
     # Image preprocessing
     resize_width: 640

@@ -9,7 +9,7 @@
 # - More octave layers for better scale detection in small images
 
 matcher:
-  name: sift
+  name: sift-fingervein
   config:
     # Image preprocessing
     resize_width: 640
