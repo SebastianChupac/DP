@@ -1,0 +1,366 @@
+{
+  "loftr": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.96,
+    "rank_k_accuracy": {
+      "1": 0.96,
+      "5": 0.96,
+      "10": 0.96,
+      "15": 0.96
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96
+      ]
+    },
+    "mean_average_precision": 0.9615975422427036,
+    "mean_rank": 2.0,
+    "median_rank": 1.0,
+    "std_rank": 5.0,
+    "cache_gallery_templates": true
+  },
+  "orb-fingervein": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.94,
+    "rank_k_accuracy": {
+      "1": 0.94,
+      "5": 0.96,
+      "10": 0.96,
+      "15": 0.96
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.94,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96
+      ]
+    },
+    "mean_average_precision": 0.9515975422427035,
+    "mean_rank": 2.02,
+    "median_rank": 1.0,
+    "std_rank": 4.99795958367012,
+    "cache_gallery_templates": true
+  },
+  "sift-fingervein": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.92,
+    "rank_k_accuracy": {
+      "1": 0.92,
+      "5": 0.96,
+      "10": 0.96,
+      "15": 0.96
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.92,
+        0.94,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96
+      ]
+    },
+    "mean_average_precision": 0.9382642089093701,
+    "mean_rank": 2.06,
+    "median_rank": 1.0,
+    "std_rank": 4.9976394427769595,
+    "cache_gallery_templates": true
+  },
+  "superglue-fingervein": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.82,
+    "rank_k_accuracy": {
+      "1": 0.82,
+      "5": 0.96,
+      "10": 0.96,
+      "15": 0.96
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.82,
+        0.92,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96
+      ]
+    },
+    "mean_average_precision": 0.8849308755760369,
+    "mean_rank": 2.18,
+    "median_rank": 1.0,
+    "std_rank": 4.9867424236669775,
+    "cache_gallery_templates": true
+  },
+  "sgmnet-fingervein": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.96,
+    "rank_k_accuracy": {
+      "1": 0.96,
+      "5": 0.96,
+      "10": 0.96,
+      "15": 0.96
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96
+      ]
+    },
+    "mean_average_precision": 0.9615975422427036,
+    "mean_rank": 2.0,
+    "median_rank": 1.0,
+    "std_rank": 5.0,
+    "cache_gallery_templates": true
+  },
+  "aspanformer": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.88,
+    "rank_k_accuracy": {
+      "1": 0.88,
+      "5": 0.96,
+      "10": 0.96,
+      "15": 0.96
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.88,
+        0.94,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96
+      ]
+    },
+    "mean_average_precision": 0.9182642089093701,
+    "mean_rank": 2.1,
+    "median_rank": 1.0,
+    "std_rank": 4.992995093127972,
+    "cache_gallery_templates": true
+  },
+  "deepdetect": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.78,
+    "rank_k_accuracy": {
+      "1": 0.78,
+      "5": 0.96,
+      "10": 0.96,
+      "15": 0.96
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.78,
+        0.9,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96,
+        0.96
+      ]
+    },
+    "mean_average_precision": 0.8615975422427036,
+    "mean_rank": 2.24,
+    "median_rank": 1.0,
+    "std_rank": 4.98220834570374,
+    "cache_gallery_templates": true
+  }
+}

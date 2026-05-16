@@ -32,6 +32,7 @@ OUTPUT_COLUMNS = [
     "config_file",
     "summary_file",
     "threshold_analysis_file",
+    "eer",
     "accuracy",
     "precision",
     "recall",
@@ -51,6 +52,7 @@ FLOAT_COLUMNS = {
     "precision",
     "recall",
     "roc_auc",
+    "eer",
     "tar",
     "far",
     "frr",
@@ -274,6 +276,45 @@ def _extract_auc(threshold_analysis_path: Optional[Path]) -> Optional[float]:
     return None
 
 
+def _extract_eer(evaluation_dir: Path, matcher_name: str) -> Optional[float]:
+    """Load evaluation/eer_comparison.json and return EER for matcher if available."""
+    eer_path = evaluation_dir / "eer_comparison.json"
+    if not eer_path.exists():
+        return None
+
+    try:
+        data = _load_json(eer_path)
+    except json.JSONDecodeError:
+        return None
+
+    if not isinstance(data, dict):
+        return None
+
+    # Prefer base matcher key
+    base = _infer_base_matcher(matcher_name)
+    # direct match
+    if base in data and isinstance(data[base], dict) and data[base].get("eer") is not None:
+        try:
+            return float(data[base]["eer"])
+        except (TypeError, ValueError):
+            return None
+
+    # try case-insensitive match and normalized name match
+    target_norm = _normalize_name(matcher_name)
+    for key, val in data.items():
+        if not isinstance(val, dict):
+            continue
+        key_norm = _normalize_name(key)
+        if key_norm == target_norm or key_norm == base or base in key_norm or key_norm in base:
+            if val.get("eer") is not None:
+                try:
+                    return float(val["eer"])
+                except (TypeError, ValueError):
+                    return None
+
+    return None
+
+
 def _format_relative_path(path: Path, project_root: Path) -> str:
     try:
         return path.relative_to(project_root).as_posix()
@@ -314,6 +355,7 @@ def collect_verification_rows(results_root: Path) -> List[Dict[str, Any]]:
         for matcher_name, metrics in summary.items():
             threshold_analysis_file = _find_threshold_analysis_file(evaluation_dir, matcher_name)
             auc_value = _extract_auc(threshold_analysis_file)
+            eer_value = _extract_eer(evaluation_dir, matcher_name)
 
             row = {
                 "experiment_folder": folder.name,
@@ -328,6 +370,7 @@ def collect_verification_rows(results_root: Path) -> List[Dict[str, Any]]:
                 "threshold_analysis_file": _format_relative_path(threshold_analysis_file, project_root)
                 if threshold_analysis_file is not None
                 else "",
+                "eer": eer_value,
                 "accuracy": metrics.get("accuracy"),
                 "precision": metrics.get("precision"),
                 "recall": metrics.get("recall"),

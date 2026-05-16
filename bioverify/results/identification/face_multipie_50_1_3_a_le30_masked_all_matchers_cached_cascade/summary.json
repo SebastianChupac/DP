@@ -1,0 +1,366 @@
+{
+  "loftr": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.22,
+    "rank_k_accuracy": {
+      "1": 0.22,
+      "5": 0.46,
+      "10": 0.46,
+      "15": 0.48
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.22,
+        0.28,
+        0.42,
+        0.44,
+        0.46,
+        0.46,
+        0.46,
+        0.46,
+        0.46,
+        0.46,
+        0.46,
+        0.48,
+        0.48,
+        0.48,
+        0.48
+      ]
+    },
+    "mean_average_precision": 0.3247826931996331,
+    "mean_rank": 18.6,
+    "median_rank": 16.5,
+    "std_rank": 17.349351572897472,
+    "cache_gallery_templates": true
+  },
+  "orb-fingervein": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.16,
+    "rank_k_accuracy": {
+      "1": 0.16,
+      "5": 0.34,
+      "10": 0.4,
+      "15": 0.48
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.16,
+        0.26,
+        0.32,
+        0.34,
+        0.34,
+        0.38,
+        0.38,
+        0.38,
+        0.38,
+        0.4,
+        0.44,
+        0.44,
+        0.48,
+        0.48,
+        0.48
+      ]
+    },
+    "mean_average_precision": 0.2678293132462531,
+    "mean_rank": 19.44,
+    "median_rank": 16.5,
+    "std_rank": 16.73578202534916,
+    "cache_gallery_templates": true
+  },
+  "sift-fingervein": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.08,
+    "rank_k_accuracy": {
+      "1": 0.08,
+      "5": 0.36,
+      "10": 0.4,
+      "15": 0.48
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.08,
+        0.24,
+        0.3,
+        0.32,
+        0.36,
+        0.36,
+        0.36,
+        0.38,
+        0.4,
+        0.4,
+        0.4,
+        0.42,
+        0.44,
+        0.46,
+        0.48
+      ]
+    },
+    "mean_average_precision": 0.22113861505555493,
+    "mean_rank": 19.7,
+    "median_rank": 16.5,
+    "std_rank": 16.541160781517117,
+    "cache_gallery_templates": true
+  },
+  "superglue-fingervein": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.04,
+    "rank_k_accuracy": {
+      "1": 0.04,
+      "5": 0.4,
+      "10": 0.48,
+      "15": 0.48
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.04,
+        0.16,
+        0.32,
+        0.38,
+        0.4,
+        0.44,
+        0.44,
+        0.48,
+        0.48,
+        0.48,
+        0.48,
+        0.48,
+        0.48,
+        0.48,
+        0.48
+      ]
+    },
+    "mean_average_precision": 0.20144935986629975,
+    "mean_rank": 19.08,
+    "median_rank": 16.5,
+    "std_rank": 16.879383875011552,
+    "cache_gallery_templates": true
+  },
+  "sgmnet-fingervein": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.2,
+    "rank_k_accuracy": {
+      "1": 0.2,
+      "5": 0.32,
+      "10": 0.42,
+      "15": 0.48
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.2,
+        0.26,
+        0.28,
+        0.3,
+        0.32,
+        0.38,
+        0.38,
+        0.4,
+        0.4,
+        0.42,
+        0.42,
+        0.44,
+        0.46,
+        0.46,
+        0.48
+      ]
+    },
+    "mean_average_precision": 0.2821544880714279,
+    "mean_rank": 19.5,
+    "median_rank": 16.5,
+    "std_rank": 16.701197561851664,
+    "cache_gallery_templates": true
+  },
+  "aspanformer": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.06,
+    "rank_k_accuracy": {
+      "1": 0.06,
+      "5": 0.22,
+      "10": 0.38,
+      "15": 0.48
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.06,
+        0.08,
+        0.18,
+        0.18,
+        0.22,
+        0.24,
+        0.3,
+        0.34,
+        0.36,
+        0.38,
+        0.4,
+        0.44,
+        0.46,
+        0.46,
+        0.48
+      ]
+    },
+    "mean_average_precision": 0.1579329873499272,
+    "mean_rank": 20.52,
+    "median_rank": 16.5,
+    "std_rank": 15.761015195728987,
+    "cache_gallery_templates": true
+  },
+  "deepdetect": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.12,
+    "rank_k_accuracy": {
+      "1": 0.12,
+      "5": 0.36,
+      "10": 0.46,
+      "15": 0.48
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.12,
+        0.18,
+        0.26,
+        0.34,
+        0.36,
+        0.36,
+        0.4,
+        0.42,
+        0.46,
+        0.46,
+        0.46,
+        0.48,
+        0.48,
+        0.48,
+        0.48
+      ]
+    },
+    "mean_average_precision": 0.23244142335836324,
+    "mean_rank": 19.36,
+    "median_rank": 16.5,
+    "std_rank": 16.701808285332458,
+    "cache_gallery_templates": true
+  }
+}

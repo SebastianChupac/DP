@@ -1,0 +1,366 @@
+{
+  "loftr": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 1.0,
+    "rank_k_accuracy": {
+      "1": 1.0,
+      "5": 1.0,
+      "10": 1.0,
+      "15": 1.0
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "mean_average_precision": 1.0,
+    "mean_rank": 1.0,
+    "median_rank": 1.0,
+    "std_rank": 0.0,
+    "cache_gallery_templates": true
+  },
+  "orb-fingervein": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 1.0,
+    "rank_k_accuracy": {
+      "1": 1.0,
+      "5": 1.0,
+      "10": 1.0,
+      "15": 1.0
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "mean_average_precision": 1.0,
+    "mean_rank": 1.0,
+    "median_rank": 1.0,
+    "std_rank": 0.0,
+    "cache_gallery_templates": true
+  },
+  "sift-fingervein": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 1.0,
+    "rank_k_accuracy": {
+      "1": 1.0,
+      "5": 1.0,
+      "10": 1.0,
+      "15": 1.0
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "mean_average_precision": 1.0,
+    "mean_rank": 1.0,
+    "median_rank": 1.0,
+    "std_rank": 0.0,
+    "cache_gallery_templates": true
+  },
+  "superglue-fingervein": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 1.0,
+    "rank_k_accuracy": {
+      "1": 1.0,
+      "5": 1.0,
+      "10": 1.0,
+      "15": 1.0
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "mean_average_precision": 1.0,
+    "mean_rank": 1.0,
+    "median_rank": 1.0,
+    "std_rank": 0.0,
+    "cache_gallery_templates": true
+  },
+  "sgmnet-fingervein": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 1.0,
+    "rank_k_accuracy": {
+      "1": 1.0,
+      "5": 1.0,
+      "10": 1.0,
+      "15": 1.0
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "mean_average_precision": 1.0,
+    "mean_rank": 1.0,
+    "median_rank": 1.0,
+    "std_rank": 0.0,
+    "cache_gallery_templates": true
+  },
+  "aspanformer": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 0.96,
+    "rank_k_accuracy": {
+      "1": 0.96,
+      "5": 1.0,
+      "10": 1.0,
+      "15": 1.0
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        0.96,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "mean_average_precision": 0.98,
+    "mean_rank": 1.04,
+    "median_rank": 1.0,
+    "std_rank": 0.19595917942265428,
+    "cache_gallery_templates": true
+  },
+  "deepdetect": {
+    "num_probes": 50,
+    "num_valid_ranks": 50,
+    "rank_1_accuracy": 1.0,
+    "rank_k_accuracy": {
+      "1": 1.0,
+      "5": 1.0,
+      "10": 1.0,
+      "15": 1.0
+    },
+    "cmc": {
+      "ranks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "values": [
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ]
+    },
+    "mean_average_precision": 1.0,
+    "mean_rank": 1.0,
+    "median_rank": 1.0,
+    "std_rank": 0.0,
+    "cache_gallery_templates": true
+  }
+}

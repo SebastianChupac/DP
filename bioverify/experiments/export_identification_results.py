@@ -285,6 +285,87 @@ class IdentificationExporter:
         
         wb.save(output_path)
 
+    def export_experiment(self, exp_folder: Path) -> Tuple[int, Path, Path, Path]:
+        """Export a single experiment folder and write results into that folder.
+        Returns (row_count, csv_path, json_path, xlsx_path).
+        """
+        exp_folder = Path(exp_folder)
+        if not exp_folder.exists() or not exp_folder.is_dir():
+            raise FileNotFoundError(f"Experiment folder not found: {exp_folder}")
+
+        config_file = exp_folder / 'config.yaml'
+        summary_file = exp_folder / 'summary.json'
+        if not config_file.exists() or not summary_file.exists():
+            raise FileNotFoundError(f"Missing config.yaml or summary.json in {exp_folder}")
+
+        try:
+            config = yaml.safe_load(config_file.read_text(encoding='utf-8'))
+            summary = json.loads(summary_file.read_text(encoding='utf-8'))
+        except Exception as e:
+            raise RuntimeError(f"Failed to read experiment files: {e}")
+
+        exp_title = config.get('experiment', {}).get('name', '')
+        ranking_strategy = config.get('ranking_strategy', '')
+        shortlist_k = config.get('shortlist_k', '')
+        shortlist_matcher_raw = config.get('shortlist_matcher')
+        if isinstance(shortlist_matcher_raw, dict):
+            shortlist_matcher = shortlist_matcher_raw.get('name', '')
+        elif isinstance(shortlist_matcher_raw, str):
+            shortlist_matcher = shortlist_matcher_raw
+        else:
+            shortlist_matcher = ''
+
+        dataset_file = config.get('identification_dataset', '')
+        probes_per_identity, gallery_samples_per_identity = self._extract_probe_gallery_counts(dataset_file)
+
+        rows: List[Dict[str, Any]] = []
+        for matcher_name, metrics in summary.items():
+            if not isinstance(metrics, dict) or 'rank_1_accuracy' not in metrics:
+                continue
+            base_matcher = self._infer_base_matcher(matcher_name)
+            dataset = self._infer_dataset_name(dataset_file, config)
+            modality = self._infer_modality(exp_folder.name, dataset_file, config)
+            rank_k_accuracy = metrics.get('rank_k_accuracy', {})
+
+            row = {
+                'experiment_folder': exp_folder.name,
+                'experiment_title': exp_title,
+                'base_matcher': base_matcher,
+                'matcher': matcher_name,
+                'modality': modality,
+                'dataset': dataset,
+                'dataset_file': dataset_file,
+                'config_file': str(config_file.relative_to(self.results_root.parent.parent)),
+                'summary_file': str(summary_file.relative_to(self.results_root.parent.parent)),
+                'ranking_strategy': ranking_strategy,
+                'shortlist_k': shortlist_k,
+                'shortlist_matcher': shortlist_matcher,
+                'probes_per_identity': probes_per_identity,
+                'gallery_samples_per_identity': gallery_samples_per_identity,
+                'num_probes': metrics.get('num_probes'),
+                'num_valid_ranks': metrics.get('num_valid_ranks'),
+                'rank_1_accuracy': rank_k_accuracy.get('1'),
+                'rank_5_accuracy': rank_k_accuracy.get('5'),
+                'rank_10_accuracy': rank_k_accuracy.get('10'),
+                'rank_15_accuracy': rank_k_accuracy.get('15'),
+                'mean_average_precision': metrics.get('mean_average_precision'),
+                'mean_rank': metrics.get('mean_rank'),
+                'median_rank': metrics.get('median_rank'),
+                'std_rank': metrics.get('std_rank'),
+            }
+            rows.append(row)
+
+        base_name = f"{exp_folder.name}_identification_results"
+        csv_path = exp_folder / f"{base_name}.csv"
+        json_path = exp_folder / f"{base_name}.json"
+        xlsx_path = exp_folder / f"{base_name}.xlsx"
+
+        self.write_csv(rows, csv_path)
+        self.write_json(rows, json_path)
+        self.write_xlsx(rows, xlsx_path)
+
+        return len(rows), csv_path, json_path, xlsx_path
+
     def export_all(self, output_dir: Optional[Path] = None) -> Tuple[int, Path, Path, Path]:
         """Export to all formats. Returns (row_count, csv_path, json_path, xlsx_path)."""
         if output_dir is None:
@@ -324,6 +405,12 @@ def main():
         default=None,
         help='Output directory (default: bioverify/results)'
     )
+    parser.add_argument(
+        '--experiment',
+        type=str,
+        default=None,
+        help='Path to a single experiment folder to export results for (writes files inside that folder)'
+    )
     
     args = parser.parse_args()
     
@@ -335,7 +422,11 @@ def main():
     exporter = IdentificationExporter(results_root)
     output_dir = Path(args.output) if args.output else results_root
     
-    row_count, csv_path, json_path, xlsx_path = exporter.export_all(output_dir)
+    if args.experiment:
+        exp_path = Path(args.experiment)
+        row_count, csv_path, json_path, xlsx_path = exporter.export_experiment(exp_path)
+    else:
+        row_count, csv_path, json_path, xlsx_path = exporter.export_all(output_dir)
     
     print(f"\nExport complete!")
     print(f"  Total rows: {row_count}")
@@ -346,3 +437,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

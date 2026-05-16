@@ -1,0 +1,91 @@
+aggregation_method: mean
+base_path: C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset
+cache_gallery_templates: true
+device: cuda
+experiment:
+  created: '2026-05-12'
+  description: Test identification on all matchers with masked and cropped images,
+    with caching enabled
+  name: Identification test experiment 11k hands 50 identities 1 probe 3 gallery palmar
+    right masked cropped all matchers cached cascade
+  purpose: id_test
+  researcher: null
+filter_dataset: null
+filter_modality: null
+identification_dataset: bioverify/data/identification/identification_hand_11khands_50_1_3_palmar_right.csv
+matchers:
+- config_base: bioverify/config/matching/loftr.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: loftr
+- config_base: bioverify/config/matching/orb_fingervein.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: orb-fingervein
+- config_base: bioverify/config/matching/sift_fingervein.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: sift-fingervein
+- config_base: bioverify/config/matching/superglue_fingervein.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: superglue-fingervein
+- config_base: bioverify/config/matching/sgmnet_fingervein.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: sgmnet-fingervein
+- config_base: bioverify/config/matching/aspanformer.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: aspanformer
+- config_base: bioverify/config/matching/deepdetect.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: deepdetect
+output_dir: bioverify/results/identification/hand_11khands_50_1_3_palmar_right_masked_cropped_all_matchers_cached_cascade
+ranking_strategy: cascade
+samples_per_gallery: multiple
+shortlist_k: 15
+shortlist_matcher:
+  config_base: bioverify/config/matching/sift_fingervein.yaml
+  config_overrides:
+    roi_crop_from_mask: true
+    roi_crop_modalities:
+    - hand
+    - handgeometry
+    use_masking: true
+  name: sift-fingervein
+top_k_ranks:
+- 1
+- 5
+- 10
+- 15
+verbose: true
