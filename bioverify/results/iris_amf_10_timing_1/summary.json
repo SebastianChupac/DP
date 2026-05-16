@@ -1,0 +1,784 @@
+{
+  "loftr": {
+    "num_pairs": 10,
+    "num_genuine": 5,
+    "num_impostor": 5,
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "genuine_accuracy": 1.0,
+    "impostor_accuracy": 1.0,
+    "tar": 1.0,
+    "far": 0.0,
+    "frr": 0.0,
+    "trr": 1.0,
+    "avg_inlier_ratio": 0.47146425486899857,
+    "timings_ms": {
+      "load_images": {
+        "mean_ms": 1.74714,
+        "mean_fps": 572.3639777006995,
+        "median_ms": 1.5432000000000001,
+        "min_ms": 1.423,
+        "max_ms": 2.8013
+      },
+      "preprocess": {
+        "mean_ms": 0.25878,
+        "mean_fps": 3864.286266326609,
+        "median_ms": 0.21445,
+        "min_ms": 0.2102,
+        "max_ms": 0.603
+      },
+      "masking": {
+        "mean_ms": 9.24141,
+        "mean_fps": 108.20859587443907,
+        "median_ms": 8.58145,
+        "min_ms": 7.6797,
+        "max_ms": 12.6808
+      },
+      "inference_ms": {
+        "mean_ms": 934.2468,
+        "mean_fps": 1.070380974277889,
+        "median_ms": 971.90355,
+        "min_ms": 416.4545,
+        "max_ms": 1417.9617
+      },
+      "match_impl_total": {
+        "mean_ms": 937.22224,
+        "mean_fps": 1.066982789482247,
+        "median_ms": 974.6457499999999,
+        "min_ms": 418.9306,
+        "max_ms": 1420.7389
+      },
+      "homography": {
+        "mean_ms": 22.76292,
+        "mean_fps": 43.931094956183124,
+        "median_ms": 11.230450000000001,
+        "min_ms": 1.8884,
+        "max_ms": 56.9512
+      },
+      "result_creation": {
+        "mean_ms": 0.06826,
+        "mean_fps": 14649.86815118664,
+        "median_ms": 0.06665,
+        "min_ms": 0.0637,
+        "max_ms": 0.0838
+      }
+    }
+  },
+  "orb": {
+    "num_pairs": 10,
+    "num_genuine": 5,
+    "num_impostor": 5,
+    "accuracy": 0.9,
+    "precision": 1.0,
+    "recall": 0.8,
+    "genuine_accuracy": 0.8,
+    "impostor_accuracy": 1.0,
+    "tar": 0.8,
+    "far": 0.0,
+    "frr": 0.2,
+    "trr": 1.0,
+    "avg_inlier_ratio": 0.29393101007807343,
+    "timings_ms": {
+      "load_images": {
+        "mean_ms": 1.60951,
+        "mean_fps": 621.3071058893701,
+        "median_ms": 1.56345,
+        "min_ms": 1.3975,
+        "max_ms": 1.9404
+      },
+      "preprocess": {
+        "mean_ms": 0.49606,
+        "mean_fps": 2015.8851751804218,
+        "median_ms": 0.4998,
+        "min_ms": 0.2126,
+        "max_ms": 0.6079
+      },
+      "masking": {
+        "mean_ms": 9.2053,
+        "mean_fps": 108.63307007919352,
+        "median_ms": 9.15195,
+        "min_ms": 7.9386,
+        "max_ms": 11.6373
+      },
+      "feature_extraction_ms": {
+        "mean_ms": 22.27484,
+        "mean_fps": 44.89370069549321,
+        "median_ms": 9.436250000000001,
+        "min_ms": 8.0683,
+        "max_ms": 100.5577
+      },
+      "matching_ms": {
+        "mean_ms": 0.47912,
+        "mean_fps": 2087.1597929537484,
+        "median_ms": 0.35775,
+        "min_ms": 0.1366,
+        "max_ms": 1.3941
+      },
+      "match_impl_total": {
+        "mean_ms": 22.83708,
+        "mean_fps": 43.78843529908377,
+        "median_ms": 10.03135,
+        "min_ms": 8.3864,
+        "max_ms": 101.3044
+      },
+      "homography": {
+        "mean_ms": 0.84162,
+        "mean_fps": 1188.1846914284356,
+        "median_ms": 0.4898,
+        "min_ms": 0.0113,
+        "max_ms": 2.9883
+      },
+      "result_creation": {
+        "mean_ms": 0.05071,
+        "mean_fps": 19719.976336028398,
+        "median_ms": 0.04665,
+        "min_ms": 0.0285,
+        "max_ms": 0.084
+      }
+    }
+  },
+  "orb-fingervein": {
+    "num_pairs": 10,
+    "num_genuine": 5,
+    "num_impostor": 5,
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "genuine_accuracy": 1.0,
+    "impostor_accuracy": 1.0,
+    "tar": 1.0,
+    "far": 0.0,
+    "frr": 0.0,
+    "trr": 1.0,
+    "avg_inlier_ratio": 0.4050095651728872,
+    "timings_ms": {
+      "load_images": {
+        "mean_ms": 1.54354,
+        "mean_fps": 647.8614094872826,
+        "median_ms": 1.4756,
+        "min_ms": 1.3553,
+        "max_ms": 1.9355
+      },
+      "preprocess": {
+        "mean_ms": 0.33482,
+        "mean_fps": 2986.6794098321484,
+        "median_ms": 0.2346,
+        "min_ms": 0.2033,
+        "max_ms": 0.6544
+      },
+      "masking": {
+        "mean_ms": 10.53909,
+        "mean_fps": 94.88485248726408,
+        "median_ms": 8.8844,
+        "min_ms": 8.3513,
+        "max_ms": 25.7523
+      },
+      "feature_extraction_ms": {
+        "mean_ms": 34.967510000000004,
+        "mean_fps": 28.597975663694665,
+        "median_ms": 34.984750000000005,
+        "min_ms": 27.1103,
+        "max_ms": 40.4986
+      },
+      "matching_ms": {
+        "mean_ms": 49.171040000000005,
+        "mean_fps": 20.33717407644825,
+        "median_ms": 47.94515,
+        "min_ms": 23.9127,
+        "max_ms": 79.7562
+      },
+      "match_impl_total": {
+        "mean_ms": 84.28939,
+        "mean_fps": 11.863889393433741,
+        "median_ms": 83.189,
+        "min_ms": 51.1597,
+        "max_ms": 120.4072
+      },
+      "homography": {
+        "mean_ms": 18.46581,
+        "mean_fps": 54.154136753275374,
+        "median_ms": 8.4758,
+        "min_ms": 0.8892,
+        "max_ms": 52.0526
+      },
+      "result_creation": {
+        "mean_ms": 0.059539999999999996,
+        "mean_fps": 16795.431642593216,
+        "median_ms": 0.06534999999999999,
+        "min_ms": 0.0302,
+        "max_ms": 0.0701
+      }
+    }
+  },
+  "sift": {
+    "num_pairs": 10,
+    "num_genuine": 5,
+    "num_impostor": 5,
+    "accuracy": 0.9,
+    "precision": 0.8333333333333334,
+    "recall": 1.0,
+    "genuine_accuracy": 1.0,
+    "impostor_accuracy": 0.8,
+    "tar": 1.0,
+    "far": 0.2,
+    "frr": 0.0,
+    "trr": 0.8,
+    "avg_inlier_ratio": 0.40232799124520435,
+    "timings_ms": {
+      "load_images": {
+        "mean_ms": 1.53511,
+        "mean_fps": 651.4191165453941,
+        "median_ms": 1.3825500000000002,
+        "min_ms": 1.3294,
+        "max_ms": 2.7181
+      },
+      "preprocess": {
+        "mean_ms": 0.25168,
+        "mean_fps": 3973.2994278448823,
+        "median_ms": 0.21505000000000002,
+        "min_ms": 0.2031,
+        "max_ms": 0.5172
+      },
+      "masking": {
+        "mean_ms": 8.52569,
+        "mean_fps": 117.29255931191491,
+        "median_ms": 8.5689,
+        "min_ms": 7.9073,
+        "max_ms": 9.0765
+      },
+      "feature_extraction_ms": {
+        "mean_ms": 99.20375,
+        "mean_fps": 10.080264102919497,
+        "median_ms": 97.90350000000001,
+        "min_ms": 96.0304,
+        "max_ms": 111.0009
+      },
+      "matching_ms": {
+        "mean_ms": 0.46918,
+        "mean_fps": 2131.3781491112154,
+        "median_ms": 0.36605,
+        "min_ms": 0.1696,
+        "max_ms": 0.9472
+      },
+      "match_impl_total": {
+        "mean_ms": 99.7901,
+        "mean_fps": 10.021034150682283,
+        "median_ms": 98.83175,
+        "min_ms": 96.4343,
+        "max_ms": 111.8617
+      },
+      "homography": {
+        "mean_ms": 0.74369,
+        "mean_fps": 1344.6462907932068,
+        "median_ms": 0.8270500000000001,
+        "min_ms": 0.0108,
+        "max_ms": 2.5039
+      },
+      "result_creation": {
+        "mean_ms": 0.05202,
+        "mean_fps": 19223.37562475971,
+        "median_ms": 0.06425,
+        "min_ms": 0.0291,
+        "max_ms": 0.0663
+      }
+    }
+  },
+  "sift-fingervein": {
+    "num_pairs": 10,
+    "num_genuine": 5,
+    "num_impostor": 5,
+    "accuracy": 0.9,
+    "precision": 1.0,
+    "recall": 0.8,
+    "genuine_accuracy": 0.8,
+    "impostor_accuracy": 1.0,
+    "tar": 0.8,
+    "far": 0.0,
+    "frr": 0.2,
+    "trr": 1.0,
+    "avg_inlier_ratio": 0.363988219348425,
+    "timings_ms": {
+      "load_images": {
+        "mean_ms": 2.28168,
+        "mean_fps": 438.2735528207286,
+        "median_ms": 2.16415,
+        "min_ms": 1.3507,
+        "max_ms": 2.9832
+      },
+      "preprocess": {
+        "mean_ms": 0.4095,
+        "mean_fps": 2442.002442002442,
+        "median_ms": 0.39349999999999996,
+        "min_ms": 0.2028,
+        "max_ms": 0.7936
+      },
+      "masking": {
+        "mean_ms": 9.13879,
+        "mean_fps": 109.42367643856572,
+        "median_ms": 8.85575,
+        "min_ms": 8.1964,
+        "max_ms": 11.0804
+      },
+      "feature_extraction_ms": {
+        "mean_ms": 118.83717,
+        "mean_fps": 8.414875581436347,
+        "median_ms": 118.22575,
+        "min_ms": 112.6448,
+        "max_ms": 126.591
+      },
+      "matching_ms": {
+        "mean_ms": 12.595320000000001,
+        "mean_fps": 79.39456877633914,
+        "median_ms": 12.2644,
+        "min_ms": 7.4406,
+        "max_ms": 22.792
+      },
+      "match_impl_total": {
+        "mean_ms": 131.8242,
+        "mean_fps": 7.585860562779824,
+        "median_ms": 132.02100000000002,
+        "min_ms": 120.3148,
+        "max_ms": 149.8372
+      },
+      "homography": {
+        "mean_ms": 4.4369,
+        "mean_fps": 225.38258694133293,
+        "median_ms": 3.70585,
+        "min_ms": 0.8269,
+        "max_ms": 15.2037
+      },
+      "result_creation": {
+        "mean_ms": 0.05201,
+        "mean_fps": 19227.071716977505,
+        "median_ms": 0.06475,
+        "min_ms": 0.0303,
+        "max_ms": 0.0664
+      }
+    }
+  },
+  "superglue": {
+    "num_pairs": 10,
+    "num_genuine": 5,
+    "num_impostor": 5,
+    "accuracy": 0.3,
+    "precision": 0.25,
+    "recall": 0.2,
+    "genuine_accuracy": 0.2,
+    "impostor_accuracy": 0.4,
+    "tar": 0.2,
+    "far": 0.6,
+    "frr": 0.8,
+    "trr": 0.4,
+    "avg_inlier_ratio": 0.4381448905286326,
+    "timings_ms": {
+      "load_images": {
+        "mean_ms": 2.90788,
+        "mean_fps": 343.89314552182344,
+        "median_ms": 3.0033,
+        "min_ms": 1.8937,
+        "max_ms": 3.13
+      },
+      "preprocess": {
+        "mean_ms": 0.81286,
+        "mean_fps": 1230.2241468395541,
+        "median_ms": 0.9001,
+        "min_ms": 0.5629,
+        "max_ms": 0.9726
+      },
+      "masking": {
+        "mean_ms": 10.58545,
+        "mean_fps": 94.46929511735448,
+        "median_ms": 9.26925,
+        "min_ms": 8.0875,
+        "max_ms": 14.5474
+      },
+      "inference_ms": {
+        "mean_ms": 191.55697,
+        "mean_fps": 5.22037908617995,
+        "median_ms": 215.32569999999998,
+        "min_ms": 96.3227,
+        "max_ms": 220.6998
+      },
+      "match_impl_total": {
+        "mean_ms": 198.39079,
+        "mean_fps": 5.0405565701915895,
+        "median_ms": 221.82150000000001,
+        "min_ms": 100.4939,
+        "max_ms": 227.1616
+      },
+      "homography": {
+        "mean_ms": 6.70943,
+        "mean_fps": 149.04395753439562,
+        "median_ms": 4.6065,
+        "min_ms": 0.9037,
+        "max_ms": 22.9835
+      },
+      "result_creation": {
+        "mean_ms": 0.06711,
+        "mean_fps": 14900.90895544628,
+        "median_ms": 0.06505,
+        "min_ms": 0.0638,
+        "max_ms": 0.0804
+      }
+    }
+  },
+  "superglue-fingervein": {
+    "num_pairs": 10,
+    "num_genuine": 5,
+    "num_impostor": 5,
+    "accuracy": 0.5,
+    "precision": 0.5,
+    "recall": 1.0,
+    "genuine_accuracy": 1.0,
+    "impostor_accuracy": 0.0,
+    "tar": 1.0,
+    "far": 1.0,
+    "frr": 0.0,
+    "trr": 0.0,
+    "avg_inlier_ratio": 0.3530857690630994,
+    "timings_ms": {
+      "load_images": {
+        "mean_ms": 2.81881,
+        "mean_fps": 354.7596326109245,
+        "median_ms": 2.9404500000000002,
+        "min_ms": 1.762,
+        "max_ms": 3.0775
+      },
+      "preprocess": {
+        "mean_ms": 0.74638,
+        "mean_fps": 1339.8001018248076,
+        "median_ms": 0.73245,
+        "min_ms": 0.5171,
+        "max_ms": 1.0808
+      },
+      "masking": {
+        "mean_ms": 11.37319,
+        "mean_fps": 87.92607878704216,
+        "median_ms": 10.88035,
+        "min_ms": 8.1832,
+        "max_ms": 15.8851
+      },
+      "inference_ms": {
+        "mean_ms": 218.52147,
+        "mean_fps": 4.576209376588946,
+        "median_ms": 255.6368,
+        "min_ms": 117.5319,
+        "max_ms": 267.5561
+      },
+      "match_impl_total": {
+        "mean_ms": 224.23586,
+        "mean_fps": 4.4595900049171435,
+        "median_ms": 261.91505,
+        "min_ms": 120.6144,
+        "max_ms": 278.8742
+      },
+      "homography": {
+        "mean_ms": 21.34506,
+        "mean_fps": 46.84924755423503,
+        "median_ms": 15.7104,
+        "min_ms": 1.9869,
+        "max_ms": 50.1562
+      },
+      "result_creation": {
+        "mean_ms": 0.0667,
+        "mean_fps": 14992.503748125939,
+        "median_ms": 0.06509999999999999,
+        "min_ms": 0.064,
+        "max_ms": 0.0746
+      }
+    }
+  },
+  "sgmnet": {
+    "num_pairs": 10,
+    "num_genuine": 5,
+    "num_impostor": 5,
+    "accuracy": 0.5,
+    "precision": 0.5,
+    "recall": 0.2,
+    "genuine_accuracy": 0.2,
+    "impostor_accuracy": 0.8,
+    "tar": 0.2,
+    "far": 0.2,
+    "frr": 0.8,
+    "trr": 0.8,
+    "avg_inlier_ratio": 0.28471678213787666,
+    "timings_ms": {
+      "load_images": {
+        "mean_ms": 2.4226,
+        "mean_fps": 412.779658218443,
+        "median_ms": 2.74395,
+        "min_ms": 1.3496,
+        "max_ms": 2.9619
+      },
+      "preprocess": {
+        "mean_ms": 0.57714,
+        "mean_fps": 1732.6818449596285,
+        "median_ms": 0.56175,
+        "min_ms": 0.206,
+        "max_ms": 0.9005
+      },
+      "masking": {
+        "mean_ms": 11.26413,
+        "mean_fps": 88.77738449396448,
+        "median_ms": 10.4252,
+        "min_ms": 8.1296,
+        "max_ms": 15.4859
+      },
+      "feature_extraction_ms": {
+        "mean_ms": 162.54575,
+        "mean_fps": 6.152114097108045,
+        "median_ms": 157.799,
+        "min_ms": 147.7473,
+        "max_ms": 191.8247
+      },
+      "matching_ms": {
+        "mean_ms": 300.64239,
+        "mean_fps": 3.326210917894845,
+        "median_ms": 313.27875,
+        "min_ms": 127.2806,
+        "max_ms": 406.4795
+      },
+      "match_impl_total": {
+        "mean_ms": 464.03172,
+        "mean_fps": 2.1550250918191542,
+        "median_ms": 481.13515,
+        "min_ms": 278.1837,
+        "max_ms": 566.7042
+      },
+      "homography": {
+        "mean_ms": 25.27579,
+        "mean_fps": 39.563550733725826,
+        "median_ms": 17.22395,
+        "min_ms": 3.2688,
+        "max_ms": 51.0408
+      },
+      "result_creation": {
+        "mean_ms": 0.06908,
+        "mean_fps": 14475.969889982629,
+        "median_ms": 0.068,
+        "min_ms": 0.0659,
+        "max_ms": 0.0766
+      }
+    }
+  },
+  "sgmnet-fingervein": {
+    "num_pairs": 10,
+    "num_genuine": 5,
+    "num_impostor": 5,
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "genuine_accuracy": 1.0,
+    "impostor_accuracy": 1.0,
+    "tar": 1.0,
+    "far": 0.0,
+    "frr": 0.0,
+    "trr": 1.0,
+    "avg_inlier_ratio": 0.1764616159871148,
+    "timings_ms": {
+      "load_images": {
+        "mean_ms": 2.39581,
+        "mean_fps": 417.3953694157717,
+        "median_ms": 2.4211,
+        "min_ms": 1.6917,
+        "max_ms": 3.2273
+      },
+      "preprocess": {
+        "mean_ms": 0.40388999999999997,
+        "mean_fps": 2475.9216618386195,
+        "median_ms": 0.36534999999999995,
+        "min_ms": 0.2076,
+        "max_ms": 0.8821
+      },
+      "masking": {
+        "mean_ms": 9.45324,
+        "mean_fps": 105.7838370759655,
+        "median_ms": 9.18575,
+        "min_ms": 8.0337,
+        "max_ms": 12.5457
+      },
+      "feature_extraction_ms": {
+        "mean_ms": 152.08995000000002,
+        "mean_fps": 6.575056405765141,
+        "median_ms": 150.9264,
+        "min_ms": 147.5175,
+        "max_ms": 157.2918
+      },
+      "matching_ms": {
+        "mean_ms": 354.58571,
+        "mean_fps": 2.8201926129510406,
+        "median_ms": 378.89284999999995,
+        "min_ms": 140.5739,
+        "max_ms": 498.8551
+      },
+      "match_impl_total": {
+        "mean_ms": 507.41512,
+        "mean_fps": 1.970772963958977,
+        "median_ms": 530.6953,
+        "min_ms": 291.9484,
+        "max_ms": 656.1684
+      },
+      "homography": {
+        "mean_ms": 42.322,
+        "mean_fps": 23.628372950238646,
+        "median_ms": 51.9648,
+        "min_ms": 5.4926,
+        "max_ms": 66.3691
+      },
+      "result_creation": {
+        "mean_ms": 0.06966,
+        "mean_fps": 14355.44071202986,
+        "median_ms": 0.0676,
+        "min_ms": 0.0663,
+        "max_ms": 0.0807
+      }
+    }
+  },
+  "aspanformer": {
+    "num_pairs": 10,
+    "num_genuine": 5,
+    "num_impostor": 5,
+    "accuracy": 0.8,
+    "precision": 0.7142857142857143,
+    "recall": 1.0,
+    "genuine_accuracy": 1.0,
+    "impostor_accuracy": 0.6,
+    "tar": 1.0,
+    "far": 0.4,
+    "frr": 0.0,
+    "trr": 0.6,
+    "avg_inlier_ratio": 0.6283701807383093,
+    "timings_ms": {
+      "load_images": {
+        "mean_ms": 1.84866,
+        "mean_fps": 540.9323510001839,
+        "median_ms": 1.4694,
+        "min_ms": 1.3422,
+        "max_ms": 3.2213
+      },
+      "preprocess": {
+        "mean_ms": 0.05122,
+        "mean_fps": 19523.62358453729,
+        "median_ms": 0.0509,
+        "min_ms": 0.0492,
+        "max_ms": 0.0535
+      },
+      "masking": {
+        "mean_ms": 9.67725,
+        "mean_fps": 103.33514169831305,
+        "median_ms": 9.39685,
+        "min_ms": 8.9538,
+        "max_ms": 12.2212
+      },
+      "inference_ms": {
+        "mean_ms": 1407.8504500000001,
+        "mean_fps": 0.7103027171671535,
+        "median_ms": 1388.1715,
+        "min_ms": 641.0341,
+        "max_ms": 2046.7136
+      },
+      "match_impl_total": {
+        "mean_ms": 1414.47224,
+        "mean_fps": 0.7069774660264806,
+        "median_ms": 1393.01165,
+        "min_ms": 650.007,
+        "max_ms": 2050.4733
+      },
+      "homography": {
+        "mean_ms": 5.10728,
+        "mean_fps": 195.79893798656036,
+        "median_ms": 4.507300000000001,
+        "min_ms": 2.8611,
+        "max_ms": 9.584
+      },
+      "result_creation": {
+        "mean_ms": 0.07117,
+        "mean_fps": 14050.864128143881,
+        "median_ms": 0.06755,
+        "min_ms": 0.0628,
+        "max_ms": 0.0862
+      }
+    }
+  },
+  "deepdetect": {
+    "num_pairs": 10,
+    "num_genuine": 5,
+    "num_impostor": 5,
+    "accuracy": 0.7,
+    "precision": 0.625,
+    "recall": 1.0,
+    "genuine_accuracy": 1.0,
+    "impostor_accuracy": 0.4,
+    "tar": 1.0,
+    "far": 0.6,
+    "frr": 0.0,
+    "trr": 0.4,
+    "avg_inlier_ratio": 0.7343479848191284,
+    "timings_ms": {
+      "load_images": {
+        "mean_ms": 1.5435,
+        "mean_fps": 647.878198898607,
+        "median_ms": 1.40875,
+        "min_ms": 1.3979,
+        "max_ms": 2.3521
+      },
+      "preprocess": {
+        "mean_ms": 0.73675,
+        "mean_fps": 1357.312521208008,
+        "median_ms": 0.68645,
+        "min_ms": 0.6207,
+        "max_ms": 1.2525
+      },
+      "masking": {
+        "mean_ms": 5.89843,
+        "mean_fps": 169.53663941082627,
+        "median_ms": 5.77985,
+        "min_ms": 5.5847,
+        "max_ms": 6.3001
+      },
+      "cnn_inference_ms": {
+        "mean_ms": 41.33528,
+        "mean_fps": 24.19240900267278,
+        "median_ms": 40.8387,
+        "min_ms": 32.8609,
+        "max_ms": 52.4604
+      },
+      "sift_descriptor_ms": {
+        "mean_ms": 56.648759999999996,
+        "mean_fps": 17.652637056839374,
+        "median_ms": 55.9988,
+        "min_ms": 51.1781,
+        "max_ms": 62.2767
+      },
+      "matching_ms": {
+        "mean_ms": 256.24613,
+        "mean_fps": 3.9024979616277524,
+        "median_ms": 253.84550000000002,
+        "min_ms": 227.2627,
+        "max_ms": 278.6699
+      },
+      "match_impl_total": {
+        "mean_ms": 381.98203,
+        "mean_fps": 2.617924199209057,
+        "median_ms": 377.918,
+        "min_ms": 347.9512,
+        "max_ms": 421.005
+      },
+      "homography": {
+        "mean_ms": 1.01592,
+        "mean_fps": 984.3294747617923,
+        "median_ms": 0.9268,
+        "min_ms": 0.0123,
+        "max_ms": 2.1656
+      },
+      "result_creation": {
+        "mean_ms": 0.06161,
+        "mean_fps": 16231.131309852297,
+        "median_ms": 0.06609999999999999,
+        "min_ms": 0.0382,
+        "max_ms": 0.0717
+      }
+    }
+  }
+}

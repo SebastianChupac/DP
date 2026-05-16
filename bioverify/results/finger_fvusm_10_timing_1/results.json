@@ -1,0 +1,6727 @@
+{
+  "experiment": {
+    "name": "All matchers 10 Finger FV-USM ROIs with CLAHE enhacement",
+    "description": "Evaluate multiple matchers on finger fvusm pairs",
+    "researcher": null,
+    "created": "2026-05-16",
+    "purpose": "multiple_matchers"
+  },
+  "timestamp": "2026-05-16T18:24:52.727098",
+  "statistics": {
+    "total_results": 110,
+    "total_errors": 0,
+    "matchers": [
+      "aspanformer",
+      "deepdetect",
+      "loftr",
+      "orb",
+      "orb-fingervein",
+      "sgmnet",
+      "sgmnet-fingervein",
+      "sift",
+      "sift-fingervein",
+      "superglue",
+      "superglue-fingervein"
+    ]
+  },
+  "results": [
+    {
+      "method_name": "loftr",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.9463414634146341,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 615,
+      "num_keypoints_image2": 615,
+      "num_matches": 615,
+      "num_inliers": 582,
+      "inlier_ratio": 0.9463414634146341,
+      "reprojection_error": 0.5252273767009762,
+      "homography_confidence": 0.9463414634146341,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "loftr_tuning": {
+          "thr": 0.2,
+          "border_rm": 2,
+          "dsmax_temperature": 0.1
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.4793,
+        "preprocess": 0.6776,
+        "masking": 2.9935,
+        "inference_ms": 505.16,
+        "match_impl_total": 506.536,
+        "homography": 1.629,
+        "result_creation": 0.088
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.4793,
+          "preprocess": 0.6776,
+          "masking": 2.9935,
+          "inference_ms": 505.16,
+          "match_impl_total": 506.536,
+          "homography": 1.629,
+          "result_creation": 0.088
+        },
+        "pair_id": "FV-USM_genuine_0",
+        "identity1": "080",
+        "identity2": "080",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948668.7896383
+    },
+    {
+      "method_name": "orb",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 0,
+      "num_keypoints_image2": 0,
+      "num_matches": 0,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 1000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.0032,
+        "preprocess": 0.5683,
+        "masking": 1.1968,
+        "feature_extraction_ms": 1.8509,
+        "match_impl_total": 1.8832,
+        "homography": 0.0112,
+        "result_creation": 0.0318
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0032,
+          "preprocess": 0.5683,
+          "masking": 1.1968,
+          "feature_extraction_ms": 1.8509,
+          "match_impl_total": 1.8832,
+          "homography": 0.0112,
+          "result_creation": 0.0318
+        },
+        "pair_id": "FV-USM_genuine_0",
+        "identity1": "080",
+        "identity2": "080",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948668.7896383
+    },
+    {
+      "method_name": "orb-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.4052385760185588,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 1639,
+      "num_keypoints_image2": 650,
+      "num_matches": 95,
+      "num_inliers": 40,
+      "inlier_ratio": 0.42105263157894735,
+      "reprojection_error": 2.2656198147369464,
+      "homography_confidence": 0.4052385760185588,
+      "matcher_params": {
+        "nfeatures": 5000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.2877,
+        "preprocess": 0.3977,
+        "masking": 1.0013,
+        "feature_extraction_ms": 104.7774,
+        "matching_ms": 11.3591,
+        "match_impl_total": 116.2612,
+        "homography": 4.8776,
+        "result_creation": 0.0659
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.2877,
+          "preprocess": 0.3977,
+          "masking": 1.0013,
+          "feature_extraction_ms": 104.7774,
+          "matching_ms": 11.3591,
+          "match_impl_total": 116.2612,
+          "homography": 4.8776,
+          "result_creation": 0.0659
+        },
+        "pair_id": "FV-USM_genuine_0",
+        "identity1": "080",
+        "identity2": "080",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948668.9142377
+    },
+    {
+      "method_name": "sift",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 21,
+      "num_keypoints_image2": 4,
+      "num_matches": 3,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 3,
+        "contrast_threshold": 0.04,
+        "edge_threshold": 10.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.2494,
+        "preprocess": 0.3702,
+        "masking": 0.5729,
+        "feature_extraction_ms": 24.6254,
+        "matching_ms": 0.1627,
+        "match_impl_total": 24.8986,
+        "homography": 0.0115,
+        "result_creation": 0.0311
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.2494,
+          "preprocess": 0.3702,
+          "masking": 0.5729,
+          "feature_extraction_ms": 24.6254,
+          "matching_ms": 0.1627,
+          "match_impl_total": 24.8986,
+          "homography": 0.0115,
+          "result_creation": 0.0311
+        },
+        "pair_id": "FV-USM_genuine_0",
+        "identity1": "080",
+        "identity2": "080",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948668.9484625
+    },
+    {
+      "method_name": "sift-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5806378615025409,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 428,
+      "num_keypoints_image2": 235,
+      "num_matches": 49,
+      "num_inliers": 29,
+      "inlier_ratio": 0.5918367346938775,
+      "reprojection_error": 1.881382185761571,
+      "homography_confidence": 0.5806378615025409,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 4,
+        "contrast_threshold": 0.01,
+        "edge_threshold": 20.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.0535,
+        "preprocess": 0.3788,
+        "masking": 0.4572,
+        "feature_extraction_ms": 34.3094,
+        "matching_ms": 10.1,
+        "match_impl_total": 44.8246,
+        "homography": 1.5812,
+        "result_creation": 0.0775
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0535,
+          "preprocess": 0.3788,
+          "masking": 0.4572,
+          "feature_extraction_ms": 34.3094,
+          "matching_ms": 10.1,
+          "match_impl_total": 44.8246,
+          "homography": 1.5812,
+          "result_creation": 0.0775
+        },
+        "pair_id": "FV-USM_genuine_0",
+        "identity1": "080",
+        "identity2": "080",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948669.001551
+    },
+    {
+      "method_name": "superglue",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5083270174029325,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 363,
+      "num_keypoints_image2": 391,
+      "num_matches": 93,
+      "num_inliers": 49,
+      "inlier_ratio": 0.5268817204301075,
+      "reprojection_error": 2.217021291734007,
+      "homography_confidence": 0.5083270174029325,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45
+      },
+      "timings_ms": {
+        "load_images": 1.0199,
+        "preprocess": 0.399,
+        "masking": 0.4828,
+        "inference_ms": 172.1577,
+        "match_impl_total": 186.2697,
+        "homography": 2.2576,
+        "result_creation": 0.0682
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0199,
+          "preprocess": 0.399,
+          "masking": 0.4828,
+          "inference_ms": 172.1577,
+          "match_impl_total": 186.2697,
+          "homography": 2.2576,
+          "result_creation": 0.0682
+        },
+        "pair_id": "FV-USM_genuine_0",
+        "identity1": "080",
+        "identity2": "080",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948669.1926675
+    },
+    {
+      "method_name": "superglue-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5216308134213341,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 703,
+      "num_keypoints_image2": 712,
+      "num_matches": 261,
+      "num_inliers": 142,
+      "inlier_ratio": 0.5440613026819924,
+      "reprojection_error": 2.3420369116453874,
+      "homography_confidence": 0.5216308134213341,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15
+      },
+      "timings_ms": {
+        "load_images": 1.0742,
+        "preprocess": 0.3855,
+        "masking": 0.6245,
+        "inference_ms": 107.5656,
+        "match_impl_total": 110.1896,
+        "homography": 2.1751,
+        "result_creation": 0.0653
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15,
+        "timings_ms": {
+          "load_images": 1.0742,
+          "preprocess": 0.3855,
+          "masking": 0.6245,
+          "inference_ms": 107.5656,
+          "match_impl_total": 110.1896,
+          "homography": 2.1751,
+          "result_creation": 0.0653
+        },
+        "pair_id": "FV-USM_genuine_0",
+        "identity1": "080",
+        "identity2": "080",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948669.2979486
+    },
+    {
+      "method_name": "sgmnet",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.3272711352298213,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 842,
+      "num_keypoints_image2": 676,
+      "num_matches": 364,
+      "num_inliers": 121,
+      "inlier_ratio": 0.3324175824175824,
+      "reprojection_error": 1.8120593976736927,
+      "homography_confidence": 0.3272711352298213,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 4000,
+          "resize": [
+            -1
+          ],
+          "det_th": 1e-05
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            256,
+            256
+          ],
+          "seed_radius_coe": 0.01,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            1.11,
+            0.1
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.2
+        },
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.0136,
+        "preprocess": 0.3889,
+        "masking": 0.6054,
+        "feature_extraction_ms": 52.2425,
+        "matching_ms": 160.114,
+        "match_impl_total": 212.5785,
+        "homography": 12.0482,
+        "result_creation": 0.0718
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.0136,
+          "preprocess": 0.3889,
+          "masking": 0.6054,
+          "feature_extraction_ms": 52.2425,
+          "matching_ms": 160.114,
+          "match_impl_total": 212.5785,
+          "homography": 12.0482,
+          "result_creation": 0.0718
+        },
+        "pair_id": "FV-USM_genuine_0",
+        "identity1": "080",
+        "identity2": "080",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948669.5353029
+    },
+    {
+      "method_name": "sgmnet-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.24756983834929192,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 842,
+      "num_keypoints_image2": 676,
+      "num_matches": 417,
+      "num_inliers": 104,
+      "inlier_ratio": 0.24940047961630696,
+      "reprojection_error": 1.647344779424566,
+      "homography_confidence": 0.24756983834929192,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 2000,
+          "resize": [
+            -1
+          ],
+          "det_th": 0.0001
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            512,
+            512
+          ],
+          "seed_radius_coe": 0.02,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            0.5,
+            0.05
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.1
+        },
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.0664,
+        "preprocess": 0.3682,
+        "masking": 0.6194,
+        "feature_extraction_ms": 40.41,
+        "matching_ms": 111.5882,
+        "match_impl_total": 152.2187,
+        "homography": 38.0204,
+        "result_creation": 0.0679
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.0664,
+          "preprocess": 0.3682,
+          "masking": 0.6194,
+          "feature_extraction_ms": 40.41,
+          "matching_ms": 111.5882,
+          "match_impl_total": 152.2187,
+          "homography": 38.0204,
+          "result_creation": 0.0679
+        },
+        "pair_id": "FV-USM_genuine_0",
+        "identity1": "080",
+        "identity2": "080",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948669.7249088
+    },
+    {
+      "method_name": "aspanformer",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.9953596287703016,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 431,
+      "num_keypoints_image2": 431,
+      "num_matches": 431,
+      "num_inliers": 429,
+      "inlier_ratio": 0.9953596287703016,
+      "reprojection_error": 0.5620233084100242,
+      "homography_confidence": 0.9953596287703016,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "online_resize": true,
+        "aspanformer_tuning": {
+          "match_coarse_thr": 0.2,
+          "match_coarse_border_rm": 0,
+          "coarse_train_res": [
+            480,
+            640
+          ]
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.0074,
+        "preprocess": 0.049,
+        "masking": 0.3358,
+        "inference_ms": 202.0937,
+        "match_impl_total": 202.8973,
+        "homography": 1.1848,
+        "result_creation": 0.0711
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "timings_ms": {
+          "load_images": 1.0074,
+          "preprocess": 0.049,
+          "masking": 0.3358,
+          "inference_ms": 202.0937,
+          "match_impl_total": 202.8973,
+          "homography": 1.1848,
+          "result_creation": 0.0711
+        },
+        "pair_id": "FV-USM_genuine_0",
+        "identity1": "080",
+        "identity2": "080",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948669.9347026
+    },
+    {
+      "method_name": "deepdetect",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5294117647058824,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 26385,
+      "num_keypoints_image2": 7874,
+      "num_matches": 102,
+      "num_inliers": 54,
+      "inlier_ratio": 0.5294117647058824,
+      "reprojection_error": 2.4128076227407522,
+      "homography_confidence": 0.5294117647058824,
+      "matcher_params": {
+        "model_threshold": 0.5,
+        "flann_trees": 5,
+        "flann_checks": 50,
+        "keypoint_size": 3.0,
+        "nndr_threshold": 0.8,
+        "ratio_threshold": 0.3,
+        "max_reprojection_error": 5.0,
+        "device": "cuda"
+      },
+      "timings_ms": {
+        "load_images": 0.969,
+        "preprocess": 1.217,
+        "masking": 0.5695,
+        "cnn_inference_ms": 53.6636,
+        "sift_descriptor_ms": 108.8397,
+        "matching_ms": 528.6332,
+        "match_impl_total": 739.4543,
+        "homography": 2.2581,
+        "result_creation": 0.0667
+      },
+      "metadata": {
+        "timings_ms": {
+          "load_images": 0.969,
+          "preprocess": 1.217,
+          "masking": 0.5695,
+          "cnn_inference_ms": 53.6636,
+          "sift_descriptor_ms": 108.8397,
+          "matching_ms": 528.6332,
+          "match_impl_total": 739.4543,
+          "homography": 2.2581,
+          "result_creation": 0.0667
+        },
+        "pair_id": "FV-USM_genuine_0",
+        "identity1": "080",
+        "identity2": "080",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948670.6654003
+    },
+    {
+      "method_name": "loftr",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7196969696969697,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 396,
+      "num_keypoints_image2": 396,
+      "num_matches": 396,
+      "num_inliers": 285,
+      "inlier_ratio": 0.7196969696969697,
+      "reprojection_error": 0.8422005361075501,
+      "homography_confidence": 0.7196969696969697,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "loftr_tuning": {
+          "thr": 0.2,
+          "border_rm": 2,
+          "dsmax_temperature": 0.1
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.0442,
+        "preprocess": 0.4027,
+        "masking": 0.525,
+        "inference_ms": 104.0411,
+        "match_impl_total": 110.4492,
+        "homography": 1.1825,
+        "result_creation": 0.0647
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0442,
+          "preprocess": 0.4027,
+          "masking": 0.525,
+          "inference_ms": 104.0411,
+          "match_impl_total": 110.4492,
+          "homography": 1.1825,
+          "result_creation": 0.0647
+        },
+        "pair_id": "FV-USM_genuine_1",
+        "identity1": "014",
+        "identity2": "014",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948670.7805016
+    },
+    {
+      "method_name": "orb",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 0,
+      "num_keypoints_image2": 0,
+      "num_matches": 0,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 1000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.1632,
+        "preprocess": 0.3871,
+        "masking": 0.4967,
+        "feature_extraction_ms": 1.5043,
+        "match_impl_total": 1.5354,
+        "homography": 0.0107,
+        "result_creation": 0.0296
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.1632,
+          "preprocess": 0.3871,
+          "masking": 0.4967,
+          "feature_extraction_ms": 1.5043,
+          "match_impl_total": 1.5354,
+          "homography": 0.0107,
+          "result_creation": 0.0296
+        },
+        "pair_id": "FV-USM_genuine_1",
+        "identity1": "014",
+        "identity2": "014",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948670.796095
+    },
+    {
+      "method_name": "orb-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.539127659966859,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 2001,
+      "num_keypoints_image2": 1745,
+      "num_matches": 54,
+      "num_inliers": 30,
+      "inlier_ratio": 0.5555555555555556,
+      "reprojection_error": 2.099830920904456,
+      "homography_confidence": 0.539127659966859,
+      "matcher_params": {
+        "nfeatures": 5000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.3515,
+        "preprocess": 0.5078,
+        "masking": 0.5703,
+        "feature_extraction_ms": 18.2879,
+        "matching_ms": 26.3371,
+        "match_impl_total": 44.73,
+        "homography": 1.9583,
+        "result_creation": 0.0655
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.3515,
+          "preprocess": 0.5078,
+          "masking": 0.5703,
+          "feature_extraction_ms": 18.2879,
+          "matching_ms": 26.3371,
+          "match_impl_total": 44.73,
+          "homography": 1.9583,
+          "result_creation": 0.0655
+        },
+        "pair_id": "FV-USM_genuine_1",
+        "identity1": "014",
+        "identity2": "014",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948670.8489769
+    },
+    {
+      "method_name": "sift",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7096587867945008,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 15,
+      "num_keypoints_image2": 9,
+      "num_matches": 8,
+      "num_inliers": 6,
+      "inlier_ratio": 0.75,
+      "reprojection_error": 0.5199190444839945,
+      "homography_confidence": 0.7096587867945008,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 3,
+        "contrast_threshold": 0.04,
+        "edge_threshold": 10.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.1344,
+        "preprocess": 0.4036,
+        "masking": 0.4746,
+        "feature_extraction_ms": 19.7552,
+        "matching_ms": 0.1957,
+        "match_impl_total": 20.0631,
+        "homography": 0.9079,
+        "result_creation": 0.0654
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.1344,
+          "preprocess": 0.4036,
+          "masking": 0.4746,
+          "feature_extraction_ms": 19.7552,
+          "matching_ms": 0.1957,
+          "match_impl_total": 20.0631,
+          "homography": 0.9079,
+          "result_creation": 0.0654
+        },
+        "pair_id": "FV-USM_genuine_1",
+        "identity1": "014",
+        "identity2": "014",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948670.8732553
+    },
+    {
+      "method_name": "sift-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.49414072035694967,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 539,
+      "num_keypoints_image2": 530,
+      "num_matches": 35,
+      "num_inliers": 18,
+      "inlier_ratio": 0.5142857142857142,
+      "reprojection_error": 2.272383457464554,
+      "homography_confidence": 0.49414072035694967,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 4,
+        "contrast_threshold": 0.01,
+        "edge_threshold": 20.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 0.9747,
+        "preprocess": 0.3816,
+        "masking": 0.4684,
+        "feature_extraction_ms": 31.7529,
+        "matching_ms": 15.7996,
+        "match_impl_total": 47.8388,
+        "homography": 2.3879,
+        "result_creation": 0.0667
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 0.9747,
+          "preprocess": 0.3816,
+          "masking": 0.4684,
+          "feature_extraction_ms": 31.7529,
+          "matching_ms": 15.7996,
+          "match_impl_total": 47.8388,
+          "homography": 2.3879,
+          "result_creation": 0.0667
+        },
+        "pair_id": "FV-USM_genuine_1",
+        "identity1": "014",
+        "identity2": "014",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948670.91543
+    },
+    {
+      "method_name": "superglue",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5764117536449394,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 368,
+      "num_keypoints_image2": 312,
+      "num_matches": 235,
+      "num_inliers": 141,
+      "inlier_ratio": 0.6,
+      "reprojection_error": 2.302147996517047,
+      "homography_confidence": 0.5764117536449394,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45
+      },
+      "timings_ms": {
+        "load_images": 1.0406,
+        "preprocess": 0.369,
+        "masking": 0.466,
+        "inference_ms": 73.6453,
+        "match_impl_total": 75.2193,
+        "homography": 1.598,
+        "result_creation": 0.0666
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0406,
+          "preprocess": 0.369,
+          "masking": 0.466,
+          "inference_ms": 73.6453,
+          "match_impl_total": 75.2193,
+          "homography": 1.598,
+          "result_creation": 0.0666
+        },
+        "pair_id": "FV-USM_genuine_1",
+        "identity1": "014",
+        "identity2": "014",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948671.0054488
+    },
+    {
+      "method_name": "superglue-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.4717897092404114,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 665,
+      "num_keypoints_image2": 589,
+      "num_matches": 396,
+      "num_inliers": 197,
+      "inlier_ratio": 0.49747474747474746,
+      "reprojection_error": 2.560228828578994,
+      "homography_confidence": 0.4717897092404114,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15
+      },
+      "timings_ms": {
+        "load_images": 1.0203,
+        "preprocess": 0.3795,
+        "masking": 0.499,
+        "inference_ms": 98.3067,
+        "match_impl_total": 100.4387,
+        "homography": 2.8801,
+        "result_creation": 0.0666
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15,
+        "timings_ms": {
+          "load_images": 1.0203,
+          "preprocess": 0.3795,
+          "masking": 0.499,
+          "inference_ms": 98.3067,
+          "match_impl_total": 100.4387,
+          "homography": 2.8801,
+          "result_creation": 0.0666
+        },
+        "pair_id": "FV-USM_genuine_1",
+        "identity1": "014",
+        "identity2": "014",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948671.0973926
+    },
+    {
+      "method_name": "sgmnet",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.2791895730936195,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 1047,
+      "num_keypoints_image2": 917,
+      "num_matches": 378,
+      "num_inliers": 107,
+      "inlier_ratio": 0.2830687830687831,
+      "reprojection_error": 1.7759778657365892,
+      "homography_confidence": 0.2791895730936195,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 4000,
+          "resize": [
+            -1
+          ],
+          "det_th": 1e-05
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            256,
+            256
+          ],
+          "seed_radius_coe": 0.01,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            1.11,
+            0.1
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.2
+        },
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.0323,
+        "preprocess": 0.3811,
+        "masking": 0.5058,
+        "feature_extraction_ms": 45.8499,
+        "matching_ms": 120.6479,
+        "match_impl_total": 166.7857,
+        "homography": 22.6624,
+        "result_creation": 0.0691
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.0323,
+          "preprocess": 0.3811,
+          "masking": 0.5058,
+          "feature_extraction_ms": 45.8499,
+          "matching_ms": 120.6479,
+          "match_impl_total": 166.7857,
+          "homography": 22.6624,
+          "result_creation": 0.0691
+        },
+        "pair_id": "FV-USM_genuine_1",
+        "identity1": "014",
+        "identity2": "014",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948671.2919052
+    },
+    {
+      "method_name": "sgmnet-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.1568098785875262,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 1047,
+      "num_keypoints_image2": 917,
+      "num_matches": 465,
+      "num_inliers": 74,
+      "inlier_ratio": 0.15913978494623657,
+      "reprojection_error": 1.7949771892127993,
+      "homography_confidence": 0.1568098785875262,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 2000,
+          "resize": [
+            -1
+          ],
+          "det_th": 0.0001
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            512,
+            512
+          ],
+          "seed_radius_coe": 0.02,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            0.5,
+            0.05
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.1
+        },
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.0102,
+        "preprocess": 0.3689,
+        "masking": 0.5061,
+        "feature_extraction_ms": 41.9214,
+        "matching_ms": 110.1763,
+        "match_impl_total": 152.3171,
+        "homography": 53.8728,
+        "result_creation": 0.0694
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.0102,
+          "preprocess": 0.3689,
+          "masking": 0.5061,
+          "feature_extraction_ms": 41.9214,
+          "matching_ms": 110.1763,
+          "match_impl_total": 152.3171,
+          "homography": 53.8728,
+          "result_creation": 0.0694
+        },
+        "pair_id": "FV-USM_genuine_1",
+        "identity1": "014",
+        "identity2": "014",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948671.5074792
+    },
+    {
+      "method_name": "aspanformer",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.9672619047619048,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 336,
+      "num_keypoints_image2": 336,
+      "num_matches": 336,
+      "num_inliers": 325,
+      "inlier_ratio": 0.9672619047619048,
+      "reprojection_error": 0.520511702752166,
+      "homography_confidence": 0.9672619047619048,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "online_resize": true,
+        "aspanformer_tuning": {
+          "match_coarse_thr": 0.2,
+          "match_coarse_border_rm": 0,
+          "coarse_train_res": [
+            480,
+            640
+          ]
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.0282,
+        "preprocess": 0.0476,
+        "masking": 0.3225,
+        "inference_ms": 161.7209,
+        "match_impl_total": 162.532,
+        "homography": 0.8503,
+        "result_creation": 0.0671
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "timings_ms": {
+          "load_images": 1.0282,
+          "preprocess": 0.0476,
+          "masking": 0.3225,
+          "inference_ms": 161.7209,
+          "match_impl_total": 162.532,
+          "homography": 0.8503,
+          "result_creation": 0.0671
+        },
+        "pair_id": "FV-USM_genuine_1",
+        "identity1": "014",
+        "identity2": "014",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948671.6654825
+    },
+    {
+      "method_name": "deepdetect",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.35555555555555557,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 26243,
+      "num_keypoints_image2": 26730,
+      "num_matches": 45,
+      "num_inliers": 16,
+      "inlier_ratio": 0.35555555555555557,
+      "reprojection_error": 1.6515192513161834,
+      "homography_confidence": 0.35555555555555557,
+      "matcher_params": {
+        "model_threshold": 0.5,
+        "flann_trees": 5,
+        "flann_checks": 50,
+        "keypoint_size": 3.0,
+        "nndr_threshold": 0.8,
+        "ratio_threshold": 0.3,
+        "max_reprojection_error": 5.0,
+        "device": "cuda"
+      },
+      "timings_ms": {
+        "load_images": 0.9433,
+        "preprocess": 1.1204,
+        "masking": 0.5694,
+        "cnn_inference_ms": 23.4155,
+        "sift_descriptor_ms": 165.8123,
+        "matching_ms": 859.1807,
+        "match_impl_total": 1117.017,
+        "homography": 9.1339,
+        "result_creation": 0.0668
+      },
+      "metadata": {
+        "timings_ms": {
+          "load_images": 0.9433,
+          "preprocess": 1.1204,
+          "masking": 0.5694,
+          "cnn_inference_ms": 23.4155,
+          "sift_descriptor_ms": 165.8123,
+          "matching_ms": 859.1807,
+          "match_impl_total": 1117.017,
+          "homography": 9.1339,
+          "result_creation": 0.0668
+        },
+        "pair_id": "FV-USM_genuine_1",
+        "identity1": "014",
+        "identity2": "014",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948672.805976
+    },
+    {
+      "method_name": "loftr",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.3684193351588959,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 95,
+      "num_keypoints_image2": 95,
+      "num_matches": 95,
+      "num_inliers": 35,
+      "inlier_ratio": 0.3684210526315789,
+      "reprojection_error": 1.4905725820571172,
+      "homography_confidence": 0.3684193351588959,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "loftr_tuning": {
+          "thr": 0.2,
+          "border_rm": 2,
+          "dsmax_temperature": 0.1
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.0277,
+        "preprocess": 0.3977,
+        "masking": 0.5299,
+        "inference_ms": 88.3152,
+        "match_impl_total": 94.8076,
+        "homography": 7.9281,
+        "result_creation": 0.0663
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0277,
+          "preprocess": 0.3977,
+          "masking": 0.5299,
+          "inference_ms": 88.3152,
+          "match_impl_total": 94.8076,
+          "homography": 7.9281,
+          "result_creation": 0.0663
+        },
+        "pair_id": "FV-USM_genuine_2",
+        "identity1": "004",
+        "identity2": "004",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948672.9132972
+    },
+    {
+      "method_name": "orb",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 0,
+      "num_keypoints_image2": 0,
+      "num_matches": 0,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 1000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.0297,
+        "preprocess": 0.3676,
+        "masking": 0.5811,
+        "feature_extraction_ms": 1.7361,
+        "match_impl_total": 1.7656,
+        "homography": 0.0107,
+        "result_creation": 0.0288
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0297,
+          "preprocess": 0.3676,
+          "masking": 0.5811,
+          "feature_extraction_ms": 1.7361,
+          "match_impl_total": 1.7656,
+          "homography": 0.0107,
+          "result_creation": 0.0288
+        },
+        "pair_id": "FV-USM_genuine_2",
+        "identity1": "004",
+        "identity2": "004",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948672.9132972
+    },
+    {
+      "method_name": "orb-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 879,
+      "num_keypoints_image2": 1319,
+      "num_matches": 15,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 5000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.3988,
+        "preprocess": 0.3839,
+        "masking": 0.8474,
+        "feature_extraction_ms": 11.6942,
+        "matching_ms": 10.126,
+        "match_impl_total": 21.9135,
+        "homography": 3.8097,
+        "result_creation": 0.0335
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.3988,
+          "preprocess": 0.3839,
+          "masking": 0.8474,
+          "feature_extraction_ms": 11.6942,
+          "matching_ms": 10.126,
+          "match_impl_total": 21.9135,
+          "homography": 3.8097,
+          "result_creation": 0.0335
+        },
+        "pair_id": "FV-USM_genuine_2",
+        "identity1": "004",
+        "identity2": "004",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948672.9475956
+    },
+    {
+      "method_name": "sift",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 7,
+      "num_keypoints_image2": 6,
+      "num_matches": 1,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 3,
+        "contrast_threshold": 0.04,
+        "edge_threshold": 10.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.4103,
+        "preprocess": 0.5861,
+        "masking": 0.5992,
+        "feature_extraction_ms": 24.0003,
+        "matching_ms": 0.1145,
+        "match_impl_total": 24.2166,
+        "homography": 0.0123,
+        "result_creation": 0.0313
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.4103,
+          "preprocess": 0.5861,
+          "masking": 0.5992,
+          "feature_extraction_ms": 24.0003,
+          "matching_ms": 0.1145,
+          "match_impl_total": 24.2166,
+          "homography": 0.0123,
+          "result_creation": 0.0313
+        },
+        "pair_id": "FV-USM_genuine_2",
+        "identity1": "004",
+        "identity2": "004",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948672.9708354
+    },
+    {
+      "method_name": "sift-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 312,
+      "num_keypoints_image2": 435,
+      "num_matches": 6,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 4,
+        "contrast_threshold": 0.01,
+        "edge_threshold": 20.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 0.9983,
+        "preprocess": 0.3731,
+        "masking": 0.4689,
+        "feature_extraction_ms": 29.0585,
+        "matching_ms": 11.3314,
+        "match_impl_total": 40.7902,
+        "homography": 0.7866,
+        "result_creation": 0.031
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 0.9983,
+          "preprocess": 0.3731,
+          "masking": 0.4689,
+          "feature_extraction_ms": 29.0585,
+          "matching_ms": 11.3314,
+          "match_impl_total": 40.7902,
+          "homography": 0.7866,
+          "result_creation": 0.031
+        },
+        "pair_id": "FV-USM_genuine_2",
+        "identity1": "004",
+        "identity2": "004",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948673.0196867
+    },
+    {
+      "method_name": "superglue",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5478882768540626,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 339,
+      "num_keypoints_image2": 441,
+      "num_matches": 14,
+      "num_inliers": 8,
+      "inlier_ratio": 0.5714285714285714,
+      "reprojection_error": 1.695570725105295,
+      "homography_confidence": 0.5478882768540626,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45
+      },
+      "timings_ms": {
+        "load_images": 1.0173,
+        "preprocess": 0.3679,
+        "masking": 0.4697,
+        "inference_ms": 70.6247,
+        "match_impl_total": 72.5712,
+        "homography": 1.8879,
+        "result_creation": 0.0663
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0173,
+          "preprocess": 0.3679,
+          "masking": 0.4697,
+          "inference_ms": 70.6247,
+          "match_impl_total": 72.5712,
+          "homography": 1.8879,
+          "result_creation": 0.0663
+        },
+        "pair_id": "FV-USM_genuine_2",
+        "identity1": "004",
+        "identity2": "004",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948673.0970352
+    },
+    {
+      "method_name": "superglue-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.2838925055025431,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 609,
+      "num_keypoints_image2": 778,
+      "num_matches": 171,
+      "num_inliers": 52,
+      "inlier_ratio": 0.30409356725146197,
+      "reprojection_error": 2.874795203483632,
+      "homography_confidence": 0.2838925055025431,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15
+      },
+      "timings_ms": {
+        "load_images": 1.0279,
+        "preprocess": 0.3698,
+        "masking": 0.5016,
+        "inference_ms": 105.8166,
+        "match_impl_total": 108.2335,
+        "homography": 16.2901,
+        "result_creation": 0.0653
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15,
+        "timings_ms": {
+          "load_images": 1.0279,
+          "preprocess": 0.3698,
+          "masking": 0.5016,
+          "inference_ms": 105.8166,
+          "match_impl_total": 108.2335,
+          "homography": 16.2901,
+          "result_creation": 0.0653
+        },
+        "pair_id": "FV-USM_genuine_2",
+        "identity1": "004",
+        "identity2": "004",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948673.214279
+    },
+    {
+      "method_name": "sgmnet",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.21516137311640376,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 924,
+      "num_keypoints_image2": 974,
+      "num_matches": 36,
+      "num_inliers": 8,
+      "inlier_ratio": 0.2222222222222222,
+      "reprojection_error": 0.9442586622064983,
+      "homography_confidence": 0.21516137311640376,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 4000,
+          "resize": [
+            -1
+          ],
+          "det_th": 1e-05
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            256,
+            256
+          ],
+          "seed_radius_coe": 0.01,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            1.11,
+            0.1
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.2
+        },
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.0007,
+        "preprocess": 0.3695,
+        "masking": 0.4765,
+        "feature_extraction_ms": 40.5298,
+        "matching_ms": 129.8906,
+        "match_impl_total": 170.6351,
+        "homography": 50.8623,
+        "result_creation": 0.0673
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.0007,
+          "preprocess": 0.3695,
+          "masking": 0.4765,
+          "feature_extraction_ms": 40.5298,
+          "matching_ms": 129.8906,
+          "match_impl_total": 170.6351,
+          "homography": 50.8623,
+          "result_creation": 0.0673
+        },
+        "pair_id": "FV-USM_genuine_2",
+        "identity1": "004",
+        "identity2": "004",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948673.4486165
+    },
+    {
+      "method_name": "sgmnet-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0907341824761362,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 924,
+      "num_keypoints_image2": 974,
+      "num_matches": 131,
+      "num_inliers": 12,
+      "inlier_ratio": 0.0916030534351145,
+      "reprojection_error": 0.7828207469756302,
+      "homography_confidence": 0.0907341824761362,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 2000,
+          "resize": [
+            -1
+          ],
+          "det_th": 0.0001
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            512,
+            512
+          ],
+          "seed_radius_coe": 0.02,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            0.5,
+            0.05
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.1
+        },
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.0172,
+        "preprocess": 0.3788,
+        "masking": 0.4786,
+        "feature_extraction_ms": 40.737,
+        "matching_ms": 112.2987,
+        "match_impl_total": 153.2561,
+        "homography": 52.7353,
+        "result_creation": 0.0829
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.0172,
+          "preprocess": 0.3788,
+          "masking": 0.4786,
+          "feature_extraction_ms": 40.737,
+          "matching_ms": 112.2987,
+          "match_impl_total": 153.2561,
+          "homography": 52.7353,
+          "result_creation": 0.0829
+        },
+        "pair_id": "FV-USM_genuine_2",
+        "identity1": "004",
+        "identity2": "004",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948673.6574616
+    },
+    {
+      "method_name": "aspanformer",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.6707948061743537,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 10,
+      "num_keypoints_image2": 10,
+      "num_matches": 10,
+      "num_inliers": 7,
+      "inlier_ratio": 0.7,
+      "reprojection_error": 0.8881660680256408,
+      "homography_confidence": 0.6707948061743537,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "online_resize": true,
+        "aspanformer_tuning": {
+          "match_coarse_thr": 0.2,
+          "match_coarse_border_rm": 0,
+          "coarse_train_res": [
+            480,
+            640
+          ]
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.1213,
+        "preprocess": 0.0536,
+        "masking": 0.3672,
+        "inference_ms": 156.6704,
+        "match_impl_total": 157.503,
+        "homography": 1.029,
+        "result_creation": 0.0654
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "timings_ms": {
+          "load_images": 1.1213,
+          "preprocess": 0.0536,
+          "masking": 0.3672,
+          "inference_ms": 156.6704,
+          "match_impl_total": 157.503,
+          "homography": 1.029,
+          "result_creation": 0.0654
+        },
+        "pair_id": "FV-USM_genuine_2",
+        "identity1": "004",
+        "identity2": "004",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948673.8058763
+    },
+    {
+      "method_name": "deepdetect",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.3157894736842105,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 20574,
+      "num_keypoints_image2": 24245,
+      "num_matches": 19,
+      "num_inliers": 6,
+      "inlier_ratio": 0.3157894736842105,
+      "reprojection_error": 1.1573116912740133,
+      "homography_confidence": 0.3157894736842105,
+      "matcher_params": {
+        "model_threshold": 0.5,
+        "flann_trees": 5,
+        "flann_checks": 50,
+        "keypoint_size": 3.0,
+        "nndr_threshold": 0.8,
+        "ratio_threshold": 0.3,
+        "max_reprojection_error": 5.0,
+        "device": "cuda"
+      },
+      "timings_ms": {
+        "load_images": 0.9386,
+        "preprocess": 1.0613,
+        "masking": 0.5734,
+        "cnn_inference_ms": 22.3754,
+        "sift_descriptor_ms": 141.4439,
+        "matching_ms": 709.3209,
+        "match_impl_total": 930.0679,
+        "homography": 13.9991,
+        "result_creation": 0.0648
+      },
+      "metadata": {
+        "timings_ms": {
+          "load_images": 0.9386,
+          "preprocess": 1.0613,
+          "masking": 0.5734,
+          "cnn_inference_ms": 22.3754,
+          "sift_descriptor_ms": 141.4439,
+          "matching_ms": 709.3209,
+          "match_impl_total": 930.0679,
+          "homography": 13.9991,
+          "result_creation": 0.0648
+        },
+        "pair_id": "FV-USM_genuine_2",
+        "identity1": "004",
+        "identity2": "004",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948674.7593896
+    },
+    {
+      "method_name": "loftr",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.6078265140472758,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 306,
+      "num_keypoints_image2": 306,
+      "num_matches": 306,
+      "num_inliers": 188,
+      "inlier_ratio": 0.6143790849673203,
+      "reprojection_error": 1.7144527469682982,
+      "homography_confidence": 0.6078265140472758,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "loftr_tuning": {
+          "thr": 0.2,
+          "border_rm": 2,
+          "dsmax_temperature": 0.1
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.0072,
+        "preprocess": 0.4067,
+        "masking": 0.5082,
+        "inference_ms": 100.1615,
+        "match_impl_total": 101.1924,
+        "homography": 1.5544,
+        "result_creation": 0.065
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0072,
+          "preprocess": 0.4067,
+          "masking": 0.5082,
+          "inference_ms": 100.1615,
+          "match_impl_total": 101.1924,
+          "homography": 1.5544,
+          "result_creation": 0.065
+        },
+        "pair_id": "FV-USM_genuine_3",
+        "identity1": "093",
+        "identity2": "093",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948674.86479
+    },
+    {
+      "method_name": "orb",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 0,
+      "num_keypoints_image2": 0,
+      "num_matches": 0,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 1000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 0.987,
+        "preprocess": 0.3784,
+        "masking": 0.5727,
+        "feature_extraction_ms": 1.7373,
+        "match_impl_total": 1.7678,
+        "homography": 0.0108,
+        "result_creation": 0.0308
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 0.987,
+          "preprocess": 0.3784,
+          "masking": 0.5727,
+          "feature_extraction_ms": 1.7373,
+          "match_impl_total": 1.7678,
+          "homography": 0.0108,
+          "result_creation": 0.0308
+        },
+        "pair_id": "FV-USM_genuine_3",
+        "identity1": "093",
+        "identity2": "093",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948674.86479
+    },
+    {
+      "method_name": "orb-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.4913818948599373,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 742,
+      "num_keypoints_image2": 510,
+      "num_matches": 22,
+      "num_inliers": 11,
+      "inlier_ratio": 0.5,
+      "reprojection_error": 1.5861498166582548,
+      "homography_confidence": 0.4913818948599373,
+      "matcher_params": {
+        "nfeatures": 5000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.3002,
+        "preprocess": 0.3837,
+        "masking": 0.5959,
+        "feature_extraction_ms": 8.7618,
+        "matching_ms": 4.943,
+        "match_impl_total": 13.7799,
+        "homography": 2.6572,
+        "result_creation": 0.0644
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.3002,
+          "preprocess": 0.3837,
+          "masking": 0.5959,
+          "feature_extraction_ms": 8.7618,
+          "matching_ms": 4.943,
+          "match_impl_total": 13.7799,
+          "homography": 2.6572,
+          "result_creation": 0.0644
+        },
+        "pair_id": "FV-USM_genuine_3",
+        "identity1": "093",
+        "identity2": "093",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948674.8832722
+    },
+    {
+      "method_name": "sift",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 7,
+      "num_keypoints_image2": 3,
+      "num_matches": 2,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 3,
+        "contrast_threshold": 0.04,
+        "edge_threshold": 10.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.27,
+        "preprocess": 0.4074,
+        "masking": 0.5214,
+        "feature_extraction_ms": 21.0933,
+        "matching_ms": 0.084,
+        "match_impl_total": 21.285,
+        "homography": 0.0133,
+        "result_creation": 0.0337
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.27,
+          "preprocess": 0.4074,
+          "masking": 0.5214,
+          "feature_extraction_ms": 21.0933,
+          "matching_ms": 0.084,
+          "match_impl_total": 21.285,
+          "homography": 0.0133,
+          "result_creation": 0.0337
+        },
+        "pair_id": "FV-USM_genuine_3",
+        "identity1": "093",
+        "identity2": "093",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948674.920608
+    },
+    {
+      "method_name": "sift-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5677270294356006,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 230,
+      "num_keypoints_image2": 233,
+      "num_matches": 10,
+      "num_inliers": 6,
+      "inlier_ratio": 0.6,
+      "reprojection_error": 0.8169812721062399,
+      "homography_confidence": 0.5677270294356006,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 4,
+        "contrast_threshold": 0.01,
+        "edge_threshold": 20.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.0323,
+        "preprocess": 0.4093,
+        "masking": 0.4727,
+        "feature_extraction_ms": 27.1074,
+        "matching_ms": 6.1776,
+        "match_impl_total": 33.4926,
+        "homography": 1.4575,
+        "result_creation": 0.0652
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0323,
+          "preprocess": 0.4093,
+          "masking": 0.4727,
+          "feature_extraction_ms": 27.1074,
+          "matching_ms": 6.1776,
+          "match_impl_total": 33.4926,
+          "homography": 1.4575,
+          "result_creation": 0.0652
+        },
+        "pair_id": "FV-USM_genuine_3",
+        "identity1": "093",
+        "identity2": "093",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948674.948469
+    },
+    {
+      "method_name": "superglue",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.36639618118082523,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 431,
+      "num_keypoints_image2": 426,
+      "num_matches": 148,
+      "num_inliers": 58,
+      "inlier_ratio": 0.3918918918918919,
+      "reprojection_error": 2.8454160675529137,
+      "homography_confidence": 0.36639618118082523,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45
+      },
+      "timings_ms": {
+        "load_images": 1.0051,
+        "preprocess": 0.3977,
+        "masking": 0.5724,
+        "inference_ms": 71.5854,
+        "match_impl_total": 73.1014,
+        "homography": 6.232,
+        "result_creation": 0.0649
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0051,
+          "preprocess": 0.3977,
+          "masking": 0.5724,
+          "inference_ms": 71.5854,
+          "match_impl_total": 73.1014,
+          "homography": 6.232,
+          "result_creation": 0.0649
+        },
+        "pair_id": "FV-USM_genuine_3",
+        "identity1": "093",
+        "identity2": "093",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948675.0316012
+    },
+    {
+      "method_name": "superglue-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.3896496328398756,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 748,
+      "num_keypoints_image2": 786,
+      "num_matches": 329,
+      "num_inliers": 137,
+      "inlier_ratio": 0.41641337386018235,
+      "reprojection_error": 2.828609920752361,
+      "homography_confidence": 0.3896496328398756,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15
+      },
+      "timings_ms": {
+        "load_images": 0.9661,
+        "preprocess": 0.4643,
+        "masking": 0.6023,
+        "inference_ms": 113.4708,
+        "match_impl_total": 114.9444,
+        "homography": 5.454,
+        "result_creation": 0.0671
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15,
+        "timings_ms": {
+          "load_images": 0.9661,
+          "preprocess": 0.4643,
+          "masking": 0.6023,
+          "inference_ms": 113.4708,
+          "match_impl_total": 114.9444,
+          "homography": 5.454,
+          "result_creation": 0.0671
+        },
+        "pair_id": "FV-USM_genuine_3",
+        "identity1": "093",
+        "identity2": "093",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948675.1637254
+    },
+    {
+      "method_name": "sgmnet",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.21512340741658842,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 786,
+      "num_keypoints_image2": 758,
+      "num_matches": 174,
+      "num_inliers": 38,
+      "inlier_ratio": 0.21839080459770116,
+      "reprojection_error": 1.8014514615141568,
+      "homography_confidence": 0.21512340741658842,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 4000,
+          "resize": [
+            -1
+          ],
+          "det_th": 1e-05
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            256,
+            256
+          ],
+          "seed_radius_coe": 0.01,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            1.11,
+            0.1
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.2
+        },
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.1162,
+        "preprocess": 0.3796,
+        "masking": 0.645,
+        "feature_extraction_ms": 37.2344,
+        "matching_ms": 108.179,
+        "match_impl_total": 145.6266,
+        "homography": 51.4388,
+        "result_creation": 0.0708
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.1162,
+          "preprocess": 0.3796,
+          "masking": 0.645,
+          "feature_extraction_ms": 37.2344,
+          "matching_ms": 108.179,
+          "match_impl_total": 145.6266,
+          "homography": 51.4388,
+          "result_creation": 0.0708
+        },
+        "pair_id": "FV-USM_genuine_3",
+        "identity1": "093",
+        "identity2": "093",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948675.3621857
+    },
+    {
+      "method_name": "sgmnet-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.12248024846600135,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 786,
+      "num_keypoints_image2": 758,
+      "num_matches": 333,
+      "num_inliers": 41,
+      "inlier_ratio": 0.12312312312312312,
+      "reprojection_error": 1.6046888965313606,
+      "homography_confidence": 0.12248024846600135,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 2000,
+          "resize": [
+            -1
+          ],
+          "det_th": 0.0001
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            512,
+            512
+          ],
+          "seed_radius_coe": 0.02,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            0.5,
+            0.05
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.1
+        },
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.1456,
+        "preprocess": 0.372,
+        "masking": 0.5164,
+        "feature_extraction_ms": 37.1043,
+        "matching_ms": 103.7808,
+        "match_impl_total": 141.102,
+        "homography": 52.4109,
+        "result_creation": 0.0674
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.1456,
+          "preprocess": 0.372,
+          "masking": 0.5164,
+          "feature_extraction_ms": 37.1043,
+          "matching_ms": 103.7808,
+          "match_impl_total": 141.102,
+          "homography": 52.4109,
+          "result_creation": 0.0674
+        },
+        "pair_id": "FV-USM_genuine_3",
+        "identity1": "093",
+        "identity2": "093",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948675.5561953
+    },
+    {
+      "method_name": "aspanformer",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.9516129032258065,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 248,
+      "num_keypoints_image2": 248,
+      "num_matches": 248,
+      "num_inliers": 236,
+      "inlier_ratio": 0.9516129032258065,
+      "reprojection_error": 0.5828786212235385,
+      "homography_confidence": 0.9516129032258065,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "online_resize": true,
+        "aspanformer_tuning": {
+          "match_coarse_thr": 0.2,
+          "match_coarse_border_rm": 0,
+          "coarse_train_res": [
+            480,
+            640
+          ]
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.0021,
+        "preprocess": 0.0482,
+        "masking": 0.3554,
+        "inference_ms": 174.7515,
+        "match_impl_total": 175.6315,
+        "homography": 0.8117,
+        "result_creation": 0.0685
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "timings_ms": {
+          "load_images": 1.0021,
+          "preprocess": 0.0482,
+          "masking": 0.3554,
+          "inference_ms": 174.7515,
+          "match_impl_total": 175.6315,
+          "homography": 0.8117,
+          "result_creation": 0.0685
+        },
+        "pair_id": "FV-USM_genuine_3",
+        "identity1": "093",
+        "identity2": "093",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948675.7281
+    },
+    {
+      "method_name": "deepdetect",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 14987,
+      "num_keypoints_image2": 16810,
+      "num_matches": 32,
+      "num_inliers": 16,
+      "inlier_ratio": 0.5,
+      "reprojection_error": 1.5041132232107262,
+      "homography_confidence": 0.5,
+      "matcher_params": {
+        "model_threshold": 0.5,
+        "flann_trees": 5,
+        "flann_checks": 50,
+        "keypoint_size": 3.0,
+        "nndr_threshold": 0.8,
+        "ratio_threshold": 0.3,
+        "max_reprojection_error": 5.0,
+        "device": "cuda"
+      },
+      "timings_ms": {
+        "load_images": 0.9484,
+        "preprocess": 1.0977,
+        "masking": 0.6924,
+        "cnn_inference_ms": 25.0487,
+        "sift_descriptor_ms": 102.503,
+        "matching_ms": 496.8395,
+        "match_impl_total": 665.5596,
+        "homography": 2.6068,
+        "result_creation": 0.0651
+      },
+      "metadata": {
+        "timings_ms": {
+          "load_images": 0.9484,
+          "preprocess": 1.0977,
+          "masking": 0.6924,
+          "cnn_inference_ms": 25.0487,
+          "sift_descriptor_ms": 102.503,
+          "matching_ms": 496.8395,
+          "match_impl_total": 665.5596,
+          "homography": 2.6068,
+          "result_creation": 0.0651
+        },
+        "pair_id": "FV-USM_genuine_3",
+        "identity1": "093",
+        "identity2": "093",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948676.3967228
+    },
+    {
+      "method_name": "loftr",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.726530612244898,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 245,
+      "num_keypoints_image2": 245,
+      "num_matches": 245,
+      "num_inliers": 178,
+      "inlier_ratio": 0.726530612244898,
+      "reprojection_error": 0.31857860194415355,
+      "homography_confidence": 0.726530612244898,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "loftr_tuning": {
+          "thr": 0.2,
+          "border_rm": 2,
+          "dsmax_temperature": 0.1
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.175,
+        "preprocess": 0.4794,
+        "masking": 0.6238,
+        "inference_ms": 301.5241,
+        "match_impl_total": 302.9986,
+        "homography": 1.0109,
+        "result_creation": 0.077
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.175,
+          "preprocess": 0.4794,
+          "masking": 0.6238,
+          "inference_ms": 301.5241,
+          "match_impl_total": 302.9986,
+          "homography": 1.0109,
+          "result_creation": 0.077
+        },
+        "pair_id": "FV-USM_genuine_4",
+        "identity1": "035",
+        "identity2": "035",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948676.7129667
+    },
+    {
+      "method_name": "orb",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 0,
+      "num_keypoints_image2": 0,
+      "num_matches": 0,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 1000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.013,
+        "preprocess": 0.3715,
+        "masking": 0.511,
+        "feature_extraction_ms": 1.7785,
+        "match_impl_total": 1.8089,
+        "homography": 0.0113,
+        "result_creation": 0.0297
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.013,
+          "preprocess": 0.3715,
+          "masking": 0.511,
+          "feature_extraction_ms": 1.7785,
+          "match_impl_total": 1.8089,
+          "homography": 0.0113,
+          "result_creation": 0.0297
+        },
+        "pair_id": "FV-USM_genuine_4",
+        "identity1": "035",
+        "identity2": "035",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948676.7129667
+    },
+    {
+      "method_name": "orb-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 1315,
+      "num_keypoints_image2": 854,
+      "num_matches": 40,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 5000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.2354,
+        "preprocess": 0.3865,
+        "masking": 1.3116,
+        "feature_extraction_ms": 11.9657,
+        "matching_ms": 12.3685,
+        "match_impl_total": 24.4512,
+        "homography": 3.0158,
+        "result_creation": 0.0309
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.2354,
+          "preprocess": 0.3865,
+          "masking": 1.3116,
+          "feature_extraction_ms": 11.9657,
+          "matching_ms": 12.3685,
+          "match_impl_total": 24.4512,
+          "homography": 3.0158,
+          "result_creation": 0.0309
+        },
+        "pair_id": "FV-USM_genuine_4",
+        "identity1": "035",
+        "identity2": "035",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948676.7502458
+    },
+    {
+      "method_name": "sift",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.916514041292463,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 12,
+      "num_keypoints_image2": 12,
+      "num_matches": 4,
+      "num_inliers": 4,
+      "inlier_ratio": 1.0,
+      "reprojection_error": 1.5938592401562012e-13,
+      "homography_confidence": 0.916514041292463,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 3,
+        "contrast_threshold": 0.04,
+        "edge_threshold": 10.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.0107,
+        "preprocess": 0.3716,
+        "masking": 0.4622,
+        "feature_extraction_ms": 21.3122,
+        "matching_ms": 0.2191,
+        "match_impl_total": 21.6365,
+        "homography": 0.3375,
+        "result_creation": 0.0653
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0107,
+          "preprocess": 0.3716,
+          "masking": 0.4622,
+          "feature_extraction_ms": 21.3122,
+          "matching_ms": 0.2191,
+          "match_impl_total": 21.6365,
+          "homography": 0.3375,
+          "result_creation": 0.0653
+        },
+        "pair_id": "FV-USM_genuine_4",
+        "identity1": "035",
+        "identity2": "035",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948676.7712588
+    },
+    {
+      "method_name": "sift-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.3819754234939213,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 292,
+      "num_keypoints_image2": 277,
+      "num_matches": 23,
+      "num_inliers": 9,
+      "inlier_ratio": 0.391304347826087,
+      "reprojection_error": 1.4777052993627389,
+      "homography_confidence": 0.3819754234939213,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 4,
+        "contrast_threshold": 0.01,
+        "edge_threshold": 20.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.054,
+        "preprocess": 0.4851,
+        "masking": 0.7794,
+        "feature_extraction_ms": 26.5301,
+        "matching_ms": 9.1318,
+        "match_impl_total": 35.955,
+        "homography": 6.049,
+        "result_creation": 0.0648
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.054,
+          "preprocess": 0.4851,
+          "masking": 0.7794,
+          "feature_extraction_ms": 26.5301,
+          "matching_ms": 9.1318,
+          "match_impl_total": 35.955,
+          "homography": 6.049,
+          "result_creation": 0.0648
+        },
+        "pair_id": "FV-USM_genuine_4",
+        "identity1": "035",
+        "identity2": "035",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948676.8168876
+    },
+    {
+      "method_name": "superglue",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.46568460459418387,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 346,
+      "num_keypoints_image2": 306,
+      "num_matches": 237,
+      "num_inliers": 114,
+      "inlier_ratio": 0.4810126582278481,
+      "reprojection_error": 2.1476999086707513,
+      "homography_confidence": 0.46568460459418387,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45
+      },
+      "timings_ms": {
+        "load_images": 1.014,
+        "preprocess": 0.3669,
+        "masking": 0.4673,
+        "inference_ms": 130.4745,
+        "match_impl_total": 132.2312,
+        "homography": 3.2844,
+        "result_creation": 0.0643
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.014,
+          "preprocess": 0.3669,
+          "masking": 0.4673,
+          "inference_ms": 130.4745,
+          "match_impl_total": 132.2312,
+          "homography": 3.2844,
+          "result_creation": 0.0643
+        },
+        "pair_id": "FV-USM_genuine_4",
+        "identity1": "035",
+        "identity2": "035",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948676.961243
+    },
+    {
+      "method_name": "superglue-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.6289557009383944,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 641,
+      "num_keypoints_image2": 604,
+      "num_matches": 358,
+      "num_inliers": 233,
+      "inlier_ratio": 0.6508379888268156,
+      "reprojection_error": 2.183998393754945,
+      "homography_confidence": 0.6289557009383944,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15
+      },
+      "timings_ms": {
+        "load_images": 1.044,
+        "preprocess": 0.3714,
+        "masking": 0.4764,
+        "inference_ms": 257.094,
+        "match_impl_total": 259.6116,
+        "homography": 1.3325,
+        "result_creation": 0.0636
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15,
+        "timings_ms": {
+          "load_images": 1.044,
+          "preprocess": 0.3714,
+          "masking": 0.4764,
+          "inference_ms": 257.094,
+          "match_impl_total": 259.6116,
+          "homography": 1.3325,
+          "result_creation": 0.0636
+        },
+        "pair_id": "FV-USM_genuine_4",
+        "identity1": "035",
+        "identity2": "035",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948677.2129152
+    },
+    {
+      "method_name": "sgmnet",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.29356310576934497,
+      "ground_truth": true,
+      "is_correct": false,
+      "num_keypoints_image1": 783,
+      "num_keypoints_image2": 782,
+      "num_matches": 309,
+      "num_inliers": 92,
+      "inlier_ratio": 0.2977346278317152,
+      "reprojection_error": 1.7821990367534344,
+      "homography_confidence": 0.29356310576934497,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 4000,
+          "resize": [
+            -1
+          ],
+          "det_th": 1e-05
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            256,
+            256
+          ],
+          "seed_radius_coe": 0.01,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            1.11,
+            0.1
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.2
+        },
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.0239,
+        "preprocess": 0.5163,
+        "masking": 0.4927,
+        "feature_extraction_ms": 37.1104,
+        "matching_ms": 169.7325,
+        "match_impl_total": 207.0617,
+        "homography": 18.103,
+        "result_creation": 0.0699
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.0239,
+          "preprocess": 0.5163,
+          "masking": 0.4927,
+          "feature_extraction_ms": 37.1104,
+          "matching_ms": 169.7325,
+          "match_impl_total": 207.0617,
+          "homography": 18.103,
+          "result_creation": 0.0699
+        },
+        "pair_id": "FV-USM_genuine_4",
+        "identity1": "035",
+        "identity2": "035",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948677.4476836
+    },
+    {
+      "method_name": "sgmnet-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.2015219578344831,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 783,
+      "num_keypoints_image2": 782,
+      "num_matches": 350,
+      "num_inliers": 71,
+      "inlier_ratio": 0.20285714285714285,
+      "reprojection_error": 1.6320730835665125,
+      "homography_confidence": 0.2015219578344831,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 2000,
+          "resize": [
+            -1
+          ],
+          "det_th": 0.0001
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            512,
+            512
+          ],
+          "seed_radius_coe": 0.02,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            0.5,
+            0.05
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.1
+        },
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.0381,
+        "preprocess": 0.3809,
+        "masking": 0.5629,
+        "feature_extraction_ms": 41.3978,
+        "matching_ms": 185.5653,
+        "match_impl_total": 227.1794,
+        "homography": 52.2477,
+        "result_creation": 0.0676
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.0381,
+          "preprocess": 0.3809,
+          "masking": 0.5629,
+          "feature_extraction_ms": 41.3978,
+          "matching_ms": 185.5653,
+          "match_impl_total": 227.1794,
+          "homography": 52.2477,
+          "result_creation": 0.0676
+        },
+        "pair_id": "FV-USM_genuine_4",
+        "identity1": "035",
+        "identity2": "035",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948677.7273574
+    },
+    {
+      "method_name": "aspanformer",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.996742671009772,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 307,
+      "num_keypoints_image2": 307,
+      "num_matches": 307,
+      "num_inliers": 306,
+      "inlier_ratio": 0.996742671009772,
+      "reprojection_error": 0.4762719532031738,
+      "homography_confidence": 0.996742671009772,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "online_resize": true,
+        "aspanformer_tuning": {
+          "match_coarse_thr": 0.2,
+          "match_coarse_border_rm": 0,
+          "coarse_train_res": [
+            480,
+            640
+          ]
+        }
+      },
+      "timings_ms": {
+        "load_images": 0.9861,
+        "preprocess": 0.0471,
+        "masking": 0.3234,
+        "inference_ms": 267.7768,
+        "match_impl_total": 268.7669,
+        "homography": 1.098,
+        "result_creation": 0.0674
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "timings_ms": {
+          "load_images": 0.9861,
+          "preprocess": 0.0471,
+          "masking": 0.3234,
+          "inference_ms": 267.7768,
+          "match_impl_total": 268.7669,
+          "homography": 1.098,
+          "result_creation": 0.0674
+        },
+        "pair_id": "FV-USM_genuine_4",
+        "identity1": "035",
+        "identity2": "035",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948677.9996593
+    },
+    {
+      "method_name": "deepdetect",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5178571428571429,
+      "ground_truth": true,
+      "is_correct": true,
+      "num_keypoints_image1": 24892,
+      "num_keypoints_image2": 14145,
+      "num_matches": 56,
+      "num_inliers": 29,
+      "inlier_ratio": 0.5178571428571429,
+      "reprojection_error": 1.3650266317896145,
+      "homography_confidence": 0.5178571428571429,
+      "matcher_params": {
+        "model_threshold": 0.5,
+        "flann_trees": 5,
+        "flann_checks": 50,
+        "keypoint_size": 3.0,
+        "nndr_threshold": 0.8,
+        "ratio_threshold": 0.3,
+        "max_reprojection_error": 5.0,
+        "device": "cuda"
+      },
+      "timings_ms": {
+        "load_images": 0.971,
+        "preprocess": 1.0578,
+        "masking": 0.4821,
+        "cnn_inference_ms": 41.8953,
+        "sift_descriptor_ms": 120.6185,
+        "matching_ms": 595.4629,
+        "match_impl_total": 808.2611,
+        "homography": 2.752,
+        "result_creation": 0.0713
+      },
+      "metadata": {
+        "timings_ms": {
+          "load_images": 0.971,
+          "preprocess": 1.0578,
+          "masking": 0.4821,
+          "cnn_inference_ms": 41.8953,
+          "sift_descriptor_ms": 120.6185,
+          "matching_ms": 595.4629,
+          "match_impl_total": 808.2611,
+          "homography": 2.752,
+          "result_creation": 0.0713
+        },
+        "pair_id": "FV-USM_genuine_4",
+        "identity1": "035",
+        "identity2": "035",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948678.8215451
+    },
+    {
+      "method_name": "loftr",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.2718355047968562,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 72,
+      "num_keypoints_image2": 72,
+      "num_matches": 72,
+      "num_inliers": 20,
+      "inlier_ratio": 0.2777777777777778,
+      "reprojection_error": 1.9186916774892921,
+      "homography_confidence": 0.2718355047968562,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "loftr_tuning": {
+          "thr": 0.2,
+          "border_rm": 2,
+          "dsmax_temperature": 0.1
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.2215,
+        "preprocess": 0.3994,
+        "masking": 0.6152,
+        "inference_ms": 249.447,
+        "match_impl_total": 250.7885,
+        "homography": 22.7282,
+        "result_creation": 0.0617
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.2215,
+          "preprocess": 0.3994,
+          "masking": 0.6152,
+          "inference_ms": 249.447,
+          "match_impl_total": 250.7885,
+          "homography": 22.7282,
+          "result_creation": 0.0617
+        },
+        "pair_id": "FV-USM_impostor_0",
+        "identity1": "106",
+        "identity2": "051",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948679.0873163
+    },
+    {
+      "method_name": "orb",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 1,
+      "num_keypoints_image2": 0,
+      "num_matches": 0,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 1000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.0035,
+        "preprocess": 0.3702,
+        "masking": 0.5476,
+        "feature_extraction_ms": 2.1334,
+        "match_impl_total": 2.1669,
+        "homography": 0.0106,
+        "result_creation": 0.0293
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0035,
+          "preprocess": 0.3702,
+          "masking": 0.5476,
+          "feature_extraction_ms": 2.1334,
+          "match_impl_total": 2.1669,
+          "homography": 0.0106,
+          "result_creation": 0.0293
+        },
+        "pair_id": "FV-USM_impostor_0",
+        "identity1": "106",
+        "identity2": "051",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948679.1029387
+    },
+    {
+      "method_name": "orb-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 2812,
+      "num_keypoints_image2": 1737,
+      "num_matches": 39,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 5000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.2464,
+        "preprocess": 0.3872,
+        "masking": 0.705,
+        "feature_extraction_ms": 17.334,
+        "matching_ms": 35.7214,
+        "match_impl_total": 53.1653,
+        "homography": 32.9111,
+        "result_creation": 0.0329
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.2464,
+          "preprocess": 0.3872,
+          "masking": 0.705,
+          "feature_extraction_ms": 17.334,
+          "matching_ms": 35.7214,
+          "match_impl_total": 53.1653,
+          "homography": 32.9111,
+          "result_creation": 0.0329
+        },
+        "pair_id": "FV-USM_impostor_0",
+        "identity1": "106",
+        "identity2": "051",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948679.1943312
+    },
+    {
+      "method_name": "sift",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 18,
+      "num_keypoints_image2": 6,
+      "num_matches": 0,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 3,
+        "contrast_threshold": 0.04,
+        "edge_threshold": 10.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.3113,
+        "preprocess": 0.4907,
+        "masking": 0.6772,
+        "feature_extraction_ms": 26.8815,
+        "matching_ms": 0.1679,
+        "match_impl_total": 27.1571,
+        "homography": 0.0113,
+        "result_creation": 0.0304
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.3113,
+          "preprocess": 0.4907,
+          "masking": 0.6772,
+          "feature_extraction_ms": 26.8815,
+          "matching_ms": 0.1679,
+          "match_impl_total": 27.1571,
+          "homography": 0.0113,
+          "result_creation": 0.0304
+        },
+        "pair_id": "FV-USM_impostor_0",
+        "identity1": "106",
+        "identity2": "051",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948679.225195
+    },
+    {
+      "method_name": "sift-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.916514041292463,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 601,
+      "num_keypoints_image2": 526,
+      "num_matches": 4,
+      "num_inliers": 4,
+      "inlier_ratio": 1.0,
+      "reprojection_error": 6.014648377658669e-13,
+      "homography_confidence": 0.916514041292463,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 4,
+        "contrast_threshold": 0.01,
+        "edge_threshold": 20.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.4832,
+        "preprocess": 0.4929,
+        "masking": 0.7048,
+        "feature_extraction_ms": 43.665,
+        "matching_ms": 16.3565,
+        "match_impl_total": 60.647,
+        "homography": 0.3133,
+        "result_creation": 0.0646
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.4832,
+          "preprocess": 0.4929,
+          "masking": 0.7048,
+          "feature_extraction_ms": 43.665,
+          "matching_ms": 16.3565,
+          "match_impl_total": 60.647,
+          "homography": 0.3133,
+          "result_creation": 0.0646
+        },
+        "pair_id": "FV-USM_impostor_0",
+        "identity1": "106",
+        "identity2": "051",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948679.2893574
+    },
+    {
+      "method_name": "superglue",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 392,
+      "num_keypoints_image2": 367,
+      "num_matches": 2,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45
+      },
+      "timings_ms": {
+        "load_images": 1.1662,
+        "preprocess": 0.4621,
+        "masking": 0.6154,
+        "inference_ms": 142.1338,
+        "match_impl_total": 144.5219,
+        "homography": 0.0128,
+        "result_creation": 0.0282
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.1662,
+          "preprocess": 0.4621,
+          "masking": 0.6154,
+          "inference_ms": 142.1338,
+          "match_impl_total": 144.5219,
+          "homography": 0.0128,
+          "result_creation": 0.0282
+        },
+        "pair_id": "FV-USM_impostor_0",
+        "identity1": "106",
+        "identity2": "051",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948679.4308176
+    },
+    {
+      "method_name": "superglue-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.34590457245617684,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 747,
+      "num_keypoints_image2": 639,
+      "num_matches": 22,
+      "num_inliers": 8,
+      "inlier_ratio": 0.36363636363636365,
+      "reprojection_error": 1.8540373890716524,
+      "homography_confidence": 0.34590457245617684,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15
+      },
+      "timings_ms": {
+        "load_images": 1.2736,
+        "preprocess": 0.4764,
+        "masking": 0.796,
+        "inference_ms": 307.5323,
+        "match_impl_total": 310.1675,
+        "homography": 8.0235,
+        "result_creation": 0.064
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15,
+        "timings_ms": {
+          "load_images": 1.2736,
+          "preprocess": 0.4764,
+          "masking": 0.796,
+          "inference_ms": 307.5323,
+          "match_impl_total": 310.1675,
+          "homography": 8.0235,
+          "result_creation": 0.064
+        },
+        "pair_id": "FV-USM_impostor_0",
+        "identity1": "106",
+        "identity2": "051",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948679.7442331
+    },
+    {
+      "method_name": "sgmnet",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.42370512443325614,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 994,
+      "num_keypoints_image2": 932,
+      "num_matches": 11,
+      "num_inliers": 5,
+      "inlier_ratio": 0.45454545454545453,
+      "reprojection_error": 0.2780099976053954,
+      "homography_confidence": 0.42370512443325614,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 4000,
+          "resize": [
+            -1
+          ],
+          "det_th": 1e-05
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            256,
+            256
+          ],
+          "seed_radius_coe": 0.01,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            1.11,
+            0.1
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.2
+        },
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.025,
+        "preprocess": 0.5311,
+        "masking": 0.7004,
+        "feature_extraction_ms": 49.4689,
+        "matching_ms": 215.6173,
+        "match_impl_total": 265.305,
+        "homography": 3.4502,
+        "result_creation": 0.0673
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.025,
+          "preprocess": 0.5311,
+          "masking": 0.7004,
+          "feature_extraction_ms": 49.4689,
+          "matching_ms": 215.6173,
+          "match_impl_total": 265.305,
+          "homography": 3.4502,
+          "result_creation": 0.0673
+        },
+        "pair_id": "FV-USM_impostor_0",
+        "identity1": "106",
+        "identity2": "051",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948680.025096
+    },
+    {
+      "method_name": "sgmnet-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.10819271067328286,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 994,
+      "num_keypoints_image2": 932,
+      "num_matches": 62,
+      "num_inliers": 7,
+      "inlier_ratio": 0.11290322580645161,
+      "reprojection_error": 0.9309764279045111,
+      "homography_confidence": 0.10819271067328286,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 2000,
+          "resize": [
+            -1
+          ],
+          "det_th": 0.0001
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            512,
+            512
+          ],
+          "seed_radius_coe": 0.02,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            0.5,
+            0.05
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.1
+        },
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.0135,
+        "preprocess": 0.3847,
+        "masking": 0.4921,
+        "feature_extraction_ms": 41.4236,
+        "matching_ms": 229.4714,
+        "match_impl_total": 271.1107,
+        "homography": 50.747,
+        "result_creation": 0.0697
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.0135,
+          "preprocess": 0.3847,
+          "masking": 0.4921,
+          "feature_extraction_ms": 41.4236,
+          "matching_ms": 229.4714,
+          "match_impl_total": 271.1107,
+          "homography": 50.747,
+          "result_creation": 0.0697
+        },
+        "pair_id": "FV-USM_impostor_0",
+        "identity1": "106",
+        "identity2": "051",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948680.3530195
+    },
+    {
+      "method_name": "aspanformer",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5557473401905844,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 23,
+      "num_keypoints_image2": 23,
+      "num_matches": 23,
+      "num_inliers": 13,
+      "inlier_ratio": 0.5652173913043478,
+      "reprojection_error": 1.699675511040098,
+      "homography_confidence": 0.5557473401905844,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "online_resize": true,
+        "aspanformer_tuning": {
+          "match_coarse_thr": 0.2,
+          "match_coarse_border_rm": 0,
+          "coarse_train_res": [
+            480,
+            640
+          ]
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.0941,
+        "preprocess": 0.0494,
+        "masking": 0.3847,
+        "inference_ms": 219.2876,
+        "match_impl_total": 220.1133,
+        "homography": 1.9052,
+        "result_creation": 0.0684
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "timings_ms": {
+          "load_images": 1.0941,
+          "preprocess": 0.0494,
+          "masking": 0.3847,
+          "inference_ms": 219.2876,
+          "match_impl_total": 220.1133,
+          "homography": 1.9052,
+          "result_creation": 0.0684
+        },
+        "pair_id": "FV-USM_impostor_0",
+        "identity1": "106",
+        "identity2": "051",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948680.5719845
+    },
+    {
+      "method_name": "deepdetect",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.3235294117647059,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 26594,
+      "num_keypoints_image2": 9413,
+      "num_matches": 34,
+      "num_inliers": 11,
+      "inlier_ratio": 0.3235294117647059,
+      "reprojection_error": 1.6729262910182194,
+      "homography_confidence": 0.3235294117647059,
+      "matcher_params": {
+        "model_threshold": 0.5,
+        "flann_trees": 5,
+        "flann_checks": 50,
+        "keypoint_size": 3.0,
+        "nndr_threshold": 0.8,
+        "ratio_threshold": 0.3,
+        "max_reprojection_error": 5.0,
+        "device": "cuda"
+      },
+      "timings_ms": {
+        "load_images": 0.9331,
+        "preprocess": 1.064,
+        "masking": 0.4942,
+        "cnn_inference_ms": 41.6774,
+        "sift_descriptor_ms": 113.8172,
+        "matching_ms": 547.4389,
+        "match_impl_total": 750.4924,
+        "homography": 12.8184,
+        "result_creation": 0.0653
+      },
+      "metadata": {
+        "timings_ms": {
+          "load_images": 0.9331,
+          "preprocess": 1.064,
+          "masking": 0.4942,
+          "cnn_inference_ms": 41.6774,
+          "sift_descriptor_ms": 113.8172,
+          "matching_ms": 547.4389,
+          "match_impl_total": 750.4924,
+          "homography": 12.8184,
+          "result_creation": 0.0653
+        },
+        "pair_id": "FV-USM_impostor_0",
+        "identity1": "106",
+        "identity2": "051",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948681.3374753
+    },
+    {
+      "method_name": "loftr",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 10,
+      "num_keypoints_image2": 10,
+      "num_matches": 10,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "loftr_tuning": {
+          "thr": 0.2,
+          "border_rm": 2,
+          "dsmax_temperature": 0.1
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.051,
+        "preprocess": 0.3971,
+        "masking": 0.4985,
+        "inference_ms": 227.6676,
+        "match_impl_total": 228.9178,
+        "homography": 2.4892,
+        "result_creation": 0.0284
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.051,
+          "preprocess": 0.3971,
+          "masking": 0.4985,
+          "inference_ms": 227.6676,
+          "match_impl_total": 228.9178,
+          "homography": 2.4892,
+          "result_creation": 0.0284
+        },
+        "pair_id": "FV-USM_impostor_1",
+        "identity1": "043",
+        "identity2": "070",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948681.5723572
+    },
+    {
+      "method_name": "orb",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 0,
+      "num_keypoints_image2": 0,
+      "num_matches": 0,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 1000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.0192,
+        "preprocess": 0.3762,
+        "masking": 0.4813,
+        "feature_extraction_ms": 1.5025,
+        "match_impl_total": 1.5317,
+        "homography": 0.0105,
+        "result_creation": 0.0288
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0192,
+          "preprocess": 0.3762,
+          "masking": 0.4813,
+          "feature_extraction_ms": 1.5025,
+          "match_impl_total": 1.5317,
+          "homography": 0.0105,
+          "result_creation": 0.0288
+        },
+        "pair_id": "FV-USM_impostor_1",
+        "identity1": "043",
+        "identity2": "070",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948681.5723572
+    },
+    {
+      "method_name": "orb-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 1372,
+      "num_keypoints_image2": 623,
+      "num_matches": 18,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 5000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.3888,
+        "preprocess": 0.4829,
+        "masking": 0.5962,
+        "feature_extraction_ms": 11.8931,
+        "matching_ms": 9.3948,
+        "match_impl_total": 21.3714,
+        "homography": 26.1563,
+        "result_creation": 0.0318
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.3888,
+          "preprocess": 0.4829,
+          "masking": 0.5962,
+          "feature_extraction_ms": 11.8931,
+          "matching_ms": 9.3948,
+          "match_impl_total": 21.3714,
+          "homography": 26.1563,
+          "result_creation": 0.0318
+        },
+        "pair_id": "FV-USM_impostor_1",
+        "identity1": "043",
+        "identity2": "070",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948681.6323583
+    },
+    {
+      "method_name": "sift",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 9,
+      "num_keypoints_image2": 4,
+      "num_matches": 2,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 3,
+        "contrast_threshold": 0.04,
+        "edge_threshold": 10.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 0.9506,
+        "preprocess": 0.3783,
+        "masking": 0.5086,
+        "feature_extraction_ms": 19.9396,
+        "matching_ms": 0.0966,
+        "match_impl_total": 20.1424,
+        "homography": 0.0117,
+        "result_creation": 0.0312
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 0.9506,
+          "preprocess": 0.3783,
+          "masking": 0.5086,
+          "feature_extraction_ms": 19.9396,
+          "matching_ms": 0.0966,
+          "match_impl_total": 20.1424,
+          "homography": 0.0117,
+          "result_creation": 0.0312
+        },
+        "pair_id": "FV-USM_impostor_1",
+        "identity1": "043",
+        "identity2": "070",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948681.654759
+    },
+    {
+      "method_name": "sift-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 381,
+      "num_keypoints_image2": 300,
+      "num_matches": 5,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 4,
+        "contrast_threshold": 0.01,
+        "edge_threshold": 20.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.0018,
+        "preprocess": 0.3726,
+        "masking": 0.4674,
+        "feature_extraction_ms": 28.4017,
+        "matching_ms": 10.3968,
+        "match_impl_total": 39.0261,
+        "homography": 1.8161,
+        "result_creation": 0.0315
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0018,
+          "preprocess": 0.3726,
+          "masking": 0.4674,
+          "feature_extraction_ms": 28.4017,
+          "matching_ms": 10.3968,
+          "match_impl_total": 39.0261,
+          "homography": 1.8161,
+          "result_creation": 0.0315
+        },
+        "pair_id": "FV-USM_impostor_1",
+        "identity1": "043",
+        "identity2": "070",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948681.7029107
+    },
+    {
+      "method_name": "superglue",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 391,
+      "num_keypoints_image2": 396,
+      "num_matches": 2,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45
+      },
+      "timings_ms": {
+        "load_images": 1.0675,
+        "preprocess": 0.3844,
+        "masking": 0.4613,
+        "inference_ms": 141.4531,
+        "match_impl_total": 143.2281,
+        "homography": 0.0131,
+        "result_creation": 0.0283
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0675,
+          "preprocess": 0.3844,
+          "masking": 0.4613,
+          "inference_ms": 141.4531,
+          "match_impl_total": 143.2281,
+          "homography": 0.0131,
+          "result_creation": 0.0283
+        },
+        "pair_id": "FV-USM_impostor_1",
+        "identity1": "043",
+        "identity2": "070",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948681.8377168
+    },
+    {
+      "method_name": "superglue-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 727,
+      "num_keypoints_image2": 704,
+      "num_matches": 6,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15
+      },
+      "timings_ms": {
+        "load_images": 1.0068,
+        "preprocess": 0.3783,
+        "masking": 0.462,
+        "inference_ms": 322.2951,
+        "match_impl_total": 324.0731,
+        "homography": 0.8428,
+        "result_creation": 0.0287
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15,
+        "timings_ms": {
+          "load_images": 1.0068,
+          "preprocess": 0.3783,
+          "masking": 0.462,
+          "inference_ms": 322.2951,
+          "match_impl_total": 324.0731,
+          "homography": 0.8428,
+          "result_creation": 0.0287
+        },
+        "pair_id": "FV-USM_impostor_1",
+        "identity1": "043",
+        "identity2": "070",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948682.1656282
+    },
+    {
+      "method_name": "sgmnet",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.2834011206567803,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 858,
+      "num_keypoints_image2": 866,
+      "num_matches": 31,
+      "num_inliers": 9,
+      "inlier_ratio": 0.2903225806451613,
+      "reprojection_error": 0.9146709000002089,
+      "homography_confidence": 0.2834011206567803,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 4000,
+          "resize": [
+            -1
+          ],
+          "det_th": 1e-05
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            256,
+            256
+          ],
+          "seed_radius_coe": 0.01,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            1.11,
+            0.1
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.2
+        },
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.0725,
+        "preprocess": 0.3807,
+        "masking": 0.4545,
+        "feature_extraction_ms": 38.9415,
+        "matching_ms": 180.5724,
+        "match_impl_total": 219.7268,
+        "homography": 19.1819,
+        "result_creation": 0.0679
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.0725,
+          "preprocess": 0.3807,
+          "masking": 0.4545,
+          "feature_extraction_ms": 38.9415,
+          "matching_ms": 180.5724,
+          "match_impl_total": 219.7268,
+          "homography": 19.1819,
+          "result_creation": 0.0679
+        },
+        "pair_id": "FV-USM_impostor_1",
+        "identity1": "043",
+        "identity2": "070",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948682.415822
+    },
+    {
+      "method_name": "sgmnet-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.13517310224657156,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 858,
+      "num_keypoints_image2": 866,
+      "num_matches": 42,
+      "num_inliers": 6,
+      "inlier_ratio": 0.14285714285714285,
+      "reprojection_error": 0.8602610265530682,
+      "homography_confidence": 0.13517310224657156,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 2000,
+          "resize": [
+            -1
+          ],
+          "det_th": 0.0001
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            512,
+            512
+          ],
+          "seed_radius_coe": 0.02,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            0.5,
+            0.05
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.1
+        },
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.001,
+        "preprocess": 0.3669,
+        "masking": 0.564,
+        "feature_extraction_ms": 42.8049,
+        "matching_ms": 195.2903,
+        "match_impl_total": 238.3099,
+        "homography": 55.9813,
+        "result_creation": 0.0692
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.001,
+          "preprocess": 0.3669,
+          "masking": 0.564,
+          "feature_extraction_ms": 42.8049,
+          "matching_ms": 195.2903,
+          "match_impl_total": 238.3099,
+          "homography": 55.9813,
+          "result_creation": 0.0692
+        },
+        "pair_id": "FV-USM_impostor_1",
+        "identity1": "043",
+        "identity2": "070",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948682.7146096
+    },
+    {
+      "method_name": "aspanformer",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 3,
+      "num_keypoints_image2": 3,
+      "num_matches": 3,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "online_resize": true,
+        "aspanformer_tuning": {
+          "match_coarse_thr": 0.2,
+          "match_coarse_border_rm": 0,
+          "coarse_train_res": [
+            480,
+            640
+          ]
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.1121,
+        "preprocess": 0.0493,
+        "masking": 0.3479,
+        "inference_ms": 216.9897,
+        "match_impl_total": 217.9019,
+        "homography": 0.0128,
+        "result_creation": 0.0285
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "timings_ms": {
+          "load_images": 1.1121,
+          "preprocess": 0.0493,
+          "masking": 0.3479,
+          "inference_ms": 216.9897,
+          "match_impl_total": 217.9019,
+          "homography": 0.0128,
+          "result_creation": 0.0285
+        },
+        "pair_id": "FV-USM_impostor_1",
+        "identity1": "043",
+        "identity2": "070",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948682.9309425
+    },
+    {
+      "method_name": "deepdetect",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 26451,
+      "num_keypoints_image2": 11364,
+      "num_matches": 32,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "model_threshold": 0.5,
+        "flann_trees": 5,
+        "flann_checks": 50,
+        "keypoint_size": 3.0,
+        "nndr_threshold": 0.8,
+        "ratio_threshold": 0.3,
+        "max_reprojection_error": 5.0,
+        "device": "cuda"
+      },
+      "timings_ms": {
+        "load_images": 0.9507,
+        "preprocess": 1.0601,
+        "masking": 0.4771,
+        "cnn_inference_ms": 39.2557,
+        "sift_descriptor_ms": 118.2932,
+        "matching_ms": 571.7105,
+        "match_impl_total": 778.1591,
+        "homography": 3.1786,
+        "result_creation": 0.0385
+      },
+      "metadata": {
+        "timings_ms": {
+          "load_images": 0.9507,
+          "preprocess": 1.0601,
+          "masking": 0.4771,
+          "cnn_inference_ms": 39.2557,
+          "sift_descriptor_ms": 118.2932,
+          "matching_ms": 571.7105,
+          "match_impl_total": 778.1591,
+          "homography": 3.1786,
+          "result_creation": 0.0385
+        },
+        "pair_id": "FV-USM_impostor_1",
+        "identity1": "043",
+        "identity2": "070",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948683.7125676
+    },
+    {
+      "method_name": "loftr",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.22386210724479796,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 100,
+      "num_keypoints_image2": 100,
+      "num_matches": 100,
+      "num_inliers": 23,
+      "inlier_ratio": 0.23,
+      "reprojection_error": 2.035896074250481,
+      "homography_confidence": 0.22386210724479796,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "loftr_tuning": {
+          "thr": 0.2,
+          "border_rm": 2,
+          "dsmax_temperature": 0.1
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.088,
+        "preprocess": 0.3917,
+        "masking": 0.5267,
+        "inference_ms": 256.9317,
+        "match_impl_total": 258.3766,
+        "homography": 48.1178,
+        "result_creation": 0.0638
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.088,
+          "preprocess": 0.3917,
+          "masking": 0.5267,
+          "inference_ms": 256.9317,
+          "match_impl_total": 258.3766,
+          "homography": 48.1178,
+          "result_creation": 0.0638
+        },
+        "pair_id": "FV-USM_impostor_2",
+        "identity1": "122",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948684.0251033
+    },
+    {
+      "method_name": "orb",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 221,
+      "num_keypoints_image2": 0,
+      "num_matches": 0,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 1000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.0144,
+        "preprocess": 0.3688,
+        "masking": 0.5031,
+        "feature_extraction_ms": 2.7449,
+        "match_impl_total": 2.776,
+        "homography": 0.0106,
+        "result_creation": 0.0295
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0144,
+          "preprocess": 0.3688,
+          "masking": 0.5031,
+          "feature_extraction_ms": 2.7449,
+          "match_impl_total": 2.776,
+          "homography": 0.0106,
+          "result_creation": 0.0295
+        },
+        "pair_id": "FV-USM_impostor_2",
+        "identity1": "122",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948684.0251033
+    },
+    {
+      "method_name": "orb-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.22359826872478458,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 4883,
+      "num_keypoints_image2": 1980,
+      "num_matches": 30,
+      "num_inliers": 7,
+      "inlier_ratio": 0.23333333333333334,
+      "reprojection_error": 1.0782543321350908,
+      "homography_confidence": 0.22359826872478458,
+      "matcher_params": {
+        "nfeatures": 5000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.2849,
+        "preprocess": 0.3824,
+        "masking": 0.721,
+        "feature_extraction_ms": 26.3158,
+        "matching_ms": 52.3968,
+        "match_impl_total": 78.8063,
+        "homography": 47.0366,
+        "result_creation": 0.1348
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.2849,
+          "preprocess": 0.3824,
+          "masking": 0.721,
+          "feature_extraction_ms": 26.3158,
+          "matching_ms": 52.3968,
+          "match_impl_total": 78.8063,
+          "homography": 47.0366,
+          "result_creation": 0.1348
+        },
+        "pair_id": "FV-USM_impostor_2",
+        "identity1": "122",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948684.1641502
+    },
+    {
+      "method_name": "sift",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 196,
+      "num_keypoints_image2": 11,
+      "num_matches": 0,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 3,
+        "contrast_threshold": 0.04,
+        "edge_threshold": 10.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.0292,
+        "preprocess": 0.368,
+        "masking": 0.5112,
+        "feature_extraction_ms": 25.9961,
+        "matching_ms": 1.1722,
+        "match_impl_total": 27.3124,
+        "homography": 0.0114,
+        "result_creation": 0.0298
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0292,
+          "preprocess": 0.368,
+          "masking": 0.5112,
+          "feature_extraction_ms": 25.9961,
+          "matching_ms": 1.1722,
+          "match_impl_total": 27.3124,
+          "homography": 0.0114,
+          "result_creation": 0.0298
+        },
+        "pair_id": "FV-USM_impostor_2",
+        "identity1": "122",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948684.1944385
+    },
+    {
+      "method_name": "sift-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5237223093099789,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 2008,
+      "num_keypoints_image2": 622,
+      "num_matches": 7,
+      "num_inliers": 4,
+      "inlier_ratio": 0.5714285714285714,
+      "reprojection_error": 3.8394766354567167e-13,
+      "homography_confidence": 0.5237223093099789,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 4,
+        "contrast_threshold": 0.01,
+        "edge_threshold": 20.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.1462,
+        "preprocess": 0.3723,
+        "masking": 0.5072,
+        "feature_extraction_ms": 54.6052,
+        "matching_ms": 38.2905,
+        "match_impl_total": 93.618,
+        "homography": 1.5431,
+        "result_creation": 0.0659
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.1462,
+          "preprocess": 0.3723,
+          "masking": 0.5072,
+          "feature_extraction_ms": 54.6052,
+          "matching_ms": 38.2905,
+          "match_impl_total": 93.618,
+          "homography": 1.5431,
+          "result_creation": 0.0659
+        },
+        "pair_id": "FV-USM_impostor_2",
+        "identity1": "122",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948684.2920628
+    },
+    {
+      "method_name": "superglue",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 223,
+      "num_keypoints_image2": 363,
+      "num_matches": 2,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45
+      },
+      "timings_ms": {
+        "load_images": 1.1873,
+        "preprocess": 0.5209,
+        "masking": 0.6283,
+        "inference_ms": 117.9357,
+        "match_impl_total": 126.1697,
+        "homography": 0.0123,
+        "result_creation": 0.0292
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.1873,
+          "preprocess": 0.5209,
+          "masking": 0.6283,
+          "inference_ms": 117.9357,
+          "match_impl_total": 126.1697,
+          "homography": 0.0123,
+          "result_creation": 0.0292
+        },
+        "pair_id": "FV-USM_impostor_2",
+        "identity1": "122",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948684.4152818
+    },
+    {
+      "method_name": "superglue-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.2683179224697415,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 428,
+      "num_keypoints_image2": 692,
+      "num_matches": 25,
+      "num_inliers": 7,
+      "inlier_ratio": 0.28,
+      "reprojection_error": 1.0238290460438912,
+      "homography_confidence": 0.2683179224697415,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15
+      },
+      "timings_ms": {
+        "load_images": 1.2022,
+        "preprocess": 0.4531,
+        "masking": 0.7957,
+        "inference_ms": 215.7871,
+        "match_impl_total": 218.5795,
+        "homography": 21.902,
+        "result_creation": 0.0666
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15,
+        "timings_ms": {
+          "load_images": 1.2022,
+          "preprocess": 0.4531,
+          "masking": 0.7957,
+          "inference_ms": 215.7871,
+          "match_impl_total": 218.5795,
+          "homography": 21.902,
+          "result_creation": 0.0666
+        },
+        "pair_id": "FV-USM_impostor_2",
+        "identity1": "122",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948684.6650677
+    },
+    {
+      "method_name": "sgmnet",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5677270294356006,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 2049,
+      "num_keypoints_image2": 1065,
+      "num_matches": 10,
+      "num_inliers": 6,
+      "inlier_ratio": 0.6,
+      "reprojection_error": 0.5831442225037423,
+      "homography_confidence": 0.5677270294356006,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 4000,
+          "resize": [
+            -1
+          ],
+          "det_th": 1e-05
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            256,
+            256
+          ],
+          "seed_radius_coe": 0.01,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            1.11,
+            0.1
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.2
+        },
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.2174,
+        "preprocess": 0.5644,
+        "masking": 0.7621,
+        "feature_extraction_ms": 56.9979,
+        "matching_ms": 388.3246,
+        "match_impl_total": 445.5433,
+        "homography": 1.6581,
+        "result_creation": 0.0665
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.2174,
+          "preprocess": 0.5644,
+          "masking": 0.7621,
+          "feature_extraction_ms": 56.9979,
+          "matching_ms": 388.3246,
+          "match_impl_total": 445.5433,
+          "homography": 1.6581,
+          "result_creation": 0.0665
+        },
+        "pair_id": "FV-USM_impostor_2",
+        "identity1": "122",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948685.1167722
+    },
+    {
+      "method_name": "sgmnet-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 2000,
+      "num_keypoints_image2": 1065,
+      "num_matches": 47,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 2000,
+          "resize": [
+            -1
+          ],
+          "det_th": 0.0001
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            512,
+            512
+          ],
+          "seed_radius_coe": 0.02,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            0.5,
+            0.05
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.1
+        },
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.1146,
+        "preprocess": 0.531,
+        "masking": 0.6395,
+        "feature_extraction_ms": 54.4652,
+        "matching_ms": 391.1303,
+        "match_impl_total": 445.8347,
+        "homography": 49.7249,
+        "result_creation": 0.0314
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.1146,
+          "preprocess": 0.531,
+          "masking": 0.6395,
+          "feature_extraction_ms": 54.4652,
+          "matching_ms": 391.1303,
+          "match_impl_total": 445.8347,
+          "homography": 49.7249,
+          "result_creation": 0.0314
+        },
+        "pair_id": "FV-USM_impostor_2",
+        "identity1": "122",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948685.6011975
+    },
+    {
+      "method_name": "aspanformer",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7767927281276363,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 6,
+      "num_keypoints_image2": 6,
+      "num_matches": 6,
+      "num_inliers": 5,
+      "inlier_ratio": 0.8333333333333334,
+      "reprojection_error": 0.2893316485295558,
+      "homography_confidence": 0.7767927281276363,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "online_resize": true,
+        "aspanformer_tuning": {
+          "match_coarse_thr": 0.2,
+          "match_coarse_border_rm": 0,
+          "coarse_train_res": [
+            480,
+            640
+          ]
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.1137,
+        "preprocess": 0.0494,
+        "masking": 0.3318,
+        "inference_ms": 214.7024,
+        "match_impl_total": 215.6215,
+        "homography": 0.7186,
+        "result_creation": 0.0645
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "timings_ms": {
+          "load_images": 1.1137,
+          "preprocess": 0.0494,
+          "masking": 0.3318,
+          "inference_ms": 214.7024,
+          "match_impl_total": 215.6215,
+          "homography": 0.7186,
+          "result_creation": 0.0645
+        },
+        "pair_id": "FV-USM_impostor_2",
+        "identity1": "122",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948685.8216283
+    },
+    {
+      "method_name": "deepdetect",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 61865,
+      "num_keypoints_image2": 27142,
+      "num_matches": 87,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "model_threshold": 0.5,
+        "flann_trees": 5,
+        "flann_checks": 50,
+        "keypoint_size": 3.0,
+        "nndr_threshold": 0.8,
+        "ratio_threshold": 0.3,
+        "max_reprojection_error": 5.0,
+        "device": "cuda"
+      },
+      "timings_ms": {
+        "load_images": 0.9543,
+        "preprocess": 1.0931,
+        "masking": 0.5934,
+        "cnn_inference_ms": 40.7578,
+        "sift_descriptor_ms": 278.9539,
+        "matching_ms": 1522.4846,
+        "match_impl_total": 1957.395,
+        "homography": 51.6058,
+        "result_creation": 0.0372
+      },
+      "metadata": {
+        "timings_ms": {
+          "load_images": 0.9543,
+          "preprocess": 1.0931,
+          "masking": 0.5934,
+          "cnn_inference_ms": 40.7578,
+          "sift_descriptor_ms": 278.9539,
+          "matching_ms": 1522.4846,
+          "match_impl_total": 1957.395,
+          "homography": 51.6058,
+          "result_creation": 0.0372
+        },
+        "pair_id": "FV-USM_impostor_2",
+        "identity1": "122",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948687.8372211
+    },
+    {
+      "method_name": "loftr",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.24403985389889413,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 36,
+      "num_keypoints_image2": 36,
+      "num_matches": 36,
+      "num_inliers": 9,
+      "inlier_ratio": 0.25,
+      "reprojection_error": 1.2540679845987501,
+      "homography_confidence": 0.24403985389889413,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "loftr_tuning": {
+          "thr": 0.2,
+          "border_rm": 2,
+          "dsmax_temperature": 0.1
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.079,
+        "preprocess": 0.3909,
+        "masking": 0.5739,
+        "inference_ms": 241.3664,
+        "match_impl_total": 243.0185,
+        "homography": 34.9941,
+        "result_creation": 0.068
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.079,
+          "preprocess": 0.3909,
+          "masking": 0.5739,
+          "inference_ms": 241.3664,
+          "match_impl_total": 243.0185,
+          "homography": 34.9941,
+          "result_creation": 0.068
+        },
+        "pair_id": "FV-USM_impostor_3",
+        "identity1": "093",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948688.1193419
+    },
+    {
+      "method_name": "orb",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 0,
+      "num_keypoints_image2": 0,
+      "num_matches": 0,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 1000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.0262,
+        "preprocess": 0.3774,
+        "masking": 0.4893,
+        "feature_extraction_ms": 1.8664,
+        "match_impl_total": 1.8975,
+        "homography": 0.0108,
+        "result_creation": 0.0295
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0262,
+          "preprocess": 0.3774,
+          "masking": 0.4893,
+          "feature_extraction_ms": 1.8664,
+          "match_impl_total": 1.8975,
+          "homography": 0.0108,
+          "result_creation": 0.0295
+        },
+        "pair_id": "FV-USM_impostor_3",
+        "identity1": "093",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948688.1193419
+    },
+    {
+      "method_name": "orb-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 1624,
+      "num_keypoints_image2": 2073,
+      "num_matches": 11,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 5000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.2146,
+        "preprocess": 0.3833,
+        "masking": 0.7045,
+        "feature_extraction_ms": 15.0026,
+        "matching_ms": 24.4169,
+        "match_impl_total": 39.5067,
+        "homography": 8.8218,
+        "result_creation": 0.0341
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.2146,
+          "preprocess": 0.3833,
+          "masking": 0.7045,
+          "feature_extraction_ms": 15.0026,
+          "matching_ms": 24.4169,
+          "match_impl_total": 39.5067,
+          "homography": 8.8218,
+          "result_creation": 0.0341
+        },
+        "pair_id": "FV-USM_impostor_3",
+        "identity1": "093",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948688.1826382
+    },
+    {
+      "method_name": "sift",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 10,
+      "num_keypoints_image2": 7,
+      "num_matches": 0,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 3,
+        "contrast_threshold": 0.04,
+        "edge_threshold": 10.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 0.9745,
+        "preprocess": 0.3689,
+        "masking": 0.5052,
+        "feature_extraction_ms": 23.6502,
+        "matching_ms": 0.1452,
+        "match_impl_total": 23.894,
+        "homography": 0.0115,
+        "result_creation": 0.0304
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 0.9745,
+          "preprocess": 0.3689,
+          "masking": 0.5052,
+          "feature_extraction_ms": 23.6502,
+          "matching_ms": 0.1452,
+          "match_impl_total": 23.894,
+          "homography": 0.0115,
+          "result_creation": 0.0304
+        },
+        "pair_id": "FV-USM_impostor_3",
+        "identity1": "093",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948688.210336
+    },
+    {
+      "method_name": "sift-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.611009360861642,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 442,
+      "num_keypoints_image2": 626,
+      "num_matches": 6,
+      "num_inliers": 4,
+      "inlier_ratio": 0.6666666666666666,
+      "reprojection_error": 2.0353705687459578e-13,
+      "homography_confidence": 0.611009360861642,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 4,
+        "contrast_threshold": 0.01,
+        "edge_threshold": 20.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 0.9575,
+        "preprocess": 0.4377,
+        "masking": 0.4829,
+        "feature_extraction_ms": 36.6333,
+        "matching_ms": 15.1965,
+        "match_impl_total": 52.3457,
+        "homography": 0.9948,
+        "result_creation": 0.0668
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 0.9575,
+          "preprocess": 0.4377,
+          "masking": 0.4829,
+          "feature_extraction_ms": 36.6333,
+          "matching_ms": 15.1965,
+          "match_impl_total": 52.3457,
+          "homography": 0.9948,
+          "result_creation": 0.0668
+        },
+        "pair_id": "FV-USM_impostor_3",
+        "identity1": "093",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948688.2664301
+    },
+    {
+      "method_name": "superglue",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.39026249878026953,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 403,
+      "num_keypoints_image2": 388,
+      "num_matches": 22,
+      "num_inliers": 9,
+      "inlier_ratio": 0.4090909090909091,
+      "reprojection_error": 1.9597689239541876,
+      "homography_confidence": 0.39026249878026953,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45
+      },
+      "timings_ms": {
+        "load_images": 1.1999,
+        "preprocess": 0.565,
+        "masking": 0.77,
+        "inference_ms": 138.9617,
+        "match_impl_total": 141.0327,
+        "homography": 6.9154,
+        "result_creation": 0.0646
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.1999,
+          "preprocess": 0.565,
+          "masking": 0.77,
+          "inference_ms": 138.9617,
+          "match_impl_total": 141.0327,
+          "homography": 6.9154,
+          "result_creation": 0.0646
+        },
+        "pair_id": "FV-USM_impostor_3",
+        "identity1": "093",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948688.4176254
+    },
+    {
+      "method_name": "superglue-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.15612365251907795,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 744,
+      "num_keypoints_image2": 718,
+      "num_matches": 93,
+      "num_inliers": 15,
+      "inlier_ratio": 0.16129032258064516,
+      "reprojection_error": 2.0790784335892294,
+      "homography_confidence": 0.15612365251907795,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15
+      },
+      "timings_ms": {
+        "load_images": 1.0355,
+        "preprocess": 0.4647,
+        "masking": 0.5795,
+        "inference_ms": 332.3943,
+        "match_impl_total": 334.9242,
+        "homography": 50.7888,
+        "result_creation": 0.0697
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15,
+        "timings_ms": {
+          "load_images": 1.0355,
+          "preprocess": 0.4647,
+          "masking": 0.5795,
+          "inference_ms": 332.3943,
+          "match_impl_total": 334.9242,
+          "homography": 50.7888,
+          "result_creation": 0.0697
+        },
+        "pair_id": "FV-USM_impostor_3",
+        "identity1": "093",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948688.8067374
+    },
+    {
+      "method_name": "sgmnet",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.7332112330339705,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 890,
+      "num_keypoints_image2": 1094,
+      "num_matches": 5,
+      "num_inliers": 4,
+      "inlier_ratio": 0.8,
+      "reprojection_error": 1.0044419702938288e-12,
+      "homography_confidence": 0.7332112330339705,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 4000,
+          "resize": [
+            -1
+          ],
+          "det_th": 1e-05
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            256,
+            256
+          ],
+          "seed_radius_coe": 0.01,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            1.11,
+            0.1
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.2
+        },
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.0132,
+        "preprocess": 0.3731,
+        "masking": 0.5618,
+        "feature_extraction_ms": 48.0189,
+        "matching_ms": 223.2082,
+        "match_impl_total": 271.4436,
+        "homography": 0.7734,
+        "result_creation": 0.0769
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.0132,
+          "preprocess": 0.3731,
+          "masking": 0.5618,
+          "feature_extraction_ms": 48.0189,
+          "matching_ms": 223.2082,
+          "match_impl_total": 271.4436,
+          "homography": 0.7734,
+          "result_creation": 0.0769
+        },
+        "pair_id": "FV-USM_impostor_3",
+        "identity1": "093",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948689.0811331
+    },
+    {
+      "method_name": "sgmnet-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.14557103318861556,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 890,
+      "num_keypoints_image2": 1094,
+      "num_matches": 39,
+      "num_inliers": 6,
+      "inlier_ratio": 0.15384615384615385,
+      "reprojection_error": 0.6197081975901817,
+      "homography_confidence": 0.14557103318861556,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 2000,
+          "resize": [
+            -1
+          ],
+          "det_th": 0.0001
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            512,
+            512
+          ],
+          "seed_radius_coe": 0.02,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            0.5,
+            0.05
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.1
+        },
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.0137,
+        "preprocess": 0.3684,
+        "masking": 0.4822,
+        "feature_extraction_ms": 42.0188,
+        "matching_ms": 235.0722,
+        "match_impl_total": 277.3069,
+        "homography": 51.0642,
+        "result_creation": 0.0686
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.0137,
+          "preprocess": 0.3684,
+          "masking": 0.4822,
+          "feature_extraction_ms": 42.0188,
+          "matching_ms": 235.0722,
+          "match_impl_total": 277.3069,
+          "homography": 51.0642,
+          "result_creation": 0.0686
+        },
+        "pair_id": "FV-USM_impostor_3",
+        "identity1": "093",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948689.4125316
+    },
+    {
+      "method_name": "aspanformer",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 2,
+      "num_keypoints_image2": 2,
+      "num_matches": 2,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "online_resize": true,
+        "aspanformer_tuning": {
+          "match_coarse_thr": 0.2,
+          "match_coarse_border_rm": 0,
+          "coarse_train_res": [
+            480,
+            640
+          ]
+        }
+      },
+      "timings_ms": {
+        "load_images": 0.9904,
+        "preprocess": 0.0479,
+        "masking": 0.3139,
+        "inference_ms": 216.1264,
+        "match_impl_total": 216.9865,
+        "homography": 0.0145,
+        "result_creation": 0.0307
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "timings_ms": {
+          "load_images": 0.9904,
+          "preprocess": 0.0479,
+          "masking": 0.3139,
+          "inference_ms": 216.1264,
+          "match_impl_total": 216.9865,
+          "homography": 0.0145,
+          "result_creation": 0.0307
+        },
+        "pair_id": "FV-USM_impostor_3",
+        "identity1": "093",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948689.6321604
+    },
+    {
+      "method_name": "deepdetect",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.48484848484848486,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 20480,
+      "num_keypoints_image2": 28569,
+      "num_matches": 33,
+      "num_inliers": 16,
+      "inlier_ratio": 0.48484848484848486,
+      "reprojection_error": 2.1414851802787718,
+      "homography_confidence": 0.48484848484848486,
+      "matcher_params": {
+        "model_threshold": 0.5,
+        "flann_trees": 5,
+        "flann_checks": 50,
+        "keypoint_size": 3.0,
+        "nndr_threshold": 0.8,
+        "ratio_threshold": 0.3,
+        "max_reprojection_error": 5.0,
+        "device": "cuda"
+      },
+      "timings_ms": {
+        "load_images": 1.0008,
+        "preprocess": 1.1162,
+        "masking": 0.5199,
+        "cnn_inference_ms": 41.0146,
+        "sift_descriptor_ms": 154.5819,
+        "matching_ms": 770.8786,
+        "match_impl_total": 1026.732,
+        "homography": 2.8157,
+        "result_creation": 0.0657
+      },
+      "metadata": {
+        "timings_ms": {
+          "load_images": 1.0008,
+          "preprocess": 1.1162,
+          "masking": 0.5199,
+          "cnn_inference_ms": 41.0146,
+          "sift_descriptor_ms": 154.5819,
+          "matching_ms": 770.8786,
+          "match_impl_total": 1026.732,
+          "homography": 2.8157,
+          "result_creation": 0.0657
+        },
+        "pair_id": "FV-USM_impostor_3",
+        "identity1": "093",
+        "identity2": "015",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948690.6496718
+    },
+    {
+      "method_name": "loftr",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.21047935142237642,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 45,
+      "num_keypoints_image2": 45,
+      "num_matches": 45,
+      "num_inliers": 10,
+      "inlier_ratio": 0.2222222222222222,
+      "reprojection_error": 2.229044689816864,
+      "homography_confidence": 0.21047935142237642,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "loftr_tuning": {
+          "thr": 0.2,
+          "border_rm": 2,
+          "dsmax_temperature": 0.1
+        }
+      },
+      "timings_ms": {
+        "load_images": 1.0573,
+        "preprocess": 0.3944,
+        "masking": 0.6129,
+        "inference_ms": 244.6823,
+        "match_impl_total": 246.0078,
+        "homography": 50.6446,
+        "result_creation": 0.0655
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.9,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0573,
+          "preprocess": 0.3944,
+          "masking": 0.6129,
+          "inference_ms": 244.6823,
+          "match_impl_total": 246.0078,
+          "homography": 50.6446,
+          "result_creation": 0.0655
+        },
+        "pair_id": "FV-USM_impostor_4",
+        "identity1": "062",
+        "identity2": "112",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948690.96477
+    },
+    {
+      "method_name": "orb",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 1,
+      "num_keypoints_image2": 0,
+      "num_matches": 0,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 1000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.0129,
+        "preprocess": 0.3682,
+        "masking": 0.5169,
+        "feature_extraction_ms": 2.3406,
+        "match_impl_total": 2.3723,
+        "homography": 0.0106,
+        "result_creation": 0.0284
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0129,
+          "preprocess": 0.3682,
+          "masking": 0.5169,
+          "feature_extraction_ms": 2.3406,
+          "match_impl_total": 2.3723,
+          "homography": 0.0106,
+          "result_creation": 0.0284
+        },
+        "pair_id": "FV-USM_impostor_4",
+        "identity1": "062",
+        "identity2": "112",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948690.97011
+    },
+    {
+      "method_name": "orb-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 1864,
+      "num_keypoints_image2": 267,
+      "num_matches": 55,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 5000,
+        "matcher_type": "FLANN",
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_lsh_table_number": 6,
+        "flann_lsh_key_size": 12,
+        "flann_lsh_multi_probe_level": 1,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.2587,
+        "preprocess": 0.3836,
+        "masking": 0.5972,
+        "feature_extraction_ms": 11.9268,
+        "matching_ms": 7.9054,
+        "match_impl_total": 19.9312,
+        "homography": 15.9817,
+        "result_creation": 0.0329
+      },
+      "metadata": {
+        "matcher_type": "FLANN",
+        "use_cross_check": false,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.2587,
+          "preprocess": 0.3836,
+          "masking": 0.5972,
+          "feature_extraction_ms": 11.9268,
+          "matching_ms": 7.9054,
+          "match_impl_total": 19.9312,
+          "homography": 15.9817,
+          "result_creation": 0.0329
+        },
+        "pair_id": "FV-USM_impostor_4",
+        "identity1": "062",
+        "identity2": "112",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948690.9996915
+    },
+    {
+      "method_name": "sift",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 10,
+      "num_keypoints_image2": 1,
+      "num_matches": 0,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 3,
+        "contrast_threshold": 0.04,
+        "edge_threshold": 10.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 0.9979,
+        "preprocess": 0.3676,
+        "masking": 0.5126,
+        "feature_extraction_ms": 23.6421,
+        "match_impl_total": 23.6827,
+        "homography": 0.0118,
+        "result_creation": 0.0327
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 0.9979,
+          "preprocess": 0.3676,
+          "masking": 0.5126,
+          "feature_extraction_ms": 23.6421,
+          "match_impl_total": 23.6827,
+          "homography": 0.0118,
+          "result_creation": 0.0327
+        },
+        "pair_id": "FV-USM_impostor_4",
+        "identity1": "062",
+        "identity2": "112",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948691.033014
+    },
+    {
+      "method_name": "sift-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.38839636406381817,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 517,
+      "num_keypoints_image2": 197,
+      "num_matches": 12,
+      "num_inliers": 5,
+      "inlier_ratio": 0.4166666666666667,
+      "reprojection_error": 1.0308739752719807,
+      "homography_confidence": 0.38839636406381817,
+      "matcher_params": {
+        "nfeatures": 0,
+        "n_octave_layers": 4,
+        "contrast_threshold": 0.01,
+        "edge_threshold": 20.0,
+        "sigma": 1.6,
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "flann_trees": 5,
+        "flann_checks": 50
+      },
+      "timings_ms": {
+        "load_images": 1.0978,
+        "preprocess": 0.3841,
+        "masking": 0.5443,
+        "feature_extraction_ms": 33.7384,
+        "matching_ms": 10.1601,
+        "match_impl_total": 44.191,
+        "homography": 5.3083,
+        "result_creation": 0.0664
+      },
+      "metadata": {
+        "lowe_ratio": 0.75,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.0978,
+          "preprocess": 0.3841,
+          "masking": 0.5443,
+          "feature_extraction_ms": 33.7384,
+          "matching_ms": 10.1601,
+          "match_impl_total": 44.191,
+          "homography": 5.3083,
+          "result_creation": 0.0664
+        },
+        "pair_id": "FV-USM_impostor_4",
+        "identity1": "062",
+        "identity2": "112",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948691.0884097
+    },
+    {
+      "method_name": "superglue",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.0,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 355,
+      "num_keypoints_image2": 447,
+      "num_matches": 7,
+      "num_inliers": 0,
+      "inlier_ratio": 0.0,
+      "reprojection_error": null,
+      "homography_confidence": 0.0,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45
+      },
+      "timings_ms": {
+        "load_images": 1.1733,
+        "preprocess": 0.3793,
+        "masking": 0.5967,
+        "inference_ms": 135.4942,
+        "match_impl_total": 143.6472,
+        "homography": 0.8492,
+        "result_creation": 0.0302
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 4,
+        "keypoint_threshold": 0.005,
+        "max_keypoints": 1024,
+        "sinkhorn_iterations": 20,
+        "match_threshold": 0.2,
+        "ratio_threshold": 0.45,
+        "timings_ms": {
+          "load_images": 1.1733,
+          "preprocess": 0.3793,
+          "masking": 0.5967,
+          "inference_ms": 135.4942,
+          "match_impl_total": 143.6472,
+          "homography": 0.8492,
+          "result_creation": 0.0302
+        },
+        "pair_id": "FV-USM_impostor_4",
+        "identity1": "062",
+        "identity2": "112",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948691.2367725
+    },
+    {
+      "method_name": "superglue-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.2599779360543875,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 669,
+      "num_keypoints_image2": 791,
+      "num_matches": 124,
+      "num_inliers": 34,
+      "inlier_ratio": 0.27419354838709675,
+      "reprojection_error": 2.5646193200836054,
+      "homography_confidence": 0.2599779360543875,
+      "matcher_params": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15
+      },
+      "timings_ms": {
+        "load_images": 1.1664,
+        "preprocess": 0.4905,
+        "masking": 0.5817,
+        "inference_ms": 339.8616,
+        "match_impl_total": 342.1288,
+        "homography": 24.0147,
+        "result_creation": 0.0654
+      },
+      "metadata": {
+        "weights": "indoor",
+        "nms_radius": 3,
+        "keypoint_threshold": 0.001,
+        "max_keypoints": 2048,
+        "sinkhorn_iterations": 100,
+        "match_threshold": 0.05,
+        "ratio_threshold": 0.15,
+        "timings_ms": {
+          "load_images": 1.1664,
+          "preprocess": 0.4905,
+          "masking": 0.5817,
+          "inference_ms": 339.8616,
+          "match_impl_total": 342.1288,
+          "homography": 24.0147,
+          "result_creation": 0.0654
+        },
+        "pair_id": "FV-USM_impostor_4",
+        "identity1": "062",
+        "identity2": "112",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948691.6056364
+    },
+    {
+      "method_name": "sgmnet",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5825945460957273,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 1006,
+      "num_keypoints_image2": 788,
+      "num_matches": 8,
+      "num_inliers": 5,
+      "inlier_ratio": 0.625,
+      "reprojection_error": 0.14072178931593332,
+      "homography_confidence": 0.5825945460957273,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 4000,
+          "resize": [
+            -1
+          ],
+          "det_th": 1e-05
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            256,
+            256
+          ],
+          "seed_radius_coe": 0.01,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            1.11,
+            0.1
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.2
+        },
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.1713,
+        "preprocess": 0.4484,
+        "masking": 0.6039,
+        "feature_extraction_ms": 41.8319,
+        "matching_ms": 198.6677,
+        "match_impl_total": 240.7182,
+        "homography": 1.3008,
+        "result_creation": 0.0687
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.4,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.1713,
+          "preprocess": 0.4484,
+          "masking": 0.6039,
+          "feature_extraction_ms": 41.8319,
+          "matching_ms": 198.6677,
+          "match_impl_total": 240.7182,
+          "homography": 1.3008,
+          "result_creation": 0.0687
+        },
+        "pair_id": "FV-USM_impostor_4",
+        "identity1": "062",
+        "identity2": "112",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948691.8511908
+    },
+    {
+      "method_name": "sgmnet-fingervein",
+      "modality": "finger",
+      "is_same_person_pred": false,
+      "verification_confidence": 0.11736074897258389,
+      "ground_truth": false,
+      "is_correct": true,
+      "num_keypoints_image1": 1006,
+      "num_keypoints_image2": 788,
+      "num_matches": 66,
+      "num_inliers": 8,
+      "inlier_ratio": 0.12121212121212122,
+      "reprojection_error": 0.4402607476214043,
+      "homography_confidence": 0.11736074897258389,
+      "matcher_params": {
+        "color": false,
+        "extractor": {
+          "name": "root",
+          "num_kpt": 2000,
+          "resize": [
+            -1
+          ],
+          "det_th": 0.0001
+        },
+        "matcher": {
+          "name": "SGM",
+          "model_dir": "SGMNet/weights/sgm/root",
+          "seed_top_k": [
+            512,
+            512
+          ],
+          "seed_radius_coe": 0.02,
+          "net_channels": 128,
+          "layer_num": 9,
+          "head": 4,
+          "seedlayer": [
+            0,
+            6
+          ],
+          "use_mc_seeding": true,
+          "use_score_encoding": false,
+          "conf_bar": [
+            0.5,
+            0.05
+          ],
+          "sink_iter": [
+            10,
+            100
+          ],
+          "detach_iter": 1000000,
+          "p_th": 0.1
+        },
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0
+      },
+      "timings_ms": {
+        "load_images": 1.0137,
+        "preprocess": 0.378,
+        "masking": 0.5888,
+        "feature_extraction_ms": 39.9449,
+        "matching_ms": 208.0824,
+        "match_impl_total": 248.2425,
+        "homography": 50.7935,
+        "result_creation": 0.0695
+      },
+      "metadata": {
+        "extractor": "root",
+        "matcher": "SGM",
+        "ratio_threshold": 0.2,
+        "max_reprojection_error": 5.0,
+        "timings_ms": {
+          "load_images": 1.0137,
+          "preprocess": 0.378,
+          "masking": 0.5888,
+          "feature_extraction_ms": 39.9449,
+          "matching_ms": 208.0824,
+          "match_impl_total": 248.2425,
+          "homography": 50.7935,
+          "result_creation": 0.0695
+        },
+        "pair_id": "FV-USM_impostor_4",
+        "identity1": "062",
+        "identity2": "112",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948692.1497405
+    },
+    {
+      "method_name": "aspanformer",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.5589956718119615,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 12,
+      "num_keypoints_image2": 12,
+      "num_matches": 12,
+      "num_inliers": 7,
+      "inlier_ratio": 0.5833333333333334,
+      "reprojection_error": 1.3011676777931795,
+      "homography_confidence": 0.5589956718119615,
+      "matcher_params": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "online_resize": true,
+        "aspanformer_tuning": {
+          "match_coarse_thr": 0.2,
+          "match_coarse_border_rm": 0,
+          "coarse_train_res": [
+            480,
+            640
+          ]
+        }
+      },
+      "timings_ms": {
+        "load_images": 0.9966,
+        "preprocess": 0.0468,
+        "masking": 0.3554,
+        "inference_ms": 214.4988,
+        "match_impl_total": 215.4121,
+        "homography": 1.662,
+        "result_creation": 0.0651
+      },
+      "metadata": {
+        "model_type": "indoor",
+        "confidence_threshold": 0.3,
+        "ratio_threshold": 0.4,
+        "timings_ms": {
+          "load_images": 0.9966,
+          "preprocess": 0.0468,
+          "masking": 0.3554,
+          "inference_ms": 214.4988,
+          "match_impl_total": 215.4121,
+          "homography": 1.662,
+          "result_creation": 0.0651
+        },
+        "pair_id": "FV-USM_impostor_4",
+        "identity1": "062",
+        "identity2": "112",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948692.3618798
+    },
+    {
+      "method_name": "deepdetect",
+      "modality": "finger",
+      "is_same_person_pred": true,
+      "verification_confidence": 0.6,
+      "ground_truth": false,
+      "is_correct": false,
+      "num_keypoints_image1": 7812,
+      "num_keypoints_image2": 7385,
+      "num_matches": 20,
+      "num_inliers": 12,
+      "inlier_ratio": 0.6,
+      "reprojection_error": 1.529720732544915,
+      "homography_confidence": 0.6,
+      "matcher_params": {
+        "model_threshold": 0.5,
+        "flann_trees": 5,
+        "flann_checks": 50,
+        "keypoint_size": 3.0,
+        "nndr_threshold": 0.8,
+        "ratio_threshold": 0.3,
+        "max_reprojection_error": 5.0,
+        "device": "cuda"
+      },
+      "timings_ms": {
+        "load_images": 0.9634,
+        "preprocess": 1.0649,
+        "masking": 0.4935,
+        "cnn_inference_ms": 41.5957,
+        "sift_descriptor_ms": 48.6865,
+        "matching_ms": 234.0616,
+        "match_impl_total": 345.758,
+        "homography": 1.6204,
+        "result_creation": 0.0658
+      },
+      "metadata": {
+        "timings_ms": {
+          "load_images": 0.9634,
+          "preprocess": 1.0649,
+          "masking": 0.4935,
+          "cnn_inference_ms": 41.5957,
+          "sift_descriptor_ms": 48.6865,
+          "matching_ms": 234.0616,
+          "match_impl_total": 345.758,
+          "homography": 1.6204,
+          "result_creation": 0.0658
+        },
+        "pair_id": "FV-USM_impostor_4",
+        "identity1": "062",
+        "identity2": "112",
+        "dataset_name": "FV-USM"
+      },
+      "timestamp": 1778948692.7228422
+    }
+  ]
+}

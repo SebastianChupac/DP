@@ -5,7 +5,7 @@ Ported from SIFT/sift-orb.py into the unified matcher framework.
 Supports both BruteForce and FLANN-LSH matching strategies.
 """
 
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Dict
 
 import cv2
 import numpy as np
@@ -91,10 +91,12 @@ class ORBMatcher(BaseMatcher):
         img2: np.ndarray,
         mask1: Optional[np.ndarray],
         mask2: Optional[np.ndarray],
+        timings_ms: Optional[Dict[str, float]] = None,
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Stateless ORB matching."""
-        kpts1, des1 = self._extract_features(img1, mask1)
-        kpts2, des2 = self._extract_features(img2, mask2)
+        with self._profile_stage(timings_ms, "feature_extraction_ms"):
+            kpts1, des1 = self._extract_features(img1, mask1)
+            kpts2, des2 = self._extract_features(img2, mask2)
 
         # Convert keypoints to array = already converted in _extract_features
         #keypoints1 = self._keypoints_to_array(kpts1)
@@ -108,9 +110,11 @@ class ORBMatcher(BaseMatcher):
 
         # Match based on configured strategy
         if self._matcher_type == "FLANN":
-            good_matches = self._match_flann(des1, des2)
+            with self._profile_stage(timings_ms, "matching_ms"):
+                good_matches = self._match_flann(des1, des2)
         else:  # BruteForce
-            good_matches = self._match_bruteforce(des1, des2)
+            with self._profile_stage(timings_ms, "matching_ms"):
+                good_matches = self._match_bruteforce(des1, des2)
 
         if not good_matches:
             return keypoints1, keypoints2, np.empty((0, 2), dtype=int)

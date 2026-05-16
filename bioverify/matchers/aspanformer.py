@@ -4,7 +4,7 @@ ASpanFormer matcher implementation.
 Uses the ASpanFormer model for robust feature matching.
 """
 
-from typing import Any, Optional, Tuple
+from typing import Any, Optional, Tuple, Dict
 import sys
 from pathlib import Path
 
@@ -144,6 +144,7 @@ class ASpanFormerMatcher(BaseMatcher):
         img2: np.ndarray,
         mask1: Optional[np.ndarray],
         mask2: Optional[np.ndarray],
+        timings_ms: Optional[Dict[str, float]] = None,
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Run ASpanFormer matching on a pair of images."""
         gray1 = self._to_grayscale(img1)
@@ -167,8 +168,9 @@ class ASpanFormerMatcher(BaseMatcher):
             "image1": img2_tensor.to(self._device),
         }
         
-        with torch.no_grad():
-            self._matcher(batch, online_resize=self._online_resize)
+        with self._profile_stage(timings_ms, "inference_ms"):
+            with torch.no_grad():
+                self._matcher(batch, online_resize=self._online_resize)
 
         # Extract results
         keypoints1 = batch["mkpts0_f"].cpu().numpy()

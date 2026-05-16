@@ -109,6 +109,14 @@ class VerificationResult:
         ]
         if self.reprojection_error is not None:
             lines.append(f"Reprojection error: {self.reprojection_error:.2f} px")
+        timings_ms = self.metadata.get("timings_ms")
+        if isinstance(timings_ms, dict) and timings_ms:
+            lines.append("Timings (ms):")
+            for stage_name, stage_value in timings_ms.items():
+                try:
+                    lines.append(f"  {stage_name}: {float(stage_value):.2f}")
+                except (TypeError, ValueError):
+                    lines.append(f"  {stage_name}: {stage_value}")
         return "\n".join(lines)
 
     def print_summary(self) -> None:

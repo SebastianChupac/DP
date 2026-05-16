@@ -174,7 +174,12 @@ class DeepDetectMatcher(BaseMatcher):
             
         return image
         
-    def _predict_keypoint_masks(self, image1: np.ndarray, image2: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
+    def _predict_keypoint_masks(
+        self,
+        image1: np.ndarray,
+        image2: np.ndarray,
+        timings_ms: Optional[Dict[str, float]] = None,
+    ) -> Tuple[np.ndarray, np.ndarray]:
         """
         Predict keypoint masks using DeepDetect CNN.
         
@@ -195,12 +200,13 @@ class DeepDetectMatcher(BaseMatcher):
         input2 = transform(img2_pil).unsqueeze(0).to(self.device)
         
         # Run model
-        with torch.no_grad():
-            pred1 = self.model(input1)
-            pred2 = self.model(input2)
-            # Convert logits to probabilities
-            pred1 = torch.sigmoid(pred1)
-            pred2 = torch.sigmoid(pred2)
+        with self._profile_stage(timings_ms, "cnn_inference_ms"):
+            with torch.no_grad():
+                pred1 = self.model(input1)
+                pred2 = self.model(input2)
+                # Convert logits to probabilities
+                pred1 = torch.sigmoid(pred1)
+                pred2 = torch.sigmoid(pred2)
             
         # Convert to numpy and threshold
         mask1 = pred1.cpu().squeeze().numpy()
@@ -265,6 +271,7 @@ class DeepDetectMatcher(BaseMatcher):
         image2: np.ndarray,
         mask1: Optional[np.ndarray],
         mask2: Optional[np.ndarray],
+        timings_ms: Optional[Dict[str, float]] = None,
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """
         Perform DeepDetect matching.
@@ -295,7 +302,7 @@ class DeepDetectMatcher(BaseMatcher):
             masked_img2 = cv2.bitwise_and(masked_img2, masked_img2, mask=mask2_prepared)
         
         # Predict keypoint masks using CNN on masked images
-        kp_mask1, kp_mask2 = self._predict_keypoint_masks(masked_img1, masked_img2)
+        kp_mask1, kp_mask2 = self._predict_keypoint_masks(masked_img1, masked_img2, timings_ms=timings_ms)
         
         # Convert masks to keypoint lists
         kp1_list = self._mask_to_keypoints(kp_mask1)
@@ -306,8 +313,9 @@ class DeepDetectMatcher(BaseMatcher):
         # but for framework consistency we use the resized images.
         # SIFT is scale-invariant so this should not significantly affect matching quality.
         sift = cv2.SIFT_create()
-        kp1, des1 = sift.compute(image1, kp1_list)
-        kp2, des2 = sift.compute(image2, kp2_list)
+        with self._profile_stage(timings_ms, "sift_descriptor_ms"):
+            kp1, des1 = sift.compute(image1, kp1_list)
+            kp2, des2 = sift.compute(image2, kp2_list)
         
         # Handle no keypoints case
         if len(kp1) == 0 or len(kp2) == 0 or des1 is None or des2 is None:
@@ -331,7 +339,8 @@ class DeepDetectMatcher(BaseMatcher):
         index_params = dict(algorithm=FLANN_INDEX_KDTREE, trees=self.flann_trees)
         search_params = dict(checks=self.flann_checks)
         flann = cv2.FlannBasedMatcher(index_params, search_params)
-        matches = flann.knnMatch(des1, des2, k=2)
+        with self._profile_stage(timings_ms, "matching_ms"):
+            matches = flann.knnMatch(des1, des2, k=2)
         
         # Apply NNDR (Lowe's ratio test)
         good_matches = []

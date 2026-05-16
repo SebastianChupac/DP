@@ -13,9 +13,11 @@ Design Decisions:
 """
 
 from abc import ABC, abstractmethod
+from contextlib import contextmanager
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional, Dict, Any, Tuple
+from typing import Optional, Dict, Any, Tuple, Iterator
+import time
 import cv2
 import numpy as np
 try:
@@ -50,6 +52,7 @@ class MatcherConfig:
         enhancement_clip_limit: CLAHE clip limit for fingervein enhancement (2.0-4.0)
         enhancement_tile_size: CLAHE tile grid size for fingervein enhancement
         device: Device for torch models ('cuda' or 'cpu')
+        profile_timings: Whether to collect per-stage timing data in milliseconds
         extra_params: Method-specific parameters
     """
     resize_width: Optional[int] = None
@@ -62,6 +65,7 @@ class MatcherConfig:
     enhancement_clip_limit: float = 3.0
     enhancement_tile_size: int = 8
     device: str = "cuda"
+    profile_timings: bool = False
     public_dataset_root: Optional[str] = None
     extra_params: Dict[str, Any] = field(default_factory=dict)
     
@@ -81,7 +85,7 @@ class MatcherConfig:
             "resize_width", "resize_height", "ransac_thresh", 
             "ransac_max_iters", "min_matches", "use_masking",
             "use_enhancement", "enhancement_clip_limit", "enhancement_tile_size",
-            "device", "public_dataset_root"
+            "device", "profile_timings", "public_dataset_root"
         }
         
         main_params = {k: v for k, v in config_dict.items() if k in known_fields}
@@ -127,6 +131,113 @@ class BaseMatcher(ABC):
 
         root = Path(root_value) if root_value else Path(PUBLIC_DATASET_ROOT)
         return root
+
+    def get_runtime_device(self) -> Optional[str]:
+        """Best-effort detection of the actual runtime device used by the matcher."""
+        visited: set[int] = set()
+        for candidate in (
+            getattr(self, "_device", None),
+            getattr(self, "device", None),
+            getattr(self, "_matcher", None),
+            getattr(self, "_matching", None),
+            getattr(self, "model", None),
+            getattr(self, "_extractor", None),
+        ):
+            detected = self._infer_runtime_device(candidate, visited)
+            if detected:
+                return detected
+        return None
+
+    def _infer_runtime_device(self, obj: Any, visited: set[int]) -> Optional[str]:
+        """Recursively inspect common matcher internals for a torch device."""
+        if obj is None:
+            return None
+
+        obj_id = id(obj)
+        if obj_id in visited:
+            return None
+        visited.add(obj_id)
+
+        if torch is not None:
+            if isinstance(obj, torch.device):
+                return str(obj)
+            if isinstance(obj, torch.nn.Module):
+                for parameter in obj.parameters(recurse=True):
+                    return str(parameter.device)
+                for buffer in obj.buffers(recurse=True):
+                    return str(buffer.device)
+
+        if isinstance(obj, str):
+            normalized = obj.strip()
+            return normalized if normalized else None
+
+        if isinstance(obj, dict):
+            for value in obj.values():
+                detected = self._infer_runtime_device(value, visited)
+                if detected:
+                    return detected
+            return None
+
+        if isinstance(obj, (list, tuple, set)):
+            for value in obj:
+                detected = self._infer_runtime_device(value, visited)
+                if detected:
+                    return detected
+            return None
+
+        for attr_name in (
+            "_device",
+            "device",
+            "_matcher",
+            "_matching",
+            "model",
+            "_extractor",
+            "superpoint",
+            "superglue",
+            "backbone",
+        ):
+            if hasattr(obj, attr_name):
+                detected = self._infer_runtime_device(getattr(obj, attr_name), visited)
+                if detected:
+                    return detected
+
+        if hasattr(obj, "__dict__"):
+            for value in obj.__dict__.values():
+                if isinstance(value, (str, int, float, bool, bytes, bytearray)):
+                    continue
+                detected = self._infer_runtime_device(value, visited)
+                if detected:
+                    return detected
+
+        return None
+
+    def _profiling_enabled(self) -> bool:
+        """Return whether per-stage profiling is enabled for this matcher."""
+        return bool(self.config.profile_timings or self.config.extra_params.get("profile_timings", False))
+
+    @staticmethod
+    def _synchronize_cuda() -> None:
+        """Synchronize CUDA if available so wall-clock timings include GPU work."""
+        if torch is None:
+            return
+        cuda = getattr(torch, "cuda", None)
+        if cuda is not None and cuda.is_available():
+            cuda.synchronize()
+
+    @contextmanager
+    def _profile_stage(self, timings_ms: Optional[Dict[str, float]], stage_name: str) -> Iterator[None]:
+        """Measure a stage in milliseconds and store it in the provided dict."""
+        if timings_ms is None:
+            yield
+            return
+
+        self._synchronize_cuda()
+        start_ns = time.perf_counter_ns()
+        try:
+            yield
+        finally:
+            self._synchronize_cuda()
+            timings_ms[stage_name] = (time.perf_counter_ns() - start_ns) / 1_000_000.0
         
     @abstractmethod
     def get_name(self) -> str:
@@ -145,6 +256,7 @@ class BaseMatcher(ABC):
         img2: np.ndarray,
         mask1: Optional[np.ndarray],
         mask2: Optional[np.ndarray],
+        timings_ms: Optional[Dict[str, float]] = None,
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """
         Perform matching on preprocessed images.
@@ -333,9 +445,11 @@ class BaseMatcher(ABC):
         Returns:
             VerificationResult (lightweight) or VisualizationResult (rich) depending on visualize flag
         """
-        # Load images
-        img1_original = self._load_image(img1_path)
-        img2_original = self._load_image(img2_path)
+        timings_ms = {} if self._profiling_enabled() else None
+
+        with self._profile_stage(timings_ms, "load_images"):
+            img1_original = self._load_image(img1_path)
+            img2_original = self._load_image(img2_path)
 
         # Keep a pre-pipeline snapshot only when rich visualization is requested.
         if visualize:
@@ -349,87 +463,87 @@ class BaseMatcher(ABC):
         img2 = img2_original
         transform_img1_orig_to_processed = np.eye(3, dtype=np.float32)
         transform_img2_orig_to_processed = np.eye(3, dtype=np.float32)
-        
-        # Preprocess
-        img1 = self._preprocess_image(img1)
-        img2 = self._preprocess_image(img2)
-        transform_img1_orig_to_processed = self._compose_with_resize_transform(
-            transform_img1_orig_to_processed,
-            img1_original.shape[:2],
-            img1.shape[:2],
-        )
-        transform_img2_orig_to_processed = self._compose_with_resize_transform(
-            transform_img2_orig_to_processed,
-            img2_original.shape[:2],
-            img2.shape[:2],
-        )
-        
-        # Get masks if needed (AFTER preprocessing so masks match image size)
+
+        with self._profile_stage(timings_ms, "preprocess"):
+            img1 = self._preprocess_image(img1)
+            img2 = self._preprocess_image(img2)
+            transform_img1_orig_to_processed = self._compose_with_resize_transform(
+                transform_img1_orig_to_processed,
+                img1_original.shape[:2],
+                img1.shape[:2],
+            )
+            transform_img2_orig_to_processed = self._compose_with_resize_transform(
+                transform_img2_orig_to_processed,
+                img2_original.shape[:2],
+                img2.shape[:2],
+            )
+
         mask1 = None
         mask2 = None
-        if self.config.use_masking and modality:
-            mask1 = self._get_or_compute_mask(img1_path, img1, modality)
-            mask2 = self._get_or_compute_mask(img2_path, img2, modality)
+        with self._profile_stage(timings_ms, "masking"):
+            if self.config.use_masking and modality:
+                mask1 = self._get_or_compute_mask(img1_path, img1, modality)
+                mask2 = self._get_or_compute_mask(img2_path, img2, modality)
 
-        # Optional ROI focusing step for sparse masks (e.g., iris and hand geometry).
-        # Crops image+mask to mask bounding box, then resizes back to target shape.
-        if self._should_crop_to_mask_roi(modality):
-            if mask1 is not None:
-                img1, mask1, crop_transform1 = self._crop_to_mask(img1, mask1)
-                transform_img1_orig_to_processed = crop_transform1 @ transform_img1_orig_to_processed
-            if mask2 is not None:
-                img2, mask2, crop_transform2 = self._crop_to_mask(img2, mask2)
-                transform_img2_orig_to_processed = crop_transform2 @ transform_img2_orig_to_processed
-        
-        # Apply enhancement for fingervein images (instead of masking)
-        if self.config.use_enhancement and modality and modality.lower() in ["fingervein", "finger_vein", "finger"]:
-            img1 = enhance_fingervein_image(
-                img1,
-                clip_limit=self.config.enhancement_clip_limit,
-                tile_grid_size=(self.config.enhancement_tile_size, self.config.enhancement_tile_size),
-            )
-            img2 = enhance_fingervein_image(
-                img2,
-                clip_limit=self.config.enhancement_clip_limit,
-                tile_grid_size=(self.config.enhancement_tile_size, self.config.enhancement_tile_size),
-            )
-        
-        # Perform matching
-        keypoints1, keypoints2, matches = self._match_impl(img1, img2, mask1, mask2)
-        
-        # Estimate homography if we have enough matches
+            # Optional ROI focusing step for sparse masks (e.g., iris and hand geometry).
+            # Crops image+mask to mask bounding box, then resizes back to target shape.
+            if self._should_crop_to_mask_roi(modality):
+                if mask1 is not None:
+                    img1, mask1, crop_transform1 = self._crop_to_mask(img1, mask1)
+                    transform_img1_orig_to_processed = crop_transform1 @ transform_img1_orig_to_processed
+                if mask2 is not None:
+                    img2, mask2, crop_transform2 = self._crop_to_mask(img2, mask2)
+                    transform_img2_orig_to_processed = crop_transform2 @ transform_img2_orig_to_processed
+
+            # Apply enhancement for fingervein images (instead of masking)
+            if self.config.use_enhancement and modality and modality.lower() in ["fingervein", "finger_vein", "finger"]:
+                img1 = enhance_fingervein_image(
+                    img1,
+                    clip_limit=self.config.enhancement_clip_limit,
+                    tile_grid_size=(self.config.enhancement_tile_size, self.config.enhancement_tile_size),
+                )
+                img2 = enhance_fingervein_image(
+                    img2,
+                    clip_limit=self.config.enhancement_clip_limit,
+                    tile_grid_size=(self.config.enhancement_tile_size, self.config.enhancement_tile_size),
+                )
+
+        with self._profile_stage(timings_ms, "match_impl_total"):
+            keypoints1, keypoints2, matches = self._match_impl(img1, img2, mask1, mask2, timings_ms=timings_ms)
+
         homography = None
         inliers = None
         reprojection_error = None
-        
-        if len(matches) >= self.config.min_matches:
-            # Extract matched points
-            pts1 = keypoints1[matches[:, 0]]
-            pts2 = keypoints2[matches[:, 1]]
-            
-            # Estimate homography
-            homography, inliers = self._estimate_homography(pts1, pts2)
-            
-            if homography is not None:
-                reprojection_error = self._compute_reprojection_error(
-                    pts1[inliers], pts2[inliers], homography
-                )
-        
-        # Create result based on visualize flag
-        verification_result = self._create_verification_result(
-            img1_path=img1_path,
-            img2_path=img2_path,
-            keypoints1=keypoints1,
-            keypoints2=keypoints2,
-            matches=matches,
-            homography=homography,
-            inliers=inliers,
-            reprojection_error=reprojection_error,
-            ground_truth=ground_truth,
-        )
+
+        with self._profile_stage(timings_ms, "homography"):
+            if len(matches) >= self.config.min_matches:
+                pts1 = keypoints1[matches[:, 0]]
+                pts2 = keypoints2[matches[:, 1]]
+
+                homography, inliers = self._estimate_homography(pts1, pts2)
+
+                if homography is not None:
+                    reprojection_error = self._compute_reprojection_error(
+                        pts1[inliers], pts2[inliers], homography
+                    )
+
+        with self._profile_stage(timings_ms, "result_creation"):
+            verification_result = self._create_verification_result(
+                img1_path=img1_path,
+                img2_path=img2_path,
+                keypoints1=keypoints1,
+                keypoints2=keypoints2,
+                matches=matches,
+                homography=homography,
+                inliers=inliers,
+                reprojection_error=reprojection_error,
+                ground_truth=ground_truth,
+            )
         verification_result.num_keypoints_image1 = len(keypoints1) if keypoints1 is not None else 0
         verification_result.num_keypoints_image2 = len(keypoints2) if keypoints2 is not None else 0
         verification_result.modality = modality
+        if timings_ms is not None:
+            verification_result.metadata["timings_ms"] = timings_ms
         
         # Override matcher name if provided (for versioned matchers like "sift-v1")
         if matcher_name is not None:
@@ -459,6 +573,8 @@ class BaseMatcher(ABC):
             # Override matcher name in visualization result too
             if matcher_name is not None:
                 viz_result.method_name = matcher_name
+            if timings_ms is not None:
+                viz_result.metadata["timings_ms"] = timings_ms
             return viz_result
         return verification_result
 

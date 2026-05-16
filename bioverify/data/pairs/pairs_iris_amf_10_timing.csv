@@ -1,0 +1,11 @@
+pair_id,image1_path,image2_path,modality,ground_truth,identity1,identity2,dataset_name,metadata
+AMF-Iris_genuine_0,Iris\003-AMF-Iris-Dataset\assem\Iris_20220817_121805_Left.bmp,Iris\003-AMF-Iris-Dataset\assem\Iris_20220817_121807_Left.bmp,iris,True,assem,assem,AMF-Iris,"{""record1_meta"": {}, ""record2_meta"": {}}"
+AMF-Iris_genuine_1,Iris\003-AMF-Iris-Dataset\abeer\Iris_20220818_121757_Right.bmp,Iris\003-AMF-Iris-Dataset\abeer\Iris_20220818_121801_Right.bmp,iris,True,abeer,abeer,AMF-Iris,"{""record1_meta"": {}, ""record2_meta"": {}}"
+AMF-Iris_genuine_2,Iris\003-AMF-Iris-Dataset\khalid\Iris_20220818_105949_Right.bmp,Iris\003-AMF-Iris-Dataset\khalid\Iris_20220818_105959_Right.bmp,iris,True,khalid,khalid,AMF-Iris,"{""record1_meta"": {}, ""record2_meta"": {}}"
+AMF-Iris_genuine_3,Iris\003-AMF-Iris-Dataset\kamal\Iris_20220818_115631_Right.bmp,Iris\003-AMF-Iris-Dataset\kamal\Iris_20220818_115635_Right.bmp,iris,True,kamal,kamal,AMF-Iris,"{""record1_meta"": {}, ""record2_meta"": {}}"
+AMF-Iris_genuine_4,Iris\003-AMF-Iris-Dataset\huda\Iris_20220818_123015_Left.bmp,Iris\003-AMF-Iris-Dataset\huda\Iris_20220818_123021_Left.bmp,iris,True,huda,huda,AMF-Iris,"{""record1_meta"": {}, ""record2_meta"": {}}"
+AMF-Iris_impostor_0,Iris\003-AMF-Iris-Dataset\ali\Iris_20220818_121644_Right.bmp,Iris\003-AMF-Iris-Dataset\ahmed\Iris_20220817_120005_Right.bmp,iris,False,ali,ahmed,AMF-Iris,"{""record1_meta"": {}, ""record2_meta"": {}}"
+AMF-Iris_impostor_1,Iris\003-AMF-Iris-Dataset\assem\Iris_20220817_121801_Left.bmp,Iris\003-AMF-Iris-Dataset\mohamad\Iris_20220817_125755_Left.bmp,iris,False,assem,mohamad,AMF-Iris,"{""record1_meta"": {}, ""record2_meta"": {}}"
+AMF-Iris_impostor_2,Iris\003-AMF-Iris-Dataset\kamal\Iris_20220818_115635_Left.bmp,Iris\003-AMF-Iris-Dataset\anas\Iris_20220818_112610_Left.bmp,iris,False,kamal,anas,AMF-Iris,"{""record1_meta"": {}, ""record2_meta"": {}}"
+AMF-Iris_impostor_3,Iris\003-AMF-Iris-Dataset\khaleel\Iris_20220818_121539_Left.bmp,Iris\003-AMF-Iris-Dataset\ameer\Iris_20220818_121521_Left.bmp,iris,False,khaleel,ameer,AMF-Iris,"{""record1_meta"": {}, ""record2_meta"": {}}"
+AMF-Iris_impostor_4,Iris\003-AMF-Iris-Dataset\kamal\Iris_20220818_115635_Left.bmp,Iris\003-AMF-Iris-Dataset\marwan\Iris_20220818_121834_Left.bmp,iris,False,kamal,marwan,AMF-Iris,"{""record1_meta"": {}, ""record2_meta"": {}}"

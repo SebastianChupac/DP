@@ -6,6 +6,7 @@ import os
 import json
 import csv
 import yaml
+from statistics import mean, median
 from pathlib import Path
 from typing import List, Dict, Optional, Tuple
 from dataclasses import asdict
@@ -17,6 +18,11 @@ from ..data.dataset import PairDataset
 from ..matchers.registry import create_matcher
 from ..matchers.base import MatcherConfig
 from ..results import VerificationResult
+
+try:
+    import torch
+except Exception:  # pragma: no cover
+    torch = None
 
 try:
     from tqdm import tqdm
@@ -57,6 +63,8 @@ class BatchExperimentRunner:
             print(f"✓ Output dir: {experiment_config.output_dir}")
             print(f"✓ Pairs CSV: {experiment_config.dataset}")
             print(f"✓ Matchers: {[m.name for m in experiment_config.matchers]}")
+            if self.config.profile_timings:
+                print("✓ Profiling enabled: per-stage timings will be recorded in ms")
     
     def _load_matcher_config(
         self,
@@ -96,8 +104,70 @@ class BatchExperimentRunner:
         # Ensure device is set
         if 'device' not in config_dict:
             config_dict['device'] = self.config.device
+
+        if 'profile_timings' not in config_dict:
+            config_dict['profile_timings'] = self.config.profile_timings
         
         return config_dict
+
+    @staticmethod
+    def _normalize_device_name(value) -> Optional[str]:
+        if value is None:
+            return None
+        try:
+            text = str(value).strip()
+            return text if text else None
+        except Exception:
+            return None
+
+    def _extract_device_from_object(self, obj) -> Optional[str]:
+        """Best-effort extraction of runtime device from matcher internals."""
+        if obj is None:
+            return None
+
+        direct_device = getattr(obj, "_device", None)
+        if direct_device is None:
+            direct_device = getattr(obj, "device", None)
+        if direct_device is not None and not callable(direct_device):
+            normalized = self._normalize_device_name(direct_device)
+            if normalized:
+                return normalized
+
+        if torch is None:
+            return None
+
+        if isinstance(obj, torch.nn.Module):
+            for parameter in obj.parameters():
+                return self._normalize_device_name(parameter.device)
+            for buffer in obj.buffers():
+                return self._normalize_device_name(buffer.device)
+
+        nested_model = getattr(obj, "model", None)
+        if nested_model is not None and nested_model is not obj:
+            nested_device = self._extract_device_from_object(nested_model)
+            if nested_device:
+                return nested_device
+
+        return None
+
+    def _get_matcher_runtime_device(self, matcher) -> Optional[str]:
+        """Return actual matcher runtime device when it can be determined."""
+        get_runtime_device = getattr(matcher, "get_runtime_device", None)
+        if callable(get_runtime_device):
+            detected = get_runtime_device()
+            if detected:
+                return detected
+
+        for attr in ("_device", "device", "_matching", "_matcher", "model", "_extractor"):
+            if not hasattr(matcher, attr):
+                continue
+            value = getattr(matcher, attr)
+            if callable(value):
+                continue
+            detected = self._extract_device_from_object(value)
+            if detected:
+                return detected
+        return None
     
     def run(self) -> Tuple[List[VerificationResult], Dict]:
         """Run the batch experiment.
@@ -133,7 +203,11 @@ class BatchExperimentRunner:
                 matchers[matcher_cfg.name] = matcher
                 
                 if self.config.verbose:
-                    print(f"   ✓ {matcher_cfg.name}")
+                    runtime_device = self._get_matcher_runtime_device(matcher)
+                    if runtime_device:
+                        print(f"   ✓ {matcher_cfg.name} (device: {runtime_device})")
+                    else:
+                        print(f"   ✓ {matcher_cfg.name}")
             except Exception as e:
                 error_msg = f"Failed to instantiate matcher {matcher_cfg.name}: {str(e)}"
                 print(f"   ✗ {error_msg}")
@@ -180,6 +254,17 @@ class BatchExperimentRunner:
                         result.modality = pair.modality
                         
                         self.results.append(result)
+
+                        if self.config.verbose and self.config.profile_timings:
+                            timings = result.metadata.get('timings_ms', {})
+                            if isinstance(timings, dict) and timings:
+                                timing_text = ", ".join(
+                                    f"{stage}={float(value):.2f} ms" if isinstance(value, (int, float)) else f"{stage}={value}"
+                                    for stage, value in timings.items()
+                                )
+                                progress_bar.write(
+                                    f"⏱ {matcher_name} pair {pair.pair_id}: {timing_text}"
+                                )
                 
                 except Exception as e:
                     error_dict = {
@@ -260,6 +345,8 @@ class BatchExperimentRunner:
             frr = (len(genuine) - genuine_correct) / len(genuine) if genuine else 0.0
             # TRR (True Rejection Rate) = % of impostor pairs correctly rejected
             trr = impostor_correct / len(impostor) if impostor else 0.0
+
+            timing_summary = self._summarize_timings(results)
             
             self.metrics[matcher_name] = {
                 'num_pairs': len(results),
@@ -275,7 +362,36 @@ class BatchExperimentRunner:
                 'frr': frr,
                 'trr': trr,
                 'avg_inlier_ratio': sum(r.verification_confidence for r in results) / len(results) if results else 0.0,
+                'timings_ms': timing_summary,
             }
+
+    @staticmethod
+    def _summarize_timings(results: List[VerificationResult]) -> Dict[str, Dict[str, float]]:
+        """Aggregate per-stage timing metadata across results."""
+        by_stage: Dict[str, List[float]] = {}
+        for result in results:
+            timings = result.metadata.get('timings_ms')
+            if not isinstance(timings, dict):
+                continue
+            for stage_name, stage_value in timings.items():
+                try:
+                    by_stage.setdefault(stage_name, []).append(float(stage_value))
+                except (TypeError, ValueError):
+                    continue
+
+        summary: Dict[str, Dict[str, float]] = {}
+        for stage_name, values in by_stage.items():
+            if not values:
+                continue
+            mean_ms = mean(values)
+            summary[stage_name] = {
+                'mean_ms': mean_ms,
+                'mean_fps': (1000.0 / mean_ms) if mean_ms > 0 else 0.0,
+                'median_ms': median(values),
+                'min_ms': min(values),
+                'max_ms': max(values),
+            }
+        return summary
     
     def _print_summary(self):
         """Print summary metrics in formatted style."""
@@ -290,6 +406,22 @@ class BatchExperimentRunner:
             print(f"    FAR (False Acceptance Rate): {metrics['far']:.2%}")
             print(f"    FRR (False Rejection Rate):  {metrics['frr']:.2%}")
             print(f"    TRR (True Rejection Rate):   {metrics['trr']:.2%}")
+            if metrics.get('timings_ms'):
+                print("    Timing summary (ms):")
+                stage_width = max(5, max(len(stage) for stage in metrics['timings_ms'].keys()))
+                header = f"      {'Stage':<{stage_width}} | {'Mean ms':>10} | {'Mean FPS':>10} | {'Median':>10} | {'Min':>10} | {'Max':>10}"
+                separator = f"      {'-' * stage_width}-+------------+------------+------------+------------+------------"
+                print(header)
+                print(separator)
+                for stage_name, stage_stats in metrics['timings_ms'].items():
+                    print(
+                        f"      {stage_name:<{stage_width}} | "
+                        f"{stage_stats['mean_ms']:>10.2f} | "
+                        f"{stage_stats['mean_fps']:>10.2f} | "
+                        f"{stage_stats['median_ms']:>10.2f} | "
+                        f"{stage_stats['min_ms']:>10.2f} | "
+                        f"{stage_stats['max_ms']:>10.2f}"
+                    )
     
     def _save_results(self):
         """Save results to JSON, CSV, and summary JSON."""
@@ -329,6 +461,7 @@ class BatchExperimentRunner:
                     'reprojection_error': r.reprojection_error,
                     'homography_confidence': r.homography_confidence,
                     'matcher_params': r.matcher_params,
+                    'timings_ms': r.metadata.get('timings_ms'),
                     'metadata': r.metadata,
                     'timestamp': r.timestamp,
                 }
@@ -348,7 +481,7 @@ class BatchExperimentRunner:
                 'num_keypoints_image1', 'num_keypoints_image2',
                 'num_matches', 'num_inliers', 'inlier_ratio',
                 'is_same_person_pred', 'confidence', 'ground_truth', 'is_correct',
-                'reprojection_error'
+                'reprojection_error', 'timings_ms'
             ])
             
             for r in self.results:
@@ -368,6 +501,7 @@ class BatchExperimentRunner:
                     r.ground_truth,
                     r.is_correct,
                     f"{r.reprojection_error:.4f}" if r.reprojection_error is not None else '',
+                    json.dumps(r.metadata.get('timings_ms', {}), ensure_ascii=True),
                 ])
         
         # Save summary metrics

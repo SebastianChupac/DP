@@ -1,0 +1,84 @@
+# Example Experiment: Multiple matcher evaluation on finger fvusm dataset 500 pairs
+# This experiment evaluates multiple matchers on a single dataset (fingerfvusm).
+# extracted vein
+
+experiment:
+  name: "All matchers 10 Finger FV-USM ROIs with CLAHE enhacement"
+  description: "Evaluate multiple matchers on finger fvusm pairs"
+  purpose: "multiple_matchers"
+  created: "2026-05-16"
+
+# Input pairs
+dataset: "bioverify/data/pairs/pairs_finger_fvusm_10_timing.csv"
+base_path: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+#filter_modality: "hand"
+
+profile_timings: true
+
+# Multiple matcher configuration
+matchers:
+  - name: loftr
+    config_base: "bioverify/config/matching/loftr.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: false
+  - name: orb
+    config_base: "bioverify/config/matching/orb.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: false
+  - name: orb-fingervein
+    config_base: "bioverify/config/matching/orb_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: false
+  - name: sift
+    config_base: "bioverify/config/matching/sift.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: false
+  - name: sift-fingervein
+    config_base: "bioverify/config/matching/sift_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: false
+  - name: superglue
+    config_base: "bioverify/config/matching/superglue.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: false
+  - name: superglue-fingervein
+    config_base: "bioverify/config/matching/superglue_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: false
+  - name: sgmnet
+    config_base: "bioverify/config/matching/sgmnet.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: false
+  - name: sgmnet-fingervein
+    config_base: "bioverify/config/matching/sgmnet_fingervein.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: false
+  - name: aspanformer
+    config_base: "bioverify/config/matching/aspanformer.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: false
+  - name: deepdetect
+    config_base: "bioverify/config/matching/deepdetect.yaml"
+    config_overrides:
+      # Disable masking for faster experiments
+      use_masking: false
+
+# Output
+output_dir: "bioverify/results/finger_fvusm_10_timing_1"
+save_visualization_results: false
+save_pair_images: false
+
+# Options
+batch_size: 1
+verbose: true
+device: "cuda"

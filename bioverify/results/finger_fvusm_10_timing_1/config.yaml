@@ -1,0 +1,62 @@
+base_path: C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset
+batch_size: 1
+dataset: bioverify/data/pairs/pairs_finger_fvusm_10_timing.csv
+device: cuda
+experiment:
+  created: '2026-05-16'
+  description: Evaluate multiple matchers on finger fvusm pairs
+  name: All matchers 10 Finger FV-USM ROIs with CLAHE enhacement
+  purpose: multiple_matchers
+  researcher: null
+filter_dataset: null
+filter_modality: null
+matchers:
+- config_base: bioverify/config/matching/loftr.yaml
+  config_overrides:
+    use_masking: false
+  name: loftr
+- config_base: bioverify/config/matching/orb.yaml
+  config_overrides:
+    use_masking: false
+  name: orb
+- config_base: bioverify/config/matching/orb_fingervein.yaml
+  config_overrides:
+    use_masking: false
+  name: orb-fingervein
+- config_base: bioverify/config/matching/sift.yaml
+  config_overrides:
+    use_masking: false
+  name: sift
+- config_base: bioverify/config/matching/sift_fingervein.yaml
+  config_overrides:
+    use_masking: false
+  name: sift-fingervein
+- config_base: bioverify/config/matching/superglue.yaml
+  config_overrides:
+    use_masking: false
+  name: superglue
+- config_base: bioverify/config/matching/superglue_fingervein.yaml
+  config_overrides:
+    use_masking: false
+  name: superglue-fingervein
+- config_base: bioverify/config/matching/sgmnet.yaml
+  config_overrides:
+    use_masking: false
+  name: sgmnet
+- config_base: bioverify/config/matching/sgmnet_fingervein.yaml
+  config_overrides:
+    use_masking: false
+  name: sgmnet-fingervein
+- config_base: bioverify/config/matching/aspanformer.yaml
+  config_overrides:
+    use_masking: false
+  name: aspanformer
+- config_base: bioverify/config/matching/deepdetect.yaml
+  config_overrides:
+    use_masking: false
+  name: deepdetect
+output_dir: bioverify/results/finger_fvusm_10_timing_1
+profile_timings: true
+save_pair_images: false
+save_visualization_results: false
+verbose: true

@@ -50,7 +50,7 @@ class SGMNetMatcher(BaseMatcher):
             if str(sgmnet_models_path) not in sys.path:
                 sys.path.insert(0, str(sgmnet_models_path))
 
-            from components.load_component import load_component
+            from bioverify.matchers.sgmnet_models.components.load_component import load_component
 
             self._load_component = load_component
             self._sgmnet_models_path = sgmnet_models_path
@@ -123,6 +123,7 @@ class SGMNetMatcher(BaseMatcher):
         img2: np.ndarray,
         mask1: Optional[np.ndarray],
         mask2: Optional[np.ndarray],
+        timings_ms: Optional[Dict[str, float]] = None,
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Run SGMNet matching on a pair of images."""
         if not self._color:
@@ -141,8 +142,9 @@ class SGMNetMatcher(BaseMatcher):
         size1 = np.flip(np.asarray(img1.shape[:2]))
         size2 = np.flip(np.asarray(img2.shape[:2]))
 
-        kpt1, desc1 = self._extractor.run(img1)
-        kpt2, desc2 = self._extractor.run(img2)
+        with self._profile_stage(timings_ms, "feature_extraction_ms"):
+            kpt1, desc1 = self._extractor.run(img1)
+            kpt2, desc2 = self._extractor.run(img2)
 
         data = {
             "x1": kpt1,
@@ -153,7 +155,8 @@ class SGMNetMatcher(BaseMatcher):
             "size2": size2,
         }
 
-        corr1, corr2, index1, index2 = self._matcher.run(data)
+        with self._profile_stage(timings_ms, "matching_ms"):
+            corr1, corr2, index1, index2 = self._matcher.run(data)
         if corr1 is None or corr2 is None or len(corr1) == 0:
             return (
                 np.empty((0, 2), dtype=np.float32),

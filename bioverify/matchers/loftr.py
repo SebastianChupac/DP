@@ -158,6 +158,7 @@ class LoFTRMatcher(BaseMatcher):
         img2: np.ndarray,
         mask1: Optional[np.ndarray],
         mask2: Optional[np.ndarray],
+        timings_ms: Optional[Dict[str, float]] = None,
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Run LoFTR matching on a pair of images."""
         gray1 = self._to_grayscale(img1)
@@ -176,9 +177,10 @@ class LoFTRMatcher(BaseMatcher):
         img2_tensor = self._to_tensor(gray2)
 
         # Run LoFTR matching
-        with torch.no_grad():
-            batch = {"image0": img1_tensor, "image1": img2_tensor}
-            pred = self._matcher(batch)
+        batch = {"image0": img1_tensor, "image1": img2_tensor}
+        with self._profile_stage(timings_ms, "inference_ms"):
+            with torch.no_grad():
+                pred = self._matcher(batch)
 
         # Extract results
         keypoints1 = pred["keypoints0"].cpu().numpy()

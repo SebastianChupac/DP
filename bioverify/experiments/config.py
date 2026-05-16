@@ -56,6 +56,7 @@ class ExperimentConfig:
     batch_size: int = 1                          # Process pairs in batches
     verbose: bool = True                         # Print progress
     device: str = "cuda"                         # Device for torch models
+    profile_timings: bool = False                # Collect per-stage timings in ms
     
     @classmethod
     def from_yaml(cls, yaml_path: str) -> "ExperimentConfig":
@@ -115,7 +116,8 @@ class ExperimentConfig:
             save_pair_images=data.get('save_pair_images', False),
             batch_size=data.get('batch_size', 1),
             verbose=data.get('verbose', True),
-            device=data.get('device', 'cuda')
+            device=data.get('device', 'cuda'),
+            profile_timings=data.get('profile_timings', False),
         )
         
         return config

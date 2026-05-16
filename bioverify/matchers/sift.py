@@ -6,7 +6,7 @@ Visualization logic is intentionally omitted (visualization handled by Visualiza
 """
 
 
-from typing import Optional, Tuple
+from typing import Optional, Tuple, Dict
 
 import cv2
 import numpy as np
@@ -93,10 +93,12 @@ class SIFTMatcher(BaseMatcher):
         img2: np.ndarray,
         mask1: Optional[np.ndarray],
         mask2: Optional[np.ndarray],
+        timings_ms: Optional[Dict[str, float]] = None,
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
         """Stateless SIFT matching."""
-        kpts1, des1 = self._extract_features(img1, mask1)
-        kpts2, des2 = self._extract_features(img2, mask2)
+        with self._profile_stage(timings_ms, "feature_extraction_ms"):
+            kpts1, des1 = self._extract_features(img1, mask1)
+            kpts2, des2 = self._extract_features(img2, mask2)
 
         # Convert keypoints to array - already done in _extract_features, 
         #keypoints1 = self._keypoints_to_array(kpts1)
@@ -116,7 +118,8 @@ class SIFTMatcher(BaseMatcher):
         index_params = dict(algorithm=1, trees=self._flann_trees)
         search_params = dict(checks=self._flann_checks)
         matcher = cv2.FlannBasedMatcher(index_params, search_params)
-        raw_matches = matcher.knnMatch(des1, des2, k=2)
+        with self._profile_stage(timings_ms, "matching_ms"):
+            raw_matches = matcher.knnMatch(des1, des2, k=2)
 
         # Apply Lowe's ratio test
         good_matches = []

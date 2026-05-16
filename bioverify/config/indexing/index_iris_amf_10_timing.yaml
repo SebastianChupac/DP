@@ -1,0 +1,22 @@
+# Configuration for indexing the AMF Iris dataset 10 pairs
+
+public_dataset_root: "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+
+random_seed: 42
+
+pair_generation:
+  #genuine_per_identity: 5          # Or use max_genuine_pairs
+  max_genuine_pairs: 5          # Hard limit, set to -1 for maximum possible pairs up to cap
+  impostor_ratio: 1
+  #max_impostor_pairs: 100         # no longer used
+
+output:
+  csv_path: "bioverify/data/pairs/pairs_iris_amf_10_timing.csv"
+  relative_paths: true
+
+datasets:
+  - dataset_path: "Iris/003-AMF-Iris-Dataset"
+    dataset_name: "AMF-Iris"
+    modality: "iris"
+    match_constraints:
+      side: true
