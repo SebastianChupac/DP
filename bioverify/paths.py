@@ -1,3 +1,8 @@
+# path.py - Define paths for the bioverify package
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
+
 from pathlib import Path
 
 
