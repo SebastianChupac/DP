@@ -46,7 +46,7 @@ def threshold_sweep_command(args):
     # Load results
     results_path = Path("bioverify/results") / args.experiment_name / "results.json"
     if not results_path.exists():
-        print(f"❌ Results file not found: {results_path}")
+        print(f"Results file not found: {results_path}")
         return
     
     with open(results_path, 'r') as f:
@@ -60,7 +60,7 @@ def threshold_sweep_command(args):
     else:
         matchers_to_analyze = all_matchers
     
-    print(f"\n📊 Threshold Sweep Analysis")
+    print(f"\nThreshold Sweep Analysis")
     print(f"   Experiment: {args.experiment_name}")
     print(f"   Matchers: {len(matchers_to_analyze)}")
     print(f"   Output: {output_dir}\n")
@@ -82,13 +82,13 @@ def threshold_sweep_command(args):
             
             # Print key metrics
             eer = analysis['eer']
-            print(f"✓ (EER={eer['eer']:.4f})")
+            print(f"OK (EER={eer['eer']:.4f})")
             
         except ValueError as e:
-            print(f"✗ ({e})")
-    
+            print(f"Error ({e})")
+
     # Save analysis
-    print(f"\n💾 Saving results...")
+    print(f"\nSaving results...")
     
     # Save individual matcher analyses
     for matcher_name, analysis in all_analysis.items():
@@ -114,16 +114,16 @@ def threshold_sweep_command(args):
                     dist_path,
                 )
         except Exception as e:
-            print(f"⚠ Could not generate plots: {e}")
+            print(f"Warning: Could not generate plots: {e}")
     
     # Save comparison if multiple matchers
     if len(all_analysis) > 1:
-        print(f"\n📈 Generating comparison plots...")
+        print(f"\nGenerating comparison plots...")
         comp_roc_path = output_dir / "roc_comparison.png"
         try:
             plot_roc_comparison(all_analysis, comp_roc_path)
         except Exception as e:
-            print(f"⚠ Could not generate comparison plot: {e}")
+            print(f"Warning: Could not generate comparison plot: {e}")
         
         # Save EER comparison table
         eer_comparison = {}
@@ -139,12 +139,12 @@ def threshold_sweep_command(args):
         eer_path = output_dir / "eer_comparison.json"
         with open(eer_path, 'w') as f:
             json.dump(eer_comparison, f, indent=2, cls=NumpyEncoder)
-        print(f"✓ EER comparison saved to {eer_path}")
+        print(f"EER comparison saved to {eer_path}")
     
     # Print summary
-    print(f"\n✅ Threshold sweep complete!")
+    print(f"\nThreshold sweep complete!")
     print(f"   Output directory: {output_dir}")
-    print(f"\n📊 Summary:")
+    print(f"\nSummary:")
     
     for matcher_name in sorted(all_analysis.keys()):
         analysis = all_analysis[matcher_name]
@@ -186,13 +186,13 @@ def compare_matchers_command(args):
     # Load results
     results_path = Path("bioverify/results") / args.experiment_name / "results.json"
     if not results_path.exists():
-        print(f"❌ Results file not found: {results_path}")
+        print(f"Results file not found: {results_path}")
         return
     
     with open(results_path, 'r') as f:
         results_dict = json.load(f)
     
-    print(f"\n📊 Matcher Comparison")
+    print(f"\nMatcher Comparison")
     print(f"   Experiment: {args.experiment_name}")
     
     # Create comparator
@@ -222,20 +222,20 @@ def compare_matchers_command(args):
     elif args.mode == 'threshold':
         threshold = args.value
         print(f"   Mode: Fixed Threshold = {threshold:.4f}")
-        print(f"   ⚠ Warning: Only use this for comparing same matcher with different params!\n")
+        print(f"   Warning: Only use this for comparing same matcher with different params!\n")
         comparison = comparator.compare_at_threshold(threshold)
         _print_threshold_comparison(comparison, threshold)
         save_path = output_dir / f"comparison_at_threshold_{threshold:.4f}.json"
     
     else:
-        print(f"❌ Unknown comparison mode: {args.mode}")
+        print(f"Unknown comparison mode: {args.mode}")
         return
     
     # Save comparison
     with open(save_path, 'w') as f:
         json.dump(comparison, f, indent=2, cls=NumpyEncoder)
     
-    print(f"\n✓ Comparison saved to {save_path}")
+    print(f"\nComparison saved to {save_path}")
 
 
 def _print_eer_comparison(comparison: dict):

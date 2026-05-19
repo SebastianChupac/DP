@@ -323,12 +323,12 @@ class VisualizationResult:
         print(f"   Ground Truth: {self.ground_truth}")
         print(f"   Prediction: {self.is_same_person_pred} "
               f"(confidence: {self.verification_confidence:.3f})")
-        print(f"   Correct decision: {'✅ Yes' if self.is_correct else '❌ No'}")
+        print(f"   Correct decision: {'Yes' if self.is_correct else 'No'}")
         print(f"   Matches: {self.num_matches} total, {self.num_inliers} inliers "
               f"(ratio: {self.inlier_ratio:.3f})")
         if self.reprojection_error is not None:
             print(f"   Reprojection error: {self.reprojection_error:.2f} px")
         if self.homography is not None:
-            print(f"   Homography: ✓ (confidence: {self.homography_confidence:.3f})")
+            print(f"   Homography: present (confidence: {self.homography_confidence:.3f})")
         else:
-            print(f"   Homography: ✗")
+            print(f"   Homography: absent")

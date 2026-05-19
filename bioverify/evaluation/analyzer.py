@@ -148,7 +148,7 @@ class ThresholdAnalyzer:
                 return float(matcher_params[key])
         
         # Fallback: Print warning and return median score
-        print(f"⚠️  Warning: No threshold parameter found in matcher_params for {self.matcher_name}. Using median score as threshold.")
+        print(f"Warning: No threshold parameter found in matcher_params for {self.matcher_name}. Using median score as threshold.")
         return float(self.score_mean)
     
     

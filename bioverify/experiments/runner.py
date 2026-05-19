@@ -63,12 +63,12 @@ class BatchExperimentRunner:
         Path(experiment_config.output_dir).mkdir(parents=True, exist_ok=True)
         
         if experiment_config.verbose:
-            print(f"✓ Experiment: {experiment_config.experiment.name}")
-            print(f"✓ Output dir: {experiment_config.output_dir}")
-            print(f"✓ Pairs CSV: {experiment_config.dataset}")
-            print(f"✓ Matchers: {[m.name for m in experiment_config.matchers]}")
+            print(f"Experiment: {experiment_config.experiment.name}")
+            print(f"Output dir: {experiment_config.output_dir}")
+            print(f"Pairs CSV: {experiment_config.dataset}")
+            print(f"Matchers: {[m.name for m in experiment_config.matchers]}")
             if self.config.profile_timings:
-                print("✓ Profiling enabled: per-stage timings will be recorded in ms")
+                print("Profiling enabled: per-stage timings will be recorded in ms")
     
     def _load_matcher_config(
         self,
@@ -181,7 +181,7 @@ class BatchExperimentRunner:
         """
         # Load pairs dataset
         if self.config.verbose:
-            print(f"\n📂 Loading pairs...")
+            print(f"\nLoading pairs...")
         
         dataset = PairDataset(
             csv_path=self.config.dataset,
@@ -192,12 +192,12 @@ class BatchExperimentRunner:
         )
         
         if len(dataset) == 0:
-            print("⚠ No pairs to process!")
+            print("Warning: No pairs to process!")
             return [], {}
         
         # Instantiate matchers
         if self.config.verbose:
-            print(f"\n🔧 Instantiating matchers...")
+            print(f"\nInstantiating matchers...")
         
         matchers = {}
         for matcher_cfg in self.config.matchers:
@@ -209,12 +209,12 @@ class BatchExperimentRunner:
                 if self.config.verbose:
                     runtime_device = self._get_matcher_runtime_device(matcher)
                     if runtime_device:
-                        print(f"   ✓ {matcher_cfg.name} (device: {runtime_device})")
+                        print(f"   {matcher_cfg.name} (device: {runtime_device})")
                     else:
-                        print(f"   ✓ {matcher_cfg.name}")
+                        print(f"   {matcher_cfg.name}")
             except Exception as e:
                 error_msg = f"Failed to instantiate matcher {matcher_cfg.name}: {str(e)}"
-                print(f"   ✗ {error_msg}")
+                print(f"   Error: {error_msg}")
                 self.errors.append({
                     'type': 'matcher_initialization',
                     'matcher': matcher_cfg.name,
@@ -228,7 +228,7 @@ class BatchExperimentRunner:
         
         # Process pairs
         if self.config.verbose:
-            print(f"\n🔄 Processing {len(dataset)} pairs...")
+            print(f"\nProcessing {len(dataset)} pairs...")
         
         progress_bar = tqdm(
             dataset.pairs,
@@ -267,7 +267,7 @@ class BatchExperimentRunner:
                                     for stage, value in timings.items()
                                 )
                                 progress_bar.write(
-                                    f"⏱ {matcher_name} pair {pair.pair_id}: {timing_text}"
+                                    f"Timing {matcher_name} pair {pair.pair_id}: {timing_text}"
                                 )
                 
                 except Exception as e:
@@ -282,18 +282,18 @@ class BatchExperimentRunner:
                     
                     if self.config.verbose:
                         progress_bar.write(
-                            f"⚠ Error in pair {pair.pair_id} with {matcher_name}: {str(e)}"
+                            f"Warning: Error in pair {pair.pair_id} with {matcher_name}: {str(e)}"
                         )
         
         # Compute summary metrics
         if self.config.verbose:
-            print(f"\n📊 Computing metrics...")
+            print(f"\nComputing metrics...")
         
         self._compute_metrics()
         
         # Save results
         if self.config.verbose:
-            print(f"\n💾 Saving results...")
+            print(f"\nSaving results...")
         
         self._save_results()
         
@@ -399,7 +399,7 @@ class BatchExperimentRunner:
     
     def _print_summary(self):
         """Print summary metrics in formatted style."""
-        print("\n📈 Summary Metrics:")
+        print("\nSummary Metrics:")
         for matcher_name, metrics in self.metrics.items():
             print(f"\n  {matcher_name}:")
             print(f"    Pairs: {metrics['num_pairs']} (Genuine: {metrics['num_genuine']}, Impostor: {metrics['num_impostor']})")
@@ -520,7 +520,7 @@ class BatchExperimentRunner:
                 json.dump(self.errors, f, indent=2)
         
         if self.config.verbose:
-            print(f"✓ Results saved to {output_dir}")
+            print(f"Results saved to {output_dir}")
 
 
 def run_experiment(config_path: str) -> Tuple[List[VerificationResult], Dict]:

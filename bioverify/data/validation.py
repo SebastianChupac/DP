@@ -42,7 +42,7 @@ class CSVValidator:
         
         # Check if file exists
         if not os.path.exists(self.csv_path):
-            print(f"❌ CSV file not found: {self.csv_path}")
+            print(f"CSV file not found: {self.csv_path}")
             self.errors.append(f"CSV file not found: {self.csv_path}")
             return False
         
@@ -84,14 +84,14 @@ class CSVValidator:
         
         # Print results
         if self.errors:
-            print(f"\n❌ Validation FAILED with {len(self.errors)} error(s):")
+            print(f"\nValidation FAILED with {len(self.errors)} error(s):")
             for error in self.errors:
                 print(f"  - {error}")
         else:
-            print(f"\n✅ Validation PASSED")
+            print(f"\nValidation PASSED")
         
         if self.warnings:
-            print(f"\n⚠️  {len(self.warnings)} warning(s):")
+            print(f"\n{len(self.warnings)} warning(s):")
             for warning in self.warnings:
                 print(f"  - {warning}")
         

@@ -69,7 +69,7 @@ def plot_roc_curve(
     if output_path:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         plt.savefig(output_path, dpi=150, bbox_inches='tight')
-        print(f"✓ ROC curve saved to {output_path}")
+        print(f"ROC curve saved to {output_path}")
     
     if show:
         plt.show()
@@ -121,7 +121,7 @@ def plot_det_curve(
     if output_path:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         plt.savefig(output_path, dpi=150, bbox_inches='tight')
-        print(f"✓ DET curve saved to {output_path}")
+        print(f"DET curve saved to {output_path}")
     
     if show:
         plt.show()
@@ -167,7 +167,7 @@ def plot_roc_comparison(
     if output_path:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         plt.savefig(output_path, dpi=150, bbox_inches='tight')
-        print(f"✓ Comparison plot saved to {output_path}")
+        print(f"Comparison plot saved to {output_path}")
     
     if show:
         plt.show()
@@ -264,7 +264,7 @@ def plot_score_distribution(
     if output_path:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         plt.savefig(output_path, dpi=150, bbox_inches="tight")
-        print(f"✓ Score distribution plot saved to {output_path}")
+        print(f"Score distribution plot saved to {output_path}")
 
     if show:
         plt.show()
@@ -283,7 +283,7 @@ def save_analysis_report(analysis_results: Dict, output_path: Path):
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with open(output_path, 'w') as f:
         json.dump(analysis_results, f, indent=2, cls=NumpyEncoder)
-    print(f"✓ Analysis report saved to {output_path}")
+    print(f"Analysis report saved to {output_path}")
 
 
 def plot_cmc_curve(
@@ -343,7 +343,7 @@ def plot_cmc_curve(
     if output_path:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         plt.savefig(output_path, dpi=150, bbox_inches='tight')
-        print(f"✓ CMC curve plot saved to {output_path}")
+        print(f"CMC curve plot saved to {output_path}")
 
     if show:
         plt.show()

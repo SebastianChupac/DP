@@ -113,10 +113,10 @@ def _precompute_modality_masks(
             images.append((img_file, rel_path))
     
     if not images:
-        print(f"⚠ No images found for {modality} at {modality_root}")
+        print(f"Warning: No images found for {modality} at {modality_root}")
         return
     
-    print(f"\n📊 Processing {modality}: {len(images)} images")
+    print(f"\nProcessing {modality}: {len(images)} images")
     
     # Create masks folder
     masks_root = dataset_root / '_masks' / modality.capitalize()
@@ -169,7 +169,7 @@ def _precompute_modality_masks(
         except Exception as e:
             errors += 1
     
-    print(f"   ✓ {processed} processed, ⊘ {skipped} skipped, ✗ {errors} errors")
+    print(f"   {processed} processed, {skipped} skipped, {errors} errors")
 
 
 def main():

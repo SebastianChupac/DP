@@ -47,16 +47,16 @@ class IdentificationExperimentRunner:
         Path(self.config.output_dir).mkdir(parents=True, exist_ok=True)
 
         if self.config.verbose:
-            print(f"✓ Identification experiment: {self.config.experiment.name}")
-            print(f"✓ Output dir: {self.config.output_dir}")
-            print(f"✓ Identification CSV: {self.config.identification_dataset}")
-            print(f"✓ Ranking strategy: {self.config.ranking_strategy}")
+            print(f"Identification experiment: {self.config.experiment.name}")
+            print(f"Output dir: {self.config.output_dir}")
+            print(f"Identification CSV: {self.config.identification_dataset}")
+            print(f"Ranking strategy: {self.config.ranking_strategy}")
             if self.config.ranking_strategy == "cascade":
                 print(
                     f"  - Shortlist matcher: {self.config.shortlist_matcher.name} (K={self.config.shortlist_k})"
                 )
-            print(f"✓ Samples per gallery: {self.config.samples_per_gallery} ({self.config.aggregation_method})")
-            print(f"✓ Matchers: {[m.name for m in self.config.matchers]}")
+            print(f"Samples per gallery: {self.config.samples_per_gallery} ({self.config.aggregation_method})")
+            print(f"Matchers: {[m.name for m in self.config.matchers]}")
 
     def _load_matcher_config(self, matcher_cfg: MatcherExperimentConfig) -> dict:
         config_dict = {}
@@ -447,10 +447,10 @@ class IdentificationExperimentRunner:
                 json.dump(self.errors, f, indent=2)
 
         if self.config.verbose:
-            print(f"✓ Identification results saved to {output_dir}")
+            print(f"Identification results saved to {output_dir}")
 
     def _print_summary(self):
-        print("\n📈 Identification Summary Metrics:")
+        print("\nIdentification Summary Metrics:")
         for matcher_name, metrics in self.metrics.items():
             print(f"\n  {matcher_name}:")
             print(f"    Probes: {metrics['num_probes']}")
@@ -461,7 +461,7 @@ class IdentificationExperimentRunner:
 
     def run(self) -> Tuple[List[IdentificationResult], Dict]:
         if self.config.verbose:
-            print("\n📂 Loading identification dataset...")
+            print("\nLoading identification dataset...")
 
         dataset = IdentificationDataset(
             csv_path=self.config.identification_dataset,
@@ -488,11 +488,11 @@ class IdentificationExperimentRunner:
         gallery = dataset.get_gallery()
 
         if not probes:
-            print("⚠ No probes to process!")
+            print("Warning: No probes to process!")
             return [], {}
 
         if self.config.verbose:
-            print("\n🔧 Instantiating matchers...")
+            print("\nInstantiating matchers...")
 
         matchers: Dict[str, object] = {}
         for matcher_cfg in self.config.matchers:
@@ -501,7 +501,7 @@ class IdentificationExperimentRunner:
                 matcher = create_matcher(matcher_cfg.name, matcher_config)
                 matchers[matcher_cfg.name] = matcher
                 if self.config.verbose:
-                    print(f"   ✓ {matcher_cfg.name}")
+                    print(f"   {matcher_cfg.name}")
             except Exception as e:
                 self.errors.append(
                     {
@@ -512,7 +512,7 @@ class IdentificationExperimentRunner:
                     }
                 )
                 if self.config.verbose:
-                    print(f"   ✗ Failed {matcher_cfg.name}: {e}")
+                    print(f"   Error: Failed {matcher_cfg.name}: {e}")
 
         if not matchers:
             raise RuntimeError("No matchers successfully instantiated!")
@@ -524,12 +524,12 @@ class IdentificationExperimentRunner:
             shortlist_matcher_cfg = self.config.shortlist_matcher
             shortlist_matcher_name = shortlist_matcher_cfg.name
             if self.config.verbose:
-                print(f"\n🔧 Instantiating shortlist matcher: {shortlist_matcher_name}...")
+                print(f"\nInstantiating shortlist matcher: {shortlist_matcher_name}...")
             try:
                 shortlist_matcher_config = self._load_matcher_config(shortlist_matcher_cfg)
                 shortlist_matcher = create_matcher(shortlist_matcher_name, shortlist_matcher_config)
                 if self.config.verbose:
-                    print(f"   ✓ {shortlist_matcher_name}")
+                    print(f"   {shortlist_matcher_name}")
             except Exception as e:
                 self.errors.append(
                     {
@@ -540,7 +540,7 @@ class IdentificationExperimentRunner:
                     }
                 )
                 if self.config.verbose:
-                    print(f"   ✗ Failed {shortlist_matcher_name}: {e}")
+                    print(f"   Error: Failed {shortlist_matcher_name}: {e}")
                 raise RuntimeError(f"Failed to instantiate shortlist matcher: {e}")
 
         gallery_templates_by_matcher: Dict[str, Dict[str, List[Dict]]] = {}
@@ -548,7 +548,7 @@ class IdentificationExperimentRunner:
 
         if self.config.cache_gallery_templates:
             if self.config.verbose:
-                print("\n🗃️  Preparing cached gallery templates...")
+                print("\nPreparing cached gallery templates...")
             for matcher_name, matcher in matchers.items():
                 gallery_templates_by_matcher[matcher_name] = self._prepare_gallery_templates(matcher, gallery)
                 if self.config.verbose:
@@ -558,7 +558,7 @@ class IdentificationExperimentRunner:
                         cache_desc = f"full features (keypoints + descriptors)"
                     else:
                         cache_desc = f"preprocessed images only"
-                    print(f"   ✓ {matcher_name}: cached {total_templates} templates ({cache_desc})")
+                    print(f"   {matcher_name}: cached {total_templates} templates ({cache_desc})")
 
             # Cache shortlist matcher gallery templates if cascade strategy
             if self.config.ranking_strategy == "cascade" and shortlist_matcher:
@@ -572,7 +572,7 @@ class IdentificationExperimentRunner:
                         cache_desc = f"full features (keypoints + descriptors)"
                     else:
                         cache_desc = f"preprocessed images only"
-                    print(f"   ✓ {shortlist_matcher_name}: cached {total_templates} templates ({cache_desc})")
+                    print(f"   {shortlist_matcher_name}: cached {total_templates} templates ({cache_desc})")
 
         progress_bar = tqdm(
             probes,
@@ -625,11 +625,11 @@ class IdentificationExperimentRunner:
                 self.results.append(result)
 
         if self.config.verbose:
-            print("\n📊 Computing identification metrics...")
+            print("\nComputing identification metrics...")
         self._compute_metrics()
 
         if self.config.verbose:
-            print("\n💾 Saving identification results...")
+            print("\nSaving identification results...")
         self._save_results()
 
         if self.config.verbose:

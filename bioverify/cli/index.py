@@ -111,7 +111,7 @@ def index_datasets_command(args):
         # Print statistics
         indexer.print_statistics(pairs)
     
-    print(f"\n✅ Indexing complete!")
+    print(f"\nIndexing complete!")
     print(f"   Output saved to: {config['output']['csv_path']}")
     
     # Validate output if requested
@@ -123,9 +123,9 @@ def index_datasets_command(args):
         )
         result = validator.validate()
         if not result:
-            print(f"❌ Validation failed for output CSV: {config['output']['csv_path']}")
+            print(f"Validation failed for output CSV: {config['output']['csv_path']}")
         else:
-            print(f"✅ Output CSV validation passed!")
+            print(f"Output CSV validation passed!")
 
 def validate_command(args):
     """Execute CSV validation command.
@@ -175,7 +175,7 @@ def match_command(args):
     matcher = create_matcher(matcher_name, matcher_config)
 
     if args.viz_output and not args.viz:
-        print("⚠ --viz-output is ignored unless --viz is enabled.")
+        print("Warning: --viz-output is ignored unless --viz is enabled.")
 
     ground_truth = parse_ground_truth(args.ground_truth)
 
@@ -206,7 +206,7 @@ def match_command(args):
             )
 
         saved_path = save_visualization_image(rendered, output_path)
-        print(f"✓ Visualization saved to: {saved_path}")
+        print(f"Visualization saved to: {saved_path}")
         show_visualization_image(rendered, title=f"{matcher_name} match visualization")
 
     if args.full:
@@ -231,7 +231,7 @@ def experiment_command(args):
         print("=" * 60)
     
     except Exception as e:
-        print(f"❌ Experiment failed: {str(e)}")
+        print(f"Experiment failed: {str(e)}")
         if args.verbose:
             import traceback
             traceback.print_exc()
@@ -252,7 +252,7 @@ def identification_experiment_command(args):
         print("=" * 60)
 
     except Exception as e:
-        print(f"❌ Identification experiment failed: {str(e)}")
+        print(f"Identification experiment failed: {str(e)}")
         if args.verbose:
             import traceback
             traceback.print_exc()
@@ -495,7 +495,7 @@ Examples:
         elif args.evaluate_command == 'compare':
             # Validate required arguments for compare modes
             if args.mode in ['far', 'frr', 'threshold'] and args.value is None:
-                print(f"❌ --value is required for mode '{args.mode}'")
+                print(f"--value is required for mode '{args.mode}'")
                 print(f"   Example: --mode {args.mode} --value 0.01")
                 compare_parser.print_help()
                 exit(1)
