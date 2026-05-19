@@ -1,0 +1,32 @@
+# Core runtime dependencies
+numpy<2,>=1.24
+opencv-python>=4.8
+Pillow>=10.0
+PyYAML>=6.0
+openpyxl>=3.1
+tqdm>=4.66
+
+# PyTorch CUDA wheels live on the official PyTorch index.
+--extra-index-url https://download.pytorch.org/whl/cu121
+
+# Visualization and evaluation
+matplotlib==3.7.4
+scipy>=1.11
+
+# Dataset preprocessing
+# The project uses the Open Iris implementation published as `open-iris`.
+# It installs the `iris` import used by the codebase.
+open-iris
+mediapipe>=0.10
+
+# Deep learning matchers and vendored model code
+torch==2.5.1+cu121
+torchvision==0.20.1+cu121
+kornia>=0.7
+albumentations>=1.4
+yacs>=0.1.8
+einops>=0.7
+loguru>=0.7
+joblib>=1.3
+h5py>=3.9
+pytorch-lightning>=2.0
