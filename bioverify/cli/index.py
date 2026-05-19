@@ -20,6 +20,7 @@ from ..data.validation import CSVValidator, print_csv_statistics
 from ..matchers.registry import create_matcher
 from ..experiments.runner import run_experiment
 from ..experiments.identification_runner import run_identification_experiment
+from ..paths import PUBLIC_DATASET_ROOT
 from ..evaluation.cli import threshold_sweep_command, compare_matchers_command
 from ..results import VisualizationResult
 from ..visualization import (
@@ -320,7 +321,7 @@ Examples:
     )
     validate_parser.add_argument(
         '--base-path',
-        default='C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset',
+        default=str(PUBLIC_DATASET_ROOT),
         help='Base path for resolving relative paths (default: PublicDataset)'
     )
     validate_parser.add_argument(
@@ -338,7 +339,7 @@ Examples:
     )
     stats_parser.add_argument(
         '--base-path',
-        default='C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset',
+        default=str(PUBLIC_DATASET_ROOT),
         help='Base path for resolving relative paths (default: PublicDataset)'
     )
 

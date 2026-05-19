@@ -8,6 +8,7 @@ Image preprocessing utilities for biometric verification.
 Includes resizing, masking, and image preparation functions.
 """
 import os
+from pathlib import Path
 from typing import Optional, Tuple
 import numpy as np
 import cv2
@@ -17,6 +18,11 @@ from mediapipe.tasks import python
 from mediapipe.tasks.python import vision
 
 from ..results import ImageData, ImageType
+
+
+_FACE_SEGMENTER_MODEL_PATH = (
+    Path(__file__).resolve().parent.parent / "matchers" / "face_segmentation" / "selfie_multiclass_256x256.tflite"
+)
 
 
 # Global cache for IRIS pipeline (loaded once for performance)
@@ -44,7 +50,7 @@ def _get_iris_pipeline():
     return _iris_pipeline_cache
 
 
-def _get_face_segmenter(model_path: str = 'face_segmentation/selfie_multiclass_256x256.tflite'):
+def _get_face_segmenter(model_path: str = str(_FACE_SEGMENTER_MODEL_PATH)):
     """
     Get or create cached MediaPipe face segmenter.
     
@@ -237,7 +243,7 @@ def create_hand_mask(img: np.ndarray) -> np.ndarray:
     return mask
 
 
-def create_face_mask(img: np.ndarray, model_path: str = 'face_segmentation/selfie_multiclass_256x256.tflite') -> np.ndarray:
+def create_face_mask(img: np.ndarray, model_path: str = str(_FACE_SEGMENTER_MODEL_PATH)) -> np.ndarray:
     """Create segmentation mask for face region using MediaPipe.
     
     The model provides these class IDs:

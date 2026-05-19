@@ -85,7 +85,10 @@ class SGMNetMatcher(BaseMatcher):
     def _prepare_extractor_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
         config = dict(config)
         if config.get("name") == "sp":
-            model_path = config.get("model_path", "SGMNet/weights/sp/superpoint_v1.pth")
+            model_path = config.get(
+                "model_path",
+                str(self._sgmnet_models_path / "weights" / "sp" / "superpoint_v1.pth"),
+            )
             config["model_path"] = self._resolve_model_path(model_path)
         return config
 

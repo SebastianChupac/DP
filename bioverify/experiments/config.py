@@ -11,6 +11,11 @@ from typing import Optional, Dict, List, Any
 import yaml
 from pathlib import Path
 
+from ..paths import PUBLIC_DATASET_ROOT as PACKAGE_PUBLIC_DATASET_ROOT
+
+
+DEFAULT_PUBLIC_DATASET_ROOT = str(PACKAGE_PUBLIC_DATASET_ROOT)
+
 
 @dataclass
 class MatcherExperimentConfig:
@@ -44,7 +49,7 @@ class ExperimentConfig:
     
     # Data configuration
     dataset: str                                 # Path to pairs CSV manifest
-    base_path: Optional[str] = None              # Base path for resolving relative image paths
+    base_path: Optional[str] = DEFAULT_PUBLIC_DATASET_ROOT  # Base path for resolving relative image paths
     filter_modality: Optional[str] = None        # Optional filter: only process specific modality
     filter_dataset: Optional[str] = None         # Optional filter: only process specific dataset
     
@@ -111,7 +116,7 @@ class ExperimentConfig:
         config = cls(
             experiment=experiment,
             dataset=data.get('dataset'),
-            base_path=data.get('base_path'),
+            base_path=data.get('base_path', DEFAULT_PUBLIC_DATASET_ROOT),
             filter_modality=data.get('filter_modality'),
             filter_dataset=data.get('filter_dataset'),
             matchers=matchers,
@@ -144,7 +149,7 @@ class IdentificationExperimentConfig:
 
     # Data configuration
     identification_dataset: str
-    base_path: Optional[str] = None
+    base_path: Optional[str] = DEFAULT_PUBLIC_DATASET_ROOT
     filter_modality: Optional[str] = None
     filter_dataset: Optional[str] = None
 
@@ -243,7 +248,7 @@ class IdentificationExperimentConfig:
         return cls(
             experiment=experiment,
             identification_dataset=dataset_path,
-            base_path=data.get('base_path'),
+            base_path=data.get('base_path', DEFAULT_PUBLIC_DATASET_ROOT),
             filter_modality=data.get('filter_modality'),
             filter_dataset=data.get('filter_dataset'),
             matchers=matchers,

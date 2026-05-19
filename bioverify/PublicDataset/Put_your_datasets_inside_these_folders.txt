@@ -1,0 +1,4 @@
+Put datasets inside the corresponding biometric modality folder, then generate masks into the _masks folder.
+
+In configuration files for indexing data and experiments, you will have to set 
+public_dataset_root or base_path to "... <your path to bioverify>/bioverify/PublicDataset"

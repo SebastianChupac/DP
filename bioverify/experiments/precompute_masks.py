@@ -20,6 +20,7 @@ import numpy as np
 from tqdm import tqdm
 
 from ..utils.preprocessing import create_iris_mask, create_face_mask, create_hand_mask
+from ..paths import PUBLIC_DATASET_ROOT
 
 
 def _detect_iris_side(img_path: Path) -> str:
@@ -176,21 +177,21 @@ def main():
     parser = argparse.ArgumentParser(
         description='Pre-compute masks for a single modality',
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
+        epilog=f"""
 Examples:
   # Pre-compute iris masks
   python -m bioverify.experiments.precompute_masks \\
-      --dataset-root C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset \\
+      --dataset-root {PUBLIC_DATASET_ROOT} \
       --modality iris
 
   # Pre-compute face masks
   python -m bioverify.experiments.precompute_masks \\
-      --dataset-root C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset \\
+      --dataset-root {PUBLIC_DATASET_ROOT} \
       --modality face
 
   # Force recomputation of hand masks
   python -m bioverify.experiments.precompute_masks \\
-      --dataset-root C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset \\
+      --dataset-root {PUBLIC_DATASET_ROOT} \
       --modality hand \\
       --force
         """

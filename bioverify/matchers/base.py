@@ -37,9 +37,10 @@ from ..utils.preprocessing import (
     create_face_mask,
     enhance_fingervein_image,
 )
+from ..paths import PUBLIC_DATASET_ROOT as PACKAGE_PUBLIC_DATASET_ROOT
 
 
-PUBLIC_DATASET_ROOT = "C:/Users/sebas/Documents/VUT_FIT_MIT/DP/PublicDataset"
+PUBLIC_DATASET_ROOT = str(PACKAGE_PUBLIC_DATASET_ROOT)
 @dataclass
 class MatcherConfig:
     """
