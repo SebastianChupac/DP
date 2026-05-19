@@ -1,3 +1,7 @@
+# cli.py - Command-line interface for experiment evaluation and analysis.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 CLI commands for experiment evaluation.
 

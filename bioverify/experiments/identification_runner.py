@@ -1,3 +1,7 @@
+# identification_runner.py - Closed-set identification experiment runner for experiments.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Closed-set identification experiment runner.
 """

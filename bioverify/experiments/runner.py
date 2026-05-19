@@ -1,3 +1,7 @@
+# runner.py - Batch experiment runner for biometric verification experiments.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Batch experiment runner for processing pairs and evaluating matchers.
 """

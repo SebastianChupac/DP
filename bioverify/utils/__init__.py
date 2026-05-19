@@ -1,3 +1,7 @@
+# __init__.py - Initialization of the BioVerify utils subpackage.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Utility functions for BioVerify framework.
 

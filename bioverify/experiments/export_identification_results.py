@@ -1,4 +1,9 @@
-#!/usr/bin/env python3
+# export_identification_results.py - Export identification experiment results to CSV, JSON, and XLSX.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
+
+
 """
 Export identification experiment results from bioverify/results/identification to tabular formats.
 Generates CSV, JSON, and XLSX files with full numeric precision.

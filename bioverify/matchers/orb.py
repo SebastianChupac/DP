@@ -1,7 +1,10 @@
-"""
-ORB matcher implementation.
+# orb.py - ORB detector implementation for biometric matching.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
 
-Ported from SIFT/sift-orb.py into the unified matcher framework.
+"""
+ORB detector implementation.
+
 Supports both BruteForce and FLANN-LSH matching strategies.
 """
 

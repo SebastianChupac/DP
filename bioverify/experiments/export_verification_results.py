@@ -1,3 +1,7 @@
+# export_verification_results.py - Export verification experiment results to CSV, JSON, and XLSX.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """Export verification experiment results into tabular files.
 
 The exporter scans ``bioverify/results`` for verification experiment folders,

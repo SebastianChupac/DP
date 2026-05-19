@@ -1,3 +1,7 @@
+# precompute_masks.py - Pre-compute masks for biometric datasets.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Pre-compute masks for all images in dataset folders.
 

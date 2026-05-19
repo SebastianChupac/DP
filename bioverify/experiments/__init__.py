@@ -1,3 +1,8 @@
+# __init__.py - Experiment running infrastructure for batch processing and evaluation.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
+
 """
 Experiment running infrastructure for batch processing and evaluation.
 

@@ -1,3 +1,7 @@
+# preprocessing.py - Image preprocessing utilities for biometric verification.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Image preprocessing utilities for biometric verification.
 

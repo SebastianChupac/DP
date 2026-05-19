@@ -1,3 +1,7 @@
+# config.py - Experiment configuration dataclass, matcher configuration, and YAML loading utilities for biometric experiments.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Experiment configuration dataclass and loading utilities.
 """

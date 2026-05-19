@@ -1,3 +1,6 @@
+# __main__.py - Main entry point for BioVerify CLI.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
 """
 Main entry point for BioVerify CLI.
 

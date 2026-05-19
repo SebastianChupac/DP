@@ -1,3 +1,7 @@
+# aspanformer.py - ASpanFormer matcher implementation for matching biometric images.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 ASpanFormer matcher implementation.
 

@@ -1,3 +1,8 @@
+# loftr.py - LoFTR matcher implementation for biometric images.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
+
 """
 LoFTR (Local Feature Transformer) matcher implementation.
 

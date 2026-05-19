@@ -1,3 +1,9 @@
+# index.py - CLI for dataset indexing, pair generation, matcher execution, and experiment running.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
+
+
 """
 CLI commands for dataset indexing.
 

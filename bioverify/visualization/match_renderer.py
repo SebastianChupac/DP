@@ -1,3 +1,7 @@
+# match_renderer.py - Visualization utilities for biometric matcher results.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """Render/save/show utilities for single-pair matcher visualization."""
 
 from pathlib import Path

@@ -1,8 +1,9 @@
+# sift.py - SIFT detector and matching implementation for biometric images.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 SIFT matcher implementation.
-
-Ported from SIFT/sift-orb.py into the unified matcher framework.
-Visualization logic is intentionally omitted (visualization handled by VisualizationResult).
 """
 
 

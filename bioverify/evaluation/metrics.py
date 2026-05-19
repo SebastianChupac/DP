@@ -1,3 +1,8 @@
+# metrics.py - Metrics computation for biometric experiments evaluation.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
+
 """
 Metrics computation for biometric verification evaluation.
 

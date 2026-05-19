@@ -1,8 +1,12 @@
+# plotter.py - Visualization utilities for experiments results.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Visualization utilities for evaluation results.
 
 Provides plotting functions for ROC curves, DET curves, and other metrics.
-Requires matplotlib; gracefully degrades if not available.
+Requires matplotlib.
 """
 
 import json

@@ -1,3 +1,7 @@
+# deepdetect.py - DeepDetect detector and matching implementation for biometric images.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 DeepDetect matcher for bioverify framework.
 
@@ -29,9 +33,6 @@ Decision Logic:
       * inlier_ratio > ratio_threshold (default 0.3)
       AND
       * mean_reprojection_error < max_reprojection_error (default 5.0 px)
-      
-Reference:
-    Original implementation: DeepDetect/DeepDetect.py
 """
 import os
 import numpy as np

@@ -1,3 +1,8 @@
+# identification.py - Dataset loader for closed-set identification protocol CSV files.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
+
 """
 Dataset loader for closed-set identification protocol CSV files.
 """

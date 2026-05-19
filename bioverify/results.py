@@ -1,3 +1,7 @@
+# results.py - Data structures for storing and representing biometric verification and identification results.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 from dataclasses import dataclass, field
 from typing import Optional, Tuple, List, Dict, Any
 import numpy as np

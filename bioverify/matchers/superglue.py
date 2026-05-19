@@ -1,7 +1,9 @@
+# superglue.py - SuperPoint detector + SuperGlue matcher implementation for biometric images.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 SuperPoint + SuperGlue matcher implementation.
-
-Uses the SuperGlue model code stored in matchers/superglue_models.
 """
 
 from typing import Optional, Tuple, Dict

@@ -1,3 +1,7 @@
+# base.py - Base matcher interface for homography-based methods.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Base matcher interface for biometric verification.
 

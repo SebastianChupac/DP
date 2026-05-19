@@ -1,3 +1,7 @@
+# validation.py - CSV manifest validation utilities for biometric datasets.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Validation utilities for dataset CSV manifests.
 

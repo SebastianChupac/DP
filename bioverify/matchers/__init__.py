@@ -1,3 +1,7 @@
+# __init__.py - Initialization of the BioVerify matchers subpackage.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Matcher implementations for biometric verification.
 

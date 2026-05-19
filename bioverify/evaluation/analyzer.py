@@ -1,3 +1,7 @@
+# analyzer.py - Result analyzer for threshold sweeping and matcher comparison in biometric verification experiments.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Result analyzer for threshold sweeping and matcher comparison.
 

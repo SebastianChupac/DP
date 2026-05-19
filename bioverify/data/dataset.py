@@ -1,3 +1,7 @@
+# dataset.py - Dataset loader for image pairs from CSV manifests.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Dataset loader for loading image pairs from CSV manifests.
 

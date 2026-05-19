@@ -1,3 +1,7 @@
+# parsers.py - Dataset parsers for biometric datasets.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Dataset parsers for different biometric dataset structures.
 

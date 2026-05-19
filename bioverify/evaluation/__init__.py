@@ -1,3 +1,7 @@
+# __init__.py - Evaluation module for analyzing experiment results, generating curves, and comparing matchers.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Evaluation module for analyzing experiment results.
 

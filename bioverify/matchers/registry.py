@@ -1,3 +1,7 @@
+# registry.py - Matcher registry and factory for BioVerify framework.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 Matcher registry and factory helpers.
 """

@@ -1,3 +1,7 @@
+# sgmnet.py - SGMNet matcher implementation for biometric matching.
+# Author: Sebastian Chupac (xchupa03)
+# Date: 19.05.2026
+
 """
 SGMNet matcher implementation.
 
